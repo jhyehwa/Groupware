@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+ul li {
+	list-style: none;
+}
+
+.body-container {
+	width: 1440px;
+	height: 720px;
+}
+
+.container-left {
+	float: left;
+}
+
+.profile li {
+	background: fuchsia;
+	width: 250px;
+	height: 370px;
+	margin-left: 5px;
+	margin-top: 5px;
+	font-size: 20px;
+}
+
+.todo {
+	background: blue;
+	width: 250px;
+	height: 340px;
+	margin-left: 5px;
+	margin-top: 5px;
+	font-size: 20px;
+}
+
+.nav-right {
+	float: left;
+	margin-left:30px;
+	
+}
+
+.container-top{
+	height:50px;
+	line-height:50px; 
+}
+
+.content-date {
+	
+}
+
+
+.content-date ul li {
+	float: left;
+}
+
+.content-weather {
+	text-align: right;
+}
+
+
+.content-top {
+	margin-top: 10px;
+}
+
+
+.content-schedule{ 
+	width: 900px; 
+	height: 240px; 
+	clear: both;
+	background: gray;
+}
+
+
+.content-bottom{
+	margin-top:30px;
+}
+
+.content-todayTalk{
+	width: 450px; 
+	height: 360px; 
+	float: left; 
+	background: pink
+}
+
+.content-right{
+	float: left;
+}
+
+.content-buddy{
+	width: 440px; 
+	height: 170px; 
+	margin-left: 10px; 
+	background: red;
+}
+
+.content-notice{
+	width: 440px; 
+	height: 180px; 
+	margin: 10px 0 0 10px; 
+	background: aqua;
+}

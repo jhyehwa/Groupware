@@ -1,0 +1,221 @@
+package com.of.community;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.of.common.FileManager;
+import com.of.common.dao.CommonDAO;
+
+@Service("community.communityService")
+public class CommunityServiceImpl implements CommunityService {
+	@Autowired
+	private CommonDAO dao;
+	
+	@Autowired
+	private FileManager fileManager;
+	
+	@Override
+	public void insertCommu(Community dto, String pathname) throws Exception {
+		try {
+			int seq=dao.selectOne("community.seq");
+			dto.setCommuNum(seq);
+				System.out.println(dto);
+			dao.insertData("community.insertCommu", dto);
+			
+			// 파일 업로드
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf:dto.getUpload()) {
+					String saveFilename=fileManager.doFileUpload(mf, pathname);
+					if(saveFilename==null) continue;
+
+					String originalFilename=mf.getOriginalFilename();
+					
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);				
+					
+					insertFile(dto);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("community.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Community> listCommu(Map<String, Object> map) {
+		List<Community> list=null;
+		
+		try {
+			list=dao.selectList("community.listCommu", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public Community readCommu(int commuNum) {
+		Community dto=null;
+
+		try {
+			dto=dao.selectOne("community.readCommu", commuNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void updateHitCount(int commuNum) throws Exception {
+		try {
+			dao.updateData("community.updateHitCount", commuNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public Community preReadCommu(Map<String, Object> map) {
+		Community dto=null;
+
+		try {
+			dto=dao.selectOne("community.preReadCommu", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public Community nextReadCommu(Map<String, Object> map) {
+		Community dto=null;
+
+		try {
+			dto=dao.selectOne("community.nextReadCommu", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void updateCommu(Community dto, String pathname) throws Exception {
+		try {
+			dao.updateData("community.updateCommu", dto);
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf:dto.getUpload()) {
+					String saveFilename=fileManager.doFileUpload(mf, pathname);
+					if(saveFilename==null) continue;
+					
+					String originalFilename=mf.getOriginalFilename();
+								
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);
+			
+					
+					insertFile(dto);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteCommu(int commuNum, String pathname) throws Exception {
+		try {
+			// 파일 지우기
+			List<Community> listFile=listFile(commuNum);
+			if(listFile!=null) {
+				for(Community dto:listFile) {
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+				}
+			}
+			
+			// 파일 테이블 내용 지우기
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("field", "num");
+			map.put("num", commuNum);
+			deleteFile(map);
+			
+			dao.deleteData("community.deleteCommu", commuNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void insertFile(Community dto) throws Exception {
+		try {
+			dao.insertData("community.insertFile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
+	public List<Community> listFile(int commuNum) {
+		List<Community> listFile=null;
+		
+		try {
+			listFile=dao.selectList("community.listFile", commuNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listFile;
+	}
+
+	@Override
+	public Community readFile(int fileNum) {
+		Community dto=null;
+		
+		try {
+			dto=dao.selectOne("community.readFile", fileNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void deleteFile(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("community.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+}

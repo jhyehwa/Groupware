@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="community">
+	<select id="seq" resultType="Integer">
+		SELECT seq_commu.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertCommu" parameterType="com.of.community.Community">
+		INSERT INTO community(commuNum, clubCode, title, writer, content, created, hitCount)
+				VALUES(#{commuNum}, #{clubCode}, #{title},
+					#{writer}, #{content}, SYSDATE, 0)
+	</insert>	
+	
+	<sql id="where-list">		
+		<if test="condition=='title' ">
+			INSTR(title, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='clubType' ">
+			INSTR(clubType, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='name' ">
+			name=#{keyword}
+		</if>
+		<if test="condition=='created' ">
+			( TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(created, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<!-- 데이터개수  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM community c
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode
+		<where>
+			<if test="keyword != null and keyword!=''  ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="listCommu" parameterType="map" resultType="com.of.community.Community">
+		SELECT c.commuNum, cb.clubType, e.name, title, created, hitCount, NVL(fileCount, 0) fileCount
+		FROM community c 
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode
+ 		LEFT OUTER JOIN (
+			SELECT commuNum, COUNT(*) fileCount FROM commuFile
+			GROUP BY commuNum
+		) f ON c.commuNum=f.commuNum 
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY commuNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	 </select>
+	 
+	<!-- 파일 -->
+	<insert id="insertFile" parameterType="com.of.community.Community">
+		INSERT INTO commuFile (fileNum, commuNum, originalFileName, saveFileName) VALUES
+				(seq_commuFile.NEXTVAL, #{commuNum}, #{originalFilename}, #{saveFilename})
+	</insert>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.of.community.Community">
+		SELECT fileNum, commuNum, saveFilename, originalFilename
+		FROM commuFile
+		WHERE commuNum=#{commuNum}    
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.of.community.Community">
+		SELECT fileNum, commuNum, saveFilename, originalFilename
+		FROM commuFile
+	    WHERE fileNum=#{fileNum}      
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM commuFile WHERE ${field} = #{commuNum}
+	</delete>
+	
+	<!-- 글보기 -->
+    <select id="readCommu" parameterType="Integer" resultType="com.of.community.Community">
+		SELECT commuNum, cb.clubType, e.name, title, content, created, hitCount
+		FROM community c 
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode 
+		WHERE commuNum = #{commuNum}
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE community SET hitCount=hitCount+1 WHERE commuNum = #{commuNum}
+	</update>
+
+	<!-- 이전글 -->
+	<select id="preReadCommu" parameterType="map" resultType="com.of.community.Community">
+		SELECT commuNum, title
+		FROM community c
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode 
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (commuNum &gt; #{commuNum})
+		</where>
+		ORDER BY commuNum ASC
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+
+    <!-- 다음글 -->
+    <select id="nextReadCommu" parameterType="map" resultType="com.of.community.Community">
+		SELECT commuNum, title
+		FROM community c
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode 
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (commuNum &lt; #{commuNum})
+		</where>
+		ORDER BY commuNum DESC
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+    
+    <!-- 수정 -->
+	<update id="updateCommu" parameterType="com.of.community.Community">
+		UPDATE community SET title=#{title},
+				content=#{content}
+		WHERE commuNum=#{commuNum}
+	</update>
+    
+	<!-- 삭제 -->
+	<delete id="deleteCommu" parameterType="Integer">
+		DELETE FROM community WHERE  commuNum=#{commuNum}
+	</delete>
+	
+</mapper>
