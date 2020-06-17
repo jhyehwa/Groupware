@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.of.common.FileManager;
 import com.of.common.MyUtil;
+import com.of.employee.SessionInfo;
 
 @Controller("community.communityController")
 public class CommunityController {
@@ -127,12 +128,12 @@ public class CommunityController {
 			Model model,
 			HttpSession session
 			) throws Exception {
-/*
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(! info.getUserId().equals("admin")) {
-			return "redirect:/notice/list";
-		}*/
-		
+
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
+/*		if(! info.getEmpNo().equals("admin")) {
+			return "redirect:/community/list";
+		}
+		*/
 		model.addAttribute("mode", "created");
 		
 		return ".community.created";
@@ -142,18 +143,18 @@ public class CommunityController {
 	public String createdSubmit(
 			Community dto,
 			HttpSession session) throws Exception {
-/*		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		if(! info.getUserId().equals("admin")) {
-			return "redirect:/notice/list";	
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
+		
+/*		if(! info.getrCode().equals("admin")) {
+			return "redirect:/community/list";	
 		}*/
 
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + "uploads" + File.separator + "community";		
 			
-			/*dto.setUserId(info.getUserId());*/
+			dto.setWriter(info.getEmpNo());
 			service.insertCommu(dto, pathname);
 		} catch (Exception e) {
 		}
@@ -213,11 +214,11 @@ public class CommunityController {
 			@RequestParam String page,
 			HttpSession session,			
 			Model model	) throws Exception {
-	/*	SessionInfo info=(SessionInfo)session.getAttribute("member");
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
-		if(! info.getUserId().equals("admin")) {
+		if(! info.getrCode().equals("admin")) {
 			return "redirect:/community/list?page="+page;
-		}*/
+		}
 		
 		System.out.println(page);
 
@@ -240,20 +241,18 @@ public class CommunityController {
 	public String updateSubmit(
 			Community dto,
 			@RequestParam(defaultValue="1") String page,
-			HttpSession session) throws Exception {
-		
-		
+			HttpSession session) throws Exception {		
 
-	/*	SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(! info.getUserId().equals("admin")) {
-			return "redirect:/notice/list?page="+page;
-		}*/
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
+		if(! info.getrCode().equals("admin")) {
+			return "redirect:/community/list?page="+page;
+		}
 		
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + File.separator + "uploads" + File.separator + "community";		
 			
-	/*		dto.setUserId(info.getUserId());*/
+			dto.setWriter(info.getEmpNo());
 			service.updateCommu(dto, pathname);
 		} catch (Exception e) {
 		}
@@ -268,17 +267,17 @@ public class CommunityController {
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpSession session) throws Exception {
-/*		SessionInfo info=(SessionInfo)session.getAttribute("member");*/
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query="page="+page;
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
-/*		
-		if(! info.getUserId().equals("admin")) {
-			return "redirect:/notice/list?"+query;
-		}*/
+		
+		if(! info.getrCode().equals("admin")) {
+			return "redirect:/community/list?"+query;
+		}
 		
 		try {
 			String root = session.getServletContext().getRealPath("/");
@@ -385,8 +384,8 @@ public class CommunityController {
 				@RequestParam Map<String, Object> paramMap,
 				HttpSession session
 				) throws Exception {
-		/*	SessionInfo info = (SessionInfo)session.getAttribute("member");
-			paramMap.put("userId", info.getUserId());*/
+			SessionInfo info = (SessionInfo)session.getAttribute("employee");
+			paramMap.put("writer", info.getEmpNo());
 			String state = "true";
 			int count = 0;
 			
@@ -462,10 +461,10 @@ public class CommunityController {
 				) throws Exception {
 			Map<String, Object> model = new HashMap<>();
 			String state ="true";
-	/*		SessionInfo info = (SessionInfo)session.getAttribute("member");*/
+			SessionInfo info = (SessionInfo)session.getAttribute("employee");
 			
 			try {
-		/*		dto.setUserId(info.getUserId());*/
+				dto.setReplyWriter(info.getEmpNo());
 				service.insertReply(dto);
 			} catch (Exception e) {
 				state = "false";
@@ -532,12 +531,12 @@ public class CommunityController {
 					@RequestParam Map<String, Object> paramMap,
 					HttpSession session 
 				) throws Exception {
-/*			
-			SessionInfo info = (SessionInfo)session.getAttribute("member");*/
+			
+			SessionInfo info = (SessionInfo)session.getAttribute("employee");
 			String state = "true";
 			
 			try {
-		/*		paramMap.put("userId", info.getUserId());*/
+				paramMap.put("replyWriter", info.getEmpNo());
 				service.insertReplyLike(paramMap);
 			} catch (Exception e) {
 				state = "false";

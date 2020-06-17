@@ -75,7 +75,7 @@ $(function(){
 				  <tr align="left" height="40"> 
 				      <td width="100"  style="text-align: center;">작 성 자</td>
 				      <td style="padding-left:10px;"> 
-				          <input class="inputnoline" type="text" name="writer" maxlength="100" value="1001199">
+				          <input class="inputnoline" type="text" name="writer" maxlength="100" value="${dto.writer}">
 				      </td>
 				  </tr>
 				  

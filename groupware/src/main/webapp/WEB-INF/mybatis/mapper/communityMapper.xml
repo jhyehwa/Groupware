@@ -162,7 +162,7 @@
 	
 	<!-- 댓글/답글 등록 -->
 	<insert id="insertReply" parameterType="com.of.community.CommuReply">
-		INSERT INTO commuReply (commuNum, replyNum, replyWriter, content, created, answer) VALUES (#{commuNum}, seq_commuReply.NEXTVAL, '1001199', #{content}, SYSDATE, #{answer})
+		INSERT INTO commuReply (commuNum, replyNum, replyWriter, content, created, answer) VALUES (#{commuNum}, seq_commuReply.NEXTVAL, #{replyWriter}, #{content}, SYSDATE, #{answer})
 	</insert>
 	
 	<!-- 게시글의 댓글 개수 -->
@@ -231,7 +231,7 @@
 	
 	<!-- 댓글 좋아요/싫어요 추가  -->
 	<insert id="insertReplyLike" parameterType="map">
-		INSERT INTO commuReplyLike (replyNum, replyWriter, replyLike) VALUES (#{replyNum}, '1001199', #{replyLike})	
+		INSERT INTO commuReplyLike (replyNum, replyWriter, replyLike) VALUES (#{replyNum}, #{replyWriter}, #{replyLike})	
 	</insert>
 	
 	<!-- 댓글 좋아요/싫어요 개수  -->
