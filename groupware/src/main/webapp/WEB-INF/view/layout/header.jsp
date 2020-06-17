@@ -18,6 +18,7 @@
 	<div class="header-right">
 		<div class="header-menu">
 			<a href="#"><i class="far fa-user-circle"></i></a> <!-- 프로필 -->
+			<span>${sessionScope.employee.name}</span>님
 			&nbsp;&nbsp;
 			<a href="#"><i class="far fa-bell"></i></a> <!-- 알림 -->
 			&nbsp;&nbsp;
