@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="employee">
+	<select id="loginEmployee" parameterType="String" resultType="com.of.employee.Employee">
+		SELECT empNo, pwd, name
+		FROM employee
+		WHERE empNo = #{empNo}
+	</select>
+	
+	<insert id="insertEmployee1" parameterType="com.of.employee.Employee">
+		INSERT INTO employee(employeeNum, empNo, pwd, name, birth, tel, email, addr, enable, rCode)
+		VALUES (seq_employeeNum.NEXTVAL, #{empNo}, #{pwd}, #{name}, #{birth}, #{tel}, #{email}, #{addr}, 1, #{rCode})
+	</insert>
+	
+	<insert id="insertEmployee2" parameterType="com.of.employee.Employee">	
+		INSERT INTO history(hNum, empNo, dCode, pCode, apDate, memo)
+		VALUES (seq_history.NEXTVAL, #{empNo}, #{dCode}, #{pCode}, #{apDate}, #{memo})
+	</insert>
+		
+	<insert id="insertEmployee3" parameterType="com.of.employee.Employee">
+		INSERT INTO career(cNum, empNo, enterDate, enterType, exitDate)
+		VALUES (seq_career.NEXTVAL, #{empNo}, #{enterDate}, '입사', #{exitDate})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<sql id="where-list">
+		<if test="condition=='empNo' ">
+			INSTR(empNo, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='dType' ">
+			DBMS_LOB.INSTR(dType, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='name' ">
+			name=#{keyword}
+		</if>
+	</sql>
+		
+	<select id="dataCount" resultType="Integer" parameterType="map" >
+		SELECT NVL(COUNT(employeeNum),0) 
+		FROM employee e
+		JOIN history h ON e.empNo = h.empNo
+		<where>
+			<if test="keyword!=null and keyword !='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="listEmployee"  resultType="com.of.employee.Employee" parameterType="map">
+		SELECT e.empNo, name, tel, email, TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, d.dCode, dType, p.pCode, pType, employeeNum
+		FROM employee e
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+        JOIN dept d ON d.dCode = h.dCode
+        JOIN position p ON p.pCode = h.pCode
+		<where>
+			<if test="keyword!=null and keyword !='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY employeeNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<select id="readEmployee" parameterType="Integer" resultType="com.of.employee.Employee">
+		SELECT e.empNo, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, tel, email, addr, d.dCode, dType, p.pCode, pType,
+			TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, TO_CHAR(exitDate, 'YYYY-MM-DD') exitDate, TO_CHAR(apDate, 'YYYY-MM-DD') apDate, memo
+		FROM employee e
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+        JOIN dept d ON d.dCode = h.dCode
+        JOIN position p ON p.pCode = h.pCode
+        WHERE employeeNum = #{employeeNum}
+	</select>
+	
+	
+	
+	<update id="updateEmployee" parameterType="Integer">
+		UPDATE employee SET empNo = #{empNo}, name = #{name}, birth = #{birth}, tel = #{tel},
+    		email = #{email}, addr = #{addr}, dCode = #{dCode}, pCode = #{pCode}, enterDate = #{enterDate},
+    		exitDate = #{exitDate}, apDate = #{apDate}, memo = #{memo}
+		WHERE employeeNum = #{employeeNum}
+	</update>
+	
+	
+</mapper>
