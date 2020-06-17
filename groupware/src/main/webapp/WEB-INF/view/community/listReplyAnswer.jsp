@@ -5,6 +5,7 @@
 	String cp=request.getContextPath();
 %>
 
+
 <c:forEach var="vo" items="${listReplyAnswer}">
 	<div class='answer' style='padding: 0px 10px;'>
 		<div style='clear:both; padding: 10px 0px;'>

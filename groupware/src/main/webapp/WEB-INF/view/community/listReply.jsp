@@ -16,6 +16,7 @@
 			</td>
 		</tr>
 	</thead>
+	
 
 	<tbody id='listReplyBody'>
 	<c:forEach var="vo" items="${listReply}">
