@@ -162,7 +162,7 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			// 파일 테이블 내용 지우기
 			Map<String, Object> map=new HashMap<String, Object>();
-			map.put("field", "num");
+			map.put("field", "commuNum");
 			map.put("num", commuNum);
 			deleteFile(map);
 			
@@ -218,4 +218,128 @@ public class CommunityServiceImpl implements CommunityService {
 			throw e;
 		}
 	}
+	
+	// 게시글 좋아요
+		@Override
+		public void insertCommuLike(Map<String, Object> map) throws Exception {
+			try {
+				dao.insertData("community.insertCommuLike", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+
+		}
+		
+		// 게시글 좋아요 개수 
+		@Override
+		public int commuLikeCount(int commuNum) {
+			int result = 0;
+			try {
+				result = dao.selectOne("community.commuLikeCount", commuNum);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+	
+	// 댓글 입력 
+		@Override
+		public void insertReply(CommuReply dto) throws Exception {
+			try {
+				dao.insertData("community.insertReply", dto);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		
+		// 댓글 리스트 
+		@Override
+		public List<CommuReply> listReply(Map<String, Object> map) {
+			List<CommuReply> list = null;
+			try {
+				list = dao.selectList("community.listReply", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return list;
+		}
+		
+		// 댓글 개수 
+		@Override
+		public int replyCount(Map<String, Object> map) {
+			int result = 0;
+			try {
+				result = dao.selectOne("community.replyCount", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+
+		// 댓글&답글 동시 지우기 
+		@Override
+		public void deleteReply(Map<String, Object> map) throws Exception {
+			try {
+				dao.deleteData("community.deleteReply", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+
+		}
+		
+		// 답글 리스트 
+		@Override
+		public List<CommuReply> listReplyAnswer(int answer) {
+			List<CommuReply> list = null;
+			try {
+				list = dao.selectList("community.listReplyAnswer", answer);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return list;
+		}
+		
+		// 답글 개수 
+		@Override
+		public int replyAnswerCount(int answer) {
+			int result = 0;
+			try {
+				result = dao.selectOne("community.replyAnswerCount", answer);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+		
+		// 댓글 좋아요&싫어요 
+		@Override
+		public void insertReplyLike(Map<String, Object> map) throws Exception {
+			try {
+				dao.insertData("community.insertReplyLike", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+
+		}
+		
+		// 좋싫 개수 
+		@Override
+		public Map<String, Object> replyLikeCount(Map<String, Object> map) {
+			Map<String, Object> countMap = null;
+			try {
+				countMap = dao.selectOne("community.replyLikeCount", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return countMap;
+		}
 }

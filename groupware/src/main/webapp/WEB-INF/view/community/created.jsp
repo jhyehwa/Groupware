@@ -90,10 +90,10 @@ $(function(){
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">동호회 분류</td>
 				      <td style="padding-left:10px;"> 
 			      		<select name="clubCode">
-			     			<option value="BW">볼링</option>
-			     			<option value="GF">골프</option>
-			     			<option value="EC">영어회화</option>
-			     			<option value="BG">보드게임</option>			     				     	
+			     			<option value="BW" ${clubCode=="BW"?"selected='selected'":""}>볼링</option>
+			     			<option value="GF" ${clubCode=="GF"?"selected='selected'":""}>골프</option>
+			     			<option value="EC" ${clubCode=="EC"?"selected='selected'":""}>영어회화</option>
+			     			<option value="BG" ${clubCode=="BG"?"selected='selected'":""}>보드게임</option>			     				     	
 			     		</select>			   
 			      	</td>
 				  </tr>
@@ -132,6 +132,10 @@ $(function(){
 			        <button type="button" class="boardBtn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="boardBtn">다시입력</button>
 			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/community/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			      	 <c:if test="${mode=='update'}">
+			         	 <input type="hidden" name="commuNum" value="${dto.commuNum}">
+			        	 <input type="hidden" name="page" value="${page}">
+			        </c:if>
 			      </td>
 			    </tr>
 			  </table>

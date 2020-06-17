@@ -2,6 +2,7 @@ package com.of.community;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -217,6 +218,8 @@ public class CommunityController {
 		if(! info.getUserId().equals("admin")) {
 			return "redirect:/community/list?page="+page;
 		}*/
+		
+		System.out.println(page);
 
 		Community dto = service.readCommu(commuNum);
 		if(dto==null) {
@@ -236,8 +239,10 @@ public class CommunityController {
 	@RequestMapping(value="/community/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			Community dto,
-			@RequestParam String page,
+			@RequestParam(defaultValue="1") String page,
 			HttpSession session) throws Exception {
+		
+		
 
 	/*	SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(! info.getUserId().equals("admin")) {
@@ -364,7 +369,7 @@ public class CommunityController {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("field", "fileNum");
-		map.put("fileNum", fileNum);
+		map.put("num", fileNum);
 		service.deleteFile(map);
 		
    	    // 작업 결과를 json으로 전송
@@ -372,4 +377,183 @@ public class CommunityController {
 		model.put("state", "true");
 		return model;
 	}
+	
+	// 게시글 좋아요 
+		@RequestMapping(value="/community/insertCommuLike", method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> insertCommuLike(
+				@RequestParam Map<String, Object> paramMap,
+				HttpSession session
+				) throws Exception {
+		/*	SessionInfo info = (SessionInfo)session.getAttribute("member");
+			paramMap.put("userId", info.getUserId());*/
+			String state = "true";
+			int count = 0;
+			
+			try {
+				service.insertCommuLike(paramMap);
+				
+			} catch (Exception e) {
+				state = "false";
+			}
+			
+			int commuNum = Integer.parseInt((String)paramMap.get("commuNum"));
+			count = service.commuLikeCount(commuNum);
+			
+			Map<String, Object> model = new HashMap<>();
+			
+			model.put("state", state);
+			model.put("commuLikeCount", count);
+			
+			return model;		
+		}
+	
+	// 댓글 리스트 : AJAX-text/html
+		@RequestMapping(value="/community/listReply")
+		public String list(
+				@RequestParam int commuNum,
+				@RequestParam(value="pageNo", defaultValue="1") int current_page,
+				Model model
+				) throws Exception {
+			
+			int rows=5;
+			int dataCount=0;
+			int total_page=0;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("commuNum", commuNum);
+			
+			dataCount = service.replyCount(map);
+			total_page=myUtil.pageCount(rows, dataCount);		
+			
+			if(current_page>total_page) {
+				current_page=total_page;
+			}
+			
+			int offset=(current_page-1)*rows;
+			if(offset<0) offset=0;
+			
+			map.put("offset", offset);
+			map.put("rows", rows);
+			
+			List<CommuReply> list = service.listReply(map);
+			for(CommuReply dto:list) {
+				dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+			}
+			
+			String paging = myUtil.pagingMethod(current_page, 
+					total_page, "listPage");
+			
+			model.addAttribute("listReply", list);
+			model.addAttribute("pageNo", current_page);
+			model.addAttribute("replyCount", dataCount);
+			model.addAttribute("total_page", total_page);
+			model.addAttribute("paging", paging);
+			
+			return "community/listReply";
+		}
+		
+		// 댓글 및 답글 등록 : AJAX-JSON 
+		@RequestMapping(value="/community/insertReply", method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> insertReply(
+				CommuReply dto,
+				HttpSession session 
+				) throws Exception {
+			Map<String, Object> model = new HashMap<>();
+			String state ="true";
+	/*		SessionInfo info = (SessionInfo)session.getAttribute("member");*/
+			
+			try {
+		/*		dto.setUserId(info.getUserId());*/
+				service.insertReply(dto);
+			} catch (Exception e) {
+				state = "false";
+			}
+			
+			model.put("state", state);
+			
+			return model;
+		}
+		
+		// 댓글의 답글 리스트 : AJAX-Text 
+		@RequestMapping(value="/community/listReplyAnswer")
+		public String listReplyAnswer(
+				@RequestParam int answer,
+				Model model
+				) throws Exception {
+			
+			List<CommuReply> list = service.listReplyAnswer(answer);
+			for(CommuReply dto : list) {
+				dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+			}
+			
+			model.addAttribute("listReplyAnswer", list);
+			
+			return "community/listReplyAnswer";		
+		}	
+		
+		// 댓글의 답글 개수 : AJAX-JSON 
+		@RequestMapping(value="/community/countReplyAnswer")
+		@ResponseBody
+		public Map<String, Object> countReplyAnswer(
+				@RequestParam int answer
+				) throws Exception {
+			Map<String, Object> model = new HashMap<>();
+			
+			int count = service.replyAnswerCount(answer);
+			model.put("count", count);
+			
+			return model;
+		}
+		
+		// 댓글 및 댓글의 답글 삭제 : AJAX-JSON
+		@RequestMapping(value="/community/deleteReply", method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> deleteReply(
+				@RequestParam Map<String, Object> paramMap
+				) throws Exception {
+			String state = "true"; 
+			try {
+				service.deleteReply(paramMap);
+			} catch (Exception e) {
+				state = "false";
+			}
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", state);
+			return map;
+		}
+		
+		// 댓글 좋아요/싫어요 추가 및 좋아요/싫어요 개수 가져오기 
+		@RequestMapping(value="/community/insertReplyLike", method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> insertReplyLike(
+					@RequestParam Map<String, Object> paramMap,
+					HttpSession session 
+				) throws Exception {
+/*			
+			SessionInfo info = (SessionInfo)session.getAttribute("member");*/
+			String state = "true";
+			
+			try {
+		/*		paramMap.put("userId", info.getUserId());*/
+				service.insertReplyLike(paramMap);
+			} catch (Exception e) {
+				state = "false";
+			}
+			
+			// 좋아요/싫어요 개수 가져오기 
+			Map<String, Object> countMap = service.replyLikeCount(paramMap);
+			
+			// 마이바티스의 resultType이 map인 경우 int형은 BigDecimal로 넘어옴 		
+			int likeCount = ((BigDecimal)countMap.get("LIKECOUNT")).intValue();
+			int disLikeCount = ((BigDecimal)countMap.get("DISLIKECOUNT")).intValue();
+			
+			Map<String, Object> model = new HashMap<>();
+			model.put("state", state);
+			model.put("likeCount", likeCount);
+			model.put("disLikeCount", disLikeCount);
+			return model;
+		}
 }

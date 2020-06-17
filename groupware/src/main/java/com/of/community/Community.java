@@ -10,7 +10,36 @@ public class Community {
 	private String clubType;
 	private String title;
 	private String writer;
-	private String name;
+	private String name;	
+	private String content;
+	private String created; 
+	private int hitCount;
+
+	private int fileNum;
+	private String originalFilename, saveFilename;	
+	private int fileCount;	
+	private List<MultipartFile> upload; 
+	private long gap;
+	
+	private int replyCount;	
+	private int commuLikeCount;		
+
+	public int getCommuLikeCount() {
+		return commuLikeCount;
+	}
+
+	public void setCommuLikeCount(int commuLikeCount) {
+		this.commuLikeCount = commuLikeCount;
+	}
+
+	public int getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -18,20 +47,6 @@ public class Community {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	private String content;
-	private String created; 
-	private int hitCount;
-
-	private int fileNum;
-	private String originalFilename, saveFilename;	
-	private int fileCount;
-	
-	// 스프링에서 파일 받기
-	// 하나만 받을 경우 : MultipartFile upload;
-	private List<MultipartFile> upload; // <input type="file" name="upload"
-
-	private long gap;
 
 	public int getListNum() {
 		return listNum;

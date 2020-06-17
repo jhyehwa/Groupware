@@ -43,7 +43,7 @@
 	
 	<!-- 리스트 -->
 	<select id="listCommu" parameterType="map" resultType="com.of.community.Community">
-		SELECT c.commuNum, cb.clubType, e.name, title, created, hitCount, NVL(fileCount, 0) fileCount
+		SELECT c.commuNum, cb.clubType, e.name, title, created, hitCount, NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
 		JOIN club cb ON c.clubCode = cb.clubCode
@@ -51,6 +51,11 @@
 			SELECT commuNum, COUNT(*) fileCount FROM commuFile
 			GROUP BY commuNum
 		) f ON c.commuNum=f.commuNum 
+		LEFT OUTER JOIN (
+			SELECT commuNum, COUNT(*) replyCount FROM commuReply
+			WHERE answer=0
+			GROUP BY commuNum
+		) r ON c.commuNum=r.commuNum
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<include refid="where-list"/>
@@ -79,16 +84,21 @@
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-		DELETE FROM commuFile WHERE ${field} = #{commuNum}
+		DELETE FROM commuFile WHERE ${field} = #{num}
 	</delete>
 	
 	<!-- 글보기 -->
     <select id="readCommu" parameterType="Integer" resultType="com.of.community.Community">
-		SELECT commuNum, cb.clubType, e.name, title, content, created, hitCount
+		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount,
+			   NVL(commuLikeCount, 0) commuLikeCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
 		JOIN club cb ON c.clubCode = cb.clubCode 
-		WHERE commuNum = #{commuNum}
+		LEFT OUTER JOIN (
+			SELECT commuNum, COUNT(*) commuLikeCount FROM commuLike
+			GROUP BY commuNum
+		) cl ON c.commuNum = cl.commuNum
+		WHERE c.commuNum = #{commuNum}
 	</select>
 
 	<!-- 조회수 증가 -->
@@ -135,9 +145,101 @@
 		WHERE commuNum=#{commuNum}
 	</update>
     
-	<!-- 삭제 -->
+	<!-- 삭제 -->	
 	<delete id="deleteCommu" parameterType="Integer">
-		DELETE FROM community WHERE  commuNum=#{commuNum}
+		DELETE FROM community WHERE commuNum=#{commuNum}
 	</delete>
 	
+	<!-- 게시글 좋아요 -->
+	<insert id="insertCommuLike" parameterType="map">
+		INSERT INTO commuLike(commuNum, writer) VALUES (#{commuNum}, '1001199')		
+	</insert>
+	
+	<!-- 게시글 좋아요  개수-->
+	<select id="commuLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM commuLike WHERE commuNum=#{commuNum}
+	</select>
+	
+	<!-- 댓글/답글 등록 -->
+	<insert id="insertReply" parameterType="com.of.community.CommuReply">
+		INSERT INTO commuReply (commuNum, replyNum, replyWriter, content, created, answer) VALUES (#{commuNum}, seq_commuReply.NEXTVAL, '1001199', #{content}, SYSDATE, #{answer})
+	</insert>
+	
+	<!-- 게시글의 댓글 개수 -->
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) 
+		FROM commuReply
+		WHERE commuNum=#{commuNum}
+	</select>
+	
+	<!-- 게시글의 댓글 리스트 -->
+	<select id="listReply" parameterType="map" resultType="com.of.community.CommuReply">
+		SELECT r.replyNum, e.name, content, r.created,
+			   NVL(answerCount, 0) answerCount,
+			   NVL(likeCount, 0) likeCount, 
+			   NVL(disLikeCount, 0) disLikeCount 								
+		FROM commuReply r 
+		JOIN employee e ON r.replyWriter = e.empNo
+		LEFT OUTER JOIN (							<!-- 답글개수 -->
+			SELECT answer, COUNT(*) answerCount
+			FROM commuReply
+			WHERE answer!=0 
+			GROUP BY answer 		
+		) a ON r.replyNum = a.answer	
+		LEFT OUTER JOIN (
+			SELECT replyNum, 
+			       COUNT(DECODE(replyLike, 1, 1)) likeCount,
+			       COUNT(DECODE(replyLike, 0, 1)) disLikeCount
+			FROM commuReplyLike
+			GROUP BY replyNum
+		) c ON r.replyNum = c.replyNum 		
+		WHERE commuNum = #{commuNum} AND r.answer = 0
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 게시글의 댓글 및 답글 삭제 -->
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM commuReply WHERE 
+		<if test="mode=='reply' ">
+			replyNum IN (
+				SELECT replyNum FROM commuReply
+				 START WITH replyNum = #{replyNum}
+				 CONNECT BY PRIOR replyNum = answer 
+			)
+		</if>	
+		<if test="mode=='answer' ">
+			replyNum = #{replyNum}
+		</if>
+	</delete>
+	
+	<!-- 댓글의 답글 개수 -->
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM commuReply 
+		WHERE answer=#{answer}
+	</select>
+	
+	<!-- 댓글의 답글 리스트 -->
+	<select id="listReplyAnswer" parameterType="Integer" resultType="com.of.community.CommuReply">
+		SELECT replyNum, commuNum, name, content, created, answer 
+		FROM commuReply c 
+		JOIN employee e ON e.empNo = c.replyWriter
+		WHERE answer= #{answer}
+		ORDER BY replyNum DESC
+	</select>
+	
+	<!-- 댓글 좋아요/싫어요 추가  -->
+	<insert id="insertReplyLike" parameterType="map">
+		INSERT INTO commuReplyLike (replyNum, replyWriter, replyLike) VALUES (#{replyNum}, '1001199', #{replyLike})	
+	</insert>
+	
+	<!-- 댓글 좋아요/싫어요 개수  -->
+	<select id="replyLikeCount" parameterType="map" resultType="map">
+		SELECT COUNT(DECODE(replyLike, 1, 1)) likeCount, 
+			   COUNT(DECODE(replyLike, 0, 1)) disLikeCount
+	 	FROM commuReplyLike
+	 	WHERE replyNum = #{replyNum}
+	</select>
+	 
 </mapper>

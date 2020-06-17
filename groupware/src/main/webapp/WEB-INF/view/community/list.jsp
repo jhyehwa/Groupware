@@ -47,9 +47,9 @@
 			      <td>${dto.listNum}</td>
 			      <td>${dto.clubType}</td>
 			      <td align="left" style="padding-left: 10px;">
-			           <a href="${articleUrl}&commuNum=${dto.commuNum}">${dto.title}</a>
+			           <a href="${articleUrl}&commuNum=${dto.commuNum}">${dto.title}(${dto.replyCount})</a>
 		        	   <c:if test="${dto.gap < 1}">
-		             	  ㅎㅎ
+		             	  
 		        	   </c:if>
 			      </td>
 			      <td>${dto.name}</td>
@@ -57,7 +57,7 @@
 			      <td>${dto.hitCount}</td>
 			      <td>
                    <c:if test="${dto.fileCount != 0}">
-                        <a href="<%=cp%>/community/zipdownload?num=${dto.commuNum}"><i class="far fa-file"></i></a>
+                        <a href="<%=cp%>/community/zipdownload?commuNum=${dto.commuNum}"><i class="far fa-file"></i></a>
                    </c:if>		      
 		     	  </td>
 			  </tr>
