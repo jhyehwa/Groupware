@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sign">
+	<insert id="insertSign" parameterType="com.of.sign.Sign">
+		INSERT INTO sign( sNum, stNum, sDept, sDate, sSubject, sContent, empNo, sEndStep)
+			VALUES( seq_sign.NEXTVAL, #{stnum}, #{sdept} , SYSDATE,  #{ssubject}, #{scontent}, 1002024, 1 )
+	</insert>
+
+	<insert id="insertSignFile" parameterType="com.of.sign.Sign">
+		INSERT INTO signFile(sfNum, sNum, sfOriginalfilename, sfSavefilename, sfFilesize)
+			VALUES( seq_signFile.NEXTVAL, #{sNum}, #{sfOriginalfilename}, #{sfSavefilename}, #{sfFilesize} )
+	</insert>
+
+	<insert id="insertSignPermission" parameterType="com.of.sign.Sign">
+		INSERT INTO permission( pNum, pStNum, pEmpNo2, pEmpNo3, pEmpNo4 )
+			VALUES( seq_permission, #{sNum}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4} )
+	</insert>
+	
+	<select id="emplist" resultType="com.of.sign.Sign">
+		SELECT e.empNo, name, tel, email, c.enterDate, dType, pType
+         FROM employee e
+     	 JOIN history h ON e.empNo = h.empNo
+     	 JOIN career c ON c.empNo = h.empNo
+       	 JOIN dept d ON d.dCode = h.dCode
+         JOIN position p ON p.pCode = h.pCode
+	</select>
+
+	<select id="readEmp" parameterType="Integer" resultType="com.of.sign.Sign">
+      SELECT e.empNo, name, dType, pType
+      FROM employee e
+      JOIN history h ON e.empNo = h.empNo
+      JOIN career c ON c.empNo = h.empNo
+        JOIN dept d ON d.dCode = h.dCode
+        JOIN position p ON p.pCode = h.pCode
+        WHERE e.empNo = #{empNo}
+	</select>
+	
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			DBMS_LOB.INSTR( content, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='userName' ">
+			userName=#{keyword}
+		</if>
+		<if test="condition=='created' ">
+			( TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(created, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM sign s;
+	</select>
+	
+	<select id="listSign" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT sNum, sSubject, sContent, s.empNo, name ,sDate, sCurrStep
+		FROM sign s
+		JOIN employee e ON s.empNo=e.empNo
+		ORDER BY sNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	
+</mapper>
