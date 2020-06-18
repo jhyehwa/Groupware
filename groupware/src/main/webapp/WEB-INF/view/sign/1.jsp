@@ -204,7 +204,7 @@
 						<table style="width: 150px;">
 							<tr>
 								<td rowspan="3" style="background: #BDBDBD; width: 70px;"><b>결재</b></td>
-								<td class="typeTd" style="height: 17px;"></td>
+								<td class="typeTd" style="height: 17px;">${sessionScope. }</td>
 							</tr>
 							<tr>
 								<td class="nameTd" style="width: 210px; height: 80px;"></td>
