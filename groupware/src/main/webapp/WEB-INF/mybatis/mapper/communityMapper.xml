@@ -152,7 +152,7 @@
 	
 	<!-- 게시글 좋아요 -->
 	<insert id="insertCommuLike" parameterType="map">
-		INSERT INTO commuLike(commuNum, writer) VALUES (#{commuNum}, '1001199')		
+		INSERT INTO commuLike(commuNum, writer) VALUES (#{commuNum}, #{writer})		
 	</insert>
 	
 	<!-- 게시글 좋아요  개수-->

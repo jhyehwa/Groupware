@@ -184,7 +184,7 @@ public class CommunityController {
 			return "redirect:/community/list?"+query;
 		}
 		
-        dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+        //dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
          
 		// 이전 글, 다음 글
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -216,9 +216,9 @@ public class CommunityController {
 			Model model	) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
-		if(! info.getrCode().equals("admin")) {
+	/*	if(! info.getrCode().equals("admin")) {
 			return "redirect:/community/list?page="+page;
-		}
+		}*/
 		
 		System.out.println(page);
 
@@ -244,9 +244,9 @@ public class CommunityController {
 			HttpSession session) throws Exception {		
 
 		SessionInfo info=(SessionInfo)session.getAttribute("employee");
-		if(! info.getrCode().equals("admin")) {
+/*		if(! info.getrCode().equals("admin")) {
 			return "redirect:/community/list?page="+page;
-		}
+		}*/
 		
 		try {
 			String root = session.getServletContext().getRealPath("/");
@@ -275,9 +275,9 @@ public class CommunityController {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 		
-		if(! info.getrCode().equals("admin")) {
+/*		if(! info.getrCode().equals("admin")) {
 			return "redirect:/community/list?"+query;
-		}
+		}*/
 		
 		try {
 			String root = session.getServletContext().getRealPath("/");
@@ -384,6 +384,7 @@ public class CommunityController {
 				@RequestParam Map<String, Object> paramMap,
 				HttpSession session
 				) throws Exception {
+			
 			SessionInfo info = (SessionInfo)session.getAttribute("employee");
 			paramMap.put("writer", info.getEmpNo());
 			String state = "true";

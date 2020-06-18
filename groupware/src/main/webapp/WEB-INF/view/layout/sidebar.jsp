@@ -12,8 +12,8 @@
 		<li class="menu-icon"><a href="#"><i class="far fa-comment-alt"></i></a></li>
 		<li class="menu-icon"><a href="#"><i class="fas fa-file-signature"></i></a></li>
 		<li class="menu-icon"><a href="#"><i class="fas fa-calendar-alt"></i></a></li>
-		<li class="menu-icon"><a href="#"><i class="fas fa-users"></i></a></li>
-		<li class="menu-icon"><a href="#"><i class="fas fa-bullhorn"></i></a></li>
+		<li class="menu-icon"><a href="<%=cp%>/community/list"><i class="fas fa-users"></i></a></li>
+		<li class="menu-icon"><a href="<%=cp%>/notice/list"><i class="fas fa-bullhorn"></i></a></li>
 		<li class="menu-icon"><a href="#"><i class="fas fa-user-clock"></i></a></li>
 		<li class="menu-icon"><a href="#"><i class="fas fa-download" ></i></a></li>
 	</ul>
