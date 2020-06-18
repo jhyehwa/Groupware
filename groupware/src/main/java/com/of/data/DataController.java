@@ -143,7 +143,7 @@ public class DataController {
 		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
 /*		if(! info.getrCode().equals("admin")) {
-			return "redirect:/community/list";	
+			return "redirect:/data/list";	
 		}*/
 
 		try {
