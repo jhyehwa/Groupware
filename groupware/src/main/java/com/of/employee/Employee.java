@@ -18,6 +18,7 @@ public class Employee {
 	private String enterDate;
 	private String enterType;
 	private String exitDate;
+	private String rType;
 	private String dType;
 	private String pType;
 
@@ -155,6 +156,14 @@ public class Employee {
 
 	public void setExitDate(String exitDate) {
 		this.exitDate = exitDate;
+	}
+
+	public String getrType() {
+		return rType;
+	}
+
+	public void setrType(String rType) {
+		this.rType = rType;
 	}
 
 	public String getdType() {

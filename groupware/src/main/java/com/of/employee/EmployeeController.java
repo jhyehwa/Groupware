@@ -202,6 +202,12 @@ public class EmployeeController {
 		SessionInfo info = new SessionInfo();
 		info.setEmpNo(dto.getEmpNo());
 		info.setName(dto.getName());
+		info.setrCode(dto.getrCode());
+		info.setrType(dto.getrType());
+		info.setdCode(dto.getdCode());
+		info.setdType(dto.getdType());
+		info.setpCode(dto.getpCode());
+		info.setpType(dto.getpType());
 
 		session.setMaxInactiveInterval(30 * 60); // 세션유지시간 30분, 기본:30분
 
@@ -331,11 +337,11 @@ public class EmployeeController {
 
 		try {
 			
-			dto.getTel().substring(0,2);
-			dto.getTel().substring(3,6);
-			dto.getTel().substring(7,10);
+			String tel1 = dto.getTel().substring(0,2);
+			String tel2 = dto.getTel().substring(3,6);
+			String tel3 = dto.getTel().substring(7,10);
 			
-			System.out.println(dto);
+			System.out.println(tel1 + tel2 + tel3);
 			
 			service.updateEmployee(dto);
 			
