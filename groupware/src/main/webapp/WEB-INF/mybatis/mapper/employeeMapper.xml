@@ -10,6 +10,7 @@
 		JOIN Right r ON e.rCode = r.rCode
 		JOIN Position p ON h.pCode = p.pCode
 		WHERE e.empNo = #{empNo}
+		
 	</select>
 	
 	<insert id="insertEmployee1" parameterType="com.of.employee.Employee">
