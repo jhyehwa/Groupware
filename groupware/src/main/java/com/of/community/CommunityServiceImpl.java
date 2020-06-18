@@ -23,8 +23,7 @@ public class CommunityServiceImpl implements CommunityService {
 	public void insertCommu(Community dto, String pathname) throws Exception {
 		try {
 			int seq=dao.selectOne("community.seq");
-			dto.setCommuNum(seq);
-				System.out.println(dto);
+			dto.setCommuNum(seq);				
 			dao.insertData("community.insertCommu", dto);
 			
 			// 파일 업로드

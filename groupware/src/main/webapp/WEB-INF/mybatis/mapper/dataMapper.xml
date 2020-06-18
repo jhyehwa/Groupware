@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data">
+	<select id="seq" resultType="Integer">
+		SELECT seq_data.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertData" parameterType="com.of.data.Data">
+		INSERT INTO data(dataNum, dataCode, title, writer, content, created)
+				VALUES(#{dataNum}, #{dataCode}, #{title},
+					#{writer}, #{content}, SYSDATE)
+	</insert>	
+	
+	<sql id="where-list">		
+		<if test="condition=='title' ">
+			INSTR(title, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='dataType' ">
+			INSTR(dataType, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='name' ">
+			name=#{keyword}
+		</if>
+		<if test="condition=='created' ">
+			( TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(created, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	
+	<!-- 데이터개수  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM data d
+		JOIN employee e ON d.writer = e.empNo
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode
+		<where>
+			<if test="keyword != null and keyword!=''  ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="listData" parameterType="map" resultType="com.of.data.Data">
+		SELECT d.dataNum, dg.dataType, e.name, title, created, NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount
+		FROM data d
+		JOIN employee e ON d.writer = e.empNo
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode
+ 		LEFT OUTER JOIN (
+			SELECT dataNum, COUNT(*) fileCount FROM dataFile
+			GROUP BY dataNum
+		) f ON d.dataNum=f.dataNum 
+		LEFT OUTER JOIN (
+			SELECT dataNum, COUNT(*) replyCount FROM dataReply
+			WHERE answer=0
+			GROUP BY dataNum
+		) r ON d.dataNum=r.dataNum
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY commuNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	 </select>
+	 
+	<!-- 파일 -->
+	<insert id="insertFile" parameterType="com.of.data.Data">
+		INSERT INTO commuFile (fileNum, commuNum, originalFileName, saveFileName) VALUES
+				(seq_commuFile.NEXTVAL, #{commuNum}, #{originalFilename}, #{saveFilename})
+	</insert>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.of.data.Data">
+		SELECT fileNum, commuNum, saveFilename, originalFilename
+		FROM commuFile
+		WHERE commuNum=#{commuNum}    
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.of.data.Data">
+		SELECT fileNum, commuNum, saveFilename, originalFilename
+		FROM commuFile
+	    WHERE fileNum=#{fileNum}      
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM commuFile WHERE ${field} = #{num}
+	</delete>
+	
+	<!-- 글보기 -->
+    <select id="readData" parameterType="Integer" resultType="com.of.data.Data">
+		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount,
+			   NVL(commuLikeCount, 0) commuLikeCount
+		FROM community c 
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode 
+		LEFT OUTER JOIN (
+			SELECT commuNum, COUNT(*) commuLikeCount FROM commuLike
+			GROUP BY commuNum
+		) cl ON c.commuNum = cl.commuNum
+		WHERE c.commuNum = #{commuNum}
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE community SET hitCount=hitCount+1 WHERE commuNum = #{commuNum}
+	</update>
+
+	<!-- 이전글 -->
+	<select id="preReadData" parameterType="map" resultType="com.of.community.Community">
+		SELECT commuNum, title
+		FROM community c
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode 
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (commuNum &gt; #{commuNum})
+		</where>
+		ORDER BY commuNum ASC
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+
+    <!-- 다음글 -->
+    <select id="nextReadData" parameterType="map" resultType="com.of.data.Data">
+		SELECT commuNum, title
+		FROM community c
+		JOIN employee e ON c.writer = e.empNo
+		JOIN club cb ON c.clubCode = cb.clubCode 
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (commuNum &lt; #{commuNum})
+		</where>
+		ORDER BY commuNum DESC
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+    
+    <!-- 수정 -->
+	<update id="updateData" parameterType="com.of.data.Data">
+		UPDATE community SET title=#{title},
+				content=#{content}
+		WHERE commuNum=#{commuNum}
+	</update>
+    
+	<!-- 삭제 -->	
+	<delete id="deleteData" parameterType="Integer">
+		DELETE FROM community WHERE commuNum=#{commuNum}
+	</delete>
+	
+	<!-- 댓글/답글 등록 -->
+	<insert id="insertReply" parameterType="com.of.data.DataReply">
+		INSERT INTO commuReply (commuNum, replyNum, replyWriter, content, created, answer) VALUES (#{commuNum}, seq_commuReply.NEXTVAL, #{replyWriter}, #{content}, SYSDATE, #{answer})
+	</insert>
+	
+	<!-- 게시글의 댓글 개수 -->
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) 
+		FROM commuReply
+		WHERE commuNum=#{commuNum}
+	</select>
+	
+	<!-- 게시글의 댓글 리스트 -->
+	<select id="listReply" parameterType="map" resultType="com.of.data.DataReply">
+		SELECT r.replyNum, e.name, content, r.created,
+			   NVL(answerCount, 0) answerCount,
+			   NVL(likeCount, 0) likeCount, 
+			   NVL(disLikeCount, 0) disLikeCount 								
+		FROM commuReply r 
+		JOIN employee e ON r.replyWriter = e.empNo
+		LEFT OUTER JOIN (							<!-- 답글개수 -->
+			SELECT answer, COUNT(*) answerCount
+			FROM commuReply
+			WHERE answer!=0 
+			GROUP BY answer 		
+		) a ON r.replyNum = a.answer	
+		LEFT OUTER JOIN (
+			SELECT replyNum, 
+			       COUNT(DECODE(replyLike, 1, 1)) likeCount,
+			       COUNT(DECODE(replyLike, 0, 1)) disLikeCount
+			FROM commuReplyLike
+			GROUP BY replyNum
+		) c ON r.replyNum = c.replyNum 		
+		WHERE commuNum = #{commuNum} AND r.answer = 0
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 게시글의 댓글 및 답글 삭제 -->
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM commuReply WHERE 
+		<if test="mode=='reply' ">
+			replyNum IN (
+				SELECT replyNum FROM commuReply
+				 START WITH replyNum = #{replyNum}
+				 CONNECT BY PRIOR replyNum = answer 
+			)
+		</if>	
+		<if test="mode=='answer' ">
+			replyNum = #{replyNum}
+		</if>
+	</delete>
+	
+	<!-- 댓글의 답글 개수 -->
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM commuReply 
+		WHERE answer=#{answer}
+	</select>
+	
+	<!-- 댓글의 답글 리스트 -->
+	<select id="listReplyAnswer" parameterType="Integer" resultType="com.of.data.DataReply">
+		SELECT replyNum, commuNum, name, content, created, answer 
+		FROM commuReply c 
+		JOIN employee e ON e.empNo = c.replyWriter
+		WHERE answer= #{answer}
+		ORDER BY replyNum DESC
+	</select>	
+
+	 
+</mapper>

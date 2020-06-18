@@ -8,7 +8,7 @@
 <div class="header-top">
 	<div class="header-left">
 		<p style="margin: 2px;">
-			<a href="<%=cp%>/">
+			<a href="<%=cp%>/login">
 			<span>로 혜화네</span>
 			<br>
 			<span>고 회사</span>
@@ -17,7 +17,7 @@
 	</div>
 	<div class="header-right">
 		<div class="header-menu">
-			<a href="#"><i class="far fa-user-circle"></i></a> <!-- 프로필 -->
+			<a href="<%=cp%>"><i class="far fa-user-circle"></i></a> <!-- 프로필 -->
 			<span>${sessionScope.employee.name}</span>님
 			&nbsp;&nbsp;
 			<a href="#"><i class="far fa-bell"></i></a> <!-- 알림 -->
