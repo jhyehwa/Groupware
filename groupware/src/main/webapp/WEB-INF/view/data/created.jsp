@@ -30,7 +30,7 @@ $(function(){
 
   <c:if test="${mode=='update'}">
   function deleteFile(fileNum) {
-		var url="<%=cp%>/community/deleteFile";
+		var url="<%=cp%>/data/deleteFile";
 		$.post(url, {fileNum:fileNum}, function(data){
 			$("#f"+fileNum).remove();
 		}, "json");
@@ -40,7 +40,7 @@ $(function(){
 
 <script type="text/javascript">
     function sendOk() {
-        var f = document.communityForm;
+        var f = document.dataForm;
 
     	var str = f.title.value;
         if(!str) {
@@ -49,14 +49,14 @@ $(function(){
             return;
         }
 
-    	str = f.content.value;
+     	str = f.content.value;
         if(!str) {
             alert("내용을 입력하세요. ");
             f.content.focus();
             return;
-        }
+        } 
 
-    	f.action="<%=cp%>/community/${mode}";
+    	f.action="<%=cp%>/data/${mode}";
 
         f.submit();
     }
@@ -66,11 +66,11 @@ $(function(){
 <div class="container">
     <div class="board-container">
         <div class="body-title">
-            <h3>♬ 커뮤니티 </h3>
+            <h3>♬ 자료실 </h3>
         </div>
         
         <div class="board-created">
-			<form name="communityForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+			<form name="dataForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			  <table class="boardtable" style="margin: 20px auto 0px; ">
 			  <tbody id="tb">
 				  <tr align="left" height="40"> 
@@ -83,18 +83,18 @@ $(function(){
 				  <tr align="left" height="50" > 
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="title" maxlength="100"value="${dto.title}">
+				        <input class="inputnoline" type="text" name="title" maxlength="100" value="${dto.title}">
 				      </td>
 				  </tr>		  
 				  
 				   <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">동호회 분류</td>
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">자료 분류</td>
 				      <td style="padding-left:10px;"> 
-			      		<select name="clubCode">
-			     			<option value="BW" ${clubCode=="BW"?"selected='selected'":""}>볼링</option>
-			     			<option value="GF" ${clubCode=="GF"?"selected='selected'":""}>골프</option>
-			     			<option value="EC" ${clubCode=="EC"?"selected='selected'":""}>영어회화</option>
-			     			<option value="BG" ${clubCode=="BG"?"selected='selected'":""}>보드게임</option>			     				     	
+			      		<select name="dataCode">
+			     			<option value="docu" ${dataCode=="docu"?"selected='selected'":""}>문서</option>
+			     			<option value="set" ${dataCode=="set"?"selected='selected'":""}>설치</option>
+			     			<option value="img" ${dataCode=="img"?"selected='selected'":""}>이미지</option>
+			     			<option value="etc" ${dataCode=="etc"?"selected='selected'":""}>기타</option>			     				     	
 			     		</select>			   
 			      	</td>
 				  </tr>
@@ -132,9 +132,9 @@ $(function(){
 			      <td align="center" >
 			        <button type="button" class="boardBtn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="boardBtn">다시입력</button>
-			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/community/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/data/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			      	 <c:if test="${mode=='update'}">
-			         	 <input type="hidden" name="commuNum" value="${dto.commuNum}">
+			         	 <input type="hidden" name="commuNum" value="${dto.dataNum}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			      </td>

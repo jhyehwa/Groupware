@@ -61,139 +61,120 @@
 				<include refid="where-list"/>
 			</if>
 		</where>
-		ORDER BY commuNum DESC
+		ORDER BY dataNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	 </select>
 	 
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.of.data.Data">
-		INSERT INTO commuFile (fileNum, commuNum, originalFileName, saveFileName) VALUES
-				(seq_commuFile.NEXTVAL, #{commuNum}, #{originalFilename}, #{saveFilename})
+		INSERT INTO dataFile (fileNum, dataNum, originalFileName, saveFileName) VALUES
+				(seq_dataFile.NEXTVAL, #{dataNum}, #{originalFilename}, #{saveFilename})
 	</insert>
 	
 	<select id="listFile" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT fileNum, commuNum, saveFilename, originalFilename
-		FROM commuFile
-		WHERE commuNum=#{commuNum}    
+		SELECT fileNum, dataNum, saveFilename, originalFilename
+		FROM dataFile
+		WHERE dataNum=#{dataNum}    
 	</select>
 	
 	<select id="readFile" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT fileNum, commuNum, saveFilename, originalFilename
-		FROM commuFile
+		SELECT fileNum, dataNum, saveFilename, originalFilename
+		FROM dataFile
 	    WHERE fileNum=#{fileNum}      
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-		DELETE FROM commuFile WHERE ${field} = #{num}
+		DELETE FROM dataFile WHERE ${field} = #{num}
 	</delete>
 	
 	<!-- 글보기 -->
     <select id="readData" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount,
-			   NVL(commuLikeCount, 0) commuLikeCount
-		FROM community c 
-		JOIN employee e ON c.writer = e.empNo
-		JOIN club cb ON c.clubCode = cb.clubCode 
-		LEFT OUTER JOIN (
-			SELECT commuNum, COUNT(*) commuLikeCount FROM commuLike
-			GROUP BY commuNum
-		) cl ON c.commuNum = cl.commuNum
-		WHERE c.commuNum = #{commuNum}
+		SELECT dataNum, dg.dataType, e.name, title, content, created			  
+		FROM data d
+		JOIN employee e ON d.writer = e.empNo
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode 
+		WHERE dataNum = #{dataNum}
 	</select>
-
-	<!-- 조회수 증가 -->
-	<update id="updateHitCount" parameterType="Integer">
-		UPDATE community SET hitCount=hitCount+1 WHERE commuNum = #{commuNum}
-	</update>
-
+	
 	<!-- 이전글 -->
-	<select id="preReadData" parameterType="map" resultType="com.of.community.Community">
-		SELECT commuNum, title
-		FROM community c
-		JOIN employee e ON c.writer = e.empNo
-		JOIN club cb ON c.clubCode = cb.clubCode 
+	<select id="preReadData" parameterType="map" resultType="com.of.data.Data">
+		SELECT dataNum, title
+		FROM data d
+		JOIN employee e ON d.writer = e.empNo
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
 			</if>
-			AND (commuNum &gt; #{commuNum})
+			AND (dataNum &gt; #{dataNum})
 		</where>
-		ORDER BY commuNum ASC
+		ORDER BY dataNum ASC
 		FETCH FIRST 1 ROWS ONLY
     </select>
 
     <!-- 다음글 -->
     <select id="nextReadData" parameterType="map" resultType="com.of.data.Data">
-		SELECT commuNum, title
-		FROM community c
-		JOIN employee e ON c.writer = e.empNo
-		JOIN club cb ON c.clubCode = cb.clubCode 
+		SELECT dataNum, title
+		FROM data d
+		JOIN employee e ON d.writer = e.empNo
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
 			</if>
-			AND (commuNum &lt; #{commuNum})
+			AND (dataNum &lt; #{dataNum})
 		</where>
-		ORDER BY commuNum DESC
+		ORDER BY dataNum DESC
 		FETCH FIRST 1 ROWS ONLY
     </select>
     
     <!-- 수정 -->
 	<update id="updateData" parameterType="com.of.data.Data">
-		UPDATE community SET title=#{title},
+		UPDATE data SET title=#{title},
 				content=#{content}
-		WHERE commuNum=#{commuNum}
+		WHERE dataNum=#{dataNum}
 	</update>
     
 	<!-- 삭제 -->	
 	<delete id="deleteData" parameterType="Integer">
-		DELETE FROM community WHERE commuNum=#{commuNum}
+		DELETE FROM data WHERE dataNum=#{dataNum}
 	</delete>
 	
 	<!-- 댓글/답글 등록 -->
 	<insert id="insertReply" parameterType="com.of.data.DataReply">
-		INSERT INTO commuReply (commuNum, replyNum, replyWriter, content, created, answer) VALUES (#{commuNum}, seq_commuReply.NEXTVAL, #{replyWriter}, #{content}, SYSDATE, #{answer})
+		INSERT INTO dataReply (dataNum, replyNum, replyWriter, content, created, answer) VALUES (#{dataNum}, seq_dataReply.NEXTVAL, #{replyWriter}, #{content}, SYSDATE, #{answer})
 	</insert>
 	
 	<!-- 게시글의 댓글 개수 -->
 	<select id="replyCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*),0) 
-		FROM commuReply
-		WHERE commuNum=#{commuNum}
+		FROM dataReply
+		WHERE dataNum=#{dataNum}
 	</select>
 	
 	<!-- 게시글의 댓글 리스트 -->
 	<select id="listReply" parameterType="map" resultType="com.of.data.DataReply">
 		SELECT r.replyNum, e.name, content, r.created,
-			   NVL(answerCount, 0) answerCount,
-			   NVL(likeCount, 0) likeCount, 
-			   NVL(disLikeCount, 0) disLikeCount 								
-		FROM commuReply r 
+			   NVL(answerCount, 0) answerCount								
+		FROM dataReply r 
 		JOIN employee e ON r.replyWriter = e.empNo
-		LEFT OUTER JOIN (							<!-- 답글개수 -->
+		LEFT OUTER JOIN (						
 			SELECT answer, COUNT(*) answerCount
-			FROM commuReply
+			FROM dataReply
 			WHERE answer!=0 
 			GROUP BY answer 		
 		) a ON r.replyNum = a.answer	
-		LEFT OUTER JOIN (
-			SELECT replyNum, 
-			       COUNT(DECODE(replyLike, 1, 1)) likeCount,
-			       COUNT(DECODE(replyLike, 0, 1)) disLikeCount
-			FROM commuReplyLike
-			GROUP BY replyNum
-		) c ON r.replyNum = c.replyNum 		
-		WHERE commuNum = #{commuNum} AND r.answer = 0
+		WHERE dataNum = #{dataNum} AND r.answer = 0
 		ORDER BY r.replyNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<!-- 게시글의 댓글 및 답글 삭제 -->
 	<delete id="deleteReply" parameterType="map">
-		DELETE FROM commuReply WHERE 
+		DELETE FROM dataReply WHERE 
 		<if test="mode=='reply' ">
 			replyNum IN (
-				SELECT replyNum FROM commuReply
+				SELECT replyNum FROM dataReply
 				 START WITH replyNum = #{replyNum}
 				 CONNECT BY PRIOR replyNum = answer 
 			)
@@ -206,15 +187,15 @@
 	<!-- 댓글의 답글 개수 -->
 	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) 
-		FROM commuReply 
+		FROM dataReply 
 		WHERE answer=#{answer}
 	</select>
 	
 	<!-- 댓글의 답글 리스트 -->
 	<select id="listReplyAnswer" parameterType="Integer" resultType="com.of.data.DataReply">
-		SELECT replyNum, commuNum, name, content, created, answer 
-		FROM commuReply c 
-		JOIN employee e ON e.empNo = c.replyWriter
+		SELECT replyNum, dataNum, name, content, created, answer 
+		FROM dataReply d
+		JOIN employee e ON e.empNo = d.replyWriter
 		WHERE answer= #{answer}
 		ORDER BY replyNum DESC
 	</select>	
