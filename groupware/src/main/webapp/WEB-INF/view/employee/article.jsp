@@ -119,7 +119,7 @@ function deleteEmployee() {
 			</div>
 			
 			<div id="buttonBox">
-				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/update?employeeNum=${dto.employeeNum}&page=${page}';">수정</button>
+				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/update?employeeNum=${employeeNum}&page=${page}';">수정</button>
 				<button type="button" class="button" onclick="deleteEmployee();">삭제</button>
 			</div>
 			

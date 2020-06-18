@@ -28,7 +28,7 @@
 			return;
 		}
 		
-		f.empNo.value = str;
+	/* 	f.empNo.value = str; */
 		
 		str = f.pwd.value;
 		str = str.trim();
@@ -78,6 +78,9 @@
 	        f.tel.focus();
 	        return;
 	    }
+	    
+	    var qwe = str.replace( /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3" );
+	    alert(qwe);
 
 	    str = f.email.value;
 		str = str.trim();
@@ -190,7 +193,7 @@
 				<div id="div-one-right">
 					<div>
 						<label id="icon"><i class="fas fa-user"></i></label>
-							<input type="text" name="empNo" id="empNo" placeholder="사원번호" maxlength="5" required value="${dto.empNo}"  ${mode == "update" ? "readonly = 'readonly'" : ""} />
+							<input type="text" name="empNo" id="empNo" placeholder="사원번호" maxlength="5" value="${dto.empNo}"  ${mode == "update" ? "readonly = 'readonly'" : ""} />
 					</div>
 					
 					<div>
@@ -236,21 +239,21 @@
 					<div class="selectGroup">
 						<label id="icon"><i class="far fa-hand-rock"></i></label>
 						<select class="selectBox" name="rCode">
-							<option selected="selected" value="basic">기본</option>
-							<option value="team">팀장</option>
-							<option value="admin">관리자</option>
+							<option selected="selected" value="basic" ${dto.rCode=="basic"?"selected='selected'":"" }>기본</option>
+							<option value="team" ${dto.rCode=="team"?"selected='selected'":"" }>팀장</option>
+							<option value="admin" ${dto.rCode=="admin"?"selected='selected'":"" }>관리자</option>
 						</select>
 					</div>
 					<div class="selectGroup">
 						<label id="icon"><i class="fas fa-users"></i></label>
 						<select class="selectBox" name="dCode">
 							<option selected="selected" value="">::: 부서 :::</option>
-							<option value="DV">개발부</option>
-							<option value="PM">기획부</option>
-							<option value="HR">인사부</option>
-							<option value="PR">홍보부</option>
-							<option value="TOP">임원진</option>
-							<option value="BM">경영지원부</option>
+							<option value="DV" ${dto.dCode=="DV"?"selected='selected'":"" }>개발부</option>
+							<option value="PM" ${dto.dCode=="PM"?"selected='selected'":"" }>기획부</option>
+							<option value="HR" ${dto.dCode=="HR"?"selected='selected'":"" }>인사부</option>
+							<option value="PR" ${dto.dCode=="PR"?"selected='selected'":"" }>홍보부</option>
+							<option value="TOP" ${dto.dCode=="TOP"?"selected='selected'":"" }>임원진</option>
+							<option value="BM" ${dto.dCode=="BM"?"selected='selected'":"" }>경영지원부</option>
 						</select>
 					</div>
 					
@@ -258,43 +261,44 @@
 						<label id="icon"><i class="fas fa-layer-group"></i></label>
 						<select class="selectBox" name="pCode">
 							<option selected="selected" value="">::: 직위 :::</option>
-							<option value="01">사원</option>
-							<option value="02">대리</option>
-							<option value="03">과장</option>
-							<option value="04">부장</option>
-							<option value="05">이사</option>
-							<option value="11">부사장</option>
-							<option value="12">사장</option>
+							<option value="01" ${dto.pCode=="01"?"selected='selected'":"" }>사원</option>
+							<option value="02" ${dto.pCode=="02"?"selected='selected'":"" }>대리</option>
+							<option value="03" ${dto.pCode=="03"?"selected='selected'":"" }>과장</option>
+							<option value="04" ${dto.pCode=="04"?"selected='selected'":"" }>부장</option>
+							<option value="05" ${dto.pCode=="05"?"selected='selected'":"" }>이사</option>
+							<option value="11" ${dto.pCode=="11"?"selected='selected'":"" }>부사장</option>
+							<option value="12" ${dto.pCode=="12"?"selected='selected'":"" }>사장</option>
 						</select>
 					</div>
 					
 					<div>
 						<label id="icon"><i class="fas fa-sign-in-alt"></i></label>
-							<input type="date" name="enterDate" placeholder="입사일자" required />
+							<input type="date" name="enterDate" value="${dto.enterDate}"/>
 					</div>
 					
 					<div>
 						<label id="icon"><i class="fas fa-sign-out-alt"></i></label>
-							<input type="date" name="exitDate" placeholder="퇴사일자" required />
+							<input type="date" name="exitDate" value="${dto.exitDate}"/>
 					</div>
 					
 					<div>
 						<label id="icon"><i class="fas fa-sync"></i></label>
-							<input type="date" name="apDate" placeholder="발령일자" required />
+							<input type="date" name="apDate" value="${dto.apDate}"/>
 					</div>
 					
-					<c:if test="${mode != 'update'}">
 					<div>
 						<label id="icon"><i class="far fa-sticky-note"></i></label>
-							<input type="text" name="memo" placeholder="메모" />
+							<input type="text" name="memo" value="${dto.memo}"/>
 					</div>
-					</c:if>
 				</div>
 			</div>
 			<div id="buttonBox">
 				<button type="button" name="sendButton" class="button" onclick="employeeOk();">${mode == "employee" ? "등록하기" : "정보수정"}</button>
 				<button type="reset" class="button">다시입력</button>
 				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/main';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
+				<c:if test="${mode=='update'}">
+		        	 <input type="hidden" name="page" value="${page}">
+		        </c:if>
 			</div>
 			<div>
 				${message}

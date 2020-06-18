@@ -30,6 +30,7 @@ public class EmployeeController {
 	@Autowired
 	private MyUtil myUtil;
 	
+	// 사원 리스트
 	@RequestMapping("/employee/list")
 	public String list(
 			@RequestParam(value="page",defaultValue="1") int current_page,
@@ -136,6 +137,8 @@ public class EmployeeController {
 
 		try {
 			service.insertEmployee(dto);
+			
+			
 		} catch (Exception e) {
 			model.addAttribute("mode", "employee");
 			model.addAttribute("message", "사번 중복으로 사원등록에 실패하였습니다."); 
@@ -190,8 +193,8 @@ public class EmployeeController {
 	public String loginSubmit(@RequestParam String empNo, @RequestParam String pwd, HttpSession session, Model model) {
 
 		Employee dto = service.loginEmployee(empNo);
-		System.out.println(dto.getPwd());
-		if (! pwd.equals(dto.getPwd()) || dto == null) {
+		
+		if (dto == null || ! pwd.equals(dto.getPwd())) {
 			model.addAttribute("message", "사번 또는 비밀번호가 일치하지 않습니다.");
 			return "/login/login";
 		}
@@ -295,7 +298,7 @@ public class EmployeeController {
 		//dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		
-		
+		model.addAttribute("employeeNum", employeeNum);
 		model.addAttribute("dto",dto);
 		model.addAttribute("page", page);
 		model.addAttribute("query",query);
@@ -315,6 +318,7 @@ public class EmployeeController {
 			return "redirect:/employee/list?page="+page;
 		}
 		
+		model.addAttribute("employeeNum", employeeNum);
 		model.addAttribute("dto",dto);
 		model.addAttribute("mode","update");
 		model.addAttribute("page", page);
@@ -323,20 +327,28 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "/employee/update", method = RequestMethod.POST)
-	public String updateSubmit(Employee dto, final RedirectAttributes reAttr, Model model) {
+	public String updateSubmit(Employee dto, @RequestParam String page, Model model) {
 
 		try {
+			
+			dto.getTel().substring(0,2);
+			dto.getTel().substring(3,6);
+			dto.getTel().substring(7,10);
+			
+			System.out.println(dto);
+			
 			service.updateEmployee(dto);
+			
 		} catch (Exception e) {
 		}
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(dto.getName() + "님의 회원정보가 정상적으로 변경되었습니다.<br>");
 
-		reAttr.addAttribute("title", "회원 정보 수정");
-		reAttr.addAttribute("message", sb.toString());
+		model.addAttribute("title", "회원 정보 수정");
+		model.addAttribute("message", sb.toString());
 
-		return "redirect:/employee/complete";
+		return "redirect:/employee/list?page=" + page;
 	}
 	
 	

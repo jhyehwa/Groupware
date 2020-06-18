@@ -15,6 +15,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private CommonDAO dao;
 	
 	@Override
+	public Employee loginEmployee(String empNo) {
+		
+		Employee dto = null;
+		
+		try {
+			dto = dao.selectOne("employee.loginEmployee", empNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
+	@Override
 	public List<Employee> listEmployee(Map<String, Object> map) {
 		
 		List<Employee> list = null;
@@ -42,19 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
-	@Override
-	public Employee loginEmployee(String empNo) {
-		
-		Employee dto = null;
-		
-		try {
-			dto = dao.selectOne("employee.loginEmployee", empNo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return dto;
-	}
+
 
 	@Override
 	public void insertEmployee(Employee dto) throws Exception {
@@ -74,9 +76,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void updateEmployee(Employee dto) throws Exception {
 		
 		try {
-			dao.updateData("employee.updateEmployee", dto);
+			dao.updateData("employee.updateEmployee1", dto);
+			dao.updateData("employee.updateEmployee2", dto);
+			dao.updateData("employee.updateEmployee3", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
