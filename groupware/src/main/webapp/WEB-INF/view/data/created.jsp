@@ -39,26 +39,26 @@ $(function(){
 </script>
 
 <script type="text/javascript">
-    function sendOk() {
+    function check() {
         var f = document.dataForm;
 
     	var str = f.title.value;
         if(!str) {
             alert("제목을 입력하세요. ");
             f.title.focus();
-            return;
+            return false;
         }
 
      	str = f.content.value;
         if(!str) {
             alert("내용을 입력하세요. ");
             f.content.focus();
-            return;
+            return false;
         } 
 
     	f.action="<%=cp%>/data/${mode}";
-
-        f.submit();
+    	
+    	return true;
     }
  
 </script>
@@ -130,11 +130,11 @@ $(function(){
 			  <table>
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="button" class="boardBtn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="submit" class="boardBtn">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="boardBtn">다시입력</button>
 			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/data/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			      	 <c:if test="${mode=='update'}">
-			         	 <input type="hidden" name="commuNum" value="${dto.dataNum}">
+			         	 <input type="hidden" name="dataNum" value="${dto.dataNum}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			      </td>

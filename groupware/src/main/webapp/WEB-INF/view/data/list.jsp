@@ -37,8 +37,7 @@
 			      <th width="60">분류</th>
 			      <th>제목</th>
 			      <th width="80">작성자</th>
-			      <th width="80">작성일</th>
-			      <th width="50">조회수</th>
+			      <th width="80">작성일</th>			   
 			      <th width="50">첨부</th>
 			  </tr>
 			 
@@ -53,8 +52,7 @@
 		        	   </c:if>
 			      </td>
 			      <td>${dto.name}</td>
-			      <td>${dto.created}</td>
-			      <td>${dto.hitCount}</td>
+			      <td>${dto.created}</td>			     
 			      <td>
                    <c:if test="${dto.fileCount != 0}">
                         <a href="<%=cp%>/data/zipdownload?dataNum=${dto.dataNum}"><i class="far fa-file"></i></a>

@@ -39,26 +39,26 @@ $(function(){
 </script>
 
 <script type="text/javascript">
-    function sendOk() {
+    function check() {
         var f = document.communityForm;
 
     	var str = f.title.value;
         if(!str) {
             alert("제목을 입력하세요. ");
             f.title.focus();
-            return;
+            return false;
         }
 
     	str = f.content.value;
         if(!str) {
             alert("내용을 입력하세요. ");
             f.content.focus();
-            return;
+            return false;
         }
 
     	f.action="<%=cp%>/community/${mode}";
-
-        f.submit();
+		
+    	return true;
     }
  
 </script>
@@ -130,7 +130,7 @@ $(function(){
 			  <table>
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="button" class="boardBtn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="submit" class="boardBtn">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="boardBtn">다시입력</button>
 			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/community/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			      	 <c:if test="${mode=='update'}">
@@ -159,13 +159,13 @@ nhn.husky.EZCreator.createInIFrame({
 	}, //boolean
 	fOnAppLoad : function(){
 		//예제 코드
-		//oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+/* 		oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);  */
 	},
 	fCreator: "createSEditor2"
 });
 
 function pasteHTML() {
-	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+	/* var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>"; */
 	oEditors.getById["content"].exec("PASTE_HTML", [sHTML]);
 }
 
@@ -175,7 +175,8 @@ function showHTML() {
 }
 	
 function submitContents(elClickedObj) {
-	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	
+	// 에디터의 내용이 textarea에 적용됩니다.
 	
 	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
 	

@@ -9,7 +9,8 @@ public interface CommunityService {
 	public int dataCount(Map<String, Object> map);
 	public List<Community> listCommu(Map<String, Object> map);
 	
-	public void updateHitCount(int num) throws Exception;
+	public void updateHitCount(int commuNum) throws Exception;
+	
 	public Community readCommu(int num);
 	public Community preReadCommu(Map<String, Object> map);
 	public Community nextReadCommu(Map<String, Object> map);

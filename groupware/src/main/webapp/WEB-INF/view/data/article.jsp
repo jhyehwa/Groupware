@@ -251,7 +251,7 @@ $(function(){
 			       작성자 : ${dto.name}
 			    </td>
 			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created} | 조회 ${dto.hitCount}
+			        ${dto.created} 
 			    </td>
 			</tr>
 			
