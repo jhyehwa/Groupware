@@ -48,10 +48,15 @@
 	
 	<!-- 리스트 -->
 	<select id="listNews" parameterType="map" resultType="com.of.news.News">
-		SELECT newsNum, writer, name, title, TO_CHAR(created, 'YYYY-MM-DD')created, p.nCode, nType
+		SELECT n.newsNum, writer, name, title, TO_CHAR(created, 'YYYY-MM-DD')created, 
+			p.nCode, nType, NVL(replyCount, 0) replyCount
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN newsType p ON n.nCode=p.nCode
+		LEFT OUTER JOIN (
+			SELECT newsNum, COUNT(*) replyCount FROM newsReply
+			GROUP BY newsNum
+		) r ON n.newsNum = r.newsNum
 		<where>
 			<if test="nCode!=''">
 				p.nCode=#{nCode}
@@ -115,7 +120,7 @@
 	<update id="updateNews" parameterType="com.of.news.News">
 		UPDATE news SET title=#{title},
 				content=#{content}
-		WHERE newsNum=#{newsNum}
+		WHERE newsNum=#{newsNum} AND writer=#{writer}
 	</update>
     
 	<!-- 삭제 -->
@@ -123,6 +128,31 @@
 		DELETE FROM news WHERE newsNum=#{newsNum}
 	</delete>
 	
+	
+	<!-- 리플 -->
+	<insert id="insertReply" parameterType="com.of.news.NewsReply">
+		INSERT INTO newsReply(replyNum, newsNum, replyWriter, content, created)
+			VALUES (seq_newsReply.NEXTVAL, #{newsNum}, #{replyWriter}, #{content}, SYSDATE)
+	</insert>
+
+	<select id="listReply" parameterType="map" resultType="com.of.news.NewsReply">
+		SELECT replyNum, replyWriter, name, newsNum, content, created 
+		FROM newsReply
+		JOIN employee ON replyWriter = empNo
+		WHERE newsNum=#{newsNum}
+		ORDER BY replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM newsReply
+		WHERE newsNum=#{newsNum}
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM newsReply
+		WHERE replyNum = #{replyNum}
+	</delete>
 
 	
 </mapper>

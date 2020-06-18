@@ -22,8 +22,114 @@ function updateNews() {
 	  var url = "<%=cp%>/news/update?" + q;
 
 	  location.href=url;
-	
+}
+	  
+	  
+function ajaxJSON(url, method, query, fn) {
+	$.ajax({
+		type: method, 
+		url: url,
+		data: query,
+		dataType: "json",
+		success: function(data){
+			fn(data);
+		}, 
+		beforeSend: function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		}, 
+		error: function(jqXHR) {
+			if(jqXHR.state==403) {		// 로그인이 안됐으면 
+				login(); 
+				return false;
+			} 			
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+function ajaxHTML(url, method, query, selector) {
+	$.ajax({
+		type: method, 
+		url: url,
+		data: query,
+		success: function(data){
+			$(selector).html(data);
+		}, 
+		beforeSend: function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		}, 
+		error: function(jqXHR) {
+			if(jqXHR.state==403) {		
+				login(); 
+				return false;
+			} 			
+			console.log(jqXHR.responseText);
+		}
+	});		}
+
+//댓글 리스트, 페이징처리 
+$(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+	var url = "<%=cp%>/news/listReply";
+	var query = "newsNum=${dto.newsNum}&pageNo="+page;
+	var selector = "#listReply";
+			
+	ajaxHTML(url, "get", query, selector);
+}
+
+// 댓글 등록  (num, content, answer 서버로 전송 / userId는 session 정보 들어가있음)
+$(function(){
+	$(".btnSendReply").click(function(){
+		var newsNum = "${dto.newsNum}";
+		var $ta = $(this).closest("table").find("textarea")
+		var content = $ta.val().trim();
+		if(! content) {
+			$ta.focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		var url = "<%=cp%>/news/insertReply";
+		var query = "newsNum=" + newsNum + "&content=" + content;
+		var fn = function(data) {
+			var state = data.state;
+			if(state=="false") {
+				alert("댓글을 추가하지 못했습니다.");
+				return false;
+			}
+					
+			$ta.val("");
+			listPage(1);
+		}
+				
+		ajaxJSON(url, "post", query, fn)
+	});
+});
+
+
+		// 댓글 삭제 
+$(function(){
+	$("body").on("click", ".deleteReply", function(){
+		if(! confirm("댓글을 삭제 하시겠습니까?")) {
+			return false;
+		}
+		var replyNum = $(this).attr("data-replyNum");
+		var page = $(this).attr("data-pageNo");
+		
+		var url = "<%=cp%>/news/deleteReply";
+		var query = "replyNum="+replyNum;
+		var fn = function(data){
+			listPage(page);
+		};
+		ajaxJSON(url, "post", query, fn);		
+	});
+});
+
 </script>
+
 
 
 	
@@ -80,6 +186,7 @@ function updateNews() {
 				<c:if test="${not empty nextReadDto}">
 			              <a href="<%=cp%>/news/article?${query}&newsNum=${nextReadDto.newsNum}">${nextReadDto.title}</a>
 			        </c:if>
+			        ${page }
 			    </td>
 			</tr>
 			<tr height="45">
@@ -93,6 +200,26 @@ function updateNews() {
 			    </td>
 			</tr>
 			</table>
+		<div>
+			<table style="margin: 20px auto 0px;">
+				<tr height='30'> 
+					 <td align='left' >
+				 		<span style='font-weight: bold;'>댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				 	</td>
+				</tr>
+				<tr>
+			   		<td style='padding:5px 5px 0px;'>
+						<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+			   		</td>
+				</tr>
+				<tr>
+			   		<td align='right'>
+			        	<button type='button' class='btn btnSendReply' style='padding:10px 20px;'>댓글 등록</button>
+			   		</td>
+				 </tr>
+			</table>  		
+			<div id="listReply"></div>	
+		</div>    
         </div>
 
     </div>

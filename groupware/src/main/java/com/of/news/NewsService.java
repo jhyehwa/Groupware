@@ -14,7 +14,13 @@ public interface NewsService{
 	public News nextReadNews(Map<String, Object> map);
 	
 	public void updateNews(News dto) throws Exception;
-	public void deleteNews(int newsNum) throws Exception;
+	public void deleteNews(int newsNum, String writer) throws Exception;
+	
+	public void insertReply(NewsReply dto) throws Exception;
+	public int replyCount(Map<String, Object> map);
+	public List<NewsReply> listReply(Map<String, Object> map);
+	public void deleteReply(Map<String, Object> map)throws Exception;
+	
 	
 	
 }

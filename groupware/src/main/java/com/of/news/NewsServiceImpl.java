@@ -90,14 +90,64 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public void deleteNews(int newsNum) throws Exception {
+	public void deleteNews(int newsNum, String writer) throws Exception {
 		try {
-			dao.deleteData("news.updateNews", newsNum);	
+			News dto=readNews(newsNum);
+			if(dto==null || !writer.equals(dto.getWriter())) {
+				return;
+			}
+			dao.deleteData("news.deleteNews", newsNum);	
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}	
 		
 	}
+
+	@Override
+	public void insertReply(NewsReply dto) throws Exception {
+		try {
+			dao.insertData("news.insertReply", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("news.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<NewsReply> listReply(Map<String, Object> map) {
+		List<NewsReply> list =null;
+		
+		try {
+			list=dao.selectList("news.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public void deleteReply(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("news.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
+	
 
 }

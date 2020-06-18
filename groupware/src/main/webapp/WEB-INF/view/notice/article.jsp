@@ -22,6 +22,7 @@ function updateNotice() {
 	  var url = "<%=cp%>/notice/update?" + q;
 
 	  location.href=url;
+}
 	
 </script>
 

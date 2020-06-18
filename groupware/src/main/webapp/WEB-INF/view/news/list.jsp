@@ -59,7 +59,7 @@
 			      <td>${dto.listNum}</td>
 			      <td>${dto.nType}</td>
 			      <td align="left" style="padding-left: 10px;">
-			           <a href="${articleUrl}&newsNum=${dto.newsNum}">${dto.title}</a>
+			           <a href="${articleUrl}&newsNum=${dto.newsNum}">${dto.title}&nbsp;(${dto.replyCount})</a>
 			      </td>
 			      <td>${dto.name}</td>
 			      <td>${dto.created}</td>

@@ -8,6 +8,9 @@ public class News {
 	private String content;
 	private String created;
 	private String nCode, nType;
+	
+	private int replyCount;
+	
 	public int getListNum() {
 		return listNum;
 	}
@@ -62,6 +65,14 @@ public class News {
 	public void setnType(String nType) {
 		this.nType = nType;
 	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	
+	
 	
 	
 	

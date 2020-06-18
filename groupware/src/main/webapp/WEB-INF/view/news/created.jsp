@@ -29,10 +29,10 @@
             return false;
         }
         
-        str = f.nType.value;
+        str = f.nCode.value;
         if(!str) {
             alert("분류를 선택하세요.");
-            f.nType.focus();
+            f.nCode.focus();
             return false;
         }
 
@@ -62,28 +62,30 @@
 				   <tr align="left" height="40"> 
 				      <td width="100"  style="text-align: center;">분류</td>
 				      <td style="padding-left:10px;"> 
-						  <select name="nCode" class="selectField">
-						      <option value="COMPANY" ${nCode=="COMPANY"?"selected='selected'":""}>회사소식</option>
-						      <option value="MR" ${nCode=="MR"?"selected='selected'":""}>결혼</option>
-						      <option value="FU" ${nCode=="FU"?"selected='selected'":""}>부고</option>
-						      <option value="BI" ${nCode=="BI"?"selected='selected'":""}>츨산</option>
-						      <option value="PR" ${nCode=="PR"?"selected='selected'":""}>승진</option>
-						      <option value="ETC" ${nCode=="ETC"?"selected='selected'":""}>기타</option>
-					      </select>     	
+						  <select name="nCode"  class="selectField">
+						  	  <option value="">::선 택::</option>
+						      <option value="COMPANY" ${dto.nCode=="COMPANY"?"selected='selected'":""}>회사소식</option>
+						      <option value="MR" ${dto.nCode=="MR"?"selected='selected'":""}>결혼</option>
+						      <option value="FU" ${dto.nCode=="FU"?"selected='selected'":""}>부고</option>
+						      <option value="BI" ${dto.nCode=="BI"?"selected='selected'":""}>츨산</option>
+						      <option value="PR" ${dto.nCode=="PR"?"selected='selected'":""}>승진</option>
+						      <option value="ETC" ${dto.nCode=="ETC"?"selected='selected'":""}>기타</option>
+					      </select> 
+				 
 				      </td>
 				  </tr>
 				  
 				  <tr align="left" height="50" > 
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="title" maxlength="100"value="">
+				        <input class="inputnoline" type="text" name="title" maxlength="100"value="${dto.title}">
 				      </td>
 				  </tr>		  
 			
 				  <tr align="left"> 
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="middle">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</td>
 				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
-				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;"></textarea>
+				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}${page }</textarea>
 				      </td>
 				  </tr>         
 			  </table>

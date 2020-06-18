@@ -15,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.of.common.MyUtil;
+import com.of.employee.SessionInfo;
 
 @Controller("newsController")
 @RequestMapping("/news/*")
@@ -85,13 +87,13 @@ public class NewsController {
 		if(keyword.length()!=0) {
 			query="condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
-		if(nCode!=null) {
+/*		if(nCode!=null) {
 			if(query.length()!=0) {
 				query+="&"+"nCode="+nCode;
 			} else {
 				query="nCode="+nCode;
 			}
-		}
+		}*/
 		
 		
 		if(query.length()!=0) {
@@ -125,8 +127,11 @@ public class NewsController {
 			News dto,
 			HttpSession session
 			) throws Exception{
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("employee");
+		
 		try {			
-			dto.setWriter("1001199");
+			dto.setWriter(info.getEmpNo());
 			service.insertNews(dto);
 		} catch (Exception e) {
 		}
@@ -149,9 +154,11 @@ public class NewsController {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
+
+		
 		News dto = service.readNews(newsNum);
 		if(dto==null) {
-			return "redirect:/notice/list?"+query;
+			return "redirect:/news/list?"+query;
 		}
 		//dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
@@ -181,8 +188,13 @@ public class NewsController {
 			Model model
 			) throws Exception{
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("employee");
+		
 		News dto=service.readNews(newsNum);
 		if(dto==null) {
+			return "redirect:/news/list?page="+page;
+		}
+		if(!info.getEmpNo().equals(dto.getWriter())) {
 			return "redirect:/news/list?page="+page;
 		}
 		
@@ -202,12 +214,11 @@ public class NewsController {
 			HttpSession session
 			) throws Exception{
 		try {
-			
-			dto.setWriter("1001199");
+			SessionInfo info = (SessionInfo)session.getAttribute("employee");
+			dto.setWriter(info.getEmpNo());
 			service.updateNews(dto);
 		} catch (Exception e) {
 		}
-		
 		return "redirect:/news/list?page="+page;
 	}
 	
@@ -220,22 +231,109 @@ public class NewsController {
 			@RequestParam(defaultValue="") String keyword,
 			HttpSession session
 			) throws Exception{
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("employee");
+		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query="page="+page;
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
-/*		
-		if(! info.getUserId().equals("admin")) {
+
+	
+		
+/*		if(! info.getEmpNo().equals("admin")) {
 			return "redirect:/notice/list?"+query;
 		}
 		*/
-		try {
-			service.deleteNews(newsNum);
-		} catch (Exception e) {
-		}
+		service.deleteNews(newsNum, info.getEmpNo());
+
 		
 		return "redirect:/news/list?"+query;
+	}
+	
+	@RequestMapping("listReply")
+	public String listReply(
+			@RequestParam int newsNum,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model
+			) throws Exception{
+		
+		int rows=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("newsNum", newsNum);
+		
+		dataCount=service.replyCount(map);
+		total_page=myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page) {
+			current_page=total_page;
+		}
+		
+		int offset = (current_page-1)*rows;
+		if(offset<0) offset=0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		List<NewsReply> listReply = service.listReply(map);
+		
+		for(NewsReply dto : listReply) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		// ajax용 페이징
+		String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		// 포워딩할  jsp로 넘길 데이터
+		model.addAttribute("listReply", listReply);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "news/listReply";
+		
+	}
+	
+	//댓글등록
+	@RequestMapping(value="insertReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReply(
+			NewsReply dto,
+			HttpSession session
+			){
+		SessionInfo info =(SessionInfo)session.getAttribute("employee");
+		String state="true";
+		
+		try {
+			dto.setReplyWriter(info.getEmpNo());
+			service.insertReply(dto);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam Map<String, Object> paramMap
+			){
+		String state="true";
+		
+		try {
+			service.deleteReply(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("state", state);
+		return map;
 	}
 	
 	
