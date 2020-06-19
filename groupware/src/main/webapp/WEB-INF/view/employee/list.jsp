@@ -6,6 +6,13 @@
 	String cp=request.getContextPath();
 %>
 
+<script type="text/javascript">
+	function searchList() {
+		var f = document.searchForm;
+		f.submit();
+	}
+</script>
+
 <div class="container">
 	<div class="board-container">
 		<div class="body-title">
@@ -18,9 +25,6 @@
 		   <tr>
 		      <td align="left">
 		          &nbsp;
-		      </td>
-		      <td align="right">
-		          ${dataCount}개(${page}/${total_page} 페이지)
 		      </td>
 		   </tr>
 		</table>
@@ -46,7 +50,7 @@
 					<td>${dto.enterDate}</td>
 					<td>${dto.dType}</td>
 					<td>${dto.pType}</td>
-					<td><a href="<%=cp%>/employee/article?employeeNum=${dto.employeeNum}&page=${page}"><i class="fas fa-search"></i></a>${dto.employeeNum}</td>
+					<td><a href="<%=cp%>/employee/article?employeeNum=${dto.employeeNum}&page=${page}"><i class="fas fa-search"></i></a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -69,9 +73,11 @@
 					<form name="searchForm" action="<%=cp%>/employee/list" method="post">
 						<select name="condition" class="selectField">
 							<option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
+							<option value="enterDate" ${condition == "enterDate" ? "selected='selected'" : ""}>입사년도</option>								
 							<option value="empNo" ${condition == "empNo" ? "selected='selected'" : "" }>사원번호</option>
 							<option value="name" ${condition == "name" ? "selected='selected'" : ""}>이름</option>
-							<option value="dType" ${condition == "dType" ? "selected='selected'" : ""}>부서</option>							
+							<option value="dType" ${condition == "dType" ? "selected='selected'" : ""}>부서</option>
+							<option value="pType" ${condition == "pType" ? "selected='selected'" : ""}>직급</option>
 						</select>
 						<input type="text" name="keyword" class="boxTF">
 						<button type="button" class="boardBtn" onclick="searchList()">검색</button>

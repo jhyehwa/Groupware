@@ -13,6 +13,7 @@
 		
 	</select>
 	
+	<!-- 사원 등록 -->
 	<insert id="insertEmployee1" parameterType="com.of.employee.Employee">
 		INSERT INTO employee(employeeNum, empNo, pwd, name, birth, tel, email, addr, enable, rCode)
 		VALUES (seq_employeeNum.NEXTVAL, #{empNo}, #{pwd}, #{name}, #{birth}, #{tel}, #{email}, #{addr}, 1, #{rCode})
@@ -27,53 +28,10 @@
 		INSERT INTO career(cNum, empNo, enterDate, enterType, exitDate)
 		VALUES (seq_career.NEXTVAL, #{empNo}, #{enterDate}, '입사', #{exitDate})
 	</insert>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<sql id="where-list">
-		<if test="condition=='empNo' ">
-			INSTR(empNo, #{keyword}) &gt; 0
-		</if>
-		<if test="condition=='dType' ">
-			DBMS_LOB.INSTR(dType, #{keyword}) &gt; 0 
-		</if>
-		<if test="condition=='name' ">
-			name=#{keyword}
-		</if>
-	</sql>
-		
-	<select id="dataCount" resultType="Integer" parameterType="map" >
-		SELECT NVL(COUNT(employeeNum),0) 
-		FROM employee e
-		JOIN history h ON e.empNo = h.empNo
-		<where>
-			<if test="keyword!=null and keyword !='' ">
-				<include refid="where-list"/>
-			</if>
-		</where>
-	</select>
-	
-	
+
+	<!-- 사원 리스트 -->
 	<select id="listEmployee"  resultType="com.of.employee.Employee" parameterType="map">
-		SELECT e.empNo, name, tel, email, TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, d.dCode, dType, p.pCode, pType, employeeNum
+		SELECT e.empNo, name, tel, email, TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, d.dCode, d.dType, p.pCode, p.pType, employeeNum
 		FROM employee e
 		JOIN history h ON e.empNo = h.empNo
 		JOIN career c ON c.empNo = h.empNo
@@ -88,6 +46,7 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 
+	<!-- 사원 상세정보 보기 -->
 	<select id="readEmployee" parameterType="Integer" resultType="com.of.employee.Employee">
 		SELECT e.empNo, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, tel, email, addr, d.dCode, dType, p.pCode, pType,
 			TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, TO_CHAR(exitDate, 'YYYY-MM-DD') exitDate, TO_CHAR(apDate, 'YYYY-MM-DD') apDate, memo
@@ -99,8 +58,41 @@
         WHERE employeeNum = #{employeeNum}
 	</select>
 	
+	<!-- 데이터 개수 -->
+	<select id="dataCount" resultType="Integer" parameterType="map" >
+		SELECT NVL(COUNT(employeeNum),0) 
+		FROM employee e
+		JOIN history h ON e.empNo = h.empNo
+        JOIN position p ON p.pCode = h.pCode
+        JOIN dept d ON d.dCode = h.dCode
+        JOIN career c ON c.empNo = e.empNo
+		<where>
+			<if test="keyword!=null and keyword !='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
 	
+	<!-- 사원 리스트 검색 -->
+	<sql id="where-list">
+		<if test="condition=='enterDate' ">
+			TO_CHAR(enterDate, 'YYYY') = #{keyword}
+		</if>
+		<if test="condition=='empNo' ">
+			INSTR(e.empNo, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='name' ">
+			name=#{keyword}
+		</if>
+		<if test="condition=='dType' ">
+			INSTR(dType, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='pType' ">
+			INSTR(pType, #{keyword}) &gt; 0
+		</if>
+	</sql>
 	
+	<!-- 사원 정보 수정 -->
 	<update id="updateEmployee1" parameterType="com.of.employee.Employee">
 		UPDATE employee SET name = #{name}, birth = #{birth}, tel = #{tel}, email = #{email}, addr = #{addr}
 		WHERE empNo = #{empNo}
@@ -116,5 +108,15 @@
 		UPDATE career SET enterDate = #{enterDate}, exitDate = #{exitDate}
         WHERE empNo = #{empNo}
 	</update>
-	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </mapper>

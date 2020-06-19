@@ -48,6 +48,7 @@ function sendLogin() {
 					<input type="text" class="input" name="empNo" autocomplete="off">				
 				</div>
 			</div>
+			
 			<div class="userIcon lock">
 				<div class="i">
 					<i class="fas fa-lock"></i>
@@ -58,10 +59,13 @@ function sendLogin() {
 						<input type="password" class="input" name="pwd">
 				</div>
 			</div>
+			
 			<button type="button" class="btn" onclick="sendLogin();">Login</button>
+			
 		</form>
-		<div>
-			${message}
-		</div>
+	</div>
+	
+	<div style="background: red; font-size: 20px; text-align: center;">
+		${message}
 	</div>
 </div>

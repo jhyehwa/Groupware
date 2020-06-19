@@ -16,6 +16,4 @@ public interface EmployeeService {
 	
 	public Employee readEmployee(String empNo);
 	public Employee readEmployee(int employeeNum);
-	
-	public void deleteEmployee(Map<String, Object> map) throws Exception;
 }

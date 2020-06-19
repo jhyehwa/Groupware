@@ -79,9 +79,6 @@
 	        return;
 	    }
 	    
-	    var qwe = str.replace( /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3" );
-	    alert(qwe);
-
 	    str = f.email.value;
 		str = str.trim();
 	    if(!str) {
@@ -147,41 +144,6 @@
 	   	f.submit();
 	}
 
-
-<%-- 	function empNoCheck() {
-		var str = $("#empNo").val();
-		str = str.trim();
-		if(!/^[0-9]{5}$/i.test(str)) { 
-			$("#empNo").focus();
-			return;
-		}
-		
-		var url="<%=cp%>/employee/empNoCheck";
-		var q="empNo="+str;
-		
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:q
-			,dataType:"json"
-			,success:function(data) {
-				var p=data.passed;
-				if(p=="true") {
-					var s="<span style='color:blue;font-weight:bold;'>"+str+"</span> 아이디는 사용 가능합니다.";
-					$("#userId").parent().next(".help-block").html(s);
-				} else {
-					var s="<span style='color:red;font-weight:bold;'>"+str+"</span> 아이디는 사용할 수 없습니다.";
-					$("#empNo").parent().next(".help-block").html(s);
-					$("#empNo").val("");
-					$("#empNo").focus();
-				}
-			}
-		    ,error:function(e) {
-		    	console.log(e.responseText);
-		    }
-		});
-		
-	} --%>
 </script>
 
 <div class="container">
@@ -215,12 +177,12 @@
 					
 					<div>
 					<label id="icon"><i class="fas fa-birthday-cake"></i></label>
-						<input type="date" name="birth" placeholder="생년월일" maxlength="10" required value="${dto.birth}" />
+						<input placeholder="생년월일" type="text" onfocus="(this.type='date')" name="birth" class="date" placeholder="생년월일" maxlength="10" required value="${dto.birth}" />
 					</div>
 					
 					<div>
 					<label id="icon"><i class="fas fa-mobile-alt"></i></label>
-						<input type="text" name="tel" placeholder="전화번호" required value="${dto.tel}" />
+						<input type="text" class="tel" name="tel" placeholder="전화번호" required value="${dto.tel}" />
 					</div>
 					
 					<div>
@@ -273,29 +235,29 @@
 					
 					<div>
 						<label id="icon"><i class="fas fa-sign-in-alt"></i></label>
-							<input type="date" name="enterDate" value="${dto.enterDate}"/>
+							<input placeholder="입사날짜" type="text" class="date" onfocus="(this.type='date')" name="enterDate" value="${dto.enterDate}"/>
 					</div>
 					
 					<div>
 						<label id="icon"><i class="fas fa-sign-out-alt"></i></label>
-							<input type="date" name="exitDate" value="${dto.exitDate}"/>
+							<input placeholder="퇴사날짜" type="text" class="date" onfocus="(this.type='date')" name="exitDate" value="${dto.exitDate}"/>
 					</div>
 					
 					<div>
 						<label id="icon"><i class="fas fa-sync"></i></label>
-							<input type="date" name="apDate" value="${dto.apDate}"/>
+							<input placeholder="발령일자" type="text" class="date" onfocus="(this.type='date')" value="${dto.apDate}"/>
 					</div>
 					
 					<div>
 						<label id="icon"><i class="far fa-sticky-note"></i></label>
-							<input type="text" name="memo" value="${dto.memo}"/>
+							<input type="text" name="memo" placeholder="메모" value="${dto.memo}"/>
 					</div>
 				</div>
 			</div>
 			<div id="buttonBox">
 				<button type="button" name="sendButton" class="button" onclick="employeeOk();">${mode == "employee" ? "등록하기" : "정보수정"}</button>
 				<button type="reset" class="button">다시입력</button>
-				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/main';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
+				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
 				<c:if test="${mode=='update'}">
 		        	 <input type="hidden" name="page" value="${page}">
 		        </c:if>

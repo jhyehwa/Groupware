@@ -8,16 +8,20 @@
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/employee.css" type="text/css">
 
-<script type="text/javascript">  
-	  
-function deleteEmployee() {
-	var q = "employeeNum=${dto.employeeNum}&${query}";
-	var url = "<%=cp%>/employee/delete?" + q;
-
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
-		  	location.href=url;
+<script type="text/javascript">
+	function deleteEmployee() {
+		var q = "empNo=${dto.empNo}&page=${page}";
+		var url = "<%=cp%>/employee/delete?" + q;
+	
+		if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+			  	location.href=url;
+		}
 	}
-}
+	
+	$(function(){
+		$('.selectBox').attr('disabled', 'true');
+	});
+	
 
 </script>
 
@@ -63,7 +67,7 @@ function deleteEmployee() {
 				<div id="div-two">
 					<div class="selectGroup">
 						<label id="icon"><i class="far fa-hand-rock"></i></label>
-						<select class="selectBox" name="rCode">
+						<select class="selectBox" name="rCode" onFocus='this.initialSelect = this.selectedIndex;' onChange='this.selectedIndex = this.initialSelect;'>
 							<option selected="selected" value="basic" ${dto.rCode=="basic"?"selected='selected'":"" }>기본</option>
 							<option value="team" ${dto.rCode=="team"?"selected='selected'":"" }>팀장</option>
 							<option value="admin" ${dto.rCode=="admin"?"selected='selected'":"" }>관리자</option>
@@ -71,7 +75,7 @@ function deleteEmployee() {
 					</div>
 					<div class="selectGroup">
 						<label id="icon"><i class="fas fa-users"></i></label>
-						<select class="selectBox" name="dCode">
+						<select class="selectBox" name="dCode" onFocus='this.initialSelect = this.selectedIndex;' onChange='this.selectedIndex = this.initialSelect;'>
 							<option selected="selected" value="">::: 부서 :::</option>
 							<option value="DV" ${dto.dCode=="DV"?"selected='selected'":"" }>개발부</option>
 							<option value="PM" ${dto.dCode=="PM"?"selected='selected'":"" }>기획부</option>
@@ -84,7 +88,7 @@ function deleteEmployee() {
 					
 					<div class="selectGroup">
 						<label id="icon"><i class="fas fa-layer-group"></i></label>
-						<select class="selectBox" name="pCode">
+						<select class="selectBox" name="pCode" onFocus='this.initialSelect = this.selectedIndex;' onChange='this.selectedIndex = this.initialSelect;'>
 							<option selected="selected" value="">::: 직위 :::</option>
 							<option value="01" ${dto.pCode=="01"?"selected='selected'":"" }>사원</option>
 							<option value="02" ${dto.pCode=="02"?"selected='selected'":"" }>대리</option>
