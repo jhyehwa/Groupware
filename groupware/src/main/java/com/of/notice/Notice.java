@@ -23,6 +23,9 @@ public class Notice {
 	
 	private long gap;
 
+	private int replyCount;
+	
+
 	public int getListNum() {
 		return listNum;
 	}
@@ -134,6 +137,15 @@ public class Notice {
 
 	public void setGap(long gap) {
 		this.gap = gap;
+	}
+	
+
+	public int getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 	
 	

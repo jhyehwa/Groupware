@@ -1,15 +1,15 @@
- package com.of.news;
+package com.of.notice;
 
-public class NewsReply {
-	private int newsNum, replyNum;
+public class NoticeReply {
+	private int noticeNum, replyNum;
 	private String replyWriter, name;
 	private String content, created;
 	
-	public int getNewsNum() {
-		return newsNum;
+	public int getNoticeNum() {
+		return noticeNum;
 	}
-	public void setNewsNum(int newsNum) {
-		this.newsNum = newsNum;
+	public void setNoticeNum(int noticeNum) {
+		this.noticeNum = noticeNum;
 	}
 	public int getReplyNum() {
 		return replyNum;

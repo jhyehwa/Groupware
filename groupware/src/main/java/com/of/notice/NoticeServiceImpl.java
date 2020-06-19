@@ -152,7 +152,7 @@ public class NoticeServiceImpl implements NoticeService{
 			// 파일 테이블 내용 지우기
 			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("field", "fileNum");
-			map.put("noticeNum", noticeNum);
+			map.put("num", noticeNum);
 			deleteFile(map);
 						
 			dao.deleteData("notice.deleteNotice", noticeNum);
@@ -206,6 +206,50 @@ public class NoticeServiceImpl implements NoticeService{
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+	@Override
+	public void insertReply(NoticeReply dto) throws Exception {
+		try {
+			dao.insertData("notice.insertReply", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("notice.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<NoticeReply> listReply(Map<String, Object> map) {
+		List<NoticeReply> list =null;
+		try {
+			list=dao.selectList("notice.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public void deleteReply(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("notice.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 
 }

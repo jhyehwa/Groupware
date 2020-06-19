@@ -22,4 +22,9 @@ public interface NoticeService {
 	public Notice readFile(int fileNum);
 	public void deleteFile(Map<String, Object> map) throws Exception;
 	
+	public void insertReply(NoticeReply dto) throws Exception;
+	public int replyCount(Map<String, Object> map);
+	public List<NoticeReply> listReply(Map<String, Object> map);
+	public void deleteReply(Map<String, Object> map) throws Exception;
+	
 }

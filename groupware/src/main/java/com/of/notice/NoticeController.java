@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.of.common.FileManager;
 import com.of.common.MyUtil;
+import com.of.employee.SessionInfo;
 
 @Controller("noticeController")
 @RequestMapping("/notice/*")
@@ -300,13 +301,100 @@ public class NoticeController {
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("field", "fileNum");
-		map.put("fileNum", fileNum);
+		map.put("num", fileNum);
 		service.deleteFile(map);
 		
    	    // 작업 결과를 json으로 전송
 		Map<String, Object> model = new HashMap<>(); 
 		model.put("state", "true");
 		return model;
+	}
+	
+	
+	// 댓글 등록
+	@RequestMapping(value="insertReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReply(
+			NoticeReply dto, 
+			HttpSession session
+			) throws Exception{
+		SessionInfo info =(SessionInfo)session.getAttribute("employee");
+		String state="true";
+		
+		try {
+			dto.setReplyWriter(info.getEmpNo());
+			service.insertReply(dto);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	//댓글 리스트
+	@RequestMapping("listReply")
+	public String listReply(
+			@RequestParam int noticeNum,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model
+			) throws Exception{
+		
+		int rows=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("noticeNum", noticeNum);
+		
+		dataCount=service.replyCount(map);
+		total_page=myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page) {
+			current_page=total_page;
+		}
+		
+		int offset = (current_page-1)*rows;
+		if(offset<0) offset=0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		List<NoticeReply> listReply = service.listReply(map);
+		
+		for(NoticeReply dto : listReply) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		// ajax용 페이징
+		String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		// 포워딩할  jsp로 넘길 데이터
+		model.addAttribute("listReply", listReply);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "notice/listReply";
+		
+	}
+	
+	//댓글삭제
+	@RequestMapping(value="deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam Map<String, Object> paramMap
+			){
+		String state="true";
+		
+		try {
+			service.deleteReply(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("state", state);
+		return map;
 	}
 	
 }

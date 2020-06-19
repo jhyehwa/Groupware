@@ -129,6 +129,34 @@
 	</select>
 	
 	<delete id="deleteFile" parameterType="map">
-		DELETE FROM noticeFile WHERE ${field} = #{fileNum}
+		DELETE FROM noticeFile WHERE ${field} = #{num}
 	</delete>
+	
+	<!-- 댓글/답글 등록 -->
+	<insert id="insertReply" parameterType="com.of.notice.NoticeReply">
+		INSERT INTO noticeReply (noticeNum, replyNum, replyWriter, content, created) VALUES (#{noticeNum}, seq_noticeReply.NEXTVAL, #{replyWriter}, #{content}, SYSDATE)
+	</insert>
+	
+	<!-- 게시글의 댓글 개수 -->
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM noticeReply 
+		WHERE noticeNum=#{noticeNum}
+	</select>
+	
+	<!-- 게시글의 댓글 리스트 -->
+	<select id="listReply" parameterType="map" resultType="com.of.notice.NoticeReply">
+		SELECT replyNum, r.replyWriter, name, content, created
+		FROM noticeReply r 
+		JOIN employee e ON r.replyWriter=e.empNo
+		WHERE noticeNum = #{noticeNum} 
+		ORDER BY replyNum DESC 
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM noticeReply WHERE replyNum=#{replyNum}
+	</delete>
+	
 </mapper>
