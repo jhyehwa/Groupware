@@ -65,18 +65,18 @@ $(function(){
 
 <div class="container">
     <div class="board-container">
-        <div class="body-title">
+        <div class="board-title">
             <h3>♬ 자료실 </h3>
         </div>
         
         <div class="board-created">
 			<form name="dataForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-			  <table class="boardtable" style="margin: 20px auto 0px; ">
+			  <table class="boardtable">
 			  <tbody id="tb">
 				  <tr align="left" height="40"> 
 				      <td width="100"  style="text-align: center;">작 성 자</td>
 				      <td style="padding-left:10px;"> 
-				          <input class="inputnoline" type="text" name="writer" maxlength="100" value="${sessionScope.employee.name}">
+				        	 ${sessionScope.employee.name }
 				      </td>
 				  </tr>
 				  

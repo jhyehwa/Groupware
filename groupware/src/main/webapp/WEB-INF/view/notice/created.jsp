@@ -64,18 +64,18 @@ $(function(){
 
 <div class="container">
     <div class="board-container">
-        <div class="body-title">
+        <div class="board-title">
             <h3>공지사항 </h3>
         </div>
         
         <div class="board-created">
 			<form name="noticeForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-			  <table class="boardtable" style="margin: 20px auto 0px; ">
+			  <table class="boardtable">
 			  	  <tbody id="tb">
 				  <tr align="left" height="40"> 
 				      <td width="100"  style="text-align: center;">작 성 자</td>
 				      <td style="padding-left:10px;"> 
-				        	 박지송아
+				        	 ${sessionScope.employee.name }
 				      </td>
 				  </tr>
 				  
@@ -94,9 +94,9 @@ $(function(){
 				  </tr>
 				  
 				  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
+				      <td width="100" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
 				      <td style="padding-left:10px;"> 
-				          <input type="file" name="upload" class="boxTF" size="53" style="width: 95%; height: 25px;">
+				          <input type="file" name="upload" class="btnboxTF" size="53" style="width: 95%; height: 25px;">
 				       </td>
 			 	 </tr>
               </tbody>

@@ -25,14 +25,14 @@
 
 <div class="container">
     <div class="board-container">
-        <div class="body-title">
+        <div class="board-title">
             <h3>소식 </h3>
         </div>
         
         <div class="board-body">
 			<table style="margin-top: 20px;">
 			   <tr>
-			     <td align="left">
+			     <td align="left" class="newsSort">
 			  	 	<a href="javascript:searchList2('MR');">결혼</a>
 				 	<a href="javascript:searchList2('FU');">부고</a>
 				 	<a href="javascript:searchList2('BI');">출산</a>

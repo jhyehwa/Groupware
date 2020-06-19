@@ -15,7 +15,7 @@
 
 <div class="container">
     <div class="board-container">
-        <div class="body-title">
+        <div class="board-title">
             <h3>♬ 자료실 </h3>
         </div>
         
@@ -63,7 +63,7 @@
 
 			</table>
 			 
-			<table style="margin: 10px 0 0 100px;">
+			<table style="margin-top: 10px;">
 			   <tr>
 				<td class="board-paging" align="center">
 			        ${dataCount==0 ? "등록된 게시물이 없습니다.":paging}

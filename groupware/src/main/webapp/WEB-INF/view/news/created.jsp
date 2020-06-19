@@ -45,22 +45,22 @@
 
 <div class="container">
     <div class="board-container">
-        <div class="body-title">
+        <div class="board-title">
             <h3>소식 </h3>
         </div>
         
         <div class="board-created">
 			<form name="newsForm" method="post" onsubmit="return submitContents(this);">
-			  <table class="boardtable" style="margin: 20px auto 0px; ">
+			  <table class="boardtable">
 				  <tr align="left" height="40"> 
 				      <td width="100"  style="text-align: center;">작 성 자</td>
 				      <td style="padding-left:10px;"> 
-				        	 박지송아
+				        	 ${sessionScope.employee.name }
 				      </td>
 				  </tr>
 				  
 				   <tr align="left" height="40"> 
-				      <td width="100"  style="text-align: center;">분류</td>
+				      <td width="100"  style="text-align: center;">분&nbsp; &nbsp;&nbsp;&nbsp;류</td>
 				      <td style="padding-left:10px;"> 
 						  <select name="nCode"  class="selectField">
 						  	  <option value="">::선 택::</option>

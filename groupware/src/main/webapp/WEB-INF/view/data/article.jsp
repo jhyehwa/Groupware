@@ -233,13 +233,13 @@ $(function(){
 
 	
 <div class="container">
-    <div class="body-container">
-        <div class="body-title">
+    <div class="board-container">
+        <div class="board-title">
             <h3>♬ 자료실 </h3>
         </div>
         
         <div class="board-article">
-			<table style="margin: 20px auto 0px;">
+			<table>
 			<tr height="35" style="background:#006461; color: white; ">
 			    <td colspan="2" align="center">
 				    ${dto.title}
@@ -298,7 +298,7 @@ $(function(){
 			</tr>
 			</table>			
         <div>
-		<table style="margin: 20px auto 0px;">
+		<table style="margin-top: 20px">
 			<tr height='30'> 
 				 <td align='left' >
 				 	<span style='font-weight: bold;'>댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
@@ -311,7 +311,7 @@ $(function(){
 			</tr>
 			<tr>
 			   <td align='right'>
-			        <button type='button' class='btn btnSendReply' style='padding:10px 20px;'>댓글 등록</button>
+			        <button type='button' class='boardBtn btnSendReply' style='padding:5px 5px; margin-right: 10px;'>댓글 등록</button>
 			    </td>
 			 </tr>
 		</table>  		

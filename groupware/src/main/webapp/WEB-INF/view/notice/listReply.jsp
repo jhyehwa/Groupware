@@ -20,11 +20,11 @@
 
 	<tbody id='listReplyBody'>
 	<c:forEach var="vo" items="${listReply}">
-		<tr height='35' style='background: #eeeeee;'>
-			<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-right:none;'>
+		<tr height='35' style='background: gold;'>
+			<td width='50%' style='padding:5px 5px;'>
 				<span><b>${vo.name}</b></span>
 			</td>
-			<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
+			<td width='50%' style='padding:5px 5px;' align='right'>
 				<span>${vo.created}</span> |
 			<%-- 	<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}"> --%>
 					<span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</span>
