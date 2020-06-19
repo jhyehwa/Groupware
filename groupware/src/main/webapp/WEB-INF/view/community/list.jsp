@@ -88,9 +88,9 @@
 			</table>
         </div>   
         
-        <div class="board-body" style="width: 30%; float: left; margin-left: 20px;"> 
+        <div class="board-body" style="width: 30%; float: left; margin-left: 60px;"> 
         	<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 커뮤니티 정보 <i class="fas fa-file-signature"></i></h3>          		 
+          		  <h3 style="font-size: 18px;">| 커뮤니티 정보</h3>          		 
       	    </div> 
         </div>
         
