@@ -41,6 +41,7 @@
 				<td>상세</td>
 			</tr>
 			
+			
 			<c:forEach var="dto" items="${list}">
 				<tr align="center" style="border-bottom: 1px solid #cccccc;">
 					<td>${dto.empNo}</td>
