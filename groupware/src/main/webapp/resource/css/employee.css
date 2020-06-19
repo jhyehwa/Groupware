@@ -190,3 +190,17 @@ input:focus {
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
+
+/* list */
+.board-body table {
+	margin-top: 20px;
+}
+
+.list-menu {
+	border-collapse: collapse;
+}
+
+.list-title {
+	text-align: center;
+	background: #006461;
+}

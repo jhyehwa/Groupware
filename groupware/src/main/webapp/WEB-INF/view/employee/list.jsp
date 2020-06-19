@@ -16,21 +16,21 @@
 <div class="container">
 	<div class="board-container">
 		<div class="body-title">
-			<h3>사원리스트</h3>
+			<h3><i class="fa fa-quote-left"> 사원 정보</i></h3>
 		</div>
 	</div>
 	
 	<div class="board-body">
-		<table style="margin-top: 20px;">
+		<table>
 		   <tr>
-		      <td align="left">
+		      <td>
 		          &nbsp;
 		      </td>
 		   </tr>
 		</table>
 			
-		<table style="border-collapse: collapse;">
-			<tr align="center" bgcolor="#006461">
+		<table class="list-menu">
+			<tr class="list-title">
 				<td>사원번호</td>
 				<td>이름</td>
 				<td>전화번호</td>

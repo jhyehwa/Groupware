@@ -36,7 +36,7 @@ function sendLogin() {
 
 <div class="wrap">
 	<div class="login-content">
-			
+		<c:if test="${empty sessionScope.employee}">
 		<form name="loginForm" method="post">
 			<div class="userIcon user">
 				<div class="i">
@@ -63,6 +63,7 @@ function sendLogin() {
 			<button type="button" class="btn" onclick="sendLogin();">Login</button>
 			
 		</form>
+		</c:if>
 	</div>
 	
 	<div style="background: red; font-size: 20px; text-align: center;">

@@ -12,8 +12,6 @@
 		<put-attribute name="sidebar" value="/WEB-INF/view/layout/sidebar.jsp" />
 	</definition>
 	
-
-	
    <!-- 3단 관리자 -->
 	<definition name=".adminLayout" template="/WEB-INF/view/admin/layout/layout.jsp">
 	    <put-attribute name="title" value="spring" />
@@ -21,6 +19,7 @@
 		<put-attribute name="body" value="/WEB-INF/view/admin/main/main.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/view/layout/sidebar.jsp" />
 	</definition>
+	
 	<definition name=".admin.*.*.*" extends=".adminLayout">
 		<put-attribute name="body" value="/WEB-INF/view/admin/{1}/{2}/{3}.jsp"/>
 	</definition>

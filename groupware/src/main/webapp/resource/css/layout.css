@@ -49,11 +49,23 @@
 }
 
 /*sidebar*/
+ul {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.menu-bar {
+	width: 100%;
+	max-width: 350px;
+}
+
 .menu-bar i{
 	font-size: 30px;
 	color: white;
 	line-height: 60px;
-	
 }
 
 .menu-icon {
@@ -82,4 +94,26 @@
 	-webkit-reansition: all .5s ease;
 	transition: all .5s ease;
 	bottom: 0px;
+}
+
+.sub-menu {
+	display: none;
+	background: #C8E6C9;
+	li
+	{
+	border-bottom
+	:
+	1px
+	solid
+	#B6B6B6;
+}
+}
+
+.sub-menu a {
+	display: block;
+	color: #727272;
+	padding: 5px;
+	transition: all 0.4s ease-out; &: hover { background-color : #CDDC39;
+	color: #fff;
+}
 }

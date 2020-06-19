@@ -184,6 +184,15 @@ public class EmployeeController {
 
 		return ".main.main";
 	}
+	
+	@RequestMapping(value="/employee/logout")
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("employee");
+		session.invalidate();
+		
+		return "redirect:/";
+	}
 
 	// ---------------------------------------------------------------------------------------------
 	// 사원 정보 보기
