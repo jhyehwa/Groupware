@@ -44,7 +44,7 @@ public class CommunityController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
-		int rows = 10; // 한 화면에 보여주는 게시물 수
+		int rows = 5; // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
    	    
