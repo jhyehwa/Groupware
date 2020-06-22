@@ -27,6 +27,7 @@
 			
 			<a href="#"><i class="far fa-bell"></i></a> <!-- 알림 -->
 			&nbsp;&nbsp;
+			
 			<a href="#"><i class="fas fa-user-shield"></i></a>
 			&nbsp;&nbsp;
 			<a href="#"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->

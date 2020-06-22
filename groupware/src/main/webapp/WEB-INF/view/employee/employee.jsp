@@ -45,12 +45,12 @@
 		}
 		
 		f.pwd.value = str;
- 
+ /* 
 		if(str!= f.pwdCheck.value) {
 	        alert("비밀번호가 일치하지 않습니다.");
 	        f.pwdCheck.focus();
 	        return;
-		}
+		} */
 
 	    str = f.name.value;
 		str = str.trim();
