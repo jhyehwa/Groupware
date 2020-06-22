@@ -3,30 +3,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="employee">
 	<select id="loginEmployee" parameterType="String" resultType="com.of.employee.Employee">
-		SELECT e.empNo, name, pwd, r.rCode, rType, d.dCode, dType, p.pCode, pType
+		SELECT e.empNo, name, pwd, r.rCode, rType, d.dCode, dType, p.pCode, pType, lastLogin
 		FROM employee e
 		JOIN history h ON e.empNo = h.empNo
 		JOIN Dept d ON h.dCode = d.dCode
 		JOIN Right r ON e.rCode = r.rCode
 		JOIN Position p ON h.pCode = p.pCode
 		WHERE e.empNo = #{empNo}
-		
 	</select>
+	
+	<update id="updateLastLogin" parameterType="String">
+		UPDATE employee SET lastLogin = SYSDATE
+		WHERE empNo = #{empNo}
+	</update>
 	
 	<!-- 사원 등록 -->
 	<insert id="insertEmployee1" parameterType="com.of.employee.Employee">
-		INSERT INTO employee(employeeNum, empNo, pwd, name, birth, tel, email, addr, enable, rCode)
-		VALUES (seq_employeeNum.NEXTVAL, #{empNo}, #{pwd}, #{name}, #{birth}, #{tel}, #{email}, #{addr}, 1, #{rCode})
+		INSERT INTO employee(employeeNum, empNo, pwd, name, birth, tel, email, addr, enable, rCode, lastLogin)
+		VALUES (seq_employeeNum.NEXTVAL, #{empNo}, #{pwd}, #{name}, #{birth}, #{tel}, #{email}, #{addr}, 1, #{rCode}, SYSDATE)
 	</insert>
 	
 	<insert id="insertEmployee2" parameterType="com.of.employee.Employee">	
 		INSERT INTO history(hNum, empNo, dCode, pCode, apDate, memo)
-		VALUES (seq_history.NEXTVAL, #{empNo}, #{dCode}, #{pCode}, #{apDate}, #{memo})
+		VALUES (seq_historyNum.NEXTVAL, #{empNo}, #{dCode}, #{pCode}, #{apDate}, #{memo})
 	</insert>
 		
 	<insert id="insertEmployee3" parameterType="com.of.employee.Employee">
 		INSERT INTO career(cNum, empNo, enterDate, enterType, exitDate)
-		VALUES (seq_career.NEXTVAL, #{empNo}, #{enterDate}, '입사', #{exitDate})
+		VALUES (seq_careerNum.NEXTVAL, #{empNo}, #{enterDate}, '입사', #{exitDate})
 	</insert>
 
 	<!-- 사원 리스트 -->
@@ -56,6 +60,17 @@
         JOIN dept d ON d.dCode = h.dCode
         JOIN position p ON p.pCode = h.pCode
         WHERE employeeNum = #{employeeNum}
+	</select>
+	
+	<select id="readEmployee2" parameterType="String" resultType="com.of.employee.Employee">
+		SELECT e.empNo, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, tel, email, addr, d.dCode, dType, p.pCode, pType,
+			TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, TO_CHAR(exitDate, 'YYYY-MM-DD') exitDate, TO_CHAR(apDate, 'YYYY-MM-DD') apDate, memo
+		FROM employee e
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+        JOIN dept d ON d.dCode = h.dCode
+        JOIN position p ON p.pCode = h.pCode
+        WHERE e.empNo = #{empNo}
 	</select>
 	
 	<!-- 데이터 개수 -->

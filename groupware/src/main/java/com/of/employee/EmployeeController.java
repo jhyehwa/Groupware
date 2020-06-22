@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.of.common.MyUtil;
@@ -117,15 +118,12 @@ public class EmployeeController {
 			String tel2 = dto.getTel().substring(3, 7);
 			String tel3 = dto.getTel().substring(7);
 
-			System.out.println("asdalskdalskdnlasndlkasndlksandlaksndasl" + tel1 + "," + tel2 + "," + tel3);
-
 			dto.setTel(tel1 + "-" + tel2 + "-" + tel3);
 
 			service.insertEmployee(dto);
 
 		} catch (Exception e) {
 			model.addAttribute("mode", "employee");
-			model.addAttribute("message", "사번 중복으로 사원등록에 실패하였습니다.");
 
 			return ".employee.employee";
 		}
@@ -136,7 +134,25 @@ public class EmployeeController {
 		reAttr.addFlashAttribute("message", sb.toString());
 		reAttr.addFlashAttribute("title", "사원 등록");
 
-		return "redirect:/employee/list";
+		return "redirect:/employee/complete";
+	}
+
+	// ---------------------------------------------------------------------------------------------
+	// 사원번호 중복 체크
+	@RequestMapping(value = "/employee/empNoCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> empNoCheck(@RequestParam String empNo) throws Exception {
+
+		String p = "true";
+		Employee dto = service.readEmployee(empNo);
+		if (dto != null) {
+			p = "false";
+		}
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("passed", p);
+
+		return model;
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -184,13 +200,15 @@ public class EmployeeController {
 
 		return ".main.main";
 	}
-	
-	@RequestMapping(value="/employee/logout")
+
+	// ---------------------------------------------------------------------------------------------
+	// 로그아웃
+	@RequestMapping(value = "/employee/logout")
 	public String logout(HttpSession session) {
-		
+
 		session.removeAttribute("employee");
 		session.invalidate();
-		
+
 		return "redirect:/";
 	}
 

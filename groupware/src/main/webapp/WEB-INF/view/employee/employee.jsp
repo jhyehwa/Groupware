@@ -28,7 +28,7 @@
 			return;
 		}
 		
-	/* 	f.empNo.value = str; */
+		f.empNo.value = str;
 		
 		str = f.pwd.value;
 		str = str.trim();
@@ -45,14 +45,12 @@
 		}
 		
 		f.pwd.value = str;
-
-		/* 
+ 
 		if(str!= f.pwdCheck.value) {
 	        alert("비밀번호가 일치하지 않습니다.");
 	        f.pwdCheck.focus();
 	        return;
 		}
-		 */
 
 	    str = f.name.value;
 		str = str.trim();
@@ -123,14 +121,6 @@
 	        return;
 	    }
 	    
-	    str = f.exitDate.value;
-		str = str.trim();
-	    if(!str) {
-	        alert("퇴사일자를 선택해주세요.");
-	        f.exitDate.focus();
-	        return;
-	    }
-	    
 	    str = f.apDate.value;
 		str = str.trim();
 	    if(!str) {
@@ -143,36 +133,88 @@
 	 	
 	   	f.submit();
 	}
+	
+	// 사원번호 중복 검사
+	function empNoCheck() {
+		var str = $("#empNo").val();
+		str = str.trim();
+		if(!/^[0-9]{5}$/i.test(str)) { 
+			$("#empNo").focus();
+			return;
+		}
+		
+		var url="<%=cp%>/employee/empNoCheck";
+		var q="empNo="+str;
+		
+		$.ajax({
+			type:"post",
+			url:url,
+			data:q,
+			dataType:"json",
+			success:function(data) {
+				var p=data.passed;
+				if(p=="true") {
+					var s="<span style='color:blue; font-weight:bold;'>"+str+"</span> 아이디는 사용 가능합니다.";
+					$("#empNo").next(".help-block").html(s);
+				} else {
+					var s="<span style='color:red;font-weight:bold;'>"+str+"</span> 아이디는 사용할 수 없습니다.";
+					$("#empNo").next(".help-block").html(s);
+					$("#empNo").val("");
+					$("#empNo").focus();
+				}
+			}
+		    ,error:function(e) {
+		    	console.log(e.responseText);
+		    }
+		});
+	}
 
+/* 	function pwdCheck() {
+		var f1 = document.forms[0];
+		var pw1 = f1.pwd.value;
+		var pw2 = f1.pwdCheck.value;
+		if (pw1 != pw2) {
+			document.getElementById('pwdCheck').style.color = "red";
+			document.getElementById('pwdCheck').innerHTML = "동일한 암호를 입력하세요.";
+		} else {
+			document.getElementById('pwdCheck').style.color = "black";
+			document.getElementById('pwdCheck').innerHTML = "암호가 확인 되었습니다.";
+
+		}
+	} */
 </script>
 
 <div class="container">
 	<div class="testbox">
-		<h1>${mode == "employee" ? "Register" : "Update"}</h1>
+		<h1><i class="fas fa-pencil-alt"></i>${mode == "employee" ? " 사원 등록" : " 사원 수정"}</h1>
 
 		<form name="employeeForm" method="post">
 			<div id="div-one">
 				<div id="div-one-right">
 					<div>
 						<label id="icon"><i class="fas fa-user"></i></label>
-							<input type="text" name="empNo" id="empNo" placeholder="사원번호" maxlength="5" value="${dto.empNo}"  ${mode == "update" ? "readonly = 'readonly'" : ""} />
+							<input type="text" name="empNo" id="empNo" placeholder="사원번호" maxlength="5" value="${dto.empNo}"  ${mode == "update" ? "readonly = 'readonly'" : ""} onchange="empNoCheck();" />
+							<c:if test="${mode != 'update'}">
+								<p class="help-block"></p>
+							</c:if>
 					</div>
 					
 					<div>
 					<label id="icon"><i class="fas fa-lock"></i></label>
-						<input type="password" name="pwd" placeholder="비밀번호" required />
+						<input type="password" name="pwd" class="pwdCheck" placeholder="비밀번호" required />
 					</div>
 					
 					<c:if test="${mode == 'update'}">
 						<div>
 						<label id="icon"><i class="fas fa-lock"></i></label>
-							<input type="password" name="pwdCheck" placeholder="비밀번호확인" required />
+							<input type="password" name="pwdCheck" onkeyup="pwdCheck()" placeholder="비밀번호확인" required />
+							<p class="help-block"></p>
 						</div>
 					</c:if>
 					
 					<div>
 					<label id="icon"><i class="fas fa-signature"></i></label>
-						<input type="text" name="name" placeholder="성명" required value="${dto.name}" ${mode == "update" ? "readonly = 'readonly'" : ""} />
+						<input type="text" name="name" placeholder="성명" required value="${dto.name}" />
 					</div>
 					
 					<div>
@@ -245,7 +287,7 @@
 					
 					<div>
 						<label id="icon"><i class="fas fa-sync"></i></label>
-							<input placeholder="발령일자" type="text" class="date" onfocus="(this.type='date')" value="${dto.apDate}"/>
+							<input placeholder="발령일자" type="text" class="date" onfocus="(this.type='date')" name="apDate" value="${dto.apDate}"/>
 					</div>
 					
 					<div>
@@ -254,16 +296,20 @@
 					</div>
 				</div>
 			</div>
+			
+			<div id="message">
+				${message}
+			</div>
+			
 			<div id="buttonBox">
-				<button type="button" name="sendButton" class="button" onclick="employeeOk();">${mode == "employee" ? "등록하기" : "정보수정"}</button>
-				<button type="reset" class="button">다시입력</button>
-				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
+				<div id="buttonSubBox">
+					<button type="button" name="sendButton" class="button" onclick="employeeOk();">${mode == "employee" ? "등록하기" : "정보수정"}</button>
+					<button type="reset" class="button">다시입력</button>
+					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
+				</div>
 				<c:if test="${mode=='update'}">
 		        	 <input type="hidden" name="page" value="${page}">
 		        </c:if>
-			</div>
-			<div>
-				${message}
 			</div>
 		</form>
 	</div>

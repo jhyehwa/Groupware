@@ -14,6 +14,6 @@ public interface EmployeeService {
 	public void updateEmployee(Employee dto) throws Exception;
 	public void updateLastLogin(String empNo) throws Exception;
 	
-	public Employee readEmployee(String empNo);
 	public Employee readEmployee(int employeeNum);
+	public Employee readEmployee(String empNo);
 }

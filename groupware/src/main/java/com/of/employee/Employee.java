@@ -21,6 +21,7 @@ public class Employee {
 	private String rType;
 	private String dType;
 	private String pType;
+	private String lastLogin;
 
 	public int getEmployeeNum() {
 		return employeeNum;
@@ -180,6 +181,14 @@ public class Employee {
 
 	public void setpType(String pType) {
 		this.pType = pType;
+	}
+
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 
 }

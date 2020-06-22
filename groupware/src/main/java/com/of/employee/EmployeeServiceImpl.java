@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	// ---------------------------------------------------------------------------------------------
-	// 
+	// 데이터 개수
 	@Override
 	public int dataCount(Map<String, Object> map) {
 
@@ -62,6 +62,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 
+	// ---------------------------------------------------------------------------------------------
+	// 사원 등록
 	@Override
 	public void insertEmployee(Employee dto) throws Exception {
 
@@ -75,29 +77,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 
 	}
-
-	@Override
-	public void updateEmployee(Employee dto) throws Exception {
-
-		try {
-			dao.updateData("employee.updateEmployee1", dto);
-			dao.updateData("employee.updateEmployee2", dto);
-			dao.updateData("employee.updateEmployee3", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-
-	@Override
-	public void updateLastLogin(String empNo) throws Exception {
-
-		/*
-		 * try { dao.updateData("employee.updateLastLogin", empNo); } catch (Exception
-		 * e) { e.printStackTrace(); }
-		 */
-	}
-
+	
+	// ---------------------------------------------------------------------------------------------
 	@Override
 	public Employee readEmployee(int employeeNum) {
 
@@ -113,19 +94,46 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	}
 
-
 	@Override
 	public Employee readEmployee(String empNo) {
 
 		Employee dto = null;
 
 		try {
-			dto = dao.selectOne("employee.readEmployee", empNo);
+			dto = dao.selectOne("employee.readEmployee2", empNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return dto;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+	// 사원 수정
+	@Override
+	public void updateEmployee(Employee dto) throws Exception {
+
+		try {
+			dao.updateData("employee.updateEmployee1", dto);
+			dao.updateData("employee.updateEmployee2", dto);
+			dao.updateData("employee.updateEmployee3", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	// ---------------------------------------------------------------------------------------------
+	// 사원 접속일
+	@Override
+	public void updateLastLogin(String empNo) throws Exception {
+
+		try {
+			dao.updateData("employee.updateLastLogin", empNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

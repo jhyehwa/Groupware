@@ -21,8 +21,6 @@
 	$(function(){
 		$('.selectBox').attr('disabled', 'true');
 	});
-	
-
 </script>
 
 <div class="container">
@@ -123,14 +121,12 @@
 			</div>
 			
 			<div id="buttonBox">
-				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/update?employeeNum=${employeeNum}&page=${page}';">수정</button>
-				<button type="button" class="button" onclick="deleteEmployee();">삭제</button>
-			</div>
-			
-			<div>
-				<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list?${query}';">리스트</button>
-			</div>
-			
+				<div id="buttonSubBox">
+					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/update?employeeNum=${employeeNum}&page=${page}';">수정</button>
+					<button type="button" class="button" onclick="deleteEmployee();">삭제</button>
+					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list?${query}';">리스트</button>
+				</div>
+			</div>			
 			<div>
 				${message}
 			</div>
