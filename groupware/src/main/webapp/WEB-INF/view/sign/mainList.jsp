@@ -29,11 +29,6 @@
 		});
 	}
 
-	function searchList() {
-		var f = document.searchForm;
-		f.submit();
-	}
-
 	$(function() {
 		var url = "<%=cp%>/sign/signList";
 		var query = "rows=" + 3;
@@ -62,6 +57,7 @@
 						<td align="left">&nbsp;</td>
 						<td align="left"><h3>결재대기함</h3></td>
 					</tr>
+					
 				</table>
 				
 				<table style="border-collapse: collapse;">
@@ -72,7 +68,14 @@
 						<th width="80">기안일</th>
 						<th width="60">결재상태</th>
 					</tr>
-	
+					
+				<c:if test="${list.size()==0}">
+					 <tr>
+						<td class="board-paging" align="center" colspan="5">
+			     		   <p>등록된 게시물이 없습니다.</p>
+						</td>
+				    </tr>
+				</c:if>
 				<c:forEach var="dto" items="${list}">
 					<tr align="center" style="border-bottom: 1px solid #cccccc;">
 						<td>${dto.name}</td>
@@ -81,14 +84,14 @@
 						</td>
 						<td>파일이미지</td>
 						<td>${dto.sdate}</td>
-						<td>${dto.scurrStep}</td>
+						<td>${dto.scurrStep==dto.sendStep ?'미결':'완료'}</td>
 					</tr>
 				</c:forEach>
 				</table>
 			</div>
 			
 			<div style="text-align: right;">
-				<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="send();">들어가기</button>
+				<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';">+</button>
 			</div>
 <div style="float: right;">
 			</div>
@@ -109,16 +112,25 @@
 						<th width="80">기안일</th>
 						<th width="60">결재상태</th>
 					</tr>
+					<c:if test="${list.size()==0}">
+						 <tr>
+							<td class="board-paging" align="center" colspan="5">
+			     			   <p>등록된 게시물이 없습니다.</p>
+							</td>
+				  	  </tr>
+					</c:if>
 	
 				<c:forEach var="dto" items="${list}">
 					<tr align="center" style="border-bottom: 1px solid #cccccc;">
 						<td>${dto.listNum}</td>
 						<td align="left" style="padding-left: 80px;">
-						<a href="#">${dㄴto.ssubject}</a>
+						<a href="#">${dto.ssubject}</a>
 						</td>
 						<td>파일이미지</td>
 						<td>${dto.sdate}</td>
-						<td>${dto.scurrStep}</td>
+						<td>
+							${dto.scurrStep=='0'?'미결':'완료'}
+						</td>
 					</tr>
 				</c:forEach>
 				</table>
@@ -145,7 +157,14 @@
 						<th width="80">기안일</th>
 						<th width="60">결재상태</th>
 					</tr>
-	
+				<c:if test="${list.size()==0}">
+					 <tr>
+						<td class="board-paging" align="center" colspan="5">
+			     		   <p>등록된 게시물이 없습니다.</p>
+						</td>
+				    </tr>
+				</c:if>			
+				
 				<c:forEach var="dto" items="${list}">
 					<tr align="center" style="border-bottom: 1px solid #cccccc;">
 						<td>${dto.listNum}</td>
@@ -154,7 +173,7 @@
 						</td>
 						<td>파일이미지</td>
 						<td>${dto.sdate}</td>
-						<td>${dto.scurrStep}</td>
+						<td>${dto.scurrStep=='0'?'미결':'완료'}</td>
 					</tr>
 				</c:forEach>
 				</table>
@@ -166,8 +185,6 @@
 
 		</div>
 	</div>
-
-
 	
 </body>
 </html>

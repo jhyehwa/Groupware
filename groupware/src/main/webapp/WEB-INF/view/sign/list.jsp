@@ -11,13 +11,72 @@
 		var f=document.searchForm;
 		f.submit();
 	}
+	
+	function ajaxHTML(url, type, query, selector) {
+		$.ajax({
+			type:type,
+			url:url,
+			data:query,
+			success:function(data){
+				$(selector).html(data);
+			},
+			error:function(e){
+				console.log(e.responseText);
+			}
+		});
+	}
+
+	
+	$(function(){
+		$("body").on("click", ".articleSign", function(){
+			var option = $(this).closest("tr").find(".stNum").text();
+			var valueSnum = $(this).closest("tr").find("input[class=dtoSnum]").val();
+			
+			$("#articleModal-dialog").dialog({
+				modal : true,
+				width : 1200,
+				height : 1150,
+				title : '결재',
+				open : function() {
+					
+					$(".showSing").show();
+					
+					var url = "<%=cp%>/sign/search";
+					
+					if(option==0){
+						return;
+					}
+					
+					var query = "option="+ option+ "&mode=article"+"&valueSnum="+valueSnum;
+					
+					ajaxHTML(url, "GET", query, ".showSing");
+				
+					
+				},
+				close : function(event, ui) {
+						
+				}
+			});
+		});
+		
+	});
+	
+	
 </script>
 
+<!-- 아티클 모달 -->
+<div id="articleModal-dialog" class="articleModal">
+	<div class="showSing"  style="width: 1000px; height:950px; display: none; border: 1px solid black">
+		
+	</div>
+</div>
 
 <div class="container">
     <div class="board-container">
         <div class="body-title">
-            <h3>공지사항 </h3>
+            <h3>
+            ${mode}
+            </h3>
         </div>
         
         <div class="board-body">
@@ -35,28 +94,25 @@
 			<table style="border-collapse: collapse;">
 			  <tr align="center" bgcolor="#006461;"> 
 			      <th width="60">번호</th>
+			      <th width="100">종류</th>
 			      <th>제목</th>
-			      <th width="100">작성자</th>
-			      <th width="80">작성일</th>
-			      <th width="60">조회수</th>
+			      <th width="80">기안일</th>
+			      <th width="60">파일첨부</th>
 			  </tr>
 			<c:forEach var="dto" items="${list}">
 			  <tr align="center" style="border-bottom: 1px solid #cccccc;"> 
-			      <td>${dto.listNum}</td>
-			      <td align="left" style="padding-left: 10px;">
-			           <a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.title}</a>
-			           <c:if test="${dto.gap < 24}">
-		               	<i class="fas fa-ad"></i>
-		          	   </c:if>
+			      <td class="listNum">${dto.listNum} / ${dto.snum}<input type="hidden" class="dtoSnum" value="${dto.snum}"></td>
+			      <td class="stNum">${dto.stnum}</td>
+			      <td align="left" style="padding-left: 10px;" class="ssubject">
+			           <a class="articleSign">${dto.ssubject}</a>
 			      </td>
-			      <td>${dto.name}</td>
-			      <td>${dto.created}</td>
-			      <td>${dto.hitCount}</td>
+			      <td>${dto.sdate}</td>
+			      <td>파일 이미지</td>
 			  </tr>
 			</c:forEach>
 			</table>
 			 
-			<table style="margin: 10px 0 0 100px;">
+			<table>
 			   <tr>
 				<td class="board-paging" align="center">
 			         ${dataCount==0 ? "등록된 게시물이 없습니다.":paging}
@@ -67,26 +123,29 @@
 			<table style="margin-top: 10px ">
 			   <tr height="40">
 			      <td align="left" width="100">
-			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
+			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/sign/list?mode=${mode}';">새로고침</button>
 			      </td>
 			      <td align="center">
-			          <form name="searchForm" action="<%=cp%>/notice/list" method="post">
+			          <form name="searchForm" action="<%=cp%>/sign/list" method="post">
 			              <select name="condition" class="selectField">
+			                  <option value="all" ${condition=="all"?"selected='selected'":""}>::검색::</option>
 			                  <option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
-			                  <option value="name" ${condition=="name"?"selected='selected'":""}>작성자</option>
 			                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
+			                  <option value="option" ${condition=="content"?"selected='selected'":""}>종류</option>
 			                  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 			            </select>
+			            <input type="hidden" name="mode" value="${mode}" >
 			            <input type="text" name="keyword" class="boxTF">
 			            <button type="button" class="boardBtn" onclick="searchList()">검색</button>
 			        </form>
 			      </td>
 			      <td align="right" width="100">
-			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/notice/created';">글올리기</button>
+			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/sign/created';">글올리기</button>
 			      </td>
 			   </tr>
 			</table>
         </div>
     </div>
 </div>
+
 

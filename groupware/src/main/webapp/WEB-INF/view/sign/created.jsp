@@ -1,11 +1,16 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String cp=request.getContextPath();
+
+	
 %>
 
+<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 
 
@@ -61,7 +66,9 @@ $(function() {
 		
 		ajaxHTML(url, "GET", query, "#signForm");
 	});
+	
 });
+
 
 function check() {
 	var f = document.inputForm;
@@ -69,7 +76,7 @@ function check() {
 	
 	var str = f.ssubject.value;
 	
-	if(!str){
+	/*if(!str){
 		alert("제목을 입력하세요.");
 		f.ssubject.focus();
 		return false;
@@ -80,7 +87,8 @@ function check() {
 		alert("내용을 입력하세요.");
 		f.scontent.focus();
 		return false;
-	}
+	}*/
+	
 	var option = $("#listSelect option:selected").val();
 	f.action = "<%=cp%>/sign/created?option="+option;
 	f.submit();
@@ -98,15 +106,19 @@ $(function() {
 			},
 			close : function(event, ui) {
 					var empNo = $("#listTable input[name=cb]:checked").val();
-				$(function() {
+					if(empNo == undefined){
+						return;
+					}
 					var dType = $("#listTable input[name=cb]:checked").closest("td").next().children("input[name=hDType]").val();
 					var pType = $("#listTable input[name=cb]:checked").closest("td").next().next().children("input[name=hPType]").val();
 					var tdName = $("#listTable input[name=cb]:checked").closest("td").next().next().next().children("input[name=hName]").val();
 					$btn.closest("table").find(".typeTd").append("<span>"+ dType + " / " + pType + "</span>");
 					$btn.closest("table").find(".nameTd").append("<span>"+ tdName + "</span>");
 					
+					
+					$("#listTable input[name=cb]").prop("checked", false);
+					
 					$btn.closest("td").find("input").val(empNo);
-				});
 			}
 		});
 	});
@@ -115,8 +127,8 @@ $(function() {
 		$('#lineModal-dialog').dialog("close");
 	});
 	
-	
 });
+
 
 </script>
 <div>
@@ -135,6 +147,8 @@ $(function() {
 	</select>
 </div>
 
-<div id="signForm" style="width: 1000px; height:950px; margin-left: 500px;">
-
+<div id="signForm" style="width: 1000px; height:960px; margin-left: 500px;">
 </div>
+
+
+

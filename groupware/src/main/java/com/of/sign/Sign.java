@@ -18,23 +18,49 @@ public class Sign {
 	private String ssubject;
 	private String scontent;
 	private String sstorage;
-	private String sendStep;
+	private int sendStep;
 	private String scurrStep;
 	private int empNo;
 	private String sfOriginalfilename;
 	private String sfSavefilename;
 	private int sfFileSize;
-	private String pempNo2;
-	private String pempNo3;
-	private String pempNo4;
+	private String pEmpNo2;
+	private String pEmpNo3;
+	private String pEmpNo4;
+	private String startDay;
 	private int enabled;
+
 	
-	public int getEnabled() {
-		return enabled;
+	public String getStartDay() {
+		return startDay;
 	}
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
+	public void setStartDay(String startDay) {
+		this.startDay = startDay;
+	}
+
+	public int getSnum() {
+		return snum;
+	}
+
+	public void setSnum(int snum) {
+		this.snum = snum;
+	}
+
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getTel() {
@@ -75,30 +101,6 @@ public class Sign {
 
 	public void setpType(String pType) {
 		this.pType = pType;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getListNum() {
-		return listNum;
-	}
-
-	public void setListNum(int listNum) {
-		this.listNum = listNum;
-	}
-
-	public int getSnum() {
-		return snum;
-	}
-
-	public void setSnum(int snum) {
-		this.snum = snum;
 	}
 
 	public int getStnum() {
@@ -173,11 +175,11 @@ public class Sign {
 		this.sstorage = sstorage;
 	}
 
-	public String getSendStep() {
+	public int getSendStep() {
 		return sendStep;
 	}
 
-	public void setSendStep(String sendStep) {
+	public void setSendStep(int sendStep) {
 		this.sendStep = sendStep;
 	}
 
@@ -221,28 +223,36 @@ public class Sign {
 		this.sfFileSize = sfFileSize;
 	}
 
-	public String getPempNo2() {
-		return pempNo2;
+	public String getpEmpNo2() {
+		return pEmpNo2;
 	}
 
-	public void setPempNo2(String pempNo2) {
-		this.pempNo2 = pempNo2;
+	public void setpEmpNo2(String pEmpNo2) {
+		this.pEmpNo2 = pEmpNo2;
 	}
 
-	public String getPempNo3() {
-		return pempNo3;
+	public String getpEmpNo3() {
+		return pEmpNo3;
 	}
 
-	public void setPempNo3(String pempNo3) {
-		this.pempNo3 = pempNo3;
+	public void setpEmpNo3(String pEmpNo3) {
+		this.pEmpNo3 = pEmpNo3;
 	}
 
-	public String getPempNo4() {
-		return pempNo4;
+	public String getpEmpNo4() {
+		return pEmpNo4;
 	}
 
-	public void setPempNo4(String pempNo4) {
-		this.pempNo4 = pempNo4;
+	public void setpEmpNo4(String pEmpNo4) {
+		this.pEmpNo4 = pEmpNo4;
+	}
+
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
 	}
 
 }

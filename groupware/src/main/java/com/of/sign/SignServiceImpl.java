@@ -18,6 +18,8 @@ public class SignServiceImpl implements SignService {
 	public void insertSign(Sign dto) throws Exception {
 		try {
 			dao.insertData("insertSign", dto);
+			dao.insertData("insertSignPermission", dto);
+//			dao.insertData("insertSign", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -26,8 +28,13 @@ public class SignServiceImpl implements SignService {
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result =dao.selectOne("sign.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -52,17 +59,47 @@ public class SignServiceImpl implements SignService {
 		return list;
 	}
 
+
 	@Override
-	public Sign readSign(int sNum) {
+	public Sign readSign(int valueSnum) {
 		Sign dto = null;
+		
 		try {
-			dto = dao.selectOne("readEmp", sNum);
+			dto = dao.selectOne("readSign", valueSnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dto;
 	}
 
+	@Override
+	public Sign readEmp(int empNo) {
+		Sign dto = null;
+			try {
+				dto = dao.selectOne("readEmp", empNo);
+			}catch (NullPointerException e) {
+				dto = null;
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		return dto;
+	}
+	
+
+	@Override
+	public Sign readWriter(int empNo) {
+		Sign dto = null;
+		try {
+			dto = dao.selectOne("readWriter", empNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	
+	
 	@Override
 	public void updateSign(Sign dto) throws Exception {
 		// TODO Auto-generated method stub
