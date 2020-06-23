@@ -67,12 +67,12 @@
 	 
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.of.data.Data">
-		INSERT INTO dataFile (fileNum, dataNum, originalFileName, saveFileName) VALUES
-				(seq_dataFile.NEXTVAL, #{dataNum}, #{originalFilename}, #{saveFilename})
+		INSERT INTO dataFile (fileNum, dataNum, originalFileName, saveFileName, fileSize) VALUES
+				(seq_dataFile.NEXTVAL, #{dataNum}, #{originalFilename}, #{saveFilename}, #{fileSize})
 	</insert>
 	
 	<select id="listFile" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT fileNum, dataNum, saveFilename, originalFilename
+		SELECT fileNum, dataNum, saveFilename, originalFilename, fileSize
 		FROM dataFile
 		WHERE dataNum=#{dataNum}    
 	</select>

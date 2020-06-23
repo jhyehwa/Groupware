@@ -14,7 +14,7 @@
 <title>spring</title>
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/normalize.css" type="text/css">
-<link rel="stylesheet" href="<%=cp%>/resource/css/employee.css" type="text/css">
+
 <link rel="stylesheet" href="<%=cp%>/resource/css/style.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/board.css" type="text/css">

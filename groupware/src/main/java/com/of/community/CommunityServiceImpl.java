@@ -341,4 +341,28 @@ public class CommunityServiceImpl implements CommunityService {
 
 			return countMap;
 		}
+
+		@Override
+		public List<Community> listClub(Map<String, Object> map) {
+			List<Community> listClub=null;
+			
+			try {
+				listClub=dao.selectList("community.listClub", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return listClub;
+		}
+
+		@Override
+		public void insertClub(Community dto) throws Exception {
+			try {					
+				dao.insertData("community.insertClub", dto);		
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+			
+		}
 }

@@ -8,6 +8,9 @@ public class Community {
 	private int listNum, commuNum;
 	private String clubCode;
 	private String clubType;
+	private String clubExp;
+	private String clubMake;
+	private String clubNew;
 	private String title;
 	private String writer;
 	private String name;	
@@ -78,6 +81,30 @@ public class Community {
 
 	public void setClubType(String clubType) {
 		this.clubType = clubType;
+	}		
+
+	public String getClubExp() {
+		return clubExp;
+	}
+
+	public void setClubExp(String clubExp) {
+		this.clubExp = clubExp;
+	}	
+
+	public String getClubMake() {
+		return clubMake;
+	}
+
+	public void setClubMake(String clubMake) {
+		this.clubMake = clubMake;
+	}	
+
+	public String getClubNew() {
+		return clubNew;
+	}
+
+	public void setClubNew(String clubNew) {
+		this.clubNew = clubNew;
 	}
 
 	public String getTitle() {

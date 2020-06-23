@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resource/css/data.css" type="text/css">
 <script type="text/javascript">
 	function searchList() {
 		var f=document.searchForm;
@@ -14,23 +15,45 @@
 </script>
 
 <div class="container">
-    <div class="board-container">
-        <div class="board-title">
+    <div class="board-container" style="margin-left: 200px;">
+        <div class="board-title" style="font-size: 18px;">
             <h3>♬ 자료실 </h3>
         </div>
         
-        <div class="board-body">
-			<table style="margin-top: 20px;">
-			   <tr>
-			      <td align="left">
-			          &nbsp;
-			      </td>
-			      <td align="right">
-			          ${dataCount}개(${page}/${total_page} 페이지)
-			      </td>
-			   </tr>
-			</table>
+        <div class="board-body" style="float: left; width: 20%;">
+			<div style="margin-top: 20px; margin-left: 20px;">
+	        		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/data/created';"><i class="fas fa-upload"></i></button>
+	       	</div>	
+	       	<form name="searchForm" action="" method="post">
+        	<div class="selectGroup">
+        		  <select class="selectBox" name="condition" class="selectField">			              
+		          	   <option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
+		               <option value="dataType" ${condition=="clubType"?"selected='selected'":""}>분류</option>
+		               <option value="name" ${condition=="name"?"selected='selected'":""}>작성자</option>
+		               <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
+			      </select>        
+        	</div>
+        	<div style="margin-left: 20px; margin-top: -10px;">
+        		<p style="font-size: 20px; border: 1px solid #cccccc; width: 220px;"><input type="text" name="keyword" class="boxTF" style="width: 170px; height: 35px; border: none; font-size: 15px; padding-left: 10px;">&nbsp;
+        				<button type=button onclick="searchList()" style="border: none; background: transparent;"><i class="fas fa-search"></i></button></p>
+        	</div>  
+        	</form>     	
+	    </div>
 			
+		<div class="board-body" style="width: 80%; float: left;" > 
+			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
+          		  <h3 style="font-size: 18px;">| 전체 자료실
+          		  &nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		     
+          		  <button type="button" style="border: none; background: transparent;" onclick="javascript:location.href='<%=cp%>/data/list';"><i class="fas fa-redo-alt"></i></button>
+          		  </h3>          		 
+      		  </div> 	      		        
 			<table style="border-collapse: collapse;">
 			  <tr align="center" bgcolor="#006461;"> 
 				  <th width="60">번호</th>
@@ -70,29 +93,10 @@
 				</td>
 			   </tr>
 			</table>
+		</div>
 			
-			<table style="margin-top: 10px ">
-			   <tr height="40">
-			      <td align="left" width="100">
-			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/data/list';">새로고침</button>
-			      </td>
-			      <td align="center">
-			          <form name="searchForm" action="" method="post">
-			              <select name="condition" class="selectField">			              
-		                	  <option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
-		                 	  <option value="dataType" ${condition=="clubType"?"selected='selected'":""}>분류</option>
-		                	  <option value="name" ${condition=="name"?"selected='selected'":""}>작성자</option>
-		                	  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
-			            </select>
-			            <input type="text" name="keyword" class="boxTF">
-			            <button type="button" class="boardBtn" onclick="searchList()">검색</button>
-			        </form>
-			      </td>
-			      <td align="right" width="100">
-			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/data/created';">글올리기</button>
-			      </td>
-			   </tr>
-			</table>
-        </div>
+			
+
+  
     </div>
 </div>

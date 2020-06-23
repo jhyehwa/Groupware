@@ -35,9 +35,11 @@ public class DataServiceImpl implements DataService {
 						continue;
 
 					String originalFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
 
 					dto.setOriginalFilename(originalFilename);
 					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
 
 					insertFile(dto);
 				}
@@ -124,9 +126,11 @@ public class DataServiceImpl implements DataService {
 					if(saveFilename==null) continue;
 					
 					String originalFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
 					
 					dto.setOriginalFilename(originalFilename);
 					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
 					
 					insertFile(dto);
 				}

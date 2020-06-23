@@ -5,9 +5,11 @@ import java.util.Map;
 
 public interface CommunityService {
 	public void insertCommu(Community dto, String pathname) throws Exception;
+	public void insertClub(Community dto) throws Exception;
 	
 	public int dataCount(Map<String, Object> map);
 	public List<Community> listCommu(Map<String, Object> map);
+	public List<Community> listClub(Map<String, Object> map);
 	
 	public void updateHitCount(int commuNum) throws Exception;
 	

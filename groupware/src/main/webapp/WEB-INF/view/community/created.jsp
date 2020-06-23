@@ -83,7 +83,7 @@ $(function(){
 				  <tr align="left" height="50" > 
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="title" maxlength="100"value="${dto.title}">
+				        <input class="inputnoline" type="text" name="title" maxlength="100" value="${dto.title}">
 				      </td>
 				  </tr>		  
 				  
@@ -91,10 +91,9 @@ $(function(){
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">동호회 분류</td>
 				      <td style="padding-left:10px;"> 
 			      		<select name="clubCode">
-			     			<option value="BW" ${clubCode=="BW"?"selected='selected'":""}>볼링</option>
-			     			<option value="GF" ${clubCode=="GF"?"selected='selected'":""}>골프</option>
-			     			<option value="EC" ${clubCode=="EC"?"selected='selected'":""}>영어회화</option>
-			     			<option value="BG" ${clubCode=="BG"?"selected='selected'":""}>보드게임</option>			     				     	
+			      		 <c:forEach var="dto" items="${listClub}"> 
+			      		 	<option value="${dto.clubCode}">${dto.clubType}</option>			
+			     		</c:forEach>		     				     	
 			     		</select>			   
 			      	</td>
 				  </tr>

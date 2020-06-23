@@ -5,6 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
+<link rel="stylesheet" href="<%=cp%>/resource/css/employee.css" type="text/css">
 
 <div>
 	<div id="complete-form">

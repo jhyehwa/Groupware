@@ -73,6 +73,8 @@ public class CommunityController {
 
         // 글 리스트
         List<Community> list = service.listCommu(map);
+        
+        List<Community> listClub = service.listClub(map);
 
         // 리스트의 번호
         Date endDate = new Date();
@@ -111,6 +113,7 @@ public class CommunityController {
         String paging = myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("listClub", listClub);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
@@ -134,6 +137,10 @@ public class CommunityController {
 			return "redirect:/community/list";
 		}
 		*/
+		Map<String, Object> map = new HashMap<String, Object>();			        
+	    List<Community> listClub = service.listClub(map);	    
+	   
+		model.addAttribute("listClub", listClub);		
 		model.addAttribute("mode", "created");
 		
 		return ".community.created";
@@ -228,7 +235,11 @@ public class CommunityController {
 		}
 		
 		List<Community> listFile=service.listFile(commuNum);
-			
+		
+		Map<String, Object> map = new HashMap<String, Object>();			        
+	    List<Community> listClub = service.listClub(map);	    
+	   
+		model.addAttribute("listClub", listClub);				
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);
@@ -556,4 +567,36 @@ public class CommunityController {
 			model.put("disLikeCount", disLikeCount);
 			return model;
 		}
+		
+		@RequestMapping(value="/community/clubMake", method=RequestMethod.GET)
+		public String clubMakeForm(HttpSession session) throws Exception {
+
+			SessionInfo info=(SessionInfo)session.getAttribute("employee");
+	/*		if(! info.getEmpNo().equals("admin")) {
+				return "redirect:/community/list";
+			}
+			*/			
+			
+			return ".community.clubMake";
+		}
+
+		@RequestMapping(value="/community/clubMake", method=RequestMethod.POST)
+		public String clubMakeSubmit(
+				Community dto,
+				HttpSession session) throws Exception {
+			
+			SessionInfo info=(SessionInfo)session.getAttribute("employee");
+			
+	/*		if(! info.getrCode().equals("admin")) {
+				return "redirect:/community/list";	
+			}*/
+
+			try {
+				service.insertClub(dto);
+			} catch (Exception e) {
+			}
+			
+			return "redirect:/community/list";
+		}		
+	
 }

@@ -12,6 +12,11 @@
 					#{writer}, #{content}, SYSDATE, 0)
 	</insert>	
 	
+	<!-- 동호회 추가 --> 
+	<insert id="insertClub" parameterType="com.of.community.Community">
+		INSERT INTO club (clubCode, clubType, clubExp, clubMake, clubNew) VALUES (#{clubCode}, #{clubType}, #{clubExp}, SYSDATE, 'NEW')
+	</insert>	
+	
 	<sql id="where-list">		
 		<if test="condition=='title' ">
 			INSTR(title, #{keyword}) &gt; 0
@@ -43,7 +48,9 @@
 	
 	<!-- 리스트 -->
 	<select id="listCommu" parameterType="map" resultType="com.of.community.Community">
-		SELECT c.commuNum, cb.clubType, e.name, title, created, hitCount, NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount
+		SELECT c.commuNum, cb.clubType, e.name, title, created, content, hitCount, 
+			   NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount,
+			   NVL(commuLikeCount, 0) commuLikeCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
 		JOIN club cb ON c.clubCode = cb.clubCode
@@ -56,6 +63,10 @@
 			WHERE answer=0
 			GROUP BY commuNum
 		) r ON c.commuNum=r.commuNum
+		LEFT OUTER JOIN (
+			SELECT commuNum, COUNT(*) commuLikeCount FROM commuLike
+			GROUP BY commuNum
+		) cl ON c.commuNum = cl.commuNum
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<include refid="where-list"/>
@@ -63,6 +74,12 @@
 		</where>
 		ORDER BY commuNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	 </select>
+	 
+	 <!--동호회 리스트--> 
+	 <select id="listClub" parameterType="map" resultType="com.of.community.Community">
+	 	SELECT clubCode, clubType, clubExp, TO_CHAR(clubMake, 'YYYY/MM/DD') clubMake, clubNew FROM club
+	 	ORDER BY clubMake
 	 </select>
 	 
 	<!-- 파일 -->
@@ -141,7 +158,7 @@
     <!-- 수정 -->
 	<update id="updateCommu" parameterType="com.of.community.Community">
 		UPDATE community SET title=#{title},
-				content=#{content}
+				content=#{content}, clubCode=#{clubCode}
 		WHERE commuNum=#{commuNum}
 	</update>
     

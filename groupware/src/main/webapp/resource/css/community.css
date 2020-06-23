@@ -10,7 +10,7 @@
 
 .selectGroup .selectBox {
 	margin-top: 9px;	
-	width: 80px;
+	width: 110px;
 	height: 25px;
 	position: absolute;
 	top: 0;
@@ -61,4 +61,41 @@
 	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
 	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
 	border: solid 1px #cbc9c9;
+}
+
+.modalbtn a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.modalbtn a:link {
+	text-decoration: none;
+	color: white;
+}
+
+.modalbtn a:visited {
+	text-decoration: none;
+	color: white;
+}
+
+.modalbtn a:active {
+	text-decoration: none;
+	color: white;
+}
+
+
+.clubBtn{
+	color: #6E3C89;
+	background:white;
+	border:1px solid #6E3C89;
+	border-top-left-radius: 5px; 
+	border-bottom-left-radius: 5px; 
+	border-top-right-radius: 5px; 
+	border-bottom-right-radius: 5px; 
+	padding:3px 3px;
+}
+
+.clubBtn:hover{ 
+	color:white; 
+	background-color: #6E3C89; 
 }

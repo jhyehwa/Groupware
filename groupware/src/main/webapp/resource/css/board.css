@@ -13,8 +13,8 @@
 }
 
 .board-body table th{
-	color: white;
-	background: #006461;
+	color: black;
+	background: #D3B7D8;
 }
 
 .newsSort a{
@@ -66,15 +66,15 @@
 
 
 .boardtable td:first-child {
-	background:#006461;
+	background:#9565A4;
 	color: white;
 	border-bottom: 1px solid white;
 }
 
 .boardBtn{
-	color: #006461;
+	color: #632A7E; 
 	background:white;
-	border:1px solid #006461;
+	border:1px solid #632A7E;
 	border-top-left-radius: 5px; 
 	border-bottom-left-radius: 5px; 
 	border-top-right-radius: 5px; 
@@ -84,7 +84,7 @@
 
 .boardBtn:hover{ 
 	color:white; 
-	background-color: #006461; 
+	background-color: #632A7E; 
 }
 
 .board-article table{
