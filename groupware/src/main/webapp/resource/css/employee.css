@@ -295,8 +295,7 @@ input:focus {
 	width: 30px;
 	height: 39px;
 	background-color: #fff400;
-	background-image:
-		url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
+	background-image: url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
 	background-position: center;
 	background-repeat: no-repeat;
 	z-index: 0;
@@ -334,6 +333,10 @@ input:focus {
 #new-button1 {
 	width: 50px;
 	height: 30px;
+}
+
+#new-button1>i {
+	padding-top: 5px;
 }
 
 #new-button2 {

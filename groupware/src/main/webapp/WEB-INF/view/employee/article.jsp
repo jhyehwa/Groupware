@@ -6,8 +6,6 @@
    String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/employee.css" type="text/css">
-
 <script type="text/javascript">
 	function deleteEmployee() {
 		var q = "empNo=${dto.empNo}&page=${page}";

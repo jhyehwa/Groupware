@@ -6,17 +6,11 @@
 	String cp=request.getContextPath();
 %>
 
-<script type="text/javascript">
-	function searchList() {
-		var f = document.searchForm;
-		f.submit();
-	}
-</script>
-
 <div class="container">
 	<div id="list-container">
 		<div class="body-title">
-			<h3><i class="fa fa-quote-left"> 사원 정보</i></h3>
+			<h3><i class="fa fa-quote-left"> 주소록</i></h3>
+			<h4>${dataCount}개(${page}/${total_page} 페이지)</h4>
 		</div>
 	</div>
 	

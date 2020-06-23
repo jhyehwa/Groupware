@@ -6,8 +6,6 @@
 	String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/employee.css" type="text/css">
-
 <script type="text/javascript">
 	function employeeOk() {
 		var f = document.employeeForm;
@@ -45,12 +43,6 @@
 		}
 		
 		f.pwd.value = str;
- /* 
-		if(str!= f.pwdCheck.value) {
-	        alert("비밀번호가 일치하지 않습니다.");
-	        f.pwdCheck.focus();
-	        return;
-		} */
 
 	    str = f.name.value;
 		str = str.trim();
@@ -168,20 +160,26 @@
 		    }
 		});
 	}
-
-/* 	function pwdCheck() {
-		var f1 = document.forms[0];
-		var pw1 = f1.pwd.value;
-		var pw2 = f1.pwdCheck.value;
-		if (pw1 != pw2) {
-			document.getElementById('pwdCheck').style.color = "red";
-			document.getElementById('pwdCheck').innerHTML = "동일한 암호를 입력하세요.";
+	
+	// 비밀번호 중복 검사
+	function passwordCheck(){
+		var pwd1 = $("#pwd1").val();
+		var pwd2 = $("#pwd2").val();
+		
+		// 정규식 넣어줘야 함
+		
+		if(pwd1 == pwd2) {
+			var s = "<span style='color:blue;font-weight:bold;'>비밀번호가 일치합니다.</span>";
+			$("#pwd2").next(".help-block").html(s);
 		} else {
-			document.getElementById('pwdCheck').style.color = "black";
-			document.getElementById('pwdCheck').innerHTML = "암호가 확인 되었습니다.";
-
+			var s = "<span style='color:red;font-weight:bold;'>비밀번호가 일치하지 않습니다.</span>";
+			$("#pwd2").next(".help-block").html(s);
+			$("#pwd1").val("");
+			$("#pwd2").val("");
+			$("#pwd2").focus();
 		}
-	} */
+
+	}
 </script>
 
 <div class="container">
@@ -201,13 +199,13 @@
 					
 					<div>
 					<label id="icon"><i class="fas fa-lock"></i></label>
-						<input type="password" name="pwd" class="pwdCheck" placeholder="비밀번호" required />
+						<input type="password" name="pwd" id="pwd1" placeholder="비밀번호" />
 					</div>
 					
 					<c:if test="${mode == 'update'}">
 						<div>
 						<label id="icon"><i class="fas fa-lock"></i></label>
-							<input type="password" name="pwdCheck" onkeyup="pwdCheck()" placeholder="비밀번호확인" required />
+							<input type="password" name="pwdCheck" id="pwd2" placeholder="비밀번호확인" onchange="passwordCheck();" />
 							<p class="help-block"></p>
 						</div>
 					</c:if>

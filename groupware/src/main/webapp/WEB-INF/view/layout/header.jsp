@@ -18,19 +18,22 @@
 	<div class="header-right">
 		<div class="header-menu">
 			<c:if test="${not empty sessionScope.employee}">
-				<a href="<%=cp%>"><i class="far fa-user-circle"></i></a> <!-- 프로필 -->
-				<span>${sessionScope.employee.name}</span>님
-				&nbsp;&nbsp;
-				<a href="<%=cp%>/employee/logout">로그아웃</a>
-				&nbsp;&nbsp;
+				<span style="color: white; margin-right: 10px; font-size: 15px;">${sessionScope.employee.name}님</span>
+				<a href="<%=cp%>"><i class="far fa-user-circle" style="margin-right: 5px;"></i></a> <!-- 프로필 -->
+				&nbsp;
 			</c:if>
 			
 			<a href="#"><i class="far fa-bell"></i></a> <!-- 알림 -->
-			&nbsp;&nbsp;
-			
-			<a href="#"><i class="fas fa-user-shield"></i></a>
-			&nbsp;&nbsp;
+			&nbsp;
 			<a href="#"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
+			&nbsp;
+			<c:if test="${sessionScope.employee.rCode == 'admin'}">
+				<a href="<%=cp%>/employee/list"><i class="fas fa-user-cog"></i></a> <!-- 관리자 -->
+				&nbsp;
+			</c:if>
+			<c:if test="${not empty sessionScope.employee}">
+				<a href="<%=cp%>/employee/logout"><i class="fas fa-sign-out-alt"></i></a>
+			</c:if>
 		</div>
 	</div>
 </div>
