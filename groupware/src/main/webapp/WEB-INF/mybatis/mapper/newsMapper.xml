@@ -119,7 +119,7 @@
 	<!-- 수정 -->
 	<update id="updateNews" parameterType="com.of.news.News">
 		UPDATE news SET title=#{title},
-				content=#{content}
+				content=#{content}, nCode=#{nCode} 
 		WHERE newsNum=#{newsNum} AND writer=#{writer}
 	</update>
     

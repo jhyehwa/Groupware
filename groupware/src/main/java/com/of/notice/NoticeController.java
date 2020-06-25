@@ -130,11 +130,13 @@ public class NoticeController {
 			Notice dto,
 			HttpSession session
 			) throws Exception{
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
+		
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + "uploads" + File.separator + "notice";		
 			
-			dto.setWriter("1001199");
+			dto.setWriter(info.getEmpNo());
 			service.insertNotice(dto, pathname);
 		} catch (Exception e) {
 		}
@@ -149,6 +151,7 @@ public class NoticeController {
 			@RequestParam(defaultValue="") String keyword,
 			Model model
 			) throws Exception{
+
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		
@@ -194,6 +197,7 @@ public class NoticeController {
 			Model model
 			) throws Exception{
 		
+		
 		Notice dto=service.readNotice(noticeNum);
 		if(dto==null) {
 			return "redirect:/notice/list?page="+page;
@@ -216,11 +220,13 @@ public class NoticeController {
 			@RequestParam String page,
 			HttpSession session
 			) throws Exception{
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + File.separator + "uploads" + File.separator + "notice";		
 			
-			dto.setWriter("1001199");
+			dto.setWriter(info.getEmpNo());
 			service.updateNotice(dto, pathname);
 		} catch (Exception e) {
 		}
