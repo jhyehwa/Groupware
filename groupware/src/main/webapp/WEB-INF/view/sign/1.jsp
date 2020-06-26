@@ -5,8 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp=request.getContextPath();
-	
+	String cp = request.getContextPath();
 
 	Date nowDate = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -18,18 +17,18 @@
 	font-size: 13px;
 }
 
-input{
+input {
 	border: 1px solid gray;
 	height: 30px;
-	padding-left:10px;
+	padding-left: 10px;
 	border-radius: 5px;
 }
 
-textarea{
+textarea {
 	border: 1px solid gray;
 	width: 900px;
 	height: 500px;
-	padding-left:10px;
+	padding-left: 10px;
 	border-radius: 5px;
 }
 
@@ -135,176 +134,227 @@ textarea{
 </style>
 
 <form method="post" name="inputForm" id="inputForm">
-	<table class="body">
+	<input type="hidden" class="hiddenSnum" value="${sNum}">
+	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
-			<td class="headLineTd" colspan="4"><p class="pTag">업 무 기 안</p></td>
+			<td class="headLineTd" colspan="4">
+			<div class="returnMemoDiv" style=" position: absolute ; display: none;">
+					<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="반려사유를 작성해주세요" style="width: 350px; height: 100px; resize: none;
+							padding-top: 5px;"></textarea>
+					<br><button type="button" class="returnMemo">반려하기</button>
+			</div>
+			<p class="pTag">업 무 기 안</p>
+			</td>
 		</tr>
 		<tr>
 			<td class="menus"></td>
 		</tr>
 		<tr>
 			<td>
-				<div class="bodyDiv">
-					<div class="leftMenu">
-						<table>
-							<tr>
-								<td style="width: 30%; background: #BDBDBD"><b>기안자</b></td>
-								<td>${sessionScope.employee.name}</td>
-							</tr>
-							<tr>
-								<td style="background: #BDBDBD"><b>소속</b></td>
-								<td>${sessionScope.employee.dType}</td>
-							</tr>
-							<tr>
-								<td style="background: #BDBDBD"><b>기안일</b></td>
+				<div class="leftMenu">
+					<table>
+						<tr>
+							<td style="width: 30%; background: #BDBDBD"><b>기안자</b></td>
+							<td>${sessionScope.employee.name}</td>
+						</tr>
+						<tr>
+							<td style="background: #BDBDBD"><b>소속</b></td>
+							<td>${sessionScope.employee.dType}</td>
+						</tr>
+						<tr>
+							<td style="background: #BDBDBD"><b>기안일</b></td>
+							<c:if test="${mode=='article'}">
 								<td class="sdayTd">
-								<c:if test="${mode=='article'}">
-									${dto.startDay}
-								</c:if>
-								<%=sf.format(nowDate)%>
-								</td>
-							</tr>
-							<tr>
-								<td style="background: #BDBDBD"><b>문서번호</b></td>
-								<td>-</td>
-							</tr>
-						</table>
-					</div>
-					<div class="rightMenu" id="lineDiv4">
-					<input type="hidden" value="4" name="lineDivChild">
-						<table style="width: 150px;">
+									${dto.sdate}</td>
+							</c:if>
+							<c:if test="${mode!='article'}">
+								<td><%=sf.format(nowDate)%></td>
+							</c:if>
+						</tr>
 						<tr>
-								<td rowspan="3" style="background: #BDBDBD; width: 70px;"><b>결재</b></td>
-								<td class="typeTd" style="height: 17px;">
-									${ mode=="article" ? pempNo4.dType : " " }
-									 / 
-									${ mode=="article" ? pempNo4.pType : " " }
-								</td>
-							</tr>
-							<tr>
-								<td class="nameTd" style="width: 210px; height: 80px;">
-									${ mode=="article" ? pempNo4.name : " " }
-								</td>
-							</tr>
-							<tr>
-								<td height="20px;">
-								<button type="button" id="btnLine" style="font-weight: bold">
-								+</button>
-								<input type="hidden" name="lineEmp4" id="lineEmp4" value="0">
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="rightMenu" id="lineDiv3">
-					<input type="hidden" value="3" name="lineDivChild">
-						<table style="width: 150px;">
-						<tr>
-								<td rowspan="3" style="background: #BDBDBD; width: 70px;"><b>결재</b></td>
-								<td class="typeTd" style="height: 17px;">
-									${ mode=="article" ? pempNo3.dType : " " }
-									 / 
-									${ mode=="article" ? pempNo3.pType : " " }
-								</td>
-							</tr>
-							<tr>
-								<td class="nameTd" style="width: 210px; height: 80px;">
-								${ mode=="article" ? pempNo3.name : " " }
-								</td>
-							</tr>
-							<tr>
-								<td height="20px;">
-								<button type="button" id="btnLine" style="font-weight: bold">
-								+</button>
-								<input type="hidden" name="lineEmp3" id="lineEmp3" value="0">
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="rightMenu" id="lineDiv2">
-					<input type="hidden" value="2" name="lineDivChild">
-						<table style="width: 150px;">
-							<tr>
-								<td rowspan="3" style="background: #BDBDBD; width: 70px;"><b>결재</b></td>
-								<td class="typeTd" style="height: 17px;">
-									${ mode=="article" ? pempNo2.dType : " " }
-									 / 
-									${ mode=="article" ? pempNo2.pType : " " }
-								</td>
-							</tr>
-							<tr>
-								<td class="nameTd" style="width: 210px; height: 80px;">
-									${ mode=="article" ? pempNo2.name : " " }
-								</td>
-							</tr>
-							<tr>
-								<td>
-								<button type="button" id="btnLine" style="font-weight: bold">
-								+</button>
-								<input type="hidden" name="lineEmp2" id="lineEmp2" value="0">
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="rightMenu" id="lineDiv1">
-						<input type="hidden" value="1" name="lineDivChild">
-						<table style="width: 150px;">
-							<tr>
-								<td rowspan="3" style="background: #BDBDBD; width: 70px;"><b>결재</b></td>
-								<td class="typeTd" style="height: 17px;">
-								${ mode=="article" ? writer.dType : sessionScope.employee.dType }
-								 / 
-								${ mode=="article" ? writer.pType : sessionScope.employee.pType }
-								</td>
-							</tr>
-							<tr>
-								<td class="nameTd" style="width: 210px; height: 80px;">
-								${ mode=="article" ? writer.name : sessionScope.employee.name}
-								</td>
-							</tr>
-							<tr>
-								<td height="20px;">
-								<p>확인</p>
-								<input type="hidden" name="lineEmp1" value="0">
-								</td>
-							</tr>
-						</table>
-					</div>
+							<td style="background: #BDBDBD"><b>문서번호</b></td>
+							<td>-</td>
+						</tr>
+					</table>
 				</div>
-			</td>
-		</tr>
-
+				<div class="rightMenu" id="lineDiv4">
+					<input type="hidden" value="4" name="lineDivChild">
+					<table style="width: 150px;">
+						<tr>
+							<td rowspan="3"
+								style="background: #BDBDBD; width: 70px; text-align: left;"><b>결재</b></td>
+							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " }&nbsp;
+								${ mode=="article" ? pempNo4.pType : " " }</td>
+						</tr>
+						<tr>
+							<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? pempNo4.name : " " }
+							</td>
+						</tr>
+						<tr>
+							<td style="height: 20px;"><c:if test="${empty mode}">
+									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+								</c:if> <c:if test="${not empty mode}">
+									<p id="btnLine">
+										<c:if test="${dto.scurrStep == 3}">
+											<c:if test="${pempNo4.empNo == sessionScope.employee.empNo}">
+												<button type="button" class="choiceBtn"
+													style="font-weight: bold" value="ok">승인</button>
+												<button type="button" class="choiceBtn"
+													style="font-weight: bold" value="no">반려</button>
+											</c:if>
+										</c:if>
+										<c:if test="${dto.scurrStep > 3 }">
+										<p>결재완료</p>
+										</c:if>
+									</p>
+								</c:if> <input type="hidden" name="lineEmp4" id="lineEmp4" value="0">
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="rightMenu" id="lineDiv3">
+					<input type="hidden" value="3" name="lineDivChild">
+					<table style="width: 150px;">
+						<tr>
+							<td rowspan="3"
+								style="background: #BDBDBD; width: 70px; text-align: left;"><b>결재</b></td>
+							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo3.dType : " " }&nbsp;
+								${ mode=="article" ? pempNo3.pType : " " }</td>
+						</tr>
+						<tr>
+							<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? pempNo3.name : " " }
+							</td>
+							
+						</tr>
+						<tr>
+							<td style="height: 20px;"><c:if test="${empty mode}">
+									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+								</c:if> <c:if test="${not empty mode}">
+									<p id="btnLine">
+										<c:if test="${dto.scurrStep == 2}">
+											<c:if test="${pempNo3.empNo == sessionScope.employee.empNo}">
+												<button type="button" class="choiceBtn"
+													style="font-weight: bold" value="ok">승인</button>
+												<button type="button" class="choiceBtn"
+													style="font-weight: bold" value="no">반려</button>
+											</c:if>
+										</c:if>
+										<c:if test="${dto.scurrStep > 2 }">
+										<p>결재완료</p>
+										</c:if>
+									</p>
+								</c:if> <input type="hidden" name="lineEmp3" id="lineEmp3" value="0">
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="rightMenu" id="lineDiv2">
+					<input type="hidden" value="2" name="lineDivChild">
+					<table style="width: 150px;">
+						<tr>
+							<td rowspan="3"
+								style="background: #BDBDBD; width: 70px; text-align: left;"><b>결재</b></td>
+							<td class="typeTd" style="height: 17px; width: 1000px;">
+							${ mode=="article" ? pempNo2.dType : " " }&nbsp;
+								${ mode=="article" ? pempNo2.pType : " " }</td>
+						</tr>
+						<tr>
+							<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? pempNo2.name : " " }
+							</td>
+						</tr>
+						<tr>
+							<td style="height: 20px;"><c:if test="${empty mode}">
+									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+								</c:if> <c:if test="${not empty mode}">
+									<p id="btnLine">
+										<c:if test="${dto.scurrStep == 1}">
+											<c:if test="${pempNo2.empNo == sessionScope.employee.empNo}">
+												<button type="button" class="choiceBtn"
+													style="font-weight: bold" value="ok">승인</button>
+												<button type="button" class="choiceBtn"
+													style="font-weight: bold" value="no">반려</button>
+											</c:if>
+										</c:if>
+										<c:if test="${dto.scurrStep > 1 }">
+										<p>결재완료</p>
+										</c:if>
+									</p>
+								</c:if> <input type="hidden" name="lineEmp2" id="lineEmp2" value="0">
+							</td>
+						</tr>
+					</table>
+				</div>
+		<div class="rightMenu" id="lineDiv1">
+			<input type="hidden" value="1" name="lineDivChild">
+			<table style="width: 150px;">
+				<tr>
+					<td rowspan="3"
+						style="background: #BDBDBD; width: 70px; text-align: left;"><b>결재</b></td>
+					<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? writer.dType : sessionScope.employee.dType }
+						&nbsp; ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
+					</td>
+				</tr>
+				<tr>
+					<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? writer.name : sessionScope.employee.name}
+					</td>
+				</tr>
+				<tr>
+					<td height="20px;">
+						<p>확인</p> <input type="hidden" name="lineEmp1" value="0">
+					</td>
+				</tr>
+			</table>
+		</div>
 
 	</table>
 	<div class="contentDiv">
 		<table class="content">
 			<tr>
 				<td style="width: 150px; background: #BDBDBD"><b>시행일자</b></td>
-				<td style="width: 50%;">
-					<input type="text" id="startDay" name="startDay" value="${dto.startDay}"></td>
+				<c:if test="${mode == 'article'}">
+					<td style="width: 50%;">
+						<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none;">
+					</td>
+				</c:if>
+				<c:if test="${mode != 'article'}">
+					<td style="width: 50%;"><input type="text" id="startDay" name="startDay"></td>
+				</c:if>
 				<td style="background: #BDBDBD" width="100px;"><b>시행 부서</b></td>
 				<td>
-				<input type="text" id="sDept" value="${mode == 'acticle' ? dto.sdept : sessionScope.employee.dType }" readonly="readonly">
-				
+					<input type="text" id="sDept" value="${mode == 'acticle' ? dto.sdept : sessionScope.employee.dType }"
+					 disabled="disabled" style="border: none;">
 				</td>
 			</tr>
 			<tr>
 				<td style="background: #BDBDBD"><b>제목</b></td>
 				<td colspan="3">
-				<input type="text" id="sSubject" name="ssubject" value="${dto.ssubject}"></td>
+				<c:if test="${mode == 'article'}">
+					<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
+						style="border: none;">
+				</c:if>
+				<c:if test="${mode != 'article'}">
+					<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+				</c:if>
+				</td>
 			</tr>
 			<tr>
 				<td style="background: #BDBDBD" colspan="4"><b>내용</b></td>
 			</tr>
 			<tr>
 				<td colspan="4" style="padding-left: 40px;">
-				<textarea rows="12" cols="50" style="width:900px; height:420px; resize: none;" id="sContent" name="scontent">
-				${dto.scontent}
-				</textarea>
+				<c:if test="${mode == 'article'}">
+					<textarea rows="12"cols="50" style="border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent" disabled="disabled">${dto.scontent}</textarea>
+				</c:if>
+				<c:if test="${mode != 'article'}">
+					<textarea rows="12"cols="50" style="width: 900px; height: 420px; resize: none;" id="sContent" name="scontent"></textarea>
+				</c:if>
 				</td>
 			</tr>
 		</table>
 	</div>
-	<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>
+	<c:if test="${mode != 'article' }">
+		<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>
+	</c:if>
 </form>
 
 
@@ -313,72 +363,26 @@ textarea{
 <div id="lineModal-dialog" class="lineModal">
 
 
-		<div class="listDiv">
-			<table id="listTable" class="listTable" style="width: 580px;">
-				<tr style="background: #E3F6CE; text-align: center;">
-					<td style="width: 50px;">선택</td>
-					<td style="width: 50px;">부서</td>
-					<td style="width: 50px;">직급</td>
-					<td style="width: 150px;">이름</td>
+	<div class="listDiv">
+		<table id="listTable" class="listTable" style="width: 580px;">
+			<tr style="background: #E3F6CE; text-align: center;">
+				<td style="width: 50px;">선택</td>
+				<td style="width: 50px;">부서</td>
+				<td style="width: 50px;">직급</td>
+				<td style="width: 150px;">이름</td>
+			</tr>
+			<c:forEach var="dto" items="${list}">
+				<tr style="text-align: center;">
+					<td><input type="checkbox" name="cb" value="${dto.empNo}"></td>
+					<td><input type="hidden" name="hDType" value="${dto.dType}">${dto.dType}</td>
+					<td><input type="hidden" name="hPType" value="${dto.pType}">${dto.pType}</td>
+					<td><input type="hidden" name="hName" value="${dto.name}">${dto.name}</td>
 				</tr>
-				<c:forEach var="dto" items="${list}">
-					<tr style="text-align: center;">
-						<td><input type="checkbox" name="cb" value="${dto.empNo}"></td>
-						<td><input type="hidden" name="hDType" value="${dto.dType}">${dto.dType}</td>
-						<td><input type="hidden" name="hPType" value="${dto.pType}">${dto.pType}</td>
-						<td><input type="hidden" name="hName" value="${dto.name}">${dto.name}</td>
-					</tr>
-				</c:forEach>
-			</table>
-			<button type="button" id="btnLineSelectOk" class="close">선택</button>
-		</div>
+			</c:forEach>
+		</table>
+		<button type="button" id="btnLineSelectOk" class="close">선택</button>
+	</div>
 
 </div>
 
 
-<script type="text/javascript">
-
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors,
-	elPlaceHolder: "sContent",
-	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",	
-	htParams : {bUseToolbar : true,
-		fOnBeforeUnload : function(){
-			// alert("아싸!");
-		}
-	}, //boolean
-	fOnAppLoad : function(){
-		//예제 코드
-		//oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
-	},
-	fCreator: "createSEditor2"
-});
-
-function pasteHTML() {
-	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
-	oEditors.getById["sContent"].exec("PASTE_HTML", [sHTML]);
-}
-
-function showHTML() {
-	var sHTML = oEditors.getById["sContent"].getIR();
-	alert(sHTML);
-}
-	
-function submitContents(elClickedObj) {
-	oEditors.getById["sContent"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
-	
-	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
-	
-	try {
-		// elClickedObj.form.submit();
-		return check();
-	} catch(e) {}
-}
-
-function setDefaultFont() {
-	var sDefaultFont = '돋움';
-	var nFontSize = 24;
-	oEditors.getById["sContent"].setDefaultFont(sDefaultFont, nFontSize);
-}
-</script>

@@ -67,6 +67,8 @@ $(function() {
 		ajaxHTML(url, "GET", query, "#signForm");
 	});
 	
+
+	
 });
 
 
@@ -112,7 +114,7 @@ $(function() {
 					var dType = $("#listTable input[name=cb]:checked").closest("td").next().children("input[name=hDType]").val();
 					var pType = $("#listTable input[name=cb]:checked").closest("td").next().next().children("input[name=hPType]").val();
 					var tdName = $("#listTable input[name=cb]:checked").closest("td").next().next().next().children("input[name=hName]").val();
-					$btn.closest("table").find(".typeTd").append("<span>"+ dType + " / " + pType + "</span>");
+					$btn.closest("table").find(".typeTd").append("<span>"+ dType + " " + pType + "</span>");
 					$btn.closest("table").find(".nameTd").append("<span>"+ tdName + "</span>");
 					
 					
@@ -126,14 +128,10 @@ $(function() {
 	$("body").on("click", "#btnLineSelectOk", function(){
 		$('#lineModal-dialog').dialog("close");
 	});
-	
+		
 });
 
-
 </script>
-<div>
-	<span>테이블마다의 이름이 들어간다</span>
-</div>
 
 
 <div id="listBody" style="margin-left: 500px; width: 1000px;">

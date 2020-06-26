@@ -2,6 +2,8 @@ package com.of.sign;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.of.common.MyUtil;
 import com.of.employee.SessionInfo;
 
-import oracle.net.aso.a;
-import oracle.net.aso.p;
-
 @Controller("sign.signController")
 @RequestMapping("/sign/*")
 public class SignController {
@@ -36,6 +35,7 @@ public class SignController {
 	@RequestMapping(value = "mainList")
 	public String list(
 			HttpServletRequest req,
+			HttpSession session,
 			Model model) throws Exception {
 
 		int rows = 3;
@@ -44,11 +44,28 @@ public class SignController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("offset", offset);
 		map.put("rows", rows);
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("employee");
+		System.out.println(info.getEmpNo());
+		map.put("empNo", info.getEmpNo());
 
 		List<Sign> list = service.listSign(map, "wait");
-
+		
+		List<Sign> list2 = service.stepList(map, "reci");
+		
+		List<Sign> list3 = service.finishList(map, "fini");
+		
+		map.put("finish", "finish");
+		// List<Sign> list3 = service.finishSign(map,"");
+		
+		// 결재대기함
 		model.addAttribute("list", list);
-
+		
+		// 수신대기함
+		model.addAttribute("rlist", list2);
+		
+		// 결재 완료함
+		model.addAttribute("flist", list3);
 		return ".sign.mainList";
 	}
 	
@@ -60,12 +77,14 @@ public class SignController {
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			@RequestParam String mode,
+			HttpSession session,
 			Model model
 			) throws Exception{
 		
 		
 		String cp = req.getContextPath();
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("employee");
 		
 		int rows=10; // 10 줄씩 출력
 		int total_page = 0;
@@ -74,42 +93,135 @@ public class SignController {
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			keyword= URLDecoder.decode(keyword,"utf-8");
 		}
-		
 		// 페이지 수 출력
 		Map<String, Object> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
-		dataCount = service.dataCount(map);
-		
-		System.out.println(dataCount);
-		if(dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
-		}
-		
-		
-		// 페이지 변화 시 설정
-		if(total_page < current_page) {
-			current_page=total_page;
-		}
-		
 		int offset = (current_page-1) * rows;
 		if(offset < 0) offset = 0;
 		map.put("offset", offset);
 		map.put("rows", rows);
-
-		List<Sign> list = service.listSign(map, keyword);
-		
+		// 문서함 종류 선택
+	
+		List<Sign> list = null;
 		int listNum, n = 0;
-		for(Sign dto : list) {
-			listNum = dataCount-(offset + n);
-			dto.setListNum(listNum);
-			n++;
-		}
-		
+		String paging = null;
 		String query = "";
 		String listUrl = cp+"/sign/list?mode="+mode;
 		String articleUrl = cp+"/sign/article?page=" + current_page;
+		
+		String option = mode;
+		map.put("empNo", info.getEmpNo());
+		switch (mode) {
+		case "1":
+			mode = "결재대기함";
+			
+			list = service.listSign(map, "wait");
+			
+			dataCount = service.dataCount(map, "wait");
+			
+			if(dataCount != 0) {
+				total_page = myUtil.pageCount(rows, dataCount);
+			}
+			
+			// 페이지 변화 시 설정
+			if(total_page < current_page) {
+				current_page=total_page;
+			}
+			
+			for(Sign dto : list) {
+				listNum = dataCount-(offset + n);
+				dto.setListNum(listNum);
+				n++;
+			}
+			paging = myUtil.paging(current_page, total_page, listUrl);
+			
+			break;
+			
+		case "2":
+			mode = "수신대기함";
+			
+			list = service.stepList(map, keyword);
+			
+			dataCount = service.stepCount(map);
+			if(dataCount != 0) {
+				total_page = myUtil.pageCount(rows, dataCount);
+			}
+			
+			// 페이지 변화 시 설정
+			if(total_page < current_page) {
+				current_page=total_page;
+			}
+			
+			for(Sign dto : list) {
+				listNum = dataCount-(offset + n);
+				dto.setListNum(listNum);
+				n++;
+			}
+			
+			paging = myUtil.paging(current_page, total_page, listUrl);
+
+			model.addAttribute("list", list);
+			model.addAttribute("dataCount", dataCount);
+			model.addAttribute("total_page", total_page);
+			model.addAttribute("page", current_page);
+			model.addAttribute("paging", paging);
+			model.addAttribute("list", list);
+			break;
+		case "3":
+			mode = "결재완료함";
+			
+			list = service.finishList(map, keyword);
+			
+			dataCount = service.dataCount(map, "fini");
+			
+			if(dataCount != 0) {
+				total_page = myUtil.pageCount(rows, dataCount);
+			}
+			
+			// 페이지 변화 시 설정
+			if(total_page < current_page) {
+				current_page=total_page;
+			}
+			
+			for(Sign dto : list) {
+				listNum = dataCount-(offset + n);
+				dto.setListNum(listNum);
+				n++;
+			}
+			paging = myUtil.paging(current_page, total_page, listUrl);
+			
+			break;
+		case "4":
+			mode = "반려함";
+			
+			break;
+		case "5":
+			mode = "검색리스트";
+			
+			list = service.seatchList(map, "searching");
+			
+			dataCount = service.dataCount(map, "searching");
+			
+			if(dataCount != 0) {
+				total_page = myUtil.pageCount(rows, dataCount);
+			}
+			
+			// 페이지 변화 시 설정
+			if(total_page < current_page) {
+				current_page=total_page;
+			}
+			
+			for(Sign dto : list) {
+				listNum = dataCount-(offset + n);
+				dto.setListNum(listNum);
+				n++;
+			}
+			paging = myUtil.paging(current_page, total_page, listUrl);
+			
+			break;
+		}
 		
 		if(keyword.length() != 0) {
 			query = "condition=" + condition + 
@@ -122,34 +234,14 @@ public class SignController {
 			articleUrl = cp+"sign/article?page="+current_page+"&"+query;
 		}
 		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
-		
-		switch (mode) {
-		case "1":
-			mode = "결재대기함";
-			break;
-		case "2":
-			mode = "수신대기함";
-			break;
-		case "3":
-			mode = "결재완료함";
-			break;
-		case "4":
-			mode = "아직안정함";
-			break;
-		case "5":
-			mode = "이것도안정함";
-			break;
-		}
-		
-		
+		model.addAttribute("option", option);
 		model.addAttribute("list", list);
-		model.addAttribute("articleUrl", articleUrl);
-		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
+		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("mode",mode);
@@ -158,11 +250,10 @@ public class SignController {
 	}
 	
 	
-	
 	// create jsp 호출
 	@RequestMapping(value = "created", method = RequestMethod.GET)
 	public String craeteForm(HttpSession session, Model model) throws Exception {
-		model.addAttribute("mode", "created");
+		//model.addAttribute("mode", "created");
 		return ".sign.created";
 	}
 
@@ -220,6 +311,7 @@ public class SignController {
 			@RequestParam(defaultValue="") String valueSnum,
 			Model model) throws Exception {
 		
+		
 		String returnAddr =  "sign/" + option;
 		Sign dto = null;
 		Sign writer = null;
@@ -230,13 +322,19 @@ public class SignController {
 		try {
 			if(mode.equalsIgnoreCase("article")) {
 				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 				writer = service.readWriter(Integer.parseInt(valueSnum));
 				
 				dto = service.readSign(Integer.parseInt(valueSnum));
 				
-				System.out.println(dto.getpEmpNo2());
-				System.out.println(dto.getpEmpNo3());
-				System.out.println(dto.getpEmpNo4());
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
+				
+				date = sdf.parse(dto.getStartDay());
+				sd = sdf1.format(date);
+				dto.setStartDay(sd);
 				
 				if(dto.getpEmpNo2() != null) {
 					pempNo2 = service.readEmp(Integer.parseInt(dto.getpEmpNo2()));
@@ -255,10 +353,11 @@ public class SignController {
 				
 			}
 			
-			
 			List<Sign> list = service.empList();
+			
 			model.addAttribute("list",list);
 			model.addAttribute("dto",dto);
+			model.addAttribute("sNum", valueSnum);
 			model.addAttribute("mode", mode);
 			model.addAttribute("writer", writer);
 
@@ -269,6 +368,25 @@ public class SignController {
 		return returnAddr;
 	}
 	
-	
+	@RequestMapping(value="passSign")
+	public void passSign(
+			@RequestParam String passVal,
+			@RequestParam String sNum,
+			@RequestParam(defaultValue="") String reason,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpSession session,
+			Model model
+			) throws Exception{
+		
+		switch (passVal) {
+		case "ok":
+			service.updateScurrStep(Integer.parseInt(sNum));
+			break;
+		case "no":
+			/*service.(Integer.parseInt(sNum));*/
+			break;
+		}
+	}
 	
 }

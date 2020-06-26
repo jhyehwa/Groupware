@@ -27,10 +27,16 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public int dataCount(Map<String, Object> map, String val) {
 		int result=0;
 		try {
-			result =dao.selectOne("sign.dataCount", map);
+			if(! val.equals("fini")) {
+				map.put("val", "wait");
+				result = dao.selectOne("sign.dataCount", map);
+			}else {
+				map.put("val", "fini");
+				result = dao.selectOne("sign.dataCount", map);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,6 +47,7 @@ public class SignServiceImpl implements SignService {
 	public List<Sign> listSign(Map<String, Object> map, String keyword) {
 		List<Sign> list = null;
 		try {
+			map.put("val", keyword);
 			list = dao.selectList("sign.listSign", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,7 +72,7 @@ public class SignServiceImpl implements SignService {
 		Sign dto = null;
 		
 		try {
-			dto = dao.selectOne("readSign", valueSnum);
+			dto = dao.selectOne("sign.readSign", valueSnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,7 +83,7 @@ public class SignServiceImpl implements SignService {
 	public Sign readEmp(int empNo) {
 		Sign dto = null;
 			try {
-				dto = dao.selectOne("readEmp", empNo);
+				dto = dao.selectOne("sign.readEmp", empNo);
 			}catch (NullPointerException e) {
 				dto = null;
 			}
@@ -91,26 +98,60 @@ public class SignServiceImpl implements SignService {
 	public Sign readWriter(int empNo) {
 		Sign dto = null;
 		try {
-			dto = dao.selectOne("readWriter", empNo);
+			dto = dao.selectOne("sign.readWriter", empNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dto;
 	}
-
-	
 	
 	@Override
-	public void updateSign(Sign dto) throws Exception {
-		// TODO Auto-generated method stub
-
+	public List<Sign> stepList(Map<String, Object> map, String keyword){
+		List<Sign> list = null;
+		try {
+			list = dao.selectList("sign.stepList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public void updateScurrStep(int sNum) throws Exception {
+		dao.updateData("sign.updateScurrStep", sNum);
+	}
+	
+	@Override
+	public int stepCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result =dao.selectOne("sign.stepCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public void deleteBoard(int sNum, String empNoId) throws Exception {
-		// TODO Auto-generated method stub
-
+	public List<Sign> finishList(Map<String, Object> map, String keyword) {
+		List<Sign> list = null;
+		try {
+			list = dao.selectList("sign.finishSignList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
-
+	@Override
+	public List<Sign> seatchList(Map<String, Object> map, String keyword) {
+		List<Sign> list = null;
+		try {
+			System.out.println(keyword);
+			list = dao.selectList("sign.searchlist", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

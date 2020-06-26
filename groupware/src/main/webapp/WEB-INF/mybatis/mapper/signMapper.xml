@@ -37,7 +37,7 @@
 	</select>
 
 	<select id="readSign" parameterType="Integer" resultType="com.of.sign.Sign">
-		SELECT p.pstNum, pempNo2, pempNo3, pempNo4 FROM permission p
+		SELECT sSubject, sContent,sDate ,startDay, p.pstNum, pempNo2, pempNo3, pempNo4, sCurrStep FROM permission p
 		JOIN sign s ON s.snum = p.pstNum
 		WHERE p.pstNum = #{valueSnum}
 	</select>
@@ -72,25 +72,19 @@
 			<when test="condition == 'title'">
 				INSTR(sSubject, #{keyword}) &gt; 0
 			</when>
-			<when test="condition == 'option'">
-				INSTR(stNum, #{keyword}) &gt; 0
-			</when>
 			<when test="condition == 'content'">
 				INSTR(sContent, #{keyword}) &gt; 0
 			</when>
-			<otherwise>
-				INSTR(${condition}, #{keyword}) &gt; 0
-			</otherwise>
 		</choose>
 	</sql>
-
-	<sql id="whereScurrStep">
+	
+	<sql id="val-list">
 		<choose>
-			<when test="scurrStep == '0' ">
-				sCurrStep = 0
+			<when test="val == 'fini' ">
+				sCurrStep = sEndStep AND empNo = #{empNo}
 			</when>
-			<when test="scurrStep != '0' ">
-				sCurrStep != 0
+			<when test="val == 'wait' ">
+				s.empNo = #{empNo}
 			</when>
 		</choose>
 	</sql>
@@ -99,32 +93,130 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM sign s
 		<where>
-			<if test="scurrStep != null and scurrStep != '' ">
-				<include refid="whereScurrStep" />
-			</if>
-			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list" />
+			<if test="val != null and val != '' ">
+				<include refid="val-list"/>
 			</if>
 		</where>
 	</select>
 
 	<select id="listSign" parameterType="map" resultType="com.of.sign.Sign">
-		SELECT sNum, stNum ,sSubject, sContent, s.empNo, name ,sDate,
-		sCurrStep, sEndStep
+		SELECT sNum, stNum ,sSubject, sContent, s.empNo, name ,sDate, sCurrStep, sEndStep
 		FROM sign s
 		JOIN employee e ON s.empNo=e.empNo
 		<where>
-			<if test="scurrStep != null and scurrStep != '' ">
-				<include refid="whereScurrStep" />
-			</if>
-			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list" />
+			<if test="val != null and val != '' ">
+				<include refid="val-list"/>
 			</if>
 		</where>
 		ORDER BY sNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 
-
-
+<!-- ==============================================수신대기함============================================== -->
+	<select id="stepList" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, pEmpNO2 pEmpNO
+			FROM sign s
+				JOIN permission p ON s.snum = p.pstNum
+				JOIN employee e ON s.empno = e.empno
+				JOIN history h ON e.empNo = h.empNo
+				JOIN career c ON c.empNo = h.empNo
+				JOIN dept d ON d.dCode = h.dCode
+				JOIN position p ON p.pCode = h.pCode
+			<where>
+			pempNo2 = #{empNo} and sCurrStep = 1
+			</where>
+		UNION ALL
+		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, pEmpNO3
+			FROM sign s
+				JOIN permission p ON s.snum = p.pstNum
+				JOIN employee e ON s.empno = e.empno
+				JOIN history h ON e.empNo = h.empNo
+				JOIN career c ON c.empNo = h.empNo
+				JOIN dept d ON d.dCode = h.dCode
+				JOIN position p ON p.pCode = h.pCode
+			<where>
+			pempNo3 = #{empNo} and sCurrStep = 2
+			</where>
+		UNION ALL
+		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, pEmpNO4
+			FROM sign s
+				JOIN permission p ON s.snum = p.pstNum
+				JOIN employee e ON s.empno = e.empno
+				JOIN history h ON e.empNo = h.empNo
+				JOIN career c ON c.empNo = h.empNo
+				JOIN dept d ON d.dCode = h.dCode
+				JOIN position p ON p.pCode = h.pCode
+			<where>
+			pempNo4 = #{empNo} and sCurrStep = 3
+			</where>
+	</select>
+	
+	<select id="stepCount" parameterType="map" resultType="Integer">
+	SELECT sum(cnt) FROM(
+		SELECT COUNT(*) cnt 
+			FROM sign s
+				JOIN permission p ON s.snum = p.pstNum
+				JOIN employee e ON s.empno = e.empno
+				JOIN history h ON e.empNo = h.empNo
+				JOIN career c ON c.empNo = h.empNo
+				JOIN dept d ON d.dCode = h.dCode
+				JOIN position p ON p.pCode = h.pCode
+			<where>
+			pempNo2 = #{empNo} and sCurrStep = 1
+			</where>
+		UNION ALL
+		SELECT COUNT(*) cnt
+			FROM sign s
+				JOIN permission p ON s.snum = p.pstNum
+				JOIN employee e ON s.empno = e.empno
+				JOIN history h ON e.empNo = h.empNo
+				JOIN career c ON c.empNo = h.empNo
+				JOIN dept d ON d.dCode = h.dCode
+				JOIN position p ON p.pCode = h.pCode
+			<where>
+			pempNo3 = #{empNo} and sCurrStep = 2
+			</where>
+		UNION ALL
+		SELECT COUNT(*) cnt
+			FROM sign s
+				JOIN permission p ON s.snum = p.pstNum
+				JOIN employee e ON s.empno = e.empno
+				JOIN history h ON e.empNo = h.empNo
+				JOIN career c ON c.empNo = h.empNo
+				JOIN dept d ON d.dCode = h.dCode
+				JOIN position p ON p.pCode = h.pCode
+			<where>
+			pempNo4 = #{empNo} and sCurrStep = 3
+			</where>
+			) a
+	</select>
+	
+	<update id="updateScurrStep" parameterType="Integer">
+		UPDATE sign 
+		SET sCurrStep = sCurrStep + 1
+		WHERE sNum = #{sNum}
+	</update>
+<!-- ==============================================결재완료함============================================== -->
+	<select id="finishSignList" resultType="com.of.sign.Sign">
+		SELECT sNum,stNum , sDept, sDate, startDay, sSubject, sContent, sEndStep, sCurrStep, empNo, pEmpNo2,pEmpNo3,pEmpNo4
+		FROM sign s
+		JOIN permission p ON s.sNum = p.pstNum
+		<where>
+			sEndStep = sCurrStep AND empNo = #{empNo}
+		</where>
+		ORDER BY sNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+<!-- ==============================================결재함 통합 검색============================================== -->
+	<select id="searchlist" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT *
+		FROM sign s
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list" />
+			</if>
+			AND empNo = #{empNo}
+		</where>
+	</select>
 </mapper>
