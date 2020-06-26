@@ -43,6 +43,7 @@
     border-radius:2px;
 }
 
+
 .textDate {
       font-weight: 500; cursor: pointer; font-size:20px; display: block;
       
@@ -64,10 +65,16 @@
 }
 
 .saturdayDate{
-       width:30px;
+      width:30px;
 	  height:30px;
       font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#632A7E;
 }
+
+.saturdayDate .foodSubject {
+	 background:#EEE0F9;
+   opacity: 0.5;
+}
+
 .sundayDate{
        width:30px;
 	  height:30px;
@@ -80,14 +87,28 @@
    width:110px;
    height:25px;
    line-height: 25px;
-   margin:1.5px 0;
-   font-size:16px;
+   margin:1.5px 0; 
    color:#333333;
    background:#EEE0F9;
    cursor: pointer;
    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 
+.foodBtn{
+	color: #6E3C89;
+	background:white;
+	border:1px solid #6E3C89;
+	border-top-left-radius: 5px; 
+	border-bottom-left-radius: 5px; 
+	border-top-right-radius: 5px; 
+	border-bottom-right-radius: 5px; 
+	padding:3px 3px;
+}
+
+.foodBtn:hover{ 
+	color:white; 
+	background-color: #6E3C89; 
+}
 
 #menuBtn{
 	border: 1px solid #632A7E;
@@ -95,11 +116,11 @@
 	background: white;
 	color:#632A7E;
 	padding: 5px;
+
 }
 
 </style>
 <script type="text/javascript">
-
 
 function ajaxHTML(url, method, query, selector) {
 	$.ajax({
@@ -136,22 +157,6 @@ $(function(){
     });
 });
 
-$(function(){
-	$("ul.tabs li").click(function() {
-		tab = $(this).attr("data-tab");
-		
-		$("ul.tabs li").each(function(){
-			$(this).removeClass("active");
-		});
-		
-		$("#tab-"+tab).addClass("active");
-		
-		var url="<%=cp%>/food/month"	
-
-		
-		location.href=url;
-	});
-});
 
 function changeDate(year, month) {
 	var url="<%=cp%>/food/month?year="+year+"&month="+month;
@@ -160,6 +165,8 @@ function changeDate(year, month) {
 
 // 스케쥴 등록 -----------------------
 // 등록 대화상자 출력
+<c:if test="${sessionScope.employee.empNo=='10001'}">
+
 $(function(){
 	$(".textDate").click(function(){
 		// 폼 reset
@@ -236,6 +243,8 @@ $(function(){
 	});
 });
 
+</c:if>
+
 // 등록내용 유효성 검사
 function check() {
 	if(! $("#form-subject").val()) {
@@ -245,6 +254,7 @@ function check() {
 
 	if(! $("#form-created").val()) {
 		$("#form-created").focus();
+		alert("내용을 입력하세요");
 		return false;
 	}
 
@@ -317,7 +327,7 @@ function deleteOk(num) {
 		        	</tr>
 		        	
 		        	<tr>
-		        		<td style="padding: 10px 0 0 50px; ">${year}년 ${month}월  ${todayDate}일 </td>
+		        		<td style="padding: 10px 0 0 50px; ">${todayYear}년 ${todayMonth}월  ${todayDate}일 </td>
 		        	</tr>
 	        	</table>
 	        	
@@ -383,7 +393,7 @@ function deleteOk(num) {
 					</tr>
 
 				<c:forEach var="row" items="${days}" >
-						<tr align="center" height="120" valign="top" bgcolor="#ffffff">
+						<tr align="center" height="120" valign="top">
 							<c:forEach var="d" items="${row}">
 								<td style="padding: 5px; box-sizing:border-box;">
 									${d}
@@ -397,12 +407,12 @@ function deleteOk(num) {
     </div>
 
 
-   <div id="food-dialog" style="display: none;">
+   <div id="food-dialog" class="modal" style="display: none;">
 		<form name="foodForm">
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tr>
 			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
-			            <label style="font-weight: 900;">제목</label>
+			            <label style="font-weight: 900;">분류</label>
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
@@ -435,16 +445,16 @@ function deleteOk(num) {
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <textarea name="content" id="form-content" class="boxTA" style="width:93%; height: 70px;"></textarea>
+			            <textarea name="content" id="form-content" class="boxTA" style="width:400px; height: 200px; resize: none;"></textarea>
 			        </p>
 			      </td>
 			  </tr>
 			  
 			  <tr height="45">
 			      <td align="center" colspan="2">
-			        <button type="button" class="btn" id="btnFoodSendOk">식단등록</button>
-			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" id="btnFoodSendCancel">등록취소</button>
+			        <button type="button" class="foodBtn" id="btnFoodSendOk">식단등록</button>
+			        <button type="reset" class="foodBtn">다시입력</button>
+			        <button type="button" class="foodBtn" id="btnFoodSendCancel">등록취소</button>
 			      </td>
 			  </tr>
 			</table>
