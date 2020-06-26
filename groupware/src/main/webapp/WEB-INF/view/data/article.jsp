@@ -5,10 +5,20 @@
 <%
    String cp = request.getContextPath();
 %>
+<link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
 
 <script type="text/javascript">
+function deleteDatadept() {
+	var q = "dataNum=${dto.dataNum}&${query}&dCode=${dto.dCode}";
+	var url = "<%=cp%>/data/delete?" + q;
+
+	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+		  	location.href=url;
+	}
+}
+
 function deleteData() {
-	var q = "dataNum=${dto.dataNum}&${query}";
+	var q = "dataNum=${dto.dataNum}&${query}&dCode=NON";
 	var url = "<%=cp%>/data/delete?" + q;
 
 	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
@@ -233,86 +243,88 @@ $(function(){
 
 	
 <div class="container">
-    <div class="board-container">
-        <div class="board-title">
-            <h3>♬ 자료실 </h3>
-        </div>
+     <div class="board-container">
+       <div class="body-title" style="font-size: 18px;">
+            <h3> ♬ 자료실 </h3>
+      </div>
+      
+       <div class="board-body" style="float: left; width: 20%;">	      
+	       <div class="leftside">	        	
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/data/created';"><i class="fas fa-marker"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/data/list';"><i class="fas fa-list"></i></button>	
+	       </div>   
+      </div>
         
-        <div class="board-article">
-			<table>
-			<tr height="35" style="background:#006461; color: white; ">
-			    <td colspan="2" align="center">
-				    ${dto.title}
-			    </td>
-			</tr>
+      <div class="board-article" style="margin-top: 10px; width: 80%; float: left;">
+			<table class="articleTable">
+			<tr align="left" height="40"  > 
+			      <td class="typeTd" colspan="2">			      	 
+			
+			      	<button type="button" class="articlebtn" onclick="updateData();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
+			      	<c:if test="${dto.dCode=='NON'}">
+			      		<button type="button" class="articlebtn" onclick="deleteData();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+			 		</c:if>
+			 		<c:if test="${dto.dCode!='NON'}">
+			 			<button type="button" class="articlebtn" onclick="deleteDatadept();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+			 		</c:if>
+			 	  
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		
+			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${nextReadDto.dataNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${preReadDto.dataNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			      </td>
+			</tr>		
+			 		
+			 <tr align="left" height="50"> 
+				 <td class="titleTd" colspan="2">
+				 	${dto.title}  
+				</td>   
+			 </tr>		 	
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
-			       작성자 : ${dto.name}
+			    <td class="nameTd" align="left">
+			      ${dto.name}
 			    </td>
-			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created} 
+			    <td class="createdTd" align="right";>
+			        ${dto.created}
 			    </td>
 			</tr>
 			
-			<tr >
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-			      ${dto.content}
-			   </td>
-			</tr>			
-		
 			<c:forEach var="vo" items="${listFile}">
-				<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				    <td colspan="2" align="left" style="padding-left: 5px;">
-				     첨부 된 파일 :  <a href="<%=cp%>/data/download?fileNum=${vo.fileNum}">${vo.originalFilename} </a>	
-				     (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte)		       
+				<tr>
+				    <td class="fileTd" colspan="2" align="left">
+				     <i class="fas fa-save"></i> 첨부 자료 | <a href="<%=cp%>/data/download?fileNum=${vo.fileNum}" style="font-size: 15px;">${vo.originalFilename}  (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte) </a>	        
 				    </td>
 				</tr>
 			</c:forEach>
 			
-			<tr height="35" style="border-top: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       이전글 :
-					<c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/data/article?${query}&dataNum=${preReadDto.dataNum}">${preReadDto.title}</a>
-			        </c:if>
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       다음글 :
-					 <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/data/article?${query}&dataNum=${nextReadDto.dataNum}">${nextReadDto.title}</a>
-			        </c:if>
-			    </td>
-			</tr>
-			<tr height="45">
-			    <td>
-			          <button type="button" class="boardBtn" onclick="updateData();">수정</button>
-			          <button type="button" class="boardBtn" onclick="deleteData();">삭제</button>
-			    </td>
-			
-			    <td align="right">
-			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/data/list';">리스트</button>
-			    </td>
-			</tr>
+			<tr>
+			  <td class="contentTd" colspan="2" align="left" valign="top">
+			      ${dto.content}
+			   </td>
+			</tr>	
 			</table>			
+			
+			
         <div>
-		<table style="margin-top: 20px">
+		<table class="replyTable">
 			<tr height='30'> 
-				 <td align='left' >
-				 	<span style='font-weight: bold;'>댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				<td class="replyTd" align='left'>
+				 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;${dto.replyCount}&nbsp;&nbsp;
 				 </td>
 			</tr>
 			<tr>
 			   	<td style='padding:5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+					<textarea class='replyArea'></textarea>
 			    </td>
 			</tr>
 			<tr>
 			   <td align='right'>
-			        <button type='button' class='boardBtn btnSendReply' style='padding:5px 5px; margin-right: 10px;'>댓글 등록</button>
+			        <button type='button' class='btn btnSendReply'>댓글 등록</button>
 			    </td>
 			 </tr>
 		</table>  		

@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resource/css/community.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 //clone을 사용하는 경우
@@ -63,75 +64,132 @@ $(function(){
  
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+   var fileTarget = $('.filebox .upload-hidden');
+
+    fileTarget.on('change', function(){
+        if(window.FileReader){
+            // 파일명 추출
+            var filename = $(this)[0].files[0].name;
+        } 
+
+        else {
+            // Old IE 파일명 추출
+            var filename = $(this).val().split('/').pop().split('\\').pop();
+        };
+
+        $(this).siblings('.upload-name').val(filename);
+    });
+
+    //preview image 
+    var imgTarget = $('.preview-image .upload-hidden');
+
+    imgTarget.on('change', function(){
+        var parent = $(this).parent();
+        parent.children('.upload-display').remove();
+
+        if(window.FileReader){
+            //image 파일만
+            if (!$(this)[0].files[0].type.match(/image\//)) return;
+            
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var src = e.target.result;
+                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+            }
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+
+        else {
+            $(this)[0].select();
+            $(this)[0].blur();
+            var imgSrc = document.selection.createRange().text;
+            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+            var img = $(this).siblings('.upload-display').find('img');
+            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+        }
+    });
+});
+</script>
+
+
 <div class="container">
-    <div class="board-container">
-        <div class="body-title">
-            <h3>♬ 커뮤니티 </h3>
+    <div class="board-container" style="margin-left: 200px;">
+        <div class="body-title" style="font-size: 18px;">
+            <h3> ♬ 커뮤니티 </h3>
+        </div>  
+        
+        <div class="board-body" style="float: left; width: 20%;">	      
+	        	<div style="margin-top: 20px; margin-left: 20px;">	        	
+	           		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/community/list';"><i class="fas fa-list"></i></button>
+	           	</div>   
         </div>
         
-        <div class="board-created">
+        <div class="board-created" style="margin-top: 20px;">
+         <div class="body-title" style="margin-bottom: 10px;">
+          		  <h3 style="font-size: 20px;">| 글쓰기 </h3>
+         </div>
+         
 			<form name="communityForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-			  <table class="boardtable" style="margin: 20px auto 0px; ">
+			  <table class="boardtable" style="margin-left: 5px; ">
 			  <tbody id="tb">
-				  <tr align="left" height="40"> 
-				      <td width="100"  style="text-align: center;">작 성 자</td>
-				      <td style="padding-left:10px;"> 
-				          <input class="inputnoline" type="text" name="writer" maxlength="100" value="${sessionScope.employee.name}">
-				      </td>
-				  </tr>
-				  
-				  <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
-				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="title" maxlength="100" value="${dto.title}">
-				      </td>
-				  </tr>		  
-				  
-				   <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">동호회 분류</td>
-				      <td style="padding-left:10px;"> 
-			      		<select name="clubCode">
+			  	  <tr align="left" height="50" > 
+			  	     <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">T O .</td>
+				      <td style="color: #424242; background: white; text-align: left; padding-left: 10px; border-bottom: 1px solid #cccccc;">				      
+			      		<select name="clubCode" style="width: 200x; text-align: center; background: white; height: 30px; border-radius: 4px; border: 1px solid #cccccc;">
 			      		 <c:forEach var="dto" items="${listClub}"> 
 			      		 	<option value="${dto.clubCode}">${dto.clubType}</option>			
 			     		</c:forEach>		     				     	
 			     		</select>			   
 			      	</td>
-				  </tr>
+				  </tr>					
+				  
+				  <tr align="left" height="50"  > 
+				      <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">제 목</td>
+				      <td style="padding-left:10px; border-bottom: 1px solid #cccccc;"> 
+				        <input type="text" name="title" maxlength="100" style="height: 27px; width: 930px; border: 1px solid #cccccc;" value="${dto.title}">
+				      </td>
+				  </tr>		 		  		   
 			
-				  <tr align="left"> 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="middle">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</td>
-				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
+				  <tr align="left" height="300"> 
+				      <td style="width: 100px; background: white; color: #424242; border-bottom: 1px solid #cccccc; text-align: center; padding-top:10px;" valign="middle">내 용</td>
+				      <td valign="top" style="padding:20px 0px 20px 10px; border-bottom: 1px solid #cccccc;"> 
 				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
 				      </td>
-				  </tr>
+				  </tr>  
 				  
-				 <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨부</td>
-				      <td style="padding-left:10px;"> 
-				          <input type="file" name="upload" class="boxTF" size="53" style="width: 95%; height: 25px;">
+				  <tr align="left" height="50"> 
+				      <td style="width: 100px; background: white; color: #424242; text-align: center; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #cccccc;">첨부</td>
+				      <td style="padding-left:10px; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #cccccc;"> 
+				      	<div class="filebox">				       
+				          <input class="upload-name" value="파일 선택" disabled="disabled">
+				          <label for="ex_filename">업로드</label>
+				          <input type="file" id="ex_filename" class="upload-hidden" name="upload" class="boxTF" size="53" style="width: 95%; height: 25px;">
+				        </div>
 				       </td>
-			  	</tr>
-             	 </tbody>
-              
-				<c:if test="${mode=='update'}">
+			  	  </tr> 
+			  	  
+			  	   <c:if test="${mode=='update'}">
 				   <c:forEach var="vo" items="${listFile}">
 						  <tr id="f${vo.fileNum}" height="40" style="border-bottom: 1px solid #cccccc;"> 
-						      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨부된파일</td>
+						      <td style="width: 100px; text-align: center;">첨부된파일</td>
 						      <td style="padding-left:10px;"> 
 								<a href="javascript:deleteFile('${vo.fileNum}');"><i class="far fa-trash-alt"></i></a> 
 								${vo.originalFilename}
 						      </td>
 						  </tr>
 				   </c:forEach>
-				</c:if>
+				</c:if>				
+             	 </tbody>          
 			  </table>			  
 			
-			  <table>
+			  <table class="boardtable" style="margin-left: 320px; background: white; margin-top: 35px;">
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="submit" class="boardBtn">${mode=='update'?'수정완료':'등록하기'}</button>
-			        <button type="reset" class="boardBtn">다시입력</button>
-			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/community/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="submit" class="boardBtn">${mode=='update'?'수 정':'등 록'}</button>
+			        <button type="reset" class="boardBtn2">다시입력</button>
 			      	 <c:if test="${mode=='update'}">
 			         	 <input type="hidden" name="commuNum" value="${dto.commuNum}">
 			        	 <input type="hidden" name="page" value="${page}">

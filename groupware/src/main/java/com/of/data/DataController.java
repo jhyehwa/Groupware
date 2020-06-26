@@ -36,10 +36,11 @@ public class DataController {
 	private FileManager fileManager;
 	
 	@RequestMapping(value="/data/list")
-	public String list(
+	public String list(			
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="NON") String dCode,
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -54,6 +55,7 @@ public class DataController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("condition", condition);
         map.put("keyword", keyword);
+        map.put("dCode", dCode);
 
         dataCount = service.dataCount(map);
         if(dataCount != 0)
@@ -68,7 +70,8 @@ public class DataController {
         map.put("rows", rows);
       
         List<Data> list = service.listData(map);
-      
+        int totalFile = service.totalFile();
+        
         Date endDate = new Date();
         long gap;
         int listNum, n = 0;
@@ -101,8 +104,9 @@ public class DataController {
         	articleUrl = cp+"/data/article?page=" + current_page + "&"+ query;
         }
         
-        String paging = myUtil.paging(current_page, total_page, listUrl);
-		
+        String paging = myUtil.paging(current_page, total_page, listUrl);   
+              
+        model.addAttribute("totalFile", totalFile);
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
@@ -110,14 +114,103 @@ public class DataController {
 		model.addAttribute("paging", paging);		
 		model.addAttribute("articleUrl", articleUrl);
 		
+		model.addAttribute("dCode", dCode);			
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
 		return ".data.list";
-	}
+	}	
 	
-	
-	
+	@RequestMapping(value="/data/deptList")
+	public String deptListData(			
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="") String dCode,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		int rows = 10; 
+		int total_page = 0;
+		int dataCount = 0;
+   	    
+		if(req.getMethod().equalsIgnoreCase("GET")) { 
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}		
+      
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("condition", condition);
+        map.put("keyword", keyword);
+        map.put("dCode", dCode);
+
+        dataCount = service.dataCount(map);
+        if(dataCount != 0)
+            total_page = myUtil.pageCount(rows,  dataCount) ;
+       
+        if(total_page < current_page) 
+            current_page = total_page;           
+        
+        int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
+        map.put("offset", offset);
+        map.put("rows", rows);
+      
+      
+        List<Data> list = service.deptListData(map);
+        int totalFile = service.totalFile();
+        String type = "";
+        Date endDate = new Date();
+        long gap;
+        int listNum, n = 0;
+        for(Data dto : list) {
+            listNum = dataCount - (offset + n);
+            dto.setListNum(listNum);
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date beginDate = formatter.parse(dto.getCreated());            
+            
+            gap=(endDate.getTime() - beginDate.getTime()) / (24 * 60 * 60* 1000);
+            dto.setGap(gap);
+            
+            type = dto.getdType();
+            
+            dto.setCreated(dto.getCreated().substring(0, 10));
+            
+            n++;
+        }
+        
+        
+        
+        String cp=req.getContextPath();
+        String query = "";
+        String listUrl = cp+"/data/deptList";
+        String articleUrl = cp+"/data/article?page=" + current_page;
+        if(keyword.length()!=0) {
+        	query = "condition=" + condition + 
+        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+        }
+        
+        if(query.length()!=0) {
+        	listUrl = cp+"/data/deptList?" + query;
+        	articleUrl = cp+"/data/article?page=" + current_page + "&"+ query;
+        }
+        
+        String paging = myUtil.paging(current_page, total_page, listUrl);   
+              
+        model.addAttribute("totalFile", totalFile);
+		model.addAttribute("list", list);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);		
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("val", type);		
+		model.addAttribute("dCode", dCode);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		return ".data.deptList";
+	}	
 	
 	@RequestMapping(value="/data/created", method=RequestMethod.GET)
 	public String createdForm(
@@ -199,12 +292,7 @@ public class DataController {
 		model.addAttribute("query", query);
 		
 		return ".data.article";
-	}
-	
-	
-	
-	
-	
+	}	
 	
 	@RequestMapping(value="/data/update", method=RequestMethod.GET)
 	public String updateForm(
@@ -225,7 +313,7 @@ public class DataController {
 			return "redirect:/data/list?page="+page;
 		}
 		
-		List<Data> listFile=service.listFile(dataNum);
+		List<Data> listFile=service.listFile(dataNum);	
 			
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
@@ -256,9 +344,7 @@ public class DataController {
 		}
 		
 		return "redirect:/data/list?page="+page;
-	}
-	
-	
+	}	
 	
 	
 	@RequestMapping(value="/data/delete")
@@ -267,6 +353,7 @@ public class DataController {
 			@RequestParam String page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
+			@RequestParam String dCode,
 			HttpSession session) throws Exception {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("employee");
@@ -288,7 +375,13 @@ public class DataController {
 		} catch (Exception e) {
 		}
 		
-		return "redirect:/data/list?"+query;
+		if(dCode.equals("NON")) {
+			return "redirect:/data/list?"+query;
+		} else {
+			return "redirect:/data/deptList?dCode="+dCode;
+		}
+		
+		
 	}
 	
 	
@@ -498,4 +591,15 @@ public class DataController {
 		return map;
 	}
 	
+	
+	@RequestMapping(value="/data/deleteList", method=RequestMethod.POST)
+	public String deleteList(
+			@RequestParam List<String> dataNums,
+			@RequestParam String page
+			) throws Exception {
+		
+		service.deleteListData(dataNums);		
+		
+		return "redirect:/data/list?page="+page;
+	}	
 }

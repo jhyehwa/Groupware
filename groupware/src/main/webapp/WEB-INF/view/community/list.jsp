@@ -50,7 +50,8 @@
 	        	<div style="margin-top: 20px; margin-left: 20px;">
 	        		<button type="button" style="width: 110px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/community/created';"><i class="fas fa-marker"></i></button>
 	        		<button type="button" class="modalbtn" style="width: 110px; height: 50px; background: #9565A4; color: white; font-size: 23px; border: none; border-radius: 10px;"><a class="btn" href="#ex7"><i class="fas fa-user-friends"></i>&nbsp;<i class="fas fa-plus-circle"></i></a></button>
-	        	</div>	       	       
+	        	</div> 
+	     
             <form name="searchForm" action="" method="post">
         	<div class="selectGroup">
         		  <select class="selectBox" name="condition" class="selectField">			              
@@ -70,10 +71,10 @@
         
         
         
-        <div class="board-body" style="width: 40%; float: left;" >        
+        <div class="board-body" style="width: 45%; float: left;" >        
         	  <div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
           		  <h3 style="font-size: 18px;">| 최신글
-          		  &nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -142,7 +143,7 @@
         <div class="board-body" style="width: 30%; float: left; margin-left: 60px;"> 
         	<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
           		  <h3 style="font-size: 18px;">| 커뮤니티 정보</h3>           
-          		  <table style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-radius: 20px;">		 
+          		  <table style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none;">		 
           		  <c:forEach var="dto" items="${listClub}">          		  	  
 					  <tr align="left"> 		
 					      <td style="font-weight: bold; font-size: 16px; padding-left: 10px;">

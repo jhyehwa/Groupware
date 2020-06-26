@@ -7,7 +7,9 @@ public interface DataService {
 public void insertData(Data dto, String pathname) throws Exception;
 	
 	public int dataCount(Map<String, Object> map);
-	public List<Data> listData(Map<String, Object> map);	
+	public List<Data> listData(Map<String, Object> map);
+	public List<Data> deptListData(Map<String, Object> map);
+	public int totalFile();
 
 	public Data readData(int num);
 	public Data preReadData(Map<String, Object> map);
@@ -15,6 +17,7 @@ public void insertData(Data dto, String pathname) throws Exception;
 	
 	public void updateData(Data dto, String pathname) throws Exception;
 	public void deleteData(int Data, String pathname) throws Exception;
+	public int deleteListData(List<String> dataNums) throws Exception;
 	
 	public void insertFile(Data dto) throws Exception;
 	public List<Data> listFile(int num);

@@ -17,6 +17,7 @@ public class Community {
 	private String content;
 	private String created; 
 	private int hitCount;
+	private String pType;
 
 	private int fileNum;
 	private String originalFilename, saveFilename;	
@@ -25,7 +26,17 @@ public class Community {
 	private long gap;
 	
 	private int replyCount;	
-	private int commuLikeCount;		
+	private int commuLikeCount;	
+	
+	
+
+	public String getpType() {
+		return pType;
+	}
+
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
 
 	public int getCommuLikeCount() {
 		return commuLikeCount;

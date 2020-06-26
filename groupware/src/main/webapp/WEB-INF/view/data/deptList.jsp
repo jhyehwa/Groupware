@@ -8,6 +8,7 @@
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.tablesorter.min.js"></script>
 <link rel="stylesheet" href="<%=cp%>/resource/css/data.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
 
 <script type="text/javascript">
 	function searchList() {
@@ -49,10 +50,17 @@ $(function() {
 });
 </script>
 
+<script>
+	/* var dCode = $("input[name=dCode]").val();
+    console.log(dCode);
+	  
+    $("#dddcode").html(dCode);  */
+</script>  
+
 
 
 <div class="container">
-    <div class="board-container" style="margin-left: 200px;">
+    <div class="board-container">
         <div class="board-title" style="font-size: 18px;">
             <h3>♬ 자료실 </h3>
         </div>
@@ -175,30 +183,30 @@ $(function() {
 			
 			
 			
-		<div class="board-body" style="width: 58%; float: left;" > 
+		<div class="board-body" style="width: 69%; float: left;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 전체 자료실
+          		  <h3 id="#dddcode" style="font-size: 18px;">| ${val} 자료실
           		  &nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  
-          		  <button type="button" id="btnDeleteList" style="border:none; background: none; font-size: 20px; margin-bottom: 7px; margin-left: 5px; color: #353535;"> <i class="far fa-trash-alt"></i></button>   
-          		  &nbsp;
-          		  <button type="button" style="border: none; background: transparent;" onclick="javascript:location.href='<%=cp%>/data/list';"><i class="fas fa-redo-alt"></i></button>
+          		  <button type="button" style="border: none; background: transparent;" onclick="javascript:location.href='<%=cp%>/data/deptList?dCode=${dCode}';"><i class="fas fa-redo-alt"></i></button>   
           		  </h3>          		 
-      		  </div> 	
-      		  
+      		  </div> 	   		  
       		  
       		        	
       		<form method="post" name="dataListForm">	        
-			<table id="dataTable" class="tablesorter" style="border-collapse: collapse; border-bottom: 1px solid #cccccc;  width: 810px;">
+			<table id="dataTable" class="tablesorter"> 
+ 
 				<thead>				 
-				  <tr align="center" style="border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; font-size: 14px; font-weight: bold; color: #424242;">		
+				  <tr class="menuTr" align="center">		
 				  	  <td> <input type="checkbox" name="chkAll" id="chkAll" value="all" ></td>  				  
-				      <td width="80px;">분류 <span style="font-size: 11px;"> <i class="fas fa-sort"></i> </span></td>
-				      <td width="400px;">제목 <span style="font-size: 11px;"> <i class="fas fa-sort"></i> </span></td>	
+				      <td width="100px;">분류 <span style="font-size: 11px;"> <i class="fas fa-sort"></i> </span></td>
+				      <td width="500px;">제목 <span style="font-size: 11px;"> <i class="fas fa-sort"></i> </span></td>	
 				      <td>자료 크기 <span style="font-size: 11px;"> <i class="fas fa-sort"></i> </span> </td>		      
 				      <td>등록 날짜 <span style="font-size: 11px;"> <i class="fas fa-sort"></i> </span> </td>			   
 				     <td>다운로드</td>
@@ -207,7 +215,7 @@ $(function() {
 				
 			 <tbody>
 			 <c:forEach var="dto" items="${list}">
-			  <tr align="center" style="border-bottom: 1px solid #E6E6E6;"> 
+			  <tr class="dtoTr" align="center"> 
 			  	  <td ><input type="checkbox" name="dataNums" value="${dto.dataNum}"></td>		      
 			      <td>${dto.dataType}</td>
 			      <td align="left" style="padding-left: 10px;">
@@ -227,14 +235,14 @@ $(function() {
 			      <td>
                    <c:if test="${dto.fileCount != 0}">
                         <a href="<%=cp%>/data/zipdownload?dataNum=${dto.dataNum}"><i class="fas fa-arrow-circle-down"></i></a>
-                   </c:if>		      
-		     	  </td>
-			  </tr>
+                   </c:if>		
+                   	<input type="hidden" name="page" value="${page}">		
+					<input type="hidden" name="dCode" value="${dto.dCode}">      
+		     	 </td>
+			  </tr>			
 			 </c:forEach>
 			 </tbody>
 			</table>			
-				<input type="hidden" name="page" value="${page}">		
-				<input type="hidden" name="dCode" value="${dto.dCode}">	
 			</form>			
 			 
 			<table style="margin-top: 10px;">
@@ -244,22 +252,11 @@ $(function() {
 				</td>
 			   </tr>
 			</table>
-		</div>
+		</div>			
 		
 		
-		<div class="board-body" style="width: 22%; float: left;" > 
-			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 부서별 자료실 </h3> 
-          		  <div class="deptdata">
-          		  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:location.href='<%=cp%>/data/deptList?dCode=DV';"> <i class="fas fa-folder-open"></i>&nbsp;&nbsp;개발부 </button>
-          		  <button id="dbtn" type="button" onclick="javascript:location.href='<%=cp%>/data/deptList?dCode=BM';"> <i class="fas fa-folder-open"></i>&nbsp;&nbsp;경영지원부 </button>   
-          		  <button id="dbtn" type="button" onclick="javascript:location.href='<%=cp%>/data/deptList?dCode=PM';"> <i class="fas fa-folder-open"></i>&nbsp;&nbsp;기획부 </button>   
-          		  <button id="dbtn" type="button" onclick="javascript:location.href='<%=cp%>/data/deptList?dCode=HR';"> <i class="fas fa-folder-open"></i>&nbsp;&nbsp;인사부 </button>   
-          		  <button id="dbtn" type="button" onclick="javascript:location.href='<%=cp%>/data/deptList?dCode=PR';"> <i class="fas fa-folder-open"></i>&nbsp;&nbsp;홍보부 </button>       	 
-				</div>
-				  		 
-            </div>
-		</div>		
-		  
+		<div class="board-body" style="width: 10%; float: left;" > 
+			<button id="backbtn" type="button" onclick="javascript:location.href='<%=cp%>/data/list';"> <i class="far fa-arrow-alt-circle-left"></i><span style="font-size: 20px;">Back</span></button>		
+		</div>		  
     </div>
 </div>

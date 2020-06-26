@@ -48,11 +48,13 @@
 	
 	<!-- 리스트 -->
 	<select id="listCommu" parameterType="map" resultType="com.of.community.Community">
-		SELECT c.commuNum, cb.clubType, e.name, title, created, content, hitCount, 
+		SELECT c.commuNum, cb.clubType, e.name, title, created, content, hitCount, p.pType,
 			   NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount,
 			   NVL(commuLikeCount, 0) commuLikeCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN position p ON p.pCode = h.pCode
 		JOIN club cb ON c.clubCode = cb.clubCode
  		LEFT OUTER JOIN (
 			SELECT commuNum, COUNT(*) fileCount FROM commuFile
@@ -106,10 +108,12 @@
 	
 	<!-- 글보기 -->
     <select id="readCommu" parameterType="Integer" resultType="com.of.community.Community">
-		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount,
+		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount, p.pType,
 			   NVL(commuLikeCount, 0) commuLikeCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN position p ON p.pCode = h.pCode
 		JOIN club cb ON c.clubCode = cb.clubCode 
 		LEFT OUTER JOIN (
 			SELECT commuNum, COUNT(*) commuLikeCount FROM commuLike

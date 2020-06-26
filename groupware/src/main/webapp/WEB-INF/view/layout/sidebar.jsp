@@ -52,8 +52,8 @@
 				<a href="#"><i class="far fa-comment-alt"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">이이이이이이이</a></li>
-				<li><a href="#">이이이이이이이</a></li>
+				<li><a href="#">쪽지</a></li>
+				<li><a href="#">쪽지</a></li>
 			</ul>
 		</li>
 		
@@ -62,8 +62,8 @@
 				<a href="#"><i class="far fa-address-book"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">삼삼삼삼삼삼</a></li>
-				<li><a href="#">삼삼삼삼삼삼</a></li>
+				<li><a href="#">주소록</a></li>
+				<li><a href="#">주소록</a></li>
 			</ul>
 		</li>
 		
@@ -72,8 +72,8 @@
 				<a href="<%=cp%>/sign/mainList"><i class="fas fa-file-signature"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">사사사사사사</a></li>
-				<li><a href="#">사사사사사사</a></li>
+				<li><a href="#">전자결재</a></li>
+				<li><a href="#">전자결재</a></li>
 			</ul>
 		</li>
 		
@@ -82,8 +82,8 @@
 				<a href="#"><i class="fas fa-calendar-alt"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">오오오오오오</a></li>
-				<li><a href="#">오오오오오오</a></li>
+				<li><a href="#">일정</a></li>
+				<li><a href="#">일정</a></li>
 			</ul>
 		</li>
 		
@@ -92,8 +92,8 @@
 				<a href="<%=cp%>/community/list"><i class="fas fa-users"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">육육육육육육</a></li>
-				<li><a href="#">육육육육육육</a></li>
+				<li><a href="#">커뮤니티</a></li>
+				<li><a href="#">커뮤니티</a></li>
 			</ul>
 		</li>
 		
@@ -102,8 +102,8 @@
 				<a href="<%=cp%>/notice/list"><i class="fas fa-bullhorn"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">칠칠칠칠칠칠</a></li>
-				<li><a href="#">칠칠칠칠칠칠</a></li>
+				<li><a href="#">공지/소식/식단</a></li>
+				<li><a href="#">공지/소식/식단</a></li>
 			</ul>
 		</li>
 		
@@ -112,8 +112,8 @@
 				<a href="#"><i class="fas fa-user-clock"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">팔팔팔팔팔팔</a></li>
-				<li><a href="#">팔팔팔팔팔팔</a></li>
+				<li><a href="#">근태관리</a></li>
+				<li><a href="#">근태관리</a></li>
 			</ul>
 		</li>
 		
@@ -122,8 +122,8 @@
 				<a href="<%=cp%>/data/list"><i class="fas fa-download"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">구구구구구구</a></li>
-				<li><a href="#">구구구구구구</a></li>
+				<li><a href="#">자료실</a></li>
+				<li><a href="#">자료실</a></li>
 			</ul>
 		</li>
 	</ul>

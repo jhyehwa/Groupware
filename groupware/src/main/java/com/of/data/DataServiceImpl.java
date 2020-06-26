@@ -66,6 +66,7 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public List<Data> listData(Map<String, Object> map) {
 		List<Data> list = null; 
+		System.out.println(map.get("dCode"));
 		
 		try {
 			list=dao.selectList("data.listData", map);
@@ -272,6 +273,46 @@ public class DataServiceImpl implements DataService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public int totalFile() {
+		int totalFile = 0;
+		
+		try {
+			totalFile = dao.selectOne("data.totalFile");
+		} catch (Exception e) {
+			return 0;
+		}
+		
+		return totalFile;
+	
+	}
+
+	@Override
+	public int deleteListData(List<String> dataNums) throws Exception {
+		int result = 0;
+		
+		try {
+			result = dao.deleteData("data.deleteListData", dataNums);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}						
+		return result;
+	}
+
+	@Override
+	public List<Data> deptListData(Map<String, Object> map) {
+		List<Data> list = null; 
+		System.out.println(map.get("dCode"));
+		try {
+			list=dao.selectList("data.deptListData", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;	
 	}
 
 }

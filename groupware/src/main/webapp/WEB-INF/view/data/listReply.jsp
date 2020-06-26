@@ -7,24 +7,16 @@
 
 <table>
 	<thead id='listReplyHeader' style="margin: 20px auto 0px;">
-		<tr height='35'>
-			<td colspan='2'>
-				<div style='clear: both;'>
-					<div style='float: left;'><span style='color: #3EA9CD; font-weight: bold;'>댓글 ${replyCount}개</span> <span>[댓글 목록, ${pageNo}/${total_page} 페이지]</span></div>
-					<div style='float: right; text-align: right;'></div>
-				</div>
-			</td>
-		</tr>
 	</thead>
 	
 
 	<tbody id='listReplyBody'>
 	<c:forEach var="vo" items="${listReply}">
-		<tr height='35' style='background: gold;'>
-			<td width='50%' style='padding:5px 5px;'>
+		<tr height='35' style='background: white;'>
+			<td class="replyNameTd" >
 				<span><b>${vo.name}</b></span>
 			</td>
-			<td width='50%' style='padding:5px 5px;' align='right'>
+			<td class="replyNameTd" align='right'>
 				<span>${vo.created}</span> |
 			<%-- 	<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}"> --%>
 					<span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</span>
@@ -35,27 +27,27 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan='2' valign='top' style='padding:5px 5px;'>
+			<td class="replyContentTd" colspan='2' valign='top'>
 				${vo.content}
 			</td>
 		</tr>
 
 		<tr>
-			<td style='padding:7px 5px;'>
-				<button type='button' class='boardBtn btnReplyAnswerLayout' data-replyNum='${vo.replyNum}'>답글 <span id="answerCount${vo.replyNum}">${vo.answerCount}</span></button>
-			</td>		
+			<td class="replyBtnTd">
+				<button type='button' class='btn btnReplyAnswerLayout' data-replyNum='${vo.replyNum}'><i class="fas fa-reply"></i>&nbsp;답글 ${vo.answerCount}</button>
+			</td>	
 		</tr>
 
 		<tr class='replyAnswer' style='display: none;'>
 			<td colspan='2'>
-				<div id='listReplyAnswer${vo.replyNum}' class='answerList' style='border-top: 1px solid #cccccc;'></div>
-				<div style='clear: both; padding: 10px 10px;'>
-					<div style='float: left; width: 5%;'>└</div>
+				<div id='listReplyAnswer${vo.replyNum}' class='answerList'></div>
+				<div style='clear: both; padding: 10px 10px; padding-right: 0px; padding-top: 15px;'>
+					<div style='float: left; width: 5%;'>&nbsp;</div>
 					<div style='float: left; width:95%'>
-						<textarea cols='72' rows='12' class='boxTA' style='width:98%; height: 70px;'></textarea>
+						<textarea class="replyAnswerArea" cols='72' rows='12'></textarea>
 					</div>
 				</div>
-				<div style='padding: 0px 13px 10px 10px; text-align: right;'>
+				<div class="replyAnswerBtn">
 					<button type='button' class='btn btnSendReplyAnswer' data-replyNum='${vo.replyNum}'>답글 등록</button>
 				</div>
 	        </td>

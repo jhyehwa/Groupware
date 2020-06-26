@@ -4,18 +4,19 @@
 	width: 1500px;
 	align-content: center;
 	margin:30px 0 0 300px;
+	margin-left: 200px;
 }
 
 .board-body table{
 	width: 1000px;
 	border-spacing: 0;
-	border-collapse: collapse;
 }
 
 .board-body table th{
 	color: black;
 	background: #D3B7D8;
 }
+
 
 .newsSort a{
 	color: #006461;
@@ -32,13 +33,12 @@
 }
 
 .board-created{
-	margin-top: 30px;
+/* 	margin-top: 30px; */
 	
 }
 
 .board-article{
 	margin-top: 30px;
-	
 }
 
 .board-created table{
@@ -66,25 +66,43 @@
 
 
 .boardtable td:first-child {
-	background:#9565A4;
+/* 	background:#9565A4; */
 	color: white;
 	border-bottom: 1px solid white;
 }
 
 .boardBtn{
-	color: #632A7E; 
-	background:white;
-	border:1px solid #632A7E;
-	border-top-left-radius: 5px; 
-	border-bottom-left-radius: 5px; 
-	border-top-right-radius: 5px; 
-	border-bottom-right-radius: 5px; 
-	padding:3px 3px;
+	width: 70px;
+	color: white;
+	background: #632A7E;
+	border: none;
+	padding: 10px 5px;
+	height: 37px;
+/* 	font-weight: bold; */
+	
+/* 	border-top-left-radius: 3px; 
+	border-bottom-left-radius: 3px; 
+	border-top-right-radius: 3px; 
+	border-bottom-right-radius: 3px;  */
+}
+
+.boardBtn2 {
+	width: 70px;
+	color: #2E2E2E;
+	background: #E6E6E6;
+	border: 1px solid #D8D8D8;
+	padding: 10px 5px;
+	height: 37px;
+	margin-left: 5px;
 }
 
 .boardBtn:hover{ 
 	color:white; 
-	background-color: #632A7E; 
+	background-color: #9565A4;
+}
+
+.boardBtn2:hover{ 
+	background-color: #D8D8D8;
 }
 
 .board-article table{

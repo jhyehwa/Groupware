@@ -19,6 +19,19 @@ public class Data {
 	private String originalFilename, saveFilename;
 	private long fileSize;
 	private int fileCount;
+	private long totalFile;	
+	
+	private String dCode;
+	private String dType;
+	
+	public long getTotalFile() {
+		return totalFile;
+	}
+
+	public void setTotalFile(long totalFile) {
+		this.totalFile = totalFile;
+	}
+
 	private List<MultipartFile> upload;
 	private long gap;
 	
@@ -159,5 +172,20 @@ public class Data {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
-	
+
+	public String getdCode() {
+		return dCode;
+	}
+
+	public void setdCode(String dCode) {
+		this.dCode = dCode;
+	}
+
+	public String getdType() {
+		return dType;
+	}
+
+	public void setdType(String dType) {
+		this.dType = dType;
+	}	
 }

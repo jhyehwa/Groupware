@@ -7,9 +7,9 @@
 	</select>
 	
 	<insert id="insertData" parameterType="com.of.data.Data">
-		INSERT INTO data(dataNum, dataCode, title, writer, content, created)
+		INSERT INTO data(dataNum, dataCode, title, writer, content, created, dCode)
 				VALUES(#{dataNum}, #{dataCode}, #{title},
-					#{writer}, #{content}, SYSDATE)
+					#{writer}, #{content}, SYSDATE, #{dCode})
 	</insert>	
 	
 	<sql id="where-list">		
@@ -25,7 +25,7 @@
 		<if test="condition=='created' ">
 			( TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
 				OR TO_CHAR(created, 'YYYYMMDD') = #{keyword} )
-		</if>
+		</if>		
 	</sql>
 	
 	<!-- 데이터개수  -->
@@ -33,20 +33,24 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM data d
 		JOIN employee e ON d.writer = e.empNo
-		JOIN dataGroup dg ON d.dataCode = dg.dataCode
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode		
 		<where>
-			<if test="keyword != null and keyword!=''  ">
-				<include refid="where-list"/>
+			d.dCode= #{dCode}
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 	</select>
 	
 	<!-- 리스트 -->
 	<select id="listData" parameterType="map" resultType="com.of.data.Data">
-		SELECT d.dataNum, dg.dataType, e.name, title, created, NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount
+		SELECT d.dataNum, dg.dataType, e.name, title, created, d.dCode, dType,
+		NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount, df.fileSize
 		FROM data d
 		JOIN employee e ON d.writer = e.empNo
 		JOIN dataGroup dg ON d.dataCode = dg.dataCode
+		LEFT OUTER JOIN dept dpt ON d.dCode = dpt.dCode
+		LEFT OUTER JOIN dataFile df ON d.dataNum = df.dataNum
  		LEFT OUTER JOIN (
 			SELECT dataNum, COUNT(*) fileCount FROM dataFile
 			GROUP BY dataNum
@@ -57,19 +61,58 @@
 			GROUP BY dataNum
 		) r ON d.dataNum=r.dataNum
 		<where>
+			d.dCode= #{dCode}
 			<if test="keyword != null and keyword != ''">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 		ORDER BY dataNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	 </select>
 	 
+	 <!--부서별 리스트 -->
+	<select id="deptListData" parameterType="map" resultType="com.of.data.Data">
+		SELECT d.dataNum, dg.dataType, e.name, title, created, d.dCode, dType,
+		NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount, df.fileSize
+		FROM data d
+		JOIN employee e ON d.writer = e.empNo
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode
+		LEFT OUTER JOIN dept dpt ON d.dCode = dpt.dCode
+		LEFT OUTER JOIN dataFile df ON d.dataNum = df.dataNum
+ 		LEFT OUTER JOIN (
+			SELECT dataNum, COUNT(*) fileCount FROM dataFile
+			GROUP BY dataNum
+		) f ON d.dataNum=f.dataNum 
+		LEFT OUTER JOIN (
+			SELECT dataNum, COUNT(*) replyCount FROM dataReply
+			WHERE answer=0
+			GROUP BY dataNum
+		) r ON d.dataNum=r.dataNum					
+		<where>
+			<if test="dCode!=''">
+				d.dCode=#{dCode}
+				<if test="keyword != null and keyword != ''">
+				 AND <include refid="where-list"/>								
+				</if>
+			</if>
+			<if test="dCode==''">
+				<if test="keyword != null and keyword != ''">
+					<include refid="where-list"/>								
+				</if>
+			</if>		
+		</where>
+	 </select>	 
+	 
+	 
 	<!-- 파일 -->
+	<select id="totalFile" resultType="Integer">
+	 	SELECT SUM(fileSize) sum FROM dataFile
+	 </select>
+	
 	<insert id="insertFile" parameterType="com.of.data.Data">
 		INSERT INTO dataFile (fileNum, dataNum, originalFileName, saveFileName, fileSize) VALUES
 				(seq_dataFile.NEXTVAL, #{dataNum}, #{originalFilename}, #{saveFilename}, #{fileSize})
-	</insert>
+	</insert>	
 	
 	<select id="listFile" parameterType="Integer" resultType="com.of.data.Data">
 		SELECT fileNum, dataNum, saveFilename, originalFilename, fileSize
@@ -89,8 +132,9 @@
 	
 	<!-- 글보기 -->
     <select id="readData" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT dataNum, dg.dataType, e.name, title, content, created			  
+		SELECT dataNum, dg.dataType, e.name, title, content, created, d.dCode, dpt.dType		  
 		FROM data d
+		JOIN dept dpt ON d.dCode = dpt.dCode
 		JOIN employee e ON d.writer = e.empNo
 		JOIN dataGroup dg ON d.dataCode = dg.dataCode 
 		WHERE dataNum = #{dataNum}
@@ -138,6 +182,13 @@
 	<!-- 삭제 -->	
 	<delete id="deleteData" parameterType="Integer">
 		DELETE FROM data WHERE dataNum=#{dataNum}
+	</delete>
+	
+	<delete id="deleteListData" parameterType="java.util.List">
+		DELETE FROM data WHERE dataNum IN 
+			<foreach item="dataNum" collection="list" index="index" open="(" separator="," close=")">
+				#{dataNum}
+			</foreach>
 	</delete>
 	
 	<!-- 댓글/답글 등록 -->

@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resource/css/community.css" type="text/css">
 <script type="text/javascript">
 function deleteCommu() {
 	var q = "commuNum=${dto.commuNum}&${query}";
@@ -293,86 +294,84 @@ $(function(){
 
 	
 <div class="container">
-    <div class="body-container">
-        <div class="body-title">
-            <h3>♬ 커뮤니티 </h3>
-        </div>
+    <div class="board-container" style="margin-left: 200px;">
+       <div class="body-title" style="font-size: 18px;">
+            <h3> ♬ 커뮤니티 </h3>
+      </div>
+      
+      <div class="board-body" style="float: left; width: 20%;">	      
+	       <div style="margin-top: 20px; margin-left: 20px;">	        	
+	       		<button type="button" style="width: 110px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/community/created';"><i class="fas fa-marker"></i></button>
+	       		<button type="button" style="width: 110px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/community/list';"><i class="fas fa-list"></i></button>	
+	       </div>   
+      </div>
         
-        <div class="board-article">
-			<table style="margin: 20px auto 0px;">
-			<tr height="35" style="background:#006461; color: white; ">
-			    <td colspan="2" align="center">
-				    ${dto.title}
-			    </td>
-			</tr>
+        <div class="board-article" style="margin-top: 10px; width: 80%; float: left;">
+			<table>
+			<tr align="left" height="40"  > 
+			      <td colspan="2" style="width: 100px; padding-left: 10px; background: white; color: #424242; text-align: left; font-size: 20px; border-bottom: 1px solid #cccccc;">			      	 
+			
+			      	<button type="button" class="articlebtn" onclick="updateCommu();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
+			      	<button type="button" class="articlebtn" onclick="deleteCommu();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+			 	
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		
+			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			     
+			      </td>
+			</tr>		 		
+			 <tr align="left" height="50"> 
+				 <td colspan="2" style="padding-top: 10px; width: 100px; font-size: 23px; background: white; color: #424242; text-align: left; padding-left: 10px;">
+				 	${dto.title}  
+				</td>   
+			 </tr>		 	
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
-			       작성자 : ${dto.name}
+			    <td width="50%" align="left" style="padding-left: 14px; font-size: 15px;">
+			      ${dto.name}${dto.pType}
 			    </td>
 			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created} | 조회 ${dto.hitCount}
+			        ${dto.created}
 			    </td>
 			</tr>
 			
-			<tr >
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
+			<tr>
+			  <td colspan="2" align="left" style="padding: 10px 5px; padding-top: 30px; font-size: 17px;" valign="top" height="250">
 			      ${dto.content}
 			   </td>
 			</tr>
 			
-			<tr style="border-bottom: 1px solid #ccc;">
+			<tr>
 				<td colspan="2" height="40" align="center" style="padding-bottom: 15px;">
-					<button type="button" class="btn btnSendCommuLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="commuLikeCount">${dto.commuLikeCount}</span></button>
+					<button type="button" class="btn btnSendCommuLike" title="좋아요"><i class="fas fa-heart"></i> 좋아요 </button>
 				</td>
 			</tr>
 			
 			<c:forEach var="vo" items="${listFile}">
-				<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				    <td colspan="2" align="left" style="padding-left: 5px;">
-				     첨부 된 파일 :  <a href="<%=cp%>/community/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>			       
+				<tr style="border-bottom: 1px solid #ccc;">
+					<td colspan="2" height="35" align="left" style="padding-left: 10px; font-size: 15px;">
+				     <i class="fas fa-save"></i> | <a href="<%=cp%>/community/download?fileNum=${vo.fileNum}" style="font-size: 13px;">${vo.originalFilename}</a>			       
 				    </td>
 				</tr>
 			</c:forEach>
-			
-			<tr height="35" style="border-top: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       이전글 :
-					<c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}">${preReadDto.title}</a>
-			        </c:if>
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       다음글 :
-					 <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}">${nextReadDto.title}</a>
-			        </c:if>
-			    </td>
-			</tr>
-			<tr height="45">
-			    <td>
-			          <button type="button" class="boardBtn" onclick="updateCommu();">수정</button>
-			          <button type="button" class="boardBtn" onclick="deleteCommu();">삭제</button>
-			    </td>
-			
-			    <td align="right">
-			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/community/list';">리스트</button>
-			    </td>
-			</tr>
-			</table>			
+					
+			</table>	
+					
         <div>
-		<table style="margin: 20px auto 0px;">
+		<table style="margin-top: 20px;">
 			<tr height='30'> 
-				 <td align='left' >
-				 	<span style='font-weight: bold;'>댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				 <td align='left' style="padding-left: 10px; font-size: 14px; color: #6E6E6E;" >
+				 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;${dto.replyCount}&nbsp;&nbsp;|&nbsp;&nbsp;조회 ${dto.hitCount}&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-heart"></i> ${dto.commuLikeCount}
 				 </td>
 			</tr>
 			<tr>
 			   	<td style='padding:5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+					<textarea class='boxTA' style='width:99%; height: 70px; border: 1px solid #cccccc;'></textarea>
 			    </td>
 			</tr>
 			<tr>
