@@ -186,7 +186,7 @@
 <div class="container">
 	<div class="testbox">
 		<h1><i class="fas fa-pencil-alt"></i>${mode == "employee" ? " 사원 등록" : " 사원 수정"}</h1>
-
+		
 		<form name="employeeForm" method="post">
 			<div id="div-one">
 				<div id="div-one-right">
@@ -294,10 +294,6 @@
 							<input type="text" name="memo" placeholder="메모" value="${dto.memo}"/>
 					</div>
 				</div>
-			</div>
-			
-			<div id="message">
-				${message}
 			</div>
 			
 			<div id="buttonBox">

@@ -2,19 +2,19 @@
 
 * {
 	font-family: DX명필명조;	
+	font-size: 18px;
 }
-
 
 /* employee*/
 .testbox {
-	margin: 0px auto;
+	margin: 30px 0 0 550px;
 	width: 800px;
 	height: 550px;
 	margin-bottom: 20px;
-	/* background: gray; */
 }
 
 h1 {
+	width: 740px;
 	font-size: 32px;
 	font-weight: 300;
 	color: #4c4c4c;
@@ -23,13 +23,13 @@ h1 {
 }
 
 form {
-	margin: 0 30px;
+	margin: 0px auto;
 }
 
 #div-one {
 	/* background: purple; */
-	width: 740px;
-	height: 450px;
+	width: 850px;
+	height: 550px;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	padding-top: 10px;
@@ -38,24 +38,24 @@ form {
 #div-one-right {
 	margin-left: 70px;
 	float: left;
-	width: 300px;
-	height: 400px;
+	width: 350px;
+	height: 450px;
 	/* background: fuchsia; */
 }
 
 #div-two {
 	/* background: lime; */
-	width: 300px;
-	height: 400px;
+	width: 350px;
+	height: 450px;
 	float: left;
 }
 
 #icon {
 	display: inline-block;
-	width: 30px;
-	background-color: #412065;
+	width: 50px;
+	background-color: #632A7E;
 	padding: 8px 0px 8px 15px;
-	margin-left: 15px;
+	margin-left: 35px;
 	-webkit-border-radius: 4px 0px 0px 4px;
 	-moz-border-radius: 4px 0px 0px 4px;
 	border-radius: 4px 0px 0px 4px;
@@ -66,14 +66,18 @@ form {
 	border: solid 0px #cbc9c9;
 }
 
+#icon>i {
+	margin-left: 10px;
+}
+
 .help-block {
 	text-align: center;
 	margin-top: 10px;
 }
 
 input[type=text], input[type=password], .selectBox {
-	width: 200px;
-	height: 39px;
+	width: 220px;
+	height: 45px;
 	-webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
 	-moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px;
 	border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
@@ -88,8 +92,8 @@ input[type=text], input[type=password], .selectBox {
 }
 
 input[type=date] {
-	width: 200px;
-	height: 39px;
+	width: 220px;
+	height: 45px;
 	-webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
 	-moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px;
 	border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
@@ -108,16 +112,16 @@ input:focus {
 }
 
 .selectGroup {
-	height: 39px;
+	height: 45px;
 	position: relative;
 	padding-top: 15px;
 	/* background: orange; */
 }
 
 .selectGroup .selectBox {
-	/* background: silver; */
-	width: 205px;
-	height: 39px;
+	background: silver;
+	width: 225px;
+	height: 45px;
 	position: absolute;
 	top: 0;
 	z-index: 1;
@@ -130,15 +134,17 @@ input:focus {
 	padding: 5px 15px;
 	margin-left: 3px;
 	font-size: 15px;
+	outline: 0;
+	border: none;
 }
 
 .selectGroup:before {
 	content: '';
 	position: absolute;
-	width: 210px;
-	height: 39px;
+	width: 220px;
+	height: 45px;
 	z-index: 0;
-	margin-left: 58px;
+	margin-left: 100px;
 	margin-top: -5px;
 	-webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
 	-moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px;
@@ -153,10 +159,10 @@ input:focus {
 .selectGroup:after {
 	content: '';
 	position: absolute;
-	right: 30px;
+	right: 20px;
 	width: 30px;
-	height: 39px;
-	background-color: #fff400;
+	height: 45px;
+	background-color: #9565A4;
 	background-image: url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -171,26 +177,16 @@ input:focus {
 	border: solid 1px #cbc9c9;
 }
 
-#message {
-	width: 740px;
-	height: 25px;
-	text-align: center;
-	font-size: 16px;
-	margin-top: 10px;
-	font-weight: bold;
-	color: red;
-}
-
 #buttonBox {
 	/* background: fuchsia; */
-	width: 740px;
+	width: 850px;
 	height: 50px;
 	margin-top: 5px;
 }
 
 #buttonSubBox {
 	/* background: lime; */
-	margin-left: 210px;
+	margin-left: 250px;
 }
 
 .button {
@@ -205,7 +201,7 @@ input:focus {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #412065;
+	background-color: #632A7E;
 	-webkit-box-shadow: 0 3px rgba(58, 87, 175, .75);
 	-moz-box-shadow: 0 3px rgba(58, 87, 175, .75);
 	box-shadow: 0 3px rgba(58, 87, 175, .75);
@@ -214,203 +210,8 @@ input:focus {
 
 .button:hover {
 	top: 3px;
-	background-color: #2e458b;
+	background-color: #9565A4;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-}
-
-
-/* list */
-#list-container {
-	width: 1000px;
-	align-content: center;
-	margin: 30px 0px 0px 300px;
-	/* background: fuchsia; */
-}
-
-#search {
-	border-collapse: collapse;
-	border-spacing: 0px;
-	width: 1000px;
-	margin: 0px auto;
-	/* background: orange; */
-}
-
-#search-form {
-	width: 500px;
-	float: right;
-	/* background: aqua; */
-}
-
-.selectGroup-list1 {
-	height: 50px;
-	position: relative;
-	float: left;
-	margin-left: 110px;
-	/* background: red; */
-}
-
-.selectGroup-list1 .selectBox-list1 {
-	background: silver;
-	width: 120px;
-	height: 39px;
-	position: absolute;
-	top: 0;
-	z-index: 1;
-	border: none;
-	background: transparent;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	cursor: pointer;
-	padding: 5px 15px;
-	margin-left: 0px;
-	margin-top: 5px;
-	font-size: 15px;
-}
-
-.selectGroup-list1:before {
-	content: '';
-	position: absolute;
-	width: 110px;
-	height: 39px;
-	z-index: 0;
-	margin-left: 0px;
-	margin-top: 5px;
-	-webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
-	-moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px;
-	border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
-	background-color: #fff;
-	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	border: solid 1px #cbc9c9;
-}
-
-.selectGroup-list1:after {
-	content: '';
-	position: absolute;
-	right: 147px;
-	width: 30px;
-	height: 39px;
-	background-color: #fff400;
-	background-image: url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	z-index: 0;
-	margin-top: 5px;
-	margin-right: 90px;
-	-webkit-border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
-	-moz-border-radius: 0px 4px 4px 0px/0px 0px 4px 4px;
-	border-radius: 0px 4px 4px 0px/5px 5px 4px 4px;
-	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	border: solid 1px #cbc9c9;
-}
-
-.selectGroup-list1>input[type=text] {
-	width: 150px;
-	margin-left: 130px;
-	margin-top: 5px;
-}
-
-#clickBtn {
-	float: left;
-	width: 60px;
-	height: 40px;
-	margin-left: 300px;
-	margin-top: -40px;
-}
-
-#listBtnBox-left {
-	width: 1000px;
-	height: 50px;
-	/* background: yellow; */
-}
-
-#new-button1 {
-	width: 50px;
-	height: 30px;
-}
-
-#new-button1>i {
-	padding-top: 5px;
-}
-
-#new-button2 {
-	float: right;
-	height: 30px;
-}
-
-#list-header table {
-	width: 1000px;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin: 0px auto;
-	margin-top: 20px;
-	/* background: red; */
-}
-
-#list-menu {
-	margin: 0px auto;
-}
-
-#list-title {
-	height: 35px;
-	text-align: center;
-	background: #006461;
-	color: white;
-}
-
-#list-content {
-	height: 35px;
-	text-align: center;
-	border-bottom: 1px solid #cccccc;
-}
-
-#list-paging {
-	width: 1000px;
-	text-align: center;
-	padding-top: 20px;
-	font-size: 15px;
-	/* background: green; */
-}
-
-
-/* complete */
-#complete-form  {
-	margin: 0px auto;
-	margin-top: 150px;
-	border: 1px solid black;
-	width: 500px;
-	height: 150px;
-	padding-top: 50px;
-}
-
-#title-form {
-	text-align: center;
-}
-
-#title-form span {
-	font-size: 25px;
-	font-weight: bold;
-}
-
-#messageBox>div {
-	text-align: center;
-	padding-top: 50px;
-	font-size: 15px;
-}
-
-#button-form  {
-	width: 500px;
-	height: 50px;
-	margin: 0px auto;
-}
-
-#button-form div  {
-	margin-top: 20px;
-	float: right;
 }

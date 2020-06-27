@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+* {
+	font-family: DX명필명조;	
+}
+
+/* list */
+.body-title {
+	font-size: 18px;
+}
+
+#list-container {
+	margin-left: 200px;
+	width: 1500px;
+	align-content: center;
+	margin: 30px 0 0 300px;
+}
+
+#listBtnBox {
+	float: left;
+	width: 20%;
+	/* background: aqua; */
+}
+
+#listBtnBox-left {
+	width: 275px;
+	height: 50px;
+	margin-top: 20px;
+	margin-left: 15px;
+}
+
+#new-button1 {
+	width: 220px;
+	height: 50px;
+	background: #9565A4;
+	color: white;
+	font-size: 25px;
+	border: none;
+	border-radius: 10px;
+	outline: 0;
+}
+
+#new-button2 {
+	width: 50px;
+	height: 50px;
+	background: #9565A4;
+	color: white;
+	font-size: 25px;
+	border: none;
+	border-radius: 10px;
+	outline: 0;
+}
+
+.selectGroup-list {
+	height: 39px;
+	position: relative;
+	padding-top: 13px;
+	margin-left: 20px;
+	/* background: orange; */
+}
+
+.selectGroup-list .selectBox-list {
+	margin-top: 9px;	
+	width: 110px;
+	height: 25px;
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	border: none;
+	background: transparent;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	cursor: pointer;
+	padding-left: 5px;
+	font-size: 15px;
+}
+
+.selectGroup-list:before {
+	content: '';
+	position: absolute;
+	width: 110px;
+	height: 25px;
+	z-index: 0;
+	margin-top: -5px;
+	margin-left: 0px;
+	-webkit-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
+	-moz-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
+	border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
+	background-color: white;
+	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+	border: solid 1px #cbc9c9;
+}
+
+.selectGroup-list:after {
+	content: '';
+	position: absolute;
+	right: 165px;
+	width: 30px;
+	height: 26px;
+	background-color: #6E3C89;
+	background-image: url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	z-index: 0;
+	margin-top: -5px;
+	-webkit-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
+	-moz-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
+	border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
+	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
+	border: solid 1px #cbc9c9;
+}
+
+#list-header table {
+	width: 1000px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0px auto;
+	margin-top: 20px;
+	font-size: 15px;
+}
+
+#list-menu {
+	margin: 0px auto;
+}
+
+#list-title {
+	height: 50px;
+	text-align: center;
+	background: #9565A4;;
+	color: white;
+}
+
+#list-content {
+	height: 50px;
+	text-align: center;
+	border-bottom: 1px solid #cccccc;
+}
+
+#list-paging {
+	width: 1000px;
+	text-align: center;
+	padding-top: 20px;
+	font-size: 15px;
+	/* background: green; */
+}
+
+.listBtn {
+	width: 70px;
+	color: white;
+	background: #632A7E;
+	border: none;
+	padding: 10px 5px;
+	height: 37px;
+}
+
+.listBtn:hover { 
+	color:white; 
+	background-color: #9565A4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+complete
+#complete-form  {
+	margin: 0px auto;
+	margin-top: 150px;
+	border: 1px solid black;
+	width: 500px;
+	height: 150px;
+	padding-top: 50px;
+}
+
+#title-form {
+	text-align: center;
+}
+
+#title-form span {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+#messageBox>div {
+	text-align: center;
+	padding-top: 50px;
+	font-size: 15px;
+}
+
+#button-form  {
+	width: 500px;
+	height: 50px;
+	margin: 0px auto;
+}
+
+#button-form div  {
+	margin-top: 20px;
+	float: right;
+} */

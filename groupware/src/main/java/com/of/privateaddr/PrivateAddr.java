@@ -1,14 +1,19 @@
-package com.of.address;
+package com.of.privateaddr;
 
-public class Address {
+public class PrivateAddr {
 	private int addrNum;
 	private String empNo;
 	private String name;
 	private String tel;
 	private String email;
 	private String company;
+	private String dName;
+	private String dTel;
+	private String dAddr;
 	private String memo;
-	private String grouptype;
+	private String groupType;
+
+	private int groupNum;
 
 	public int getAddrNum() {
 		return addrNum;
@@ -58,6 +63,30 @@ public class Address {
 		this.company = company;
 	}
 
+	public String getdName() {
+		return dName;
+	}
+
+	public void setdName(String dName) {
+		this.dName = dName;
+	}
+
+	public String getdTel() {
+		return dTel;
+	}
+
+	public void setdTel(String dTel) {
+		this.dTel = dTel;
+	}
+
+	public String getdAddr() {
+		return dAddr;
+	}
+
+	public void setdAddr(String dAddr) {
+		this.dAddr = dAddr;
+	}
+
 	public String getMemo() {
 		return memo;
 	}
@@ -66,12 +95,24 @@ public class Address {
 		this.memo = memo;
 	}
 
-	public String getGrouptype() {
-		return grouptype;
+	public String getGroupType() {
+		return groupType;
 	}
 
-	public void setGrouptype(String grouptype) {
-		this.grouptype = grouptype;
+	public void setGrouptype(String groupType) {
+		this.groupType = groupType;
+	}
+
+	public int getGroupNum() {
+		return groupNum;
+	}
+
+	public void setGroupNum(int groupNum) {
+		this.groupNum = groupNum;
+	}
+
+	public void setGroupType(String groupType) {
+		this.groupType = groupType;
 	}
 
 }

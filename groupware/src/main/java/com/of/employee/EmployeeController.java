@@ -128,10 +128,10 @@ public class EmployeeController {
 			return ".employee.employee";
 		}
 
-		StringBuilder sb = new StringBuilder();
+/*		StringBuilder sb = new StringBuilder();
 		sb.append(dto.getName() + "님의 사원 정보가 정상적으로 등록되었습니다.");
 
-		reAttr.addFlashAttribute("message", sb.toString());
+		reAttr.addFlashAttribute("message", sb.toString());*/
 		reAttr.addFlashAttribute("title", "사원 등록");
 
 		return "redirect:/employee/complete";
