@@ -19,7 +19,12 @@
 		<div class="header-menu">
 			<c:if test="${not empty sessionScope.employee}">
 				<span style="color: white; margin-right: 10px; font-size: 15px;">${sessionScope.employee.name}님</span>
-				<a href="<%=cp%>"><i class="far fa-user-circle" style="margin-right: 5px;"></i></a> <!-- 프로필 -->
+				<c:if test="${not empty sessionScope.employee.imageFilename}">
+					<a href="<%=cp%>/profile/list"><img src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}" style="width: 36px; height: 36px; margin-right: 5px; border-radius: 18px;"></a>
+				</c:if>
+				<c:if test="${empty sessionScope.employee.imageFilename}">
+					<a href="<%=cp%>"><i class="far fa-user-circle" style="margin-right: 5px;"></i></a> <!-- 프로필 -->
+				</c:if>
 				&nbsp;
 			</c:if>
 			

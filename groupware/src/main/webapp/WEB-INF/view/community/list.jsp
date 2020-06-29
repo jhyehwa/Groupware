@@ -62,8 +62,8 @@
 			      </select>        
         	</div>
         	<div style="margin-left: 20px; margin-top: -10px;">
-        		<p style="font-size: 20px; border: 1px solid #cccccc; width: 220px;"><input type="text" name="keyword" class="boxTF" style="width: 170px; height: 35px; border: none; font-size: 15px; padding-left: 10px;">&nbsp;
-        				<button type=button onclick="searchList()" style="border: none; background: transparent;"><i class="fas fa-search"></i></button></p>
+        		<p style="font-size: 20px; border: 1px solid #cccccc; width: 220px; background: white;"><input type="text" name="keyword" class="boxTF" style="width: 170px; height: 35px; border: none; font-size: 15px; padding-left: 10px;">&nbsp;
+        				<button type=button onclick="searchList()" style="border: none; background: white;"><i class="fas fa-search"></i></button></p>
         	</div>   
         	       
         	</form>
@@ -83,7 +83,7 @@
       		  </div> 	      		        	  	
       		        		
 			<c:forEach var="dto" items="${list}">
-				<table style="border-collapse: collapse; margin-bottom: 20px; width: 100%; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;">		 
+				<table style="border-collapse: collapse; margin-bottom: 20px; width: 100%; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; background: white;">		 
 					  <tr align="left"> 		
 					      <td width="80%;" style="color: gray; font-weight: bold; font-size: 14px;">&nbsp;&nbsp;[${dto.clubType}]</td>
 						    <c:if test="${dto.commuLikeCount==0}">	
@@ -143,7 +143,7 @@
         <div class="board-body" style="width: 30%; float: left; margin-left: 60px;"> 
         	<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
           		  <h3 style="font-size: 18px;">| 커뮤니티 정보</h3>           
-          		  <table style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none;">		 
+          		  <table style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none; background: white;">		 
           		  <c:forEach var="dto" items="${listClub}">          		  	  
 					  <tr align="left"> 		
 					      <td style="font-weight: bold; font-size: 16px; padding-left: 10px;">

@@ -22,6 +22,7 @@ public class Employee {
 	private String dType;
 	private String pType;
 	private String lastLogin;
+	private String imageFilename;
 
 	public int getEmployeeNum() {
 		return employeeNum;
@@ -190,5 +191,15 @@ public class Employee {
 	public void setLastLogin(String lastLogin) {
 		this.lastLogin = lastLogin;
 	}
+
+	public String getImageFilename() {
+		return imageFilename;
+	}
+
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
+	}
+	
+	
 
 }

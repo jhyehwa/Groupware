@@ -3,12 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="employee">
 	<select id="loginEmployee" parameterType="String" resultType="com.of.employee.Employee">
-		SELECT e.empNo, name, pwd, r.rCode, rType, d.dCode, dType, p.pCode, pType, lastLogin
+		SELECT e.empNo, name, pwd, r.rCode, rType, d.dCode, dType, p.pCode, pType, lastLogin, imageFilename
 		FROM employee e
 		JOIN history h ON e.empNo = h.empNo
 		JOIN Dept d ON h.dCode = d.dCode
 		JOIN Right r ON e.rCode = r.rCode
 		JOIN Position p ON h.pCode = p.pCode
+		JOIN Profile pf ON e.empNo = pf.empNo
 		WHERE e.empNo = #{empNo}
 	</select>
 	
@@ -31,6 +32,11 @@
 	<insert id="insertEmployee3" parameterType="com.of.employee.Employee">
 		INSERT INTO career(cNum, empNo, enterDate, enterType, exitDate)
 		VALUES (seq_careerNum.NEXTVAL, #{empNo}, #{enterDate}, '입사', #{exitDate})
+	</insert>
+	
+	<insert id="insertEmployee4" parameterType="com.of.employee.Employee">
+		INSERT INTO profile(empNo, intro, imageFilename)
+			VALUES (#{empNo}, '', '')
 	</insert>
 
 	<!-- 사원 리스트 -->

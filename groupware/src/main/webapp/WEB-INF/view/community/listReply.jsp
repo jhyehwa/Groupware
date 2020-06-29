@@ -13,7 +13,7 @@
 
 	<tbody id='listReplyBody'>
 	<c:forEach var="vo" items="${listReply}">
-		<tr height='35' style='background: white;'>
+		<tr height='35'>
 			<td width='50%' style='padding:5px 5px; border-top: 1px solid #cccccc; color: #424242;'>
 				<span><b>${vo.name}</b></span>
 			</td>

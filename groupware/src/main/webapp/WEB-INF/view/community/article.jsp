@@ -309,7 +309,7 @@ $(function(){
         <div class="board-article" style="margin-top: 10px; width: 80%; float: left;">
 			<table>
 			<tr align="left" height="40"  > 
-			      <td colspan="2" style="width: 100px; padding-left: 10px; background: white; color: #424242; text-align: left; font-size: 20px; border-bottom: 1px solid #cccccc;">			      	 
+			      <td colspan="2" style="width: 100px; padding-left: 10px; color: #424242; text-align: left; font-size: 20px; border-bottom: 1px solid #cccccc;">			      	 
 			
 			      	<button type="button" class="articlebtn" onclick="updateCommu();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
 			      	<button type="button" class="articlebtn" onclick="deleteCommu();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
@@ -326,7 +326,7 @@ $(function(){
 			      </td>
 			</tr>		 		
 			 <tr align="left" height="50"> 
-				 <td colspan="2" style="padding-top: 10px; width: 100px; font-size: 23px; background: white; color: #424242; text-align: left; padding-left: 10px;">
+				 <td colspan="2" style="padding-top: 10px; width: 100px; font-size: 23px; color: #424242; text-align: left; padding-left: 10px;">
 				 	${dto.title}  
 				</td>   
 			 </tr>		 	

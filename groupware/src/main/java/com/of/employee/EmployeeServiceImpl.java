@@ -71,6 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			dao.insertData("employee.insertEmployee1", dto);
 			dao.insertData("employee.insertEmployee2", dto);
 			dao.insertData("employee.insertEmployee3", dto);
+			dao.insertData("employee.insertEmployee4", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
