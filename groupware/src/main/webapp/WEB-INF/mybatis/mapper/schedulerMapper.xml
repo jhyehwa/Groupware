@@ -18,14 +18,27 @@
 	
 	<!-- 월별일정 -->
 	<select id="listMonthScheduler" parameterType="map" resultType="com.of.scheduler.Scheduler">
-		SELECT schNum, writer, name, title, category, content, allDay, startDate, endDate, startTime, endTime, created
+		SELECT schNum, writer, name, title, category, category color, content, allDay, startDate, endDate, startTime, endTime, created
 		FROM scheduler s
 		JOIN employee e ON writer=empNo 
 		<where>
-			writer = #{writer}
-			<if test="group !='all' ">
-				AND category=#{group}
-			</if>
+	
+			<choose>
+				<when test="group=='#9565A4'">
+					writer = #{writer} AND category=#{group}
+				</when>
+				<when test="group=='#EDA900'">
+					category=#{group}
+				</when>
+				<when test="group=='red'">
+					category=#{group}
+				</when>
+				<when test="group=='all'">
+					(category='#9565A4' AND writer = #{writer}) OR (category='#EDA900' )
+					OR (category='red'        )
+				</when>
+			</choose>
+			
 			<![CDATA[
 				AND ( (startDate>=#{start} AND startDate<=#{end})
 					OR (endDate>=#{start} AND endDate<=#{end}) )
@@ -36,7 +49,7 @@
 	
 	<!-- 일정 상세 정보 -->
 	<select id="readScheduler" parameterType="Integer" resultType="com.of.scheduler.Scheduler">
-		SELECT schNum, writer, name, title, category, content, allDay, startDate, endDate, 
+		SELECT schNum, writer, name, title, category, category color, content, allDay, startDate, endDate, 
 			startTime, endTime, created
 		FROM scheduler s
 		JOIN employee e ON writer=empNo 

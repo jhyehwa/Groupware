@@ -4,7 +4,7 @@ public class Scheduler {
 	private int schNum;
 	
 	private String writer, name;
-	private String category;
+	private String category, color;
 	private String title;
 	private String content;
 	
@@ -112,6 +112,14 @@ public class Scheduler {
 
 	public void setCreated(String created) {
 		this.created = created;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 	

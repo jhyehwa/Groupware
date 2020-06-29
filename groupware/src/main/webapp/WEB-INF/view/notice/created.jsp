@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 
-
+<link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
@@ -64,41 +64,49 @@ $(function(){
 
 <div class="container">
     <div class="board-container">
-        <div class="board-title">
+        <div class="board-title"  style="font-size: 18px;">
             <h3>공지사항 </h3>
         </div>
         
+        <div class="board-body" style="float: left; width: 20%;">	      
+	        	<div style="margin-top: 20px; margin-left: 20px;">	        	
+	           		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/notice/list';"><i class="fas fa-list"></i></button>
+	           	</div>   
+        </div> 
+        
         <div class="board-created">
+        	<div class="body-title" style="margin-bottom: 10px;">
+	          	<h3 style="font-size: 20px;">| 공지사항 올리기  </h3>
+	         </div>
 			<form name="noticeForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			  <table class="boardtable">
 			  	  <tbody id="tb">
-				  <tr align="left" height="40"> 
-				      <td width="100"  style="text-align: center;">작 성 자</td>
-				      <td style="padding-left:10px;"> 
-				        	 ${sessionScope.employee.name }
+			  	  <tr align="left" height="50"  > 
+				      <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">작성자</td>
+				      <td style="padding-left:10px; border-bottom: 1px solid #cccccc;"> 
+				      	${sessionScope.employee.name }
 				      </td>
-				  </tr>
-				  
-				  <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
-				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="title" maxlength="100"value="">
+				  </tr>	
+				  <tr align="left" height="50"  > 
+				      <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">제 목</td>
+				      <td style="padding-left:10px; border-bottom: 1px solid #cccccc;"> 
+				        <input type="text" name="title" maxlength="100" style="height: 27px; width: 930px; border: 1px solid #cccccc;" value="${dto.title}">
 				      </td>
 				  </tr>		  
 			
-				  <tr align="left"> 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="middle">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</td>
-				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
-				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;"></textarea>
+				  <tr align="left" height="300"> 
+				      <td style="width: 100px; background: white; color: #424242; border-bottom: 1px solid #cccccc; text-align: center; padding-top:10px;" valign="middle">내 용</td>
+				      <td valign="top" style="padding:20px 0px 20px 10px; border-bottom: 1px solid #cccccc;"> 
+				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%; resize: none;">${dto.content}</textarea>
 				      </td>
-				  </tr>
+				  </tr> 
 				  
-				  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-				      <td width="100" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
-				      <td style="padding-left:10px;"> 
-				          <input type="file" name="upload" class="btnboxTF" size="53" style="width: 95%; height: 25px;">
+				  <tr align="left" height="50"> 
+				      <td style="width: 100px; background: white; color: #424242; text-align: center; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #cccccc;">첨부</td>
+				      <td style="padding-left:10px; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #cccccc;"> 
+				   	      <input type="file" name="upload" class="boxTF" size="53" style="width: 95%; height: 25px;">     
 				       </td>
-			 	 </tr>
+			  	  </tr> 	
               </tbody>
               
 				<c:if test="${mode=='update'}">
@@ -114,7 +122,7 @@ $(function(){
 				</c:if>
 			  </table>
 			
-			  <table>
+			  <table class="boardtable" style="margin-left: 320px; background: white; margin-top: 35px;">
 			     <tr height="45"> 
 			      <td align="center" >
 			        <button type="submit" class="boardBtn">${mode=='update'?'수정완료':'등록하기'}</button>

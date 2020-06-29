@@ -5,7 +5,8 @@ public class SchedulerJSON {
 	
 	private String title;
 	private String name;
-	private String category;
+	private String category, color;
+
 	private boolean allDay;
 	private String start;
 	private String end;
@@ -65,6 +66,12 @@ public class SchedulerJSON {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 	

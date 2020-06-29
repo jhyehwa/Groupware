@@ -66,9 +66,10 @@ public class SchedulerController {
 			@RequestParam(defaultValue="all") String group,
 			HttpSession session
 			) throws Exception{
-		SessionInfo info = (SessionInfo)session.getAttribute("employee");
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
 		Map<String, Object> map = new HashMap<>();
+		map.put("dept", info.getdCode());
 		map.put("group", group);
 		map.put("start", start);
 		map.put("end", end);
@@ -83,6 +84,7 @@ public class SchedulerController {
 			dto.setTitle(scheduler.getTitle());
 			dto.setName(scheduler.getName());
 			dto.setCategory(scheduler.getCategory());
+			dto.setColor(scheduler.getColor());
 			
 			if(scheduler.getAllDay().equals("true")) {
 				dto.setAllDay(true);

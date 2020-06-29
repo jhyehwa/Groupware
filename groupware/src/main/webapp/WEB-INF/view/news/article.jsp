@@ -5,7 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
-
+<link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
 
 <script type="text/javascript">
 function deleteNews() {
@@ -134,94 +134,75 @@ $(function(){
 
 	
 <div class="container">
-    <div class="board-container">
-        <div class="board-title">
+    <div class="board-container"  style="margin-left: 200px;">
+        <div class="board-title"  style="font-size: 18px;">
             <h3>소식 </h3>
         </div>
         
-        <div class="board-article">
-			<table>
-			<tr height="35" style="color:#006461; ">
-			    <td colspan="2" align="left">
-			    	${dto.nType} 
-
-			    </td>
-			</tr>
-			
-			<tr height="35" style="background:#006461; color: white; ">
-			    <td colspan="2" align="center">
-				  ${dto.title}
-			    </td>
-			</tr>
-			
-			
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
-			       작성자 : ${dto.name}
-			    </td>
-			    <td width="50%" align="right" style="padding-right: 5px;">
-			    	${dto.created} 
-			    </td>
-			</tr>
-			
-			<tr >
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-			      ${dto.content}
-			   </td>
-			</tr>
-			
-			
-			<tr height="35" style="border-top: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       이전글&nbsp;
-					<c:if test="${not empty preReadDto}">
-			              <a href="<%=cp%>/news/article?${query}&newsNum=${preReadDto.newsNum}">${preReadDto.title}</a>
-			        </c:if>
-			    </td>
-			</tr>
-			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       다음글&nbsp;
-				<c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/news/article?${query}&newsNum=${nextReadDto.newsNum}">${nextReadDto.title}</a>
-			        </c:if>
-			        ${page }
-			    </td>
-			</tr>
-			<tr height="45">
-			    <td>
-			          <button type="button" class="boardBtn" onclick="updateNews();">수정</button>
-			          <button type="button" class="boardBtn" onclick="deleteNews();">삭제</button>
-			    </td>
-			
-			    <td align="right">
-			        <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/news/list?${query}';">리스트</button>
-			    </td>
-			</tr>
+        <div class="board-body" style="float: left; width: 20%;">
+        	<div class="leftside">	        	
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="fas fa-marker"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/list';"><i class="fas fa-list"></i></button>	
+	       </div>   
+	       	
+        </div>
+        
+        <div class="board-article" style="margin-top: 10px; width: 80%; float: left;">
+			<table class="articleTable">
+				<tr align="left" height="40"  > 
+				      <td class="typeTd" colspan="2">			      	 
+				      	<button type="button" class="articlebtn" onclick="updateNews();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
+				      	<button type="button" class="articlebtn" onclick="deleteNews();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+				 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				 		
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/news/article?${query}&newsNum=${nextReadDto.newsNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/news/article?${query}&newsNum=${preReadDto.newsNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+				      </td>
+				</tr>
+				<tr align="left" height="50"> 
+					 <td class="titleTd" colspan="2">
+					 	${dto.nType} ▷ ${dto.title}  
+					</td>   
+				</tr>	
+				<tr height="35" style="border-bottom: 1px solid #cccccc;">
+				    <td class="nameTd" align="left">
+				      ${dto.name}
+				    </td>
+				    <td class="createdTd" align="right">
+				        ${dto.created}
+				    </td>
+				</tr>
+				<tr>
+				  <td class="contentTd" colspan="2" align="left" valign="top">
+				      ${dto.content}
+				   </td>
+				</tr>	
 			</table>
+			
 		<div>
-			<table style="margin-top: 20px">
+			<table class="replyTable">
 				<tr height='30'> 
-					 <td align='left' >
-				 		<span style='font-weight: bold;'>댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-				 	</td>
+					<td class="replyTd" align='left'>
+					 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+					 </td>
 				</tr>
 				<tr>
-			   		<td style='padding:5px 5px 0px;'>
-						<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
-			   		</td>
+				   	<td style='padding:5px 5px 0px;'>
+						<textarea class='replyArea' style="resize: none;"></textarea>
+				    </td>
 				</tr>
 				<tr>
-			   		<td align='right'>
-			        	<button type='button' class='boardBtn btnSendReply' style='padding:5px 5px; margin-right: 10px;'>댓글 등록</button>
-			   		</td>
+				   <td align='right'>
+				        <button type='button' class='btn btnSendReply'>댓글 등록</button>
+				    </td>
 				 </tr>
 			</table>  		
-			<div id="listReply"></div>	
+		<div id="listReply"></div>	
 		</div>    
-        </div>
-
+      </div>
     </div>
 </div>
