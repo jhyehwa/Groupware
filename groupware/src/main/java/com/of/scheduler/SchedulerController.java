@@ -47,6 +47,7 @@ public class SchedulerController {
 		String state="true";
 		try {
 			scheduler.setWriter(info.getEmpNo());
+			scheduler.setdCode(info.getdCode());
 			service.insertScheduler(scheduler);
 		} catch (Exception e) {
 			state="false";
@@ -69,11 +70,11 @@ public class SchedulerController {
 		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("dept", info.getdCode());
 		map.put("group", group);
 		map.put("start", start);
 		map.put("end", end);
 		map.put("writer", info.getEmpNo());
+		map.put("dCode", info.getdCode());
 		
 		List<Scheduler> list = service.listMonthSchedule(map);
 		
@@ -82,7 +83,9 @@ public class SchedulerController {
 			SchedulerJSON dto= new SchedulerJSON();
 			dto.setSchNum(scheduler.getSchNum());
 			dto.setTitle(scheduler.getTitle());
+			dto.setWriter(scheduler.getWriter());
 			dto.setName(scheduler.getName());
+			dto.setdCode(scheduler.getdCode());
 			dto.setCategory(scheduler.getCategory());
 			dto.setColor(scheduler.getColor());
 			
@@ -106,6 +109,7 @@ public class SchedulerController {
 			
 			dto.setContent(scheduler.getContent());
 			dto.setCreated(scheduler.getCreated());
+			
 			
 			listJSON.add(dto);
 		}
@@ -139,10 +143,15 @@ public class SchedulerController {
 			Scheduler scheduler,
 			HttpSession session
 			) throws Exception{
+		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		
 		String state= "true";
 		try {
-			service.updateScheduler(scheduler);
+			scheduler.setWriter(info.getEmpNo());
+			int result=service.updateScheduler(scheduler);
+			if(result==0) {
+				state="updateFAIL";
+			}
 		} catch (Exception e) {
 			state="false";
 		}

@@ -3,8 +3,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="scheduler">
 	<insert id="insertScheduler" parameterType="com.of.scheduler.Scheduler">
-		INSERT INTO scheduler(schNum, writer, title, category, content, allDay, startDate, endDate, startTime, endTime, created) 
-			VALUES (seq_scheduler.NEXTVAL, #{writer}, #{title}, 
+		INSERT INTO scheduler(schNum, writer, dCode, title, category, content, allDay, startDate, endDate, startTime, endTime, created) 
+			VALUES (seq_scheduler.NEXTVAL, #{writer}, #{dCode}, #{title}, 
 					#{category, jdbcType=VARCHAR},
 					#{content, jdbcType=VARCHAR},
 					#{allDay, jdbcType=VARCHAR},
@@ -18,9 +18,10 @@
 	
 	<!-- 월별일정 -->
 	<select id="listMonthScheduler" parameterType="map" resultType="com.of.scheduler.Scheduler">
-		SELECT schNum, writer, name, title, category, category color, content, allDay, startDate, endDate, startTime, endTime, created
+		SELECT schNum, writer, name, s.dCode, title, category, category color, content, allDay, startDate, endDate, startTime, endTime, created
 		FROM scheduler s
-		JOIN employee e ON writer=empNo 
+		JOIN employee e ON writer=e.empNo
+		JOIN history h ON e.empNo=h.empNo
 		<where>
 	
 			<choose>
@@ -31,11 +32,11 @@
 					category=#{group}
 				</when>
 				<when test="group=='red'">
-					category=#{group}
+					category=#{group} and s.dCode=#{dCode}
 				</when>
 				<when test="group=='all'">
 					(category='#9565A4' AND writer = #{writer}) OR (category='#EDA900' )
-					OR (category='red'        )
+					OR (category='red' AND  s.dCode=#{dCode} )
 				</when>
 			</choose>
 			
@@ -49,10 +50,11 @@
 	
 	<!-- 일정 상세 정보 -->
 	<select id="readScheduler" parameterType="Integer" resultType="com.of.scheduler.Scheduler">
-		SELECT schNum, writer, name, title, category, category color, content, allDay, startDate, endDate, 
+		SELECT schNum, writer, name, s.dCode, title, category, category color, content, allDay, startDate, endDate, 
 			startTime, endTime, created
 		FROM scheduler s
-		JOIN employee e ON writer=empNo 
+		JOIN employee e ON writer=e.empNo
+		JOIN history h ON e.empNo=h.empNo
 		WHERE schNum=#{schNum}
 	</select>
 	
@@ -67,7 +69,7 @@
 			endDate=#{endDate, jdbcType=VARCHAR},
 			startTime=#{startTime, jdbcType=VARCHAR},
 			endTime=#{endTime, jdbcType=VARCHAR}
-		WHERE schNum=#{schNum}		
+		WHERE schNum=#{schNum}	AND writer=#{writer}	
 	</update>
 	
 	<!-- 일정 삭제 -->

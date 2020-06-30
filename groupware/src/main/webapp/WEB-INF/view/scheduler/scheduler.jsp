@@ -223,6 +223,7 @@ function articleForm(calEvent) {
 	var schNum=calEvent.schNum;
 	var title=calEvent.title;
 	var name=calEvent.name;
+	var writer=calEvent.writer;
 	
 	//var category=calEvent.category;
 	var color=calEvent.color;
@@ -274,12 +275,18 @@ function articleForm(calEvent) {
 		  autoOpen: false,
 		  modal: true,
 		  buttons: {
-		       " 수정 " : function() {
-		    	   updateForm(schNum,title,allDay,startDate,endDate,startTime,endTime,color);
+
+		       " 수정" : function() {
+		    	   if(writer=="${sessionScope.employee.empNo}"){
+			    	   updateForm(schNum,title,allDay,startDate,endDate,startTime,endTime,color);
+		    	   } else {
+					alert("수정할 수 없습니다.");
+				   }
 		        },
-			   " 삭제 " : function() {
+			   " 삭제" : function() {
 				   deleteOk(schNum);
 			   },
+			   
 		       " 닫기 " : function() {
 		    	   $(this).dialog("close");
 		        }
@@ -538,6 +545,11 @@ function updateOk(schNum) {
 	var query=$("form[name=schedulerForm]").serialize();
 
 	var fn = function(data){
+		var state=data.state;
+		if(state=="updateFAIL"){
+			alert("수정안됨");
+			return false;
+		}
 		 group="all";
     	 calendar.fullCalendar('refetchEvents', schNum);
     	 

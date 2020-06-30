@@ -3,7 +3,7 @@ package com.of.scheduler;
 public class Scheduler {
 	private int schNum;
 	
-	private String writer, name;
+	private String writer, name, dCode;
 	private String category, color;
 	private String title;
 	private String content;
@@ -121,6 +121,15 @@ public class Scheduler {
 	public void setColor(String color) {
 		this.color = color;
 	}
+
+	public String getdCode() {
+		return dCode;
+	}
+
+	public void setdCode(String dCode) {
+		this.dCode = dCode;
+	}
+	
 	
 	
 }

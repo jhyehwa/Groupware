@@ -49,13 +49,15 @@ public class SchedulerServiceImpl implements SchedulerService{
 	}
 
 	@Override
-	public void updateScheduler(Scheduler scheduler) throws Exception {
+	public int updateScheduler(Scheduler scheduler) throws Exception {
+		int result=0;
 		try {
-			dao.updateData("scheduler.updateScheduler", scheduler);
+			result=dao.updateData("scheduler.updateScheduler", scheduler);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+		return result;
 	}
 
 	@Override
