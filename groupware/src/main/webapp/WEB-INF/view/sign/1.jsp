@@ -138,10 +138,17 @@ textarea {
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">
-			<div class="returnMemoDiv" style=" position: absolute ; display: none;">
-					<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="반려사유를 작성해주세요" style="width: 350px; height: 100px; resize: none;
-							padding-top: 5px;"></textarea>
-					<br><button type="button" class="returnMemo">반려하기</button>
+			<div class="returnMemoDiv" style=" position: absolute ; ${listVal == null ? 'display:none' : ' ' };">
+				<input type="hidden" class="hiddenWriter" value="${writer.empNo}">
+					<c:if test="${listVal == null}">
+						<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="반려사유를 작성해주세요" style="width: 350px; height: 100px; resize: none;
+								padding-top: 5px;"></textarea>
+						<br><button type="button" class="returnMemo">반려하기</button>
+					</c:if>
+					<c:if test="${listVal != null}">
+						<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="" style="width: 350px; height: 100px; resize: none;
+								padding-top: 5px; color: red; " readonly="readonly">반려 사유 : ${dto.rreason}</textarea>
+					</c:if>
 			</div>
 			<p class="pTag">업 무 기 안</p>
 			</td>
@@ -155,11 +162,21 @@ textarea {
 					<table>
 						<tr>
 							<td style="width: 30%; background: #BDBDBD"><b>기안자</b></td>
-							<td>${sessionScope.employee.name}</td>
+							<c:if test="${mode!='article'}">
+								<td>${sessionScope.employee.name}</td>
+							</c:if>
+							<c:if test="${mode=='article'}">
+								<td>${writer.name}</td>
+							</c:if>	
 						</tr>
 						<tr>
 							<td style="background: #BDBDBD"><b>소속</b></td>
-							<td>${sessionScope.employee.dType}</td>
+							<c:if test="${mode!='article'}">
+								<td>${sessionScope.employee.dType}</td>
+							</c:if>
+							<c:if test="${mode=='article'}">
+								<td>${writer.dType}</td>
+							</c:if>	
 						</tr>
 						<tr>
 							<td style="background: #BDBDBD"><b>기안일</b></td>
@@ -317,7 +334,7 @@ textarea {
 					</td>
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<td style="width: 50%;"><input type="text" id="startDay" name="startDay"></td>
+					<td style="width: 50%;"><input type="date" id="startDay" name="startDay"></td>
 				</c:if>
 				<td style="background: #BDBDBD" width="100px;"><b>시행 부서</b></td>
 				<td>
@@ -350,10 +367,28 @@ textarea {
 				</c:if>
 				</td>
 			</tr>
+			<tr>
+				<td style="background: #eee"><b>첨부</b></td>
+				<td colspan="3">
+					<input type="file" id="upload" name="upload" style="padding-top: 13px;">
+				</td>
+			</tr>
 		</table>
+		<c:if test="${mode=='article'}">
+			<c:forEach var="vo" items="${listFile}">
+				<tr id="f${vo.fileNum}" height="40" style="border-bottom: 1px solid #cccccc;">
+					<td colspan="3" style="padding-left:10px;"> 
+								<a href="javascript:deleteFile('${vo.fileNum}');"><i class="far fa-trash-alt"></i></a> 
+								${vo.originalFilename}
+					</td>
+				</tr>
+			</c:forEach>
+		</c:if>
 	</div>
 	<c:if test="${mode != 'article' }">
-		<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>
+		<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span style="height: 10px; font-size: 15px;">
+		<input type="checkbox" value="storage" id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
 	</c:if>
 </form>
 

@@ -1,5 +1,9 @@
 package com.of.sign;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Sign {
 	private int snum;
 	private int listNum;
@@ -20,17 +24,81 @@ public class Sign {
 	private String sstorage;
 	private int sendStep;
 	private String scurrStep;
+	private String writer;
 	private int empNo;
-	private String sfOriginalfilename;
-	private String sfSavefilename;
-	private int sfFileSize;
+	
 	private String pEmpNo2;
 	private String pEmpNo3;
 	private String pEmpNo4;
 	private String startDay;
+	private String rreason;
 	private int enabled;
-
 	
+
+	private int fileNum;
+	private String originalFilename;
+	private String saveFilename;
+	private int fileCount;
+	
+	private List<MultipartFile> upload;
+	
+	
+	public int getFileNum() {
+		return fileNum;
+	}
+
+	public void setFileNum(int fileNum) {
+		this.fileNum = fileNum;
+	}
+
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
+
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+
+	public int getFileCount() {
+		return fileCount;
+	}
+
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
+	}
+
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
+	}
+
+	public String getRreason() {
+		return rreason;
+	}
+
+	public void setRreason(String rreason) {
+		this.rreason = rreason;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
 	public String getStartDay() {
 		return startDay;
 	}
@@ -197,30 +265,6 @@ public class Sign {
 
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
-	}
-
-	public String getSfOriginalfilename() {
-		return sfOriginalfilename;
-	}
-
-	public void setSfOriginalfilename(String sfOriginalfilename) {
-		this.sfOriginalfilename = sfOriginalfilename;
-	}
-
-	public String getSfSavefilename() {
-		return sfSavefilename;
-	}
-
-	public void setSfSavefilename(String sfSavefilename) {
-		this.sfSavefilename = sfSavefilename;
-	}
-
-	public int getSfFileSize() {
-		return sfFileSize;
-	}
-
-	public void setSfFileSize(int sfFileSize) {
-		this.sfFileSize = sfFileSize;
 	}
 
 	public String getpEmpNo2() {

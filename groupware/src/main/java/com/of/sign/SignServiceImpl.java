@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.of.common.FileManager;
 import com.of.common.dao.CommonDAO;
 
 @Service("sign.signService")
@@ -14,18 +16,35 @@ public class SignServiceImpl implements SignService {
 	@Autowired
 	private CommonDAO dao;
 
+	@Autowired
+	private FileManager fileManager;
+
 	@Override
-	public void insertSign(Sign dto) throws Exception {
+	public void insertSign(Sign dto, String pathname) throws Exception {
 		try {
 			dao.insertData("insertSign", dto);
 			dao.insertData("insertSignPermission", dto);
 //			dao.insertData("insertSign", dto);
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf : dto.getUpload()) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if(saveFilename==null) continue;
+					
+					String originalFilename = mf.getOriginalFilename();
+					
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);
+					
+					//insertFile(dto);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-
+	
 	@Override
 	public int dataCount(Map<String, Object> map, String val) {
 		int result=0;
@@ -68,11 +87,10 @@ public class SignServiceImpl implements SignService {
 
 
 	@Override
-	public Sign readSign(int valueSnum) {
+	public Sign readSign(Map<String, Object> map) {
 		Sign dto = null;
-		
 		try {
-			dto = dao.selectOne("sign.readSign", valueSnum);
+			dto = dao.selectOne("sign.readSign", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,4 +172,65 @@ public class SignServiceImpl implements SignService {
 		}
 		return list;
 	}
+
+	@Override
+	public void insertReturnSign(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("sign.insertReturnSign", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateScurrStepReturn(int sNum) throws Exception {
+		try {
+			dao.updateData("sign.updateScurrStepReturn", sNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<Sign> returnSignList(Map<String, Object> map) {
+		List<Sign> list = null;
+		try {
+			list = dao.selectList("sign.returnSignList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int returnDataCount(int empNo) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sign.returnDataCount", empNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Sign readReturnSign(Map<String, Object> map) {
+		Sign dto = null;
+		try {
+			dto = dao.selectOne("sign.readReturnSign", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public void insertStorage(Sign dto) throws Exception {
+			try {
+				dao.insertData("sign.insertStorage", dto);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}
 }

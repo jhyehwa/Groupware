@@ -5,78 +5,24 @@
 <%
    String cp = request.getContextPath();
 %>
-<style type="text/css">
-.buttonDiv{
-	padding-top:25px;
-	height: 30px;
-	width: 1000px;
+
+<link rel="stylesheet" href="<%=cp%>/resource/css/data.css" type="text/css">
+<script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+<script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
+<style>
+.board-bodys{
+	width: 800px;
 }
 
-
-.selectGroup {
-	height: 39px;
-	position: relative;
-	padding-top: 13px;
-/* 	background: orange; */
+.signList {
+	color: #cccccc;
 }
 
-.selectGroup .selectBox {
-	margin-top: 9px;	
-	width: 110px;
-	height: 25px;
-	position: absolute;
-	top: 0;
-	z-index: 1;
-	border: none;
-	background: transparent;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	cursor: pointer;
-	padding-left: 5px;
-	font-size: 15px;
-}
-
-.selectGroup:before {
-	content: '';
-	position: absolute;
-	width: 80px;
-	height: 25px;
-	z-index: 0;
-	margin-top: -5px;
-	-webkit-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
-	-moz-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
-	border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
-	background-color: white;
-	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	border: solid 1px #cbc9c9;
-}
-
-.selectGroup:after {
-	content: '';
-	position: absolute;
-	right: 110px;
-	width: 30px;
-	height: 26px;
- 	background-color: #6E3C89;
-	background-image: url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	z-index: 0;
-	margin-top: -5px;
-	-webkit-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
-	-moz-border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
-	border-radius: 0px 0px 0px 0px/0px 0px 0px 0px;
-	-webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	-moz-box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-	border: solid 1px #cbc9c9;
+.signList:hover{
+	color: black;
 }
 
 </style>
-
 <script type="text/javascript">
 	function searchList() {
 		var f=document.searchForm;
@@ -97,10 +43,34 @@
 		});
 	}
 	
+
+	function ajaxJSON(url, type, query, fn) {
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				fn(data);
+			}
+			/* , beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    } */
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
+	
 	$(function(){
 		$("body").on("click", ".articleSign", function(){
 			var option = $(this).closest("tr").find(".stNum").text();
 			var valueSnum = $(this).closest("tr").find("input[class=dtoSnum]").val();
+			var listVal = "${mode}";
 			
 			$("#articleModal-dialog").dialog({
 				modal : true,
@@ -120,7 +90,7 @@
 						return;
 					}
 					
-					var query = "option="+ option+ "&mode=article"+"&valueSnum="+valueSnum;
+					var query = "option="+ option+ "&mode=article"+"&valueSnum="+valueSnum+"&listVal="+listVal;
 					
 					ajaxHTML(url, "GET", query, ".showSing");
 				
@@ -155,9 +125,14 @@
 				$(".returnMemoDiv").show();
 				
 				$("body").on("click", ".returnMemo", function(){
-					var query = "passVal="+val+"&sNum="+sNum;
-					ajaxHTML(url, "GET", query,"");
-					location.reload();
+					var writer = $(this).closest("div").find("input[type=hidden]").val();
+					var returnMemo = $(this).closest("div").find("textarea").val();
+					
+					var query = "passVal="+val+"&sNum="+sNum+"&writer="+writer+"&returnMemo="+returnMemo;
+					var fn = function(data){
+						location.href="<%=cp%>/sign/list?mode="+${option};
+					}
+					ajaxJSON(url, "GET", query, fn);
 				});
 			}
 		});
@@ -165,54 +140,63 @@
 	
 </script>
 
-<!-- 아티클 모달 -->
-<div id="articleModal-dialog" class="articleModal">
-	<div class="showSing"  style="  width: 1000px; height:950px; position:absolute; display: none; border: 1px solid black;">
-	</div>
-</div>
-
 <div class="container">
-        <div class="body-title" style="margin : 40px 0px 0px 300px;">
-				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;"> ${mode}</span>
+	<div class="board-container">
+       <div class="body-title" style="height: 50px;">
+				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;">${mode}</span>
 		</div>
 		
-		<div style="float: left; margin-left:130px; margin-top: 40px;">
-				<button type="button" class="btnSend" style="width: 200px; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
-					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;새결재진행 &nbsp;</i><i class="fas fa-plus"  style="color: white; font-size: 18px;"></i>
-				</button>
-						
-		<form name="searchForm" action="<%=cp%>/sign/list?mode=5" method="post">
-        	<div class="selectGroup">
-        		  <select class="selectBox" id="condition" name="condition" class="selectField">			              
-		          	  <option value="emptyVal" ${condition=="emptyVal"?"selected='selected'":""}>::선택::</option>
-		          	  <option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
-		          	  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-		           	  <option value="created" ${condition=="created"?"selected='selected'":""}>기안일</option>
-			      </select>  
-        	</div>
-        	<div style="margin-top: -10px;">
-        		<p style="font-size: 20px; border: 1px solid #cccccc; width: 220px;">
-        		<input type="text" id="keyword" name="keyword" class="boxTF" style="width: 170px; height: 35px; border: none; font-size: 15px; padding-left: 10px;">&nbsp;
-        				<button type=button onclick="searchList();" style="border: none; background: transparent;"><i class="fas fa-search"></i></button></p>
-        	</div>   
-        	</form>
+		<div class="board-body" style="float: left; width: 20%">
+			<div>
+					<button type="button" class="btnSend" style="width: 200px; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
+					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;새결재진행
+						&nbsp;</i><i class="fas fa-plus"
+						style="color: white; font-size: 18px;"></i>
+					</button>
+				<br>
+
+				<form name="searchForm" action="<%=cp%>/sign/list?mode=5"
+					method="post">
+					<div class="selectGroup">
+						<select class="selectBox" id="condition" name="condition"
+							class="selectField">
+							<option value="emptyVal"
+								${condition=="emptyVal"?"selected='selected'":""}>::선택::</option>
+							<option value="title"
+								${condition=="title"?"selected='selected'":""}>제목</option>
+							<option value="content"
+								${condition=="content"?"selected='selected'":""}>내용</option>
+							<option value="created"
+								${condition=="created"?"selected='selected'":""}>기안일</option>
+						</select>
+					</div>
+					<div style="margin-top: -10px;">
+						<p style="font-size: 20px; border: 1px solid #cccccc; width: 220px;">
+							<input type="text" id="keyword" name="keyword" class="boxTF" style="width: 170px; height: 35px; border: none; font-size: 15px; padding-left: 10px;">&nbsp;
+							<button type=button onclick="searchList();" style="border: none; background: transparent;">
+								<i class="fas fa-search"></i>
+							</button>
+						</p>
+					</div>
+				</form>
+			</div>
 		</div>
 		
-    <div class="board-container">
         
         <div class="board-body">
-			<table style="margin-top: 20px; margin: 9px 0px 0px 223px; width: 1000px;">
+			<div class="board-body" style="float: left; width: 58%;">
+				<table style="margin-top: 20px; width: 800px;">
 			   <tr>
 			      <td align="left">
 			          &nbsp;
 			      </td>
-			      <td class="dataCount" align="right">
+			      <td class="dataCount" align="right" style="width: 100%;">
 			          ${dataCount}개(${page}/${total_page} 페이지)
 			      </td>
 			   </tr>
 			</table>
 			
-			<table class="trData" style="border-collapse: collapse; margin: 9px 0px 0px 223px; width: 1000px;">
+			<table class="trData" style="border-collapse: collapse; width: 800px;">
 			  <tr align="center" bgcolor="#006461;"> 
 			      <th width="60">번호</th>
 			      <th width="100">종류</th>
@@ -233,7 +217,7 @@
 			</c:forEach>
 			</table>
 			 
-			<table style=" margin: 9px 0px 0px 223px; width: 1000px;">
+			<table style="width: 800px;">
 			   <tr>
 				<td class="board-paging" align="center">
 			         ${dataCount==0 ? "등록된 게시물이 없습니다.":paging}
@@ -241,15 +225,60 @@
 			   </tr>
 			</table>
 			
-			<table style=" margin: 9px 0px 0px 223px; width: 1000px;">
+			<table style="width: 800px;">
 			   <tr height="40">
 			      <td align="left" width="100">
 			          <button type="button" class="boardBtn" onclick="javascript:location.href='<%=cp%>/sign/mainList';"><i class="fas fa-undo"></i></button>
 			      </td>
 			   </tr>
 			</table>
+			</div>
         </div>
+        
+        <div class="board-body" style="float: left;">
+				<table style="width: 100%; border: 1px solid #cccccc; border-bottom: none; width: 300px;">
+								<tr align="left">
+									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
+									<i class="fas fa-arrow-right"></i>
+										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=1'"> 결재대기함 </a>
+									</td>
+								</tr>
+								<tr align="left">
+									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
+									<i class="fas fa-arrow-right"></i>
+										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=2'" > 수신대기함 </a>
+									</td>
+								</tr>
+								<tr align="left">
+									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
+									<i class="fas fa-arrow-right"></i>
+										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=3'"> 결재완료함 </a>
+									</td>
+								</tr>
+								<tr align="left">
+									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
+									<i class="fas fa-arrow-right"></i>
+										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=4'"> 반려함 </a>
+									</td>
+								</tr>
+								<tr align="left">
+									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
+									<i class="fas fa-arrow-right"></i>
+										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=6'"> 임시보관함 </a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						</div>
+        
+        
     </div>
-</div>
 
+
+
+<!-- 아티클 모달 -->
+<div id="articleModal-dialog" class="articleModal">
+	<div class="showSing"  style="  width: 1000px; height:950px; position:absolute; display: none; border: 1px solid black;">
+	</div>
+</div>
 

@@ -26,6 +26,7 @@
 			</when>
 		</choose>
 	</insert>
+	
 
 	<select id="emplist" resultType="com.of.sign.Sign">
 		SELECT e.empNo, name, tel, email, c.enterDate, dType, pType
@@ -36,8 +37,9 @@
 		JOIN position p ON p.pCode = h.pCode
 	</select>
 
-	<select id="readSign" parameterType="Integer" resultType="com.of.sign.Sign">
-		SELECT sSubject, sContent,sDate ,startDay, p.pstNum, pempNo2, pempNo3, pempNo4, sCurrStep FROM permission p
+	<select id="readSign" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT sSubject, sContent,sDate ,startDay, p.pstNum, pempNo2, pempNo3, pempNo4, sCurrStep
+		FROM permission p
 		JOIN sign s ON s.snum = p.pstNum
 		WHERE p.pstNum = #{valueSnum}
 	</select>
@@ -81,10 +83,10 @@
 	<sql id="val-list">
 		<choose>
 			<when test="val == 'fini' ">
-				sCurrStep = sEndStep AND empNo = #{empNo}
+				sCurrStep = sEndStep AND empNo = #{empNo}  AND sCurrStep != 0
 			</when>
 			<when test="val == 'wait' ">
-				s.empNo = #{empNo}
+				s.empNo = #{empNo}  AND sCurrStep != 0
 			</when>
 		</choose>
 	</sql>
@@ -107,6 +109,7 @@
 			<if test="val != null and val != '' ">
 				<include refid="val-list"/>
 			</if>
+			AND sEndStep != 0  AND sCurrStep != 0
 		</where>
 		ORDER BY sNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -191,6 +194,7 @@
 			) a
 	</select>
 	
+<!-- ==============================================결재 승인============================================== -->	
 	<update id="updateScurrStep" parameterType="Integer">
 		UPDATE sign 
 		SET sCurrStep = sCurrStep + 1
@@ -202,7 +206,7 @@
 		FROM sign s
 		JOIN permission p ON s.sNum = p.pstNum
 		<where>
-			sEndStep = sCurrStep AND empNo = #{empNo}
+			sEndStep = sCurrStep AND empNo = #{empNo} AND sCurrStep != 0
 		</where>
 		ORDER BY sNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -219,4 +223,48 @@
 			AND empNo = #{empNo}
 		</where>
 	</select>
+	
+<!-- ==============================================반려함 관련============================================== -->
+	<insert id="insertReturnSign" parameterType="map">
+		INSERT INTO returnSign(rNum, rsNum, writer, rReason)
+		 VALUES (SEQ_ReturnSign.NEXTVAL, #{sNum}, #{writer}, #{rReason})
+	</insert>
+	<update id="updateScurrStepReturn" parameterType="Integer">
+		UPDATE sign SET sCurrStep = 0
+		WHERE sNum = #{sNum}
+	</update>
+	
+	<select id="returnSignList" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT rNum, rsNum,stNum ,writer, name , sSubject, sContent, startDay, sNum
+		FROM returnSign r
+		JOIN sign s ON r.rsNum = s.sNum
+		JOIN employee e ON r.writer = e.empNo
+		WHERE writer = #{empNo}
+		ORDER BY rNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="returnDataCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM returnSign
+		WHERE writer = #{empNo} 
+	</select>
+	
+	
+	<select id="readReturnSign" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT sSubject, sContent, sDate ,startDay, p.pstNum, pempNo2, pempNo3, pempNo4, sCurrStep, rReason
+		FROM permission p
+		JOIN sign s ON s.snum = p.pstNum
+		JOIN returnSign r ON s.sNum = r.rsNum 
+		WHERE p.pstNum = #{valueSnum}
+	</select>
+	
+<!-- ==============================================임시보관함============================================== -->
+	
+	<insert id="insertStorage" parameterType="com.of.sign.Sign">
+		INSERT INTO storage( sNum,	stNum, sDept, sDate, sSubject, sContent, empNo, sEndStep, sCurrStep, startDay, sfOriginalfilename, sfSavefilename, sfFilesize
+							,pEmpNo2, pEmpNo3, pEmpNo4, )
+		VALUES( seq_sign.NEXTVAL, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay}
+		 					,#{sfOriginalfilename},	#{sfSavefilename}, #{sfFilesize}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4})
+	</insert>
 </mapper>

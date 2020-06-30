@@ -75,10 +75,9 @@ $(function() {
 function check() {
 	var f = document.inputForm;
 	
-	
 	var str = f.ssubject.value;
 	
-	/*if(!str){
+	if(!str){
 		alert("제목을 입력하세요.");
 		f.ssubject.focus();
 		return false;
@@ -89,11 +88,25 @@ function check() {
 		alert("내용을 입력하세요.");
 		f.scontent.focus();
 		return false;
-	}*/
+	}
 	
 	var option = $("#listSelect option:selected").val();
-	f.action = "<%=cp%>/sign/created?option="+option;
-	f.submit();
+	
+	storage = f.sStorage.value;
+	
+	var chk =  $("input:checkbox[id='sStorage']").is(":checked");
+	
+	if(chk){
+		f.action = "<%=cp%>/sign/storage?option="+option+"&storage="+storage;
+		f.submit();
+		return;
+	}
+	
+	if(! chk){
+		f.action = "<%=cp%>/sign/created?option="+option;
+		f.submit();
+		return;
+	}
 }
 
 $(function() {
@@ -134,9 +147,9 @@ $(function() {
 </script>
 
 
-<div id="listBody" style="margin-left: 500px; width: 1000px;">
-	<select id="listSelect">
-		<option id="selectOption" value="0">::선택::</option>
+<div id="listBody" style="margin-left: 500px; width: 1000px; padding-top: 40px;">
+	<select id="listSelect" style="height: 55px; font-weight: bold; border: none";>
+		<option id="selectOption" value="0" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::선택::</option>
 		<option id="selectOption" value="1">1. 기안서</option>
 		<option id="selectOption" value="2">2. 휴가 신청서</option>
 		<option id="selectOption" value="3">3. 지출 결의서</option>
@@ -145,7 +158,8 @@ $(function() {
 	</select>
 </div>
 
-<div id="signForm" style="width: 1000px; height:960px; margin-left: 500px;">
+<div id="signForm" style="width: 1000px; height:1000px; margin-left: 500px;">
+	<h1 style="text-align: center; padding-top: 400px; color: #ccc">희망하는 문서를 선택하세요.</h1>
 </div>
 
 
