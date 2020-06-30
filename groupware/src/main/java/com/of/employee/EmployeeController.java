@@ -181,7 +181,7 @@ public class EmployeeController {
 
 		if (dto == null || !pwd.equals(dto.getPwd())) {
 			model.addAttribute("message", "사번 또는 비밀번호가 일치하지 않습니다.");
-			return "/login/login";
+			return ".login.login";
 		}
 
 		SessionInfo info = new SessionInfo();
@@ -199,7 +199,7 @@ public class EmployeeController {
 
 		session.setAttribute("employee", info);
 
-		return ".main.main";
+		return "redirect:/main";
 	}
 
 	// ---------------------------------------------------------------------------------------------

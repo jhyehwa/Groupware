@@ -13,15 +13,6 @@
 		INSERT INTO privateAddr(addrNum, empNo, name, tel, email, company, dName, dTel, dAddr, memo, groupNum)
 		VALUES (seq_addr.NEXTVAL, #{empNo}, #{name}, #{tel}, #{email}, #{company}, #{dName}, #{dTel}, #{dAddr}, #{memo}, #{groupNum})
 	</insert>
-<!-- 
-
-	
-
-	
-	<insert id="insertPrivateAddr3" parameterType="com.of.privateaddr.PrivateAddr">
-		INSERT INTO groupAddr(groupNum, groupType)
-		VALUES (seq_group.NEXTVAL, #{groupType})
-	</insert> -->
 	
 	<!-- 모달 그룹 등록 -->
 	<insert id="modalInsert" parameterType="com.of.privateaddr.PrivateAddr">
@@ -42,6 +33,7 @@
 		FROM privateAddr p
         JOIN groupAddr g ON p.GROUPNUM = g.GROUPNUM
     	WHERE empNo = #{empNo}
+    		AND name &gt;= #{kor} || '%' AND name &lt; #{kor2} || '%'
 		ORDER BY addrNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
@@ -51,8 +43,9 @@
 		SELECT NVL(COUNT(addrNum),0) 
 		FROM privateAddr
 		<where>
+			empNo = #{empNo}
 			<if test="keyword!=null and keyword !='' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 	</select>
@@ -66,26 +59,18 @@
 	
 	<!-- 주소록 상세정보 보기 -->
 	<select id="readAddress" parameterType="Integer" resultType="com.of.privateaddr.PrivateAddr">
-		SELECT addrNum, name, email, tel, company, dName, dTel, dAddr, memo, groupType
+		SELECT addrNum, name, email, tel, company, dName, dTel, dAddr, memo, p.groupNum, g.groupType
 		FROM privateAddr p
         JOIN groupAddr g ON p.GROUPNUM = g.GROUPNUM
         WHERE addrNum = #{addrNum}
 	</select>
 	
-	<!-- 주소록 수정 -->
+	<!-- 주소록 수정 -->	
 	<update id="updatePrivateAddr1" parameterType="com.of.privateaddr.PrivateAddr">
-		UPDATE privateAddr SET name = #{name}, empNo = #{empNo}, tel = #{tel}, email = #{email}, company = #{company}, dName = #{dName}, dTel = #{dTel}, dAddr = #{dAddr}, memo = #{memo}, groupType = #{groupType}
+		UPDATE privateAddr SET empNo = #{empNo}, name = #{name}, tel = #{tel}, email = #{email}, company = #{company}, dName = #{dName}, dTel = #{dTel}, dAddr = #{dAddr}, memo = #{memo}, groupNum = #{groupNum}
 		WHERE addrNum = #{addrNum}
 	</update>
-	
-	<update id="updatePrivateAddr2" parameterType="com.of.privateaddr.PrivateAddr">
-		UPDATE groupAddr SET groupType = #{groupType}
-		WHERE groupNum = #{groupNum}
-	</update>
-	
-	
-	
-	
+
 	
 	
 	

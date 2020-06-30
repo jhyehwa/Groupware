@@ -111,8 +111,7 @@ public class PrivateAddrServiceImpl implements PrivateAddrService {
 	public void updatePrivateAddr(PrivateAddr dto) throws Exception {
 		
 		try {
-			dao.updateData("privateAddr.updatePrivateAddr2", dto);
-			dao.updateData("privateAddr.updatePrivateAddr1", dto);
+			dao.updateData("privateAddr.updatePrivateAddr", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

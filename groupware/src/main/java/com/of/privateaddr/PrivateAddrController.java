@@ -34,14 +34,21 @@ public class PrivateAddrController {
 
 	@Autowired
 	private MyExcelView excelView;
-
+	
 	// ---------------------------------------------------------------------------------------------
-	// 주소록 리스트
+	// 주소록 리스트	
+	@RequestMapping("/privateAddr/main")
+	public String main() throws Exception {
+		return ".privateAddr.main";
+	}
+
 	@RequestMapping("/privateAddr/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "가") String kor, 
+			@RequestParam(defaultValue = "힣") String kor2,
 			HttpServletRequest req,
 			HttpSession session,
 			Model model) throws Exception {
@@ -77,30 +84,29 @@ public class PrivateAddrController {
 			offset = 0;
 		map.put("offset", offset);
 		map.put("rows", rows);
+		map.put("kor", kor);
+		map.put("kor2", kor2);
 
 		List<PrivateAddr> list = service.listPrivateAddr(map);
 
 		String query = "";
 
 		String listUrl;
-		String articleUrl;
 
 		if (keyword.length() != 0) {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
 
 		listUrl = cp + "/privateAddr/list";
-		articleUrl = cp + "/privateAddr/article?page=" + current_page;
-		if (query.length() != 0) {
-			listUrl = listUrl + "?" + query;
-			articleUrl = articleUrl + "&" + query;
-		}
 
 		List<PrivateAddr> modalList = service.modalList();
+		if (query.length() != 0) {
+			listUrl = listUrl + "?" + query;
+		}
 
 		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
 		model.addAttribute("list", list);
-		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
@@ -110,7 +116,7 @@ public class PrivateAddrController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 
-		return ".privateAddr.list";
+		return "privateAddr/list";
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -151,7 +157,7 @@ public class PrivateAddrController {
 			return ".privateAddr.privateAddr";
 		}
 
-		return "redirect:/privateAddr/list";
+		return "redirect:/privateAddr/main";
 	}
 	
 	// ---------------------------------------------------------------------------------------------
@@ -179,7 +185,7 @@ public class PrivateAddrController {
 			return ".privateAddr.list";
 		}
 
-		return "redirect:/privateAddr/list";
+		return "redirect:/privateAddr/main";
 	}
 	
 	// ---------------------------------------------------------------------------------------------
@@ -210,36 +216,6 @@ public class PrivateAddrController {
 	}
 
 	// ---------------------------------------------------------------------------------------------
-	// 주소록 보기
-	@RequestMapping(value = "/privateAddr/article")
-	public String article(
-			@RequestParam int addrNum,
-			@RequestParam String page,
-			@RequestParam(defaultValue = "title") String condition,
-			@RequestParam(defaultValue = "") String keyword,
-			Model model) throws Exception {
-
-		keyword = URLDecoder.decode(keyword, "UTF-8");
-
-		String query = "page=" + page;
-		if (keyword.length() != 0) {
-			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
-
-		PrivateAddr dto = service.readAddress(addrNum);
-		if (dto == null) {
-			return "redirect:/privateAddr/list?" + query;
-		}
-
-		model.addAttribute("addrNum", addrNum);
-		model.addAttribute("dto", dto);
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
-
-		return ".privateAddr.article";
-	}
-
-	// ---------------------------------------------------------------------------------------------
 	// 주소록 수정
 	@RequestMapping(value = "/privateAddr/update", method = RequestMethod.GET)
 	public String updateForm(@RequestParam int addrNum, @RequestParam String page, @RequestParam(defaultValue = "title") String condition, @RequestParam(defaultValue = "") String keyword, Model model, HttpSession session) throws Exception {
@@ -248,14 +224,14 @@ public class PrivateAddrController {
 		
 		keyword = URLDecoder.decode(keyword, "UTF-8");
 
-		String query = "page=" + page;
+	/*	String query = "page=" + page;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
+		}*/
 		
 		PrivateAddr dto = service.readAddress(addrNum);
 		if (dto == null) {
-			return "redirect:/privateAddr/list?" + query;
+			return "redirect:/privateAddr/list?page=" + page;
 		}
 		
 		List<PrivateAddr> modalList = service.modalList();
@@ -264,19 +240,22 @@ public class PrivateAddrController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
-		model.addAttribute("query", query);
+		/*model.addAttribute("query", query);*/
 		model.addAttribute("modalList", modalList);
 
 		return ".privateAddr.privateAddr";
 	}
 
 	@RequestMapping(value = "/privateAddr/update", method = RequestMethod.POST)
-	public String updateSubmit(@RequestParam int addrNum, PrivateAddr dto,  @RequestParam(defaultValue="1") String page, HttpSession session) {
+	public String updateSubmit(PrivateAddr dto,  @RequestParam(defaultValue="1") String page, HttpSession session) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 		
 		try {
 			System.out.println(dto.getName());
+			System.out.println(dto.getAddrNum());
+			System.out.println(dto.getGroupNum());
+			
 			dto.setTel(dto.getTel().replaceAll("-", ""));
 
 			String tel1 = dto.getTel().substring(0, 3);
@@ -284,7 +263,7 @@ public class PrivateAddrController {
 			String tel3 = dto.getTel().substring(7);
 
 			dto.setTel(tel1 + "-" + tel2 + "-" + tel3);
-			dto.setAddrNum(addrNum);
+		
 			dto.setEmpNo(info.getEmpNo());
 
 			service.updatePrivateAddr(dto);

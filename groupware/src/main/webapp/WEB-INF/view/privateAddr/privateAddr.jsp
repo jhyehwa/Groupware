@@ -145,28 +145,27 @@
 			var url="<%=cp%>/privateAddr/modalInsert";
 			
 			$.ajax({
-				type:"post"
-				,url:url
-				,data:query
-				,dataType : "JSON"
-				,success:function(data) {
+				type:"post",
+				url:url,
+				data:query,
+				dataType : "JSON",
+				success:function(data) {
 					var state=data.state;
 					if(state=="true") {
 						location.href="<%=cp%>/privateAddr/privateAddr";
 					}
-				}
-				,beforeSend : function(jqXHR) {
+				},
+				beforeSend : function(jqXHR) {
 			        jqXHR.setRequestHeader("AJAX", true);
-			    }
-			    ,error:function(jqXHR) {
+			    },
+			    error:function(jqXHR) {
 			    	if(jqXHR.status==403) {
 			    		location.href="<%=cp%>/login";
 			    		return;
 			    	}
 			    	console.log(jqXHR.responseText);
 			    }
-			});
-			
+			});		
 		});
 	});
 	
@@ -226,16 +225,17 @@
 				<input type="text" class="privateAddr-input" name="memo" id="memo" placeholder="메모" value="${dto.memo}" ${mode == "update" ? "disabled='disabled'" : ""}>
 				<button type="button" class="button_on" id="button_on8"><i class="far fa-edit"></i></button>
 				
-				<input type="text" class="privateAddr-input" name="groupNum" id="groupNum" value="${dto.groupType}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}>
+				<input type="text" class="privateAddr-input" name="groupNum" id="groupNum" value="${dto.groupNum}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}>
 				<a class="btn" href="#ex7"><button type="button" class="button_on"><i class="far fa-plus-square" style="font-size: 20px;"></i></button></a>
 
 				<div class="button-container">
-					<button type="submit" class="privateAddr-button" onclick="privateAddr();">저장</button>
+					<button type="button" class="privateAddr-button" onclick="privateAddr();">${mode == "privateAddr" ? "저장" : "수정"}</button>
 					<button type="button" class="privateAddr-button" onclick="javascript:location.href='<%=cp%>/privateAddr/list';">목록</button>
 					<button type="reset" class="privateAddr-button">취소</button>
 				</div>
 				<c:if test="${mode=='update'}">
-		        	 <input type="hidden" name="page" value="${page}">
+					<input type="hidden" name="addrNum" value="${dto.addrNum}">
+		        	<input type="hidden" name="page" value="${page}">
 		        </c:if>
 			</form>
 			
@@ -265,7 +265,6 @@
 					</form>
 				</div>
 			</div>
-
 
 			<script>
 				$('a[href="#ex7"]').click(function(event) {

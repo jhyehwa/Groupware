@@ -23,11 +23,23 @@
 }
 
 #listBtnBox-left {
-	width: 275px;
+	width: 300px;
 	height: 50px;
 	margin-top: 20px;
 	margin-left: 15px;
 }
+
+.button {
+	width: 220px;
+	height: 50px;
+	background: #9565A4;
+	color: white;
+	font-size: 25px;
+	border: none;
+	border-radius: 10px;
+	outline: 0;
+}
+
 .selectGroup-list {
 	height: 39px;
 	position: relative;
@@ -94,7 +106,7 @@
 
 
 
-/* 
+
 
 #listBtnBox-left {
 	width: 1300px;
@@ -148,7 +160,7 @@
 	font-size: 15px;
 	background: green;
 }
- */
+
 
 /* prAddress */
 
