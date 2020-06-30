@@ -44,6 +44,12 @@ public class SignServiceImpl implements SignService {
 			throw e;
 		}
 	}
+
+	@Override
+	public void insertFile(Sign dto) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	@Override
 	public int dataCount(Map<String, Object> map, String val) {
@@ -233,4 +239,5 @@ public class SignServiceImpl implements SignService {
 				throw e;
 			}
 		}
+
 }

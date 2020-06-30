@@ -5,6 +5,7 @@ import java.util.Map;
 
 public interface SignService {
 	public void insertSign(Sign dto, String pathname) throws Exception;
+	public void insertFile(Sign dto) throws Exception;
 	public int dataCount(Map<String, Object> map, String val);
 	public int stepCount(Map<String, Object> map);
 	
