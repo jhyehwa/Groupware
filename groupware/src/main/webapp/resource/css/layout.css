@@ -75,7 +75,7 @@ a {
 }
 
 .menu-icon i:hover {
-	color: #EDA900;
+	color: #2ECCFA;
 /* 	-webkit-transform: scale(1.15);
 	-moz-transform: scale(1.15);
 	-ms-transform: scale(1.15);
@@ -94,6 +94,7 @@ a {
 }
 
 .sub-menu {
+	height: 85px;
 	display: none;
 	background: #9565A4;
 	li
@@ -110,7 +111,11 @@ a {
 	display: block;
 	color: white;
 	padding: 5px;
-	transition: all 0.4s ease-out; &: hover { background-color : #CDDC39;
-	color: #fff;
+	transition: all 0.4s ease-out; &: hover { background-color : #2ECCFA;
 }
+
+.sub-menu li a:hover {
+	color: #2ECCFA;
+}
+
 }

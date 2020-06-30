@@ -89,21 +89,21 @@
 		
 		<li>
 			<div class="menu-icon">
-				<a href="<%=cp%>/community/list"><i class="fas fa-users"></i></a>
+				<a href="#"><i class="fas fa-users"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">커뮤니티</a></li>
-				<li><a href="#">커뮤니티</a></li>
+				<li><a href="<%=cp%>/community/list">커뮤니티</a></li>
 			</ul>
 		</li>
 		
 		<li>
 			<div class="menu-icon">
-				<a href="<%=cp%>/notice/list"><i class="fas fa-bullhorn"></i></a>
+				<a href="#"><i class="fas fa-bullhorn"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">공지/소식/식단</a></li>
-				<li><a href="#">공지/소식/식단</a></li>
+				<li><a href="<%=cp%>/notice/list">공지</a></li>
+				<li><a href="<%=cp%>/news/list">News</a></li>
+				<li><a href="<%=cp%>/food/month">식단표</a></li>
 			</ul>
 		</li>
 		
@@ -113,17 +113,15 @@
 			</div>
 			<ul class="sub-menu">
 				<li><a href="#">근태관리</a></li>
-				<li><a href="#">근태관리</a></li>
 			</ul>
 		</li>
 		
 		<li>
 			<div class="menu-icon">
-				<a href="<%=cp%>/data/list"><i class="fas fa-download"></i></a>
+				<a href="#"><i class="fas fa-download"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">자료실</a></li>
-				<li><a href="#">자료실</a></li>
+				<li><a href="<%=cp%>/data/list">자료실</a></li>
 			</ul>
 		</li>
 	</ul>

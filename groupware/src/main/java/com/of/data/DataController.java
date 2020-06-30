@@ -252,8 +252,6 @@ public class DataController {
 	}
 	
 	
-	
-	
 	@RequestMapping(value="/data/article")
 	public String article(
 			@RequestParam int dataNum,

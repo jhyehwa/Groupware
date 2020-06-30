@@ -9,6 +9,6 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String main() {
 		
-		return "/login/login";
+		return "login/login";
 	}
 }

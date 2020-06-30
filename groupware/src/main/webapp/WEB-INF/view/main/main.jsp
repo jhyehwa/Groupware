@@ -12,12 +12,73 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=cp%>/resource/css/home.css" type="text/css">
 <script type="text/javascript">
+function deleteTodo(num) {
+	var q = "todoNum="+num;
+	var url = "<%=cp%>/main/delete?" + q;
+
+	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+		  	location.href=url;
+	}
+}
+
+ $(function(){
+	$("#todoBtn").click(function(){	
+		
+		var out = "";
+		
+		out += "<tr>";
+		out += "	<td style='width: 75%; padding: 10px; border-bottom: 2px solid #9565A4;'>";
+		out += "		<input type='text' name='content' style='border: none;' required='required'>";
+		out += "	</td>";
+		out += "	<td style='font-size: 18px; text-align: center; border: none;'>";
+		out += "		<button type='submit' style='background: none; border: none; color: #2E2E2E;'><i class='fas fa-check'></i></button>";
+		out += "		<button type='button' onclick='deleteTodo(${dto.todoNum});' style='background: none; border: none;'>";
+		out += "			<i class='fas fa-trash-alt' style='color: #2E2E2E;''></i></button>";
+		out += "	</td>";
+		out += "</tr>";
+	
+	   var $table = $(".todoT");
+	   
+	   var length = $(".todoT tr").length;
+	   
+       $(".todoT").append(out);
+       
+       if(length > 4) {
+    	   return;
+       }
+
+	});
+}); 
+</script>
+
+<script>
 $(function(){
-	$("#todoBtn").click(function(){		
-		$(".todoT").clone().appendTo("#todo");
+	$(".cssChange").click(function(){
+		$(this).parent("div").find("input[type=text]").css("text-decoration", "line-through");
 	});
 });
 
+function showInTime(){
+    var currentDate = new Date();
+    var divClock = document.getElementById("divClockIn");
+     
+    var msg = currentDate.getHours()+":"
+    msg += currentDate.getMinutes()+":";
+    msg += currentDate.getSeconds();
+     
+    divClockIn.innerText = msg;
+}
+
+function showOutTime(){
+    var currentDate = new Date();
+    var divClock = document.getElementById("divClockOut");
+     
+    var msg = currentDate.getHours()+":"
+    msg += currentDate.getMinutes()+":";
+    msg += currentDate.getSeconds();
+     
+    divClockOut.innerText = msg;
+}
 </script>
 
 </head>
@@ -28,7 +89,7 @@ $(function(){
 
 	<div class="nav-left">
 		<div class="container-left" style="width: 23%; height: 860px;">
-			<div class="profile" style="margin-top: 2px;">
+			<div class="profile" style="margin-top: 15px;">
 				<div class="profilePhoto" style="margin-top: 15px;">
 					<table style="width: 180px; height: 180px; margin: 0px auto; margin-top: 5px;">
 						<tr>
@@ -59,7 +120,7 @@ $(function(){
 				<div class="inTime" style="margin-top: 60px; float: left; margin-left: 40px;">
 					<table style="width: 100px; height: 50px; border: 1px solid #9565A4; border-radius: 25px; color: #9565A4;">
 						<tr> 
-							<td style="text-align: center;"><button type="button" class="timeBtn" style="background: none; border: none; color:#9565A4;"> 출근 </button> </td>
+							<td style="text-align: center;"><button type="button" class="timeBtn" onclick="showInTime()" style="background: none; border: none; color:#9565A4;"> 출근 </button> </td>
 						</tr>
 					</table>
 				</div>
@@ -67,7 +128,7 @@ $(function(){
 				<div class="outTime" style="margin-top: 60px; float: left; margin-left: 45px;">
 					<table style="width: 100px; height: 50px; border: 1px solid #9565A4; border-radius: 25px; color: #9565A4;">
 						<tr> 
-							<td style="text-align: center;"><button type="button" class="timeBtn" style="background: none; border: none; color:#9565A4;"> 퇴근 </button></td>
+							<td style="text-align: center;"><button type="button" class="timeBtn" onclick="showOutTime()" style="background: none; border: none; color:#9565A4;"> 퇴근 </button></td>
 						</tr>
 					</table>
 				</div>
@@ -75,12 +136,13 @@ $(function(){
 				<div class="enterTime">
 					<table style="width: 250px; height: 50px; margin: 0px auto; padding-top: 10px;">
 						<tr>
-							<td style="text-align: left; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 출근 시간 </td>
-							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> 09:00:00 </td>
+							<td style="text-align: left; padding-bottom: 7px; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 출근 시간 </td>
+							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockIn" class="clock"></div> </td>
+							
 						</tr>
 						<tr>
 							<td style="text-align: left; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 퇴근 시간</td>
-							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> 18:00:00 </td>
+							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockOut" class="clock"></div> </td>
 						</tr>
 					</table>
 				</div>
@@ -88,20 +150,47 @@ $(function(){
 			</div>
 			
 			<div class="todo" id="todo">
-				<p style="margin-left: 15px; margin-top: 10px; font-weight: bold; margin-bottom: 15px;"> TO DO 
-					<button type="button" id="todoBtn" class="todoBtn" style="border:none; background: none;">
-						<i style="font-size: 22px;" class="far fa-plus-square"></i>
-					</button>
-				</p>
+					<p style="margin-left: 15px; margin-top: 10px; font-weight: bold; margin-bottom: 15px;"> TO DO 
+						<button type="button" id="todoBtn" class="todoBtn" style="border:none; background: none;">
+							<i style="font-size: 22px;" class="far fa-plus-square"></i>
+						</button>
+					</p>
 				
+			
+				<form name="todoForm" action="<%=cp%>/main/created" method="POST">
 				<table class="todoT" style="width: 300px; height: 40px; font-size: 15px; padding: 3px 14px; margin-left: 15px;" >
+					<c:forEach var="dto" items="${list}">
 					<tr>
-						<td style="width: 75%; padding: 10px; border-bottom: 2px solid #9565A4;">
-							<input type="text" name="content">
+						<td style="width: 78%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">
+							<div class="todoContent">
+								<button type="button" style="background: none; border: none;" class="cssChange"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i>	</button> &nbsp;
+								<input type="text" name="content" value="${dto.content}" style="border: none;" required="required" disabled="disabled">
+							</div>	
 						</td>
-						<td style="font-size: 18px; text-align: center; border: none;"><i class="fas fa-check-square"></i> <i class="fas fa-trash-alt"></i> </td>
+						<td style="font-size: 18px; text-align: center; border: none;">
+							<button type="submit" style="background: none; border: none; color: #632A7E;">
+								<i class="fas fa-check-square"></i></button>
+							<button type="button" onclick="deleteTodo(${dto.todoNum});" style="background: none; border: none;">
+								<i class="fas fa-trash-alt" style="color: #2E2E2E;"></i></button>
+						</td>
 					</tr>
+					</c:forEach>
+					<c:if test="${list.size()==0}">
+					 <tr>
+						<td style="width: 75%; padding: 10px; border-bottom: 2px solid #9565A4;">
+							<input type="text" name="content" style="border: none;" required="required"> 
+						</td>
+						<td style="font-size: 18px; text-align: center; border: none;">
+							<button type="submit" style="background: none; border: none; color: #2E2E2E;">
+								<i class="fas fa-check"></i></button>
+							<button type="button" onclick="deleteTodo(${dto.todoNum});" style="background: none; border: none;">
+								<i class="fas fa-trash-alt" style="color: #2E2E2E;"></i></button>
+						</td>
+					</tr>
+					</c:if>
 				</table>
+				</form>
+		
 				
 			</div>
 		</div>

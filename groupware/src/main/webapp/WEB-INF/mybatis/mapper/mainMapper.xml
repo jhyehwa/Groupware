@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+	<insert id="insertTodo" parameterType="com.of.main.Main">
+		INSERT INTO todo(todoNum, empNo, content)
+			VALUES(seq_todo.NEXTVAL, #{empNo}, #{content})
+	</insert>
+	
+	<select id="listTodo" parameterType="map" resultType="com.of.main.Main">
+		SELECT todoNum, content FROM todo WHERE empNo = #{empNo}
+		ORDER BY todoNum
+	 </select>
+	 
+	 <delete id="deleteTodo" parameterType="Integer">
+		DELETE FROM todo WHERE todoNum = #{todoNum}
+	</delete>
+
+</mapper>
