@@ -11,7 +11,7 @@ body {
 *:focus { outline:none; }
 
 .body-container {
-	width: 1440px;
+	width: 1900px;
 	height: 720px;
 }
 
@@ -36,10 +36,13 @@ body {
 	background: white;
 }
 
-.nav-right {
+.nav-center {
 	float: left;
 	margin-left:30px;
-	
+	margin-top: 7px;
+	width: 57%;
+	height: 840px;
+/* 	background: aqua; */
 }
 
 .container-top{
@@ -47,44 +50,38 @@ body {
 	line-height:50px; 
 }
 
-.content-date {
-	font-size: 20px;
-	font-weight: bold;
-	margin-top: 10px;
-}
-
-
-.content-date ul li {
-	float: left;
-}
-
-.content-weather {
-	text-align: right;
-}
 
 
 .content-top {
 	margin-top: 10px;
 }
 
-
 .content-schedule{ 
-	width: 850px; 
-	height: 240px; 
+	width: 840px; 
+	height: 230px; 
 	clear: both;
-	background: white;
 	padding: 10px;
-
+	float: left;
 }
 
+.weekcalendar {
+}
+
+.schedule-list {
+	background: yellow;
+	float: left;
+	height: 250px; 
+	width: 220px;
+}
 
 .content-bottom{
 	margin-top:30px;
 }
 
 .content-todayTalk{
-	width: 450px; 
-	height: 360px; 
+	margin-top: 0px;
+	width: 500px; 
+	height: 580px; 
 	float: left; 
 	background: pink
 }
@@ -94,19 +91,49 @@ body {
 }
 
 .content-buddy{
-	width: 440px; 
-	height: 170px; 
-	margin-left: 10px; 
+	width: 555px; 
+	height: 285px; 
+	margin-left: 25px; 
+	margin-top: 0px;
 	background: red;
 }
 
 .content-notice{
-	width: 440px; 
-	height: 180px; 
-	margin: 10px 0 0 10px; 
-	background: aqua;
+	width: 555px; 
+	height: 285px; 
+	margin: 10px 0 0px 25px;  
+	background: lime;
 }
 
 .timeBtn {
 	cursor: pointer;
 }
+
+.nav-right {
+	float: left;
+	height: 840px;
+/* 	background: gold; */
+	margin-top: 7px;
+	margin-left:25px;
+}
+
+.content-date {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.content-date ul li {
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin-top: -10px;
+	font-size: 25px;
+}
+
+.content-weather {
+	text-align: right;
+	height: 200px;
+	width: 100%;
+}
+

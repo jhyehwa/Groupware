@@ -19,6 +19,15 @@
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/home.css" type="text/css">
 <script type="text/javascript">
+function updateTodo(num) {		
+	var q = "todoNum="+num;
+	var url = "<%=cp%>/main/update?" + q;
+	
+	if(confirm("할 일을 마치셨습니까? ")){
+	location.href=url;
+	}
+	}
+
 function deleteTodo(num) {
 	var q = "todoNum="+num;
 	var url = "<%=cp%>/main/delete?" + q;
@@ -33,16 +42,16 @@ function deleteTodo(num) {
 		
 		var out = "";
 		
-		out += "<tr>";
-		out += "	<td style='width: 75%; padding: 10px; border-bottom: 2px solid #9565A4;'>";
-		out += "		<input type='text' name='content' style='border: none;' required='required'>";
-		out += "	</td>";
-		out += "	<td style='font-size: 18px; text-align: center; border: none;'>";
-		out += "		<button type='submit' style='background: none; border: none; color: #2E2E2E;'><i class='fas fa-check'></i></button>";
-		out += "		<button type='button' onclick='deleteTodo(${dto.todoNum});' style='background: none; border: none;'>";
-		out += "			<i class='fas fa-trash-alt' style='color: #2E2E2E;''></i></button>";
-		out += "	</td>";
-		out += "</tr>";
+		out += "	<tr>";
+		out += "		<td style='width: 75%; padding: 10px; border-bottom: 2px solid #9565A4;'>";
+		out += "			<input type='text' name='content' style='border: none;' required='required'>";
+		out += "		</td>";
+		out += "		<td style='font-size: 18px; text-align: center; border: none;'>";
+		out += "			<button type='submit' style='background: none; border: none; color: #2E2E2E;'><i class='fas fa-check'></i></button>";
+		out += "			<button type='button' onclick='deleteTodo(${dto.todoNum});' style='background: none; border: none;'>";
+		out += "				<i class='fas fa-trash-alt' style='color: #2E2E2E;''></i></button>";
+		out += "		</td>";
+		out += "	</tr>";
 	
 	   var $table = $(".todoT");
 	   
@@ -133,25 +142,107 @@ $(function(){
 });		
 
  
-//달력
-var calendar=null;
-var group="all";
-var tempContent;
+//달력							
+	var calendar=null;							
+	var group="all";							
+	var tempContent;							
+							
+//위클리							
+							
+//start:2016-01-01 => 2016-01-01 일정							
+//start:2016-01-01, end:2016-01-02 => 2016-01-01 일정							
+//start:2016-01-01, end:2016-01-03 => 2016-01-01 ~ 2016-01-02 일정							
+$(function() {							
+		calendar = $("#weekcalendar").fullCalendar({					
+			height:200,	
+			header: {				
+			left   : 'none'				
+			},				
+			defaultView: 'basicWeek'				
+			,				
+			locale: 'ko',				
+			select: function(start, end, allDay) {				
+				// start, end : moment 객체			
+				// 일정하나를 선택하는 경우 종일일정인경우 end는 start 보다 1일이 크다.			
+				//  캘런더에 start<=일정날짜또는시간<end 까지 표시함			
+							
+			},				
+			events: function(start, end, timezone, callback){				
+				// 캘린더가 처음 실행되거나 월이 변경되면			
+				var startDate=start.format("YYYY-MM-DD");			
+				var endDate=end.format("YYYY-MM-DD");			
+							
+				var url="<%=cp%>/main/month";			
+				var query="start="+startDate+"&end="+endDate+"&group="+group+"&tmp="+new Date().getTime();							
+							
+				var fn = function(data){						
+					var events = eval(data.list);					
+					callback(events);				
+				};						
+							
+			ajaxJSON(url, "post", query, fn);											
+			}			
+		});					
+});							
+</script>
 
-//start:2016-01-01 => 2016-01-01 일정
-//start:2016-01-01, end:2016-01-02 => 2016-01-01 일정
-//start:2016-01-01, end:2016-01-03 => 2016-01-01 ~ 2016-01-02 일정
-$(function() {		
-		//스케쥴러
-		calendar = $("#weekcalendar").fullCalendar({
-			height:200,
-			header: {
-			left   : 'none'
-			},
-			defaultView: 'basicWeek'
-			,
-		});
+<script>
+$(function(){
+	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+"Seoul"+"&appid="+"92014bb042cf34f71371c60e82477360";
+	
+	$.ajax({
+	    url: apiURI,
+	    dataType: "json",
+	    type: "GET",
+	    async: "false",
+	    success: function(resp) {
+	        console.log(resp);
+	        console.log("현재온도 : "+ (resp.main.temp- 273.15) );
+	        console.log("날씨 : "+ resp.weather[0].main );
+	        console.log("날씨 이미지 : "+ resp.weather[0].icon );
+	        console.log("바람   : "+ resp.wind.speed );
+	        console.log("상세날씨설명 : "+ resp.weather[0].description );
+	        
+	        var wcondition = resp.weather[0].main; 	        
+	    	var out = "";
+	    	var wicon = "";
+			
+			 if(wcondition=='Clouds') {
+		        	wicon = "<i class='fas fa-cloud'></i>";
+		        } else if(wcondition=='Clear') {
+		        	wicon = "<i class='fas fa-sun'></i>";
+		        } else if(wcondition=='Snow') {
+		        	wicon = "<i class='fas fa-snowflake'></i>";
+		        } else if(wcondition=='Rain') {
+		        	wicon = "<i class='fas fa-cloud-showers-heavy'></i>";
+		        } else if(wcondition=='Thunderstorm') {
+		        	wicon = "<i class='fas fa-bolt'></i>";	
+		        } else if(wcondition=='Drizzle') {
+		        	wicon = "<i class='fas fa-cloud-sun'></i>";
+		        } else if(wcondition=='Atmosphere') {
+		        	wicon = "<i class='fas fa-smog'></i>";
+		        }			
+			
+			out += "<table style='width: 100%;'>";
+			out += "<tr>";
+			out += "	<td rowspan='4' style='text-align: center; width: 60%; font-size: 70px;'>" + wicon + "</td>";
+			out += "	<td rowspan='2' style='text-align: center; font-size: 25px;'>" + (resp.main.temp- 273.15) + "ºC" + "</td>";
+		    out += "</tr>";
+		    out += "<tr></tr>";
+			out += "<tr>";
+			out += "	<td style='text-align: center; font-size: 20px;'>" + wcondition + "</td>";
+			out += "</tr>";
+			out += "<tr>";
+			out += "	<td style='text-align: center; font-size: 20px;'>" + resp.name + "</td>";
+			out += "</tr>";		
+			out += "</table>";
+			
+			$("#content-weather").append(out);
+	    }
+	    
+	});
 
+	
 });
 </script>
 
@@ -164,7 +255,7 @@ $(function() {
 	<div class="body-container">
 
 	<div class="nav-left">
-		<div class="container-left" style="width: 23%; height: 860px;">
+		<div class="container-left" style="width: 17%; height: 860px;">
 			<div class="profile" style="margin-top: 15px;">
 				<div class="profilePhoto" style="margin-top: 15px;">
 					<table style="width: 180px; height: 180px; margin: 0px auto; margin-top: 5px;">
@@ -235,22 +326,31 @@ $(function() {
 			
 				<form name="todoForm" action="<%=cp%>/main/created" method="POST">
 				<table class="todoT" style="width: 300px; height: 40px; font-size: 15px; padding: 3px 14px; margin-left: 15px;" >
-					<c:forEach var="dto" items="${list}">
-					<tr>
-						<td style="width: 78%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">
-							<div class="todoContent">
-								<button type="button" style="background: none; border: none;" class="cssChange"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i>	</button> &nbsp;
-								<input type="text" name="content" value="${dto.content}" style="border: none;" required="required" disabled="disabled">
-							</div>	
-						</td>
-						<td style="font-size: 18px; text-align: center; border: none;">
-							<button type="submit" style="background: none; border: none; color: #632A7E;">
-								<i class="fas fa-check-square"></i></button>
-							<button type="button" onclick="deleteTodo(${dto.todoNum});" style="background: none; border: none;">
-								<i class="fas fa-trash-alt" style="color: #2E2E2E;"></i></button>
-						</td>
-					</tr>
-					</c:forEach>
+					<c:forEach var="dto" items="${list}">								
+					<tr>										
+						<td style="width: 79%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">						
+						<div class="todoContent">						
+												
+							<c:if test="${dto.checked == 1}">						
+								<i class="fas fa-clipboard-check" style="font-size: 18px;"></i> &nbsp;						
+								<input type="text" name="content" value="${dto.content}" style="border: none; text-decoration: line-through;" required="required" disabled="disabled">						
+							</c:if>	
+												
+							<c:if test="${dto.checked != 1}">						
+								<button type="button" style="background: none; border: none;" onclick="updateTodo(${dto.todoNum});"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i></button> &nbsp;						
+								<input type="text" name="content" value="${dto.content}" style="border: none;" required="required" disabled="disabled">						
+							</c:if>	
+												
+						</div>						
+						</td>						
+						<td style="font-size: 18px; text-align: center; border: none;">						
+							<button type="submit" style="background: none; border: none; color: #632A7E;">						
+							<i class="fas fa-check-square"></i></button>						
+							<button type="button" onclick="deleteTodo(${dto.todoNum});" style="background: none; border: none;">						
+							<i class="fas fa-trash-alt" style="color: #2E2E2E;"></i></button>						
+						</td>						
+					</tr>						
+					</c:forEach>						
 					<c:if test="${list.size()==0}">
 					 <tr>
 						<td style="width: 75%; padding: 10px; border-bottom: 2px solid #9565A4;">
@@ -273,6 +373,38 @@ $(function() {
 	</div>
 	
 		
+	<div class="nav-center">
+		<div class="content-top">
+			<div class="content-schedule" >
+				<div  id="weekcalendar" class="weekcalendar"></div>
+			</div>
+			<div class="schedule-list">
+				<p> 뭐냐 </p>
+			</div>
+		</div>
+
+		
+		<div class="content-bottom">
+			<div class="content-todayTalk" >
+				<ul >
+					<li >오늘의한마디 </li>
+				</ul>
+			</div>
+			<div class="content-right">
+				<div class="content-buddy" >
+					<ul >
+						<li>쪼옥지 </li>
+					</ul>
+				</div>
+				<div class="content-notice" >
+					<ul>
+						<li >고옹지 </li>
+					</ul>
+				</div>
+			</div>
+		</div>			
+	</div>
+	
 	<div class="nav-right">
 		<div class="container-top">
 			<div class="content-date">
@@ -281,40 +413,13 @@ $(function() {
 				</ul>
 			</div>
 			<div class="content-weather">	
-				<ul>
-					<li>날씨:흐림</li>
-				</ul>
+				
+				    <div id="content-weather"></div>
 			</div>
-		</div>
-		
-		<div class="content-top">
-			<div class="content-schedule" >
-				<div  id="weekcalendar"></div>
-			</div>
-		
-			<div class="content-bottom">
-				<div class="content-todayTalk" >
-					<ul >
-						<li >오늘의한마디 </li>
-					</ul>
-				</div>
-				<div class="content-right">
-					<div class="content-buddy" >
-						<ul >
-							<li>쪼옥지 </li>
-						</ul>
-					</div>
-					<div class="content-notice" >
-						<ul>
-							<li >고옹지 </li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-		
+		</div> 	
 	</div>
+	
+	
 </div>
 </div>
 </body>
