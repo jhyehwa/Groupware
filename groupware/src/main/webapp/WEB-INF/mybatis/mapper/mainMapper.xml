@@ -19,5 +19,37 @@
 	 <delete id="deleteTodo" parameterType="Integer">
 		DELETE FROM todo WHERE todoNum = #{todoNum}
 	</delete>
+	
+	<!-- 일정 -->
+	<select id="listWeekScheduler" parameterType="map" resultType="com.of.scheduler.Scheduler">
+		SELECT schNum, writer, name, s.dCode, title, category, category color, content, allDay, startDate, endDate, startTime, endTime, created
+		FROM scheduler s
+		JOIN employee e ON writer=e.empNo
+		JOIN history h ON e.empNo=h.empNo
+		<where>
+	
+			<choose>
+				<when test="group=='#9565A4'">
+					writer = #{writer} AND category=#{group}
+				</when>
+				<when test="group=='#EDA900'">
+					category=#{group}
+				</when>
+				<when test="group=='red'">
+					category=#{group} and s.dCode=#{dCode}
+				</when>
+				<when test="group=='all'">
+					(category='#9565A4' AND writer = #{writer}) OR (category='#EDA900' )
+					OR (category='red' AND  s.dCode=#{dCode} )
+				</when>
+			</choose>
+			
+			<![CDATA[
+				AND ( (startDate>=#{start} AND startDate<=#{end})
+					OR (endDate>=#{start} AND endDate<=#{end}) )
+			]]>             
+		</where>
+		ORDER BY startDate ASC, schNum DESC
+	</select>
 
 </mapper>

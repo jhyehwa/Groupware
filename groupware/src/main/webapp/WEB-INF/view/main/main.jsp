@@ -10,6 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.min.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.print.min.css" media='print' type="text/css">
+<script type="text/javascript" src="<%=cp%>/resource/fullcalendar/lib/moment.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/fullcalendar/fullcalendar.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/fullcalendar/locale-all.js"></script>
+
 <link rel="stylesheet" href="<%=cp%>/resource/css/home.css" type="text/css">
 <script type="text/javascript">
 function deleteTodo(num) {
@@ -17,15 +24,6 @@ function deleteTodo(num) {
 	var url = "<%=cp%>/main/delete?" + q;
 
 	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
-		  	location.href=url;
-	}
-}
-
-function updateTodo(num) {
-	var q = "todoNum="+num;
-	var url = "<%=cp%>/main/update?" + q;
-
-	if(confirm("할 일을 마치셨습니까? ")){
 		  	location.href=url;
 	}
 }
@@ -47,18 +45,48 @@ function updateTodo(num) {
 		out += "</tr>";
 	
 	   var $table = $(".todoT");
+	   
 	   var length = $(".todoT tr").length;
 	   
+       $(".todoT").append(out);
+       
        if(length > 4) {
     	   return;
        }
 
-       $(".todoT").append(out);
 	});
 }); 
 </script>
 
 <script>
+function ajaxJSON(url, type, query, fn) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data, text, request) {
+			fn(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+$(function(){
+	$(".cssChange").click(function(){
+		$(this).parent("div").find("input[type=text]").css("text-decoration", "line-through");
+	});
+});
+
 function showInTime(){
     var currentDate = new Date();
     var divClock = document.getElementById("divClockIn");
@@ -80,7 +108,54 @@ function showOutTime(){
      
     divClockOut.innerText = msg;
 }
+
+// 오늘날짜 출력
+
+$(function(){
+	var today = new Date();
+	var year = today.getFullYear(); // 년도
+	var month = today.getMonth() + 1;  // 월
+	var date = today.getDate();  // 날짜
+	var day = today.getDay();  // 요일
+		if(day==0) {day="일요일";}
+		else if(day==1) {day="월요일";}
+		else if(day==2) {day="화요일";}
+		else if(day==3) {day="수요일";}
+		else if(day==4) {day="목요일";}
+		else if(day==5) {day="금요일";}
+		else {day="토요일";}
+	
+		var out = "";
+		out += year + "년 " + month + "월 " + date + "일 " + day;
+
+		$("#clockkk").append(out);	
+
+});		
+
+ 
+//달력
+var calendar=null;
+var group="all";
+var tempContent;
+
+//start:2016-01-01 => 2016-01-01 일정
+//start:2016-01-01, end:2016-01-02 => 2016-01-01 일정
+//start:2016-01-01, end:2016-01-03 => 2016-01-01 ~ 2016-01-02 일정
+$(function() {		
+		//스케쥴러
+		calendar = $("#weekcalendar").fullCalendar({
+			height:200,
+			header: {
+			left   : 'none'
+			},
+			defaultView: 'basicWeek'
+			,
+		});
+
+});
 </script>
+
+
 
 </head>
 <body>
@@ -151,7 +226,7 @@ function showOutTime(){
 			</div>
 			
 			<div class="todo" id="todo">
-					<p style="margin-left: 15px; margin-top: 10px; font-weight: bold; margin-bottom: 20px;"> TO DO 
+					<p style="margin-left: 15px; margin-top: 10px; font-weight: bold; margin-bottom: 15px;"> TO DO 
 						<button type="button" id="todoBtn" class="todoBtn" style="border:none; background: none;">
 							<i style="font-size: 22px;" class="far fa-plus-square"></i>
 						</button>
@@ -159,19 +234,13 @@ function showOutTime(){
 				
 			
 				<form name="todoForm" action="<%=cp%>/main/created" method="POST">
-				<table class="todoT" style="width: 300px; height: 40px; font-size: 15px; padding: 3px 14px; margin-left: 18px;" >
+				<table class="todoT" style="width: 300px; height: 40px; font-size: 15px; padding: 3px 14px; margin-left: 15px;" >
 					<c:forEach var="dto" items="${list}">
 					<tr>
-						<td style="width: 79%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">
+						<td style="width: 78%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">
 							<div class="todoContent">
-								<c:if test="${dto.checked == 1}">
-									<i class="fas fa-clipboard-check" style="font-size: 18px;"></i> &nbsp;
-								   <input type="text" name="content" value="${dto.content}" style="border: none; text-decoration: line-through;" required="required" disabled="disabled">
-								</c:if>
-								<c:if test="${dto.checked != 1}">
-								<button type="button" style="background: none; border: none;" onclick="updateTodo(${dto.todoNum});"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i></button> &nbsp;
+								<button type="button" style="background: none; border: none;" class="cssChange"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i>	</button> &nbsp;
 								<input type="text" name="content" value="${dto.content}" style="border: none;" required="required" disabled="disabled">
-								</c:if>
 							</div>	
 						</td>
 						<td style="font-size: 18px; text-align: center; border: none;">
@@ -208,7 +277,7 @@ function showOutTime(){
 		<div class="container-top">
 			<div class="content-date">
 				<ul>
-					<li>2020년 6월 11일 목요일 </li>
+					<li id="clockkk"></li>
 				</ul>
 			</div>
 			<div class="content-weather">	
@@ -220,9 +289,7 @@ function showOutTime(){
 		
 		<div class="content-top">
 			<div class="content-schedule" >
-				<ul>
-					<li >일정임 </li>
-				</ul>
+				<div  id="weekcalendar"></div>
 			</div>
 		
 			<div class="content-bottom">

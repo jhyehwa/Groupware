@@ -177,7 +177,7 @@ $(function() {
 				var startDate=start.format("YYYY-MM-DD");
 				var endDate=end.format("YYYY-MM-DD");
 		        
-				var url="<%=cp%>/scheduler/month";
+				var url="<%=cp%>/main/month";
                 var query="start="+startDate+"&end="+endDate+"&group="+group+"&tmp="+new Date().getTime();
                 
             	var fn = function(data){
@@ -200,6 +200,7 @@ $(function() {
 				$('#schLoading').toggle(bool);
 			}
 		});
+
 });
 
 // 분류별 검색
@@ -684,6 +685,8 @@ $(function(){
 		}
 	});
 });
+
+
 </script>
 <div class="container">
 <div class="body-container"  style="width: 800px; float: left; margin: 30px 0 0 300px;">
@@ -714,5 +717,6 @@ $(function(){
 
 
 <div id="schedulerModal" style="display: none;"></div>
+
 
 </div>

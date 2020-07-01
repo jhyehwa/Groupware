@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.of.common.dao.CommonDAO;
+import com.of.scheduler.Scheduler;
 
 @Service("main.mainService")
 public class MainServiceImpl implements MainService {
@@ -56,6 +57,18 @@ public class MainServiceImpl implements MainService {
 		}
 		
 	}
+	
+	@Override
+	public List<Scheduler> listWeekScheduler(Map<String, Object> map) {
+		List<Scheduler> list =null;
+		try {
+			list=dao.selectList("main.listWeekScheduler", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return list;
+	}
+	
 	
 	
 }
