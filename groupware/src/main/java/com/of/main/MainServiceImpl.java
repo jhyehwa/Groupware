@@ -45,6 +45,17 @@ public class MainServiceImpl implements MainService {
 		}
 		
 	}
+
+	@Override
+	public void updateTodo(int todoNum) throws Exception {
+		try {
+			dao.updateData("main.updateTodo", todoNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 	
 	
 }

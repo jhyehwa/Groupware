@@ -8,9 +8,13 @@
 	</insert>
 	
 	<select id="listTodo" parameterType="map" resultType="com.of.main.Main">
-		SELECT todoNum, content FROM todo WHERE empNo = #{empNo}
+		SELECT todoNum, content, checked FROM todo WHERE empNo = #{empNo}
 		ORDER BY todoNum
 	 </select>
+	 
+	 <update id="updateTodo" parameterType="Integer">
+		UPDATE todo SET checked = 1 WHERE todoNum = #{todoNum}
+	</update>
 	 
 	 <delete id="deleteTodo" parameterType="Integer">
 		DELETE FROM todo WHERE todoNum = #{todoNum}

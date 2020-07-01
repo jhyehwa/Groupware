@@ -4,6 +4,7 @@ public class Main {
 	private int todoNum;
 	private String empNo;
 	private String content;
+	private int checked;
 	
 	public int getTodoNum() {
 		return todoNum;
@@ -22,5 +23,11 @@ public class Main {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public int getChecked() {
+		return checked;
+	}
+	public void setChecked(int checked) {
+		this.checked = checked;
 	}
 }

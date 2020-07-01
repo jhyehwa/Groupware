@@ -94,6 +94,8 @@ a {
 }
 
 .sub-menu {
+	vertical-align: middle;
+	padding-left: 3px;
 	height: 85px;
 	display: none;
 	background: #9565A4;
@@ -111,11 +113,13 @@ a {
 	display: block;
 	color: white;
 	padding: 5px;
-	transition: all 0.4s ease-out; &: hover { background-color : #2ECCFA;
+	transition: all 0.4s ease-out;
+	    /*  hover { background-color : #2ECCFA; */
 }
 
-.sub-menu li a:hover {
-	color: #2ECCFA;
+.sub-menu a:hover {
+	/* color: #2ECCFA; */
+	font-weight: bold;
 }
 
 }

@@ -21,6 +21,15 @@ function deleteTodo(num) {
 	}
 }
 
+function updateTodo(num) {
+	var q = "todoNum="+num;
+	var url = "<%=cp%>/main/update?" + q;
+
+	if(confirm("할 일을 마치셨습니까? ")){
+		  	location.href=url;
+	}
+}
+
  $(function(){
 	$("#todoBtn").click(function(){	
 		
@@ -38,26 +47,18 @@ function deleteTodo(num) {
 		out += "</tr>";
 	
 	   var $table = $(".todoT");
-	   
 	   var length = $(".todoT tr").length;
 	   
-       $(".todoT").append(out);
-       
        if(length > 4) {
     	   return;
        }
 
+       $(".todoT").append(out);
 	});
 }); 
 </script>
 
 <script>
-$(function(){
-	$(".cssChange").click(function(){
-		$(this).parent("div").find("input[type=text]").css("text-decoration", "line-through");
-	});
-});
-
 function showInTime(){
     var currentDate = new Date();
     var divClock = document.getElementById("divClockIn");
@@ -150,7 +151,7 @@ function showOutTime(){
 			</div>
 			
 			<div class="todo" id="todo">
-					<p style="margin-left: 15px; margin-top: 10px; font-weight: bold; margin-bottom: 15px;"> TO DO 
+					<p style="margin-left: 15px; margin-top: 10px; font-weight: bold; margin-bottom: 20px;"> TO DO 
 						<button type="button" id="todoBtn" class="todoBtn" style="border:none; background: none;">
 							<i style="font-size: 22px;" class="far fa-plus-square"></i>
 						</button>
@@ -158,13 +159,19 @@ function showOutTime(){
 				
 			
 				<form name="todoForm" action="<%=cp%>/main/created" method="POST">
-				<table class="todoT" style="width: 300px; height: 40px; font-size: 15px; padding: 3px 14px; margin-left: 15px;" >
+				<table class="todoT" style="width: 300px; height: 40px; font-size: 15px; padding: 3px 14px; margin-left: 18px;" >
 					<c:forEach var="dto" items="${list}">
 					<tr>
-						<td style="width: 78%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">
+						<td style="width: 79%; padding: 10px; padding-left: 5px; padding-right: 0px; border-bottom: 2px solid #9565A4;">
 							<div class="todoContent">
-								<button type="button" style="background: none; border: none;" class="cssChange"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i>	</button> &nbsp;
+								<c:if test="${dto.checked == 1}">
+									<i class="fas fa-clipboard-check" style="font-size: 18px;"></i> &nbsp;
+								   <input type="text" name="content" value="${dto.content}" style="border: none; text-decoration: line-through;" required="required" disabled="disabled">
+								</c:if>
+								<c:if test="${dto.checked != 1}">
+								<button type="button" style="background: none; border: none;" onclick="updateTodo(${dto.todoNum});"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i></button> &nbsp;
 								<input type="text" name="content" value="${dto.content}" style="border: none;" required="required" disabled="disabled">
+								</c:if>
 							</div>	
 						</td>
 						<td style="font-size: 18px; text-align: center; border: none;">

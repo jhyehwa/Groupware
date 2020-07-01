@@ -70,4 +70,17 @@ public class MainController {
 		return "redirect:/main";
 	}
 	
+	@RequestMapping(value="/main/update")
+	public String update(
+			@RequestParam int todoNum
+			) throws Exception {
+		
+		try {
+			service.updateTodo(todoNum);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/main";
+	}
+	
 }

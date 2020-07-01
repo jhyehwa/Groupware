@@ -8,7 +8,7 @@
 <div class="header-top">
 	<div class="header-left">
 		<p style="margin: 2px;">
-			<a href="<%=cp%>/login">
+			<a href="<%=cp%>/main">
 			<span>로 혜화네</span>
 			<br>
 			<span>고 회사</span>

@@ -39,16 +39,6 @@
 	<ul class="menu-bar">
 		<li>
 			<div class="menu-icon">
-				<a href="#"><i class="far fa-address-book"></i></a>
-			</div>
-			<ul class="sub-menu">
-				<li><a href="#">일일일일일일</a></li>
-				<li><a href="#">일일일일일일</a></li>
-			</ul>
-		</li>
-		
-		<li>
-			<div class="menu-icon">
 				<a href="#"><i class="far fa-comment-alt"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -62,18 +52,18 @@
 				<a href="#"><i class="far fa-address-book"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">주소록</a></li>
-				<li><a href="#">주소록</a></li>
+				<li><p>주소록</p></li>
+				<li><a href="<%=cp%>/privateAddr/main">회사</a></li>
+				<li><a href="<%=cp%>/privateAddr/main">개인</a></li>
 			</ul>
 		</li>
 		
 		<li>
 			<div class="menu-icon">
-				<a href="<%=cp%>/sign/mainList"><i class="fas fa-file-signature"></i></a>
+				<a href="#"><i class="fas fa-file-signature"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">전자결재</a></li>
-				<li><a href="#">전자결재</a></li>
+				<li><a href="<%=cp%>/sign/mainList">전자결재</a></li>
 			</ul>
 		</li>
 		
@@ -82,8 +72,7 @@
 				<a href="#"><i class="fas fa-calendar-alt"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">일정</a></li>
-				<li><a href="#">일정</a></li>
+				<li><a href="<%=cp%>/scheduler/scheduler">일정</a></li>
 			</ul>
 		</li>
 		
