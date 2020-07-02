@@ -29,18 +29,18 @@
 		<where>
 	
 			<choose>
-				<when test="group=='#9565A4'">
+				<when test="group=='#D0A9F5'">
 					writer = #{writer} AND category=#{group}
 				</when>
-				<when test="group=='#EDA900'">
+				<when test="group=='#F3F781'">
 					category=#{group}
 				</when>
-				<when test="group=='red'">
+				<when test="group=='#F5A9A9'">
 					category=#{group} and s.dCode=#{dCode}
 				</when>
 				<when test="group=='all'">
-					(category='#9565A4' AND writer = #{writer}) OR (category='#EDA900' )
-					OR (category='red' AND  s.dCode=#{dCode} )
+					(category='#D0A9F5' AND writer = #{writer}) OR (category='#F3F781' )
+					OR (category='#F5A9A9' AND  s.dCode=#{dCode} )
 				</when>
 			</choose>
 			

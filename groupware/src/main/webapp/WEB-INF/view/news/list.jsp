@@ -32,7 +32,7 @@
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div style="margin-top: 20px; margin-left: 20px;">
-      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="fas fa-upload"></i> </button>
+      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="far fa-newspaper"></i> </button>
 	       	</div>	
 	       	
 	       	<form name="searchForm"  action="<%=cp%>/news/list" method="post">
@@ -69,14 +69,14 @@
           		  </h3>          		 
       		 </div>
       		 <div style="width: 800px;">
-      		 	<div style="margin: 20px 0 20px 0; text-align: right;">
+      		 	<%-- <div style="margin: 20px 0 20px 0; text-align: right;">
       		 	<c:if test="${dataCount==0}">
       		 		<p>&nbsp;</p>
       		 	</c:if>
       		 	<c:if test="${dataCount!=0}">
 				     ${dataCount}개(${page==0? "":page}/${total_page} page)
 				</c:if>
-				</div>
+				</div> --%>
 				<table class="tablesorter" style="border-collapse: collapse; border-bottom: 1px solid #cccccc;">
 				  <tr align="center" style="border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; font-size: 14px; font-weight: bold; color: #424242;"> 
 				      <th width="90">번호</th>

@@ -69,10 +69,10 @@
     color: #fff; background-image:none;
 }
 .btn-private {
-    background-color:#9565A4; border-color:#9565A4;
+    background-color:#D0A9F5; border-color:#D0A9F5;
 }
 .btn-private:hover, .btn-private:focus {
-    background-color:#9565A4; border-color:#9565A4;
+    background-color:#D0A9F5; border-color:#D0A9F5;
 }
 .btn-black {
     background-color:black; border-color:black;
@@ -81,16 +81,16 @@
     background-color:black; border-color:black;
 }
 .btn-company {
-    background-color:#EDA900; border-color:#EDA900;
+    background-color:#F3F781;; border-color:#F3F781;;
 }
 .btn-company:hover, .btn-company:focus {
-    background-color:#EDA900; border-color:#EDA900;
+    background-color:#F3F781;; border-color:#F3F781;;
 }
 .btn-red {
-    background-color:red; border-color:red;
+    background-color: #F5A9A9; border-color:#F5A9A9;
 }
 .btn-red:hover, .btn-red:focus {
-    background-color:red; border-color:red;
+    background-color:#F5A9A9; border-color:#F5A9A9;
 }
 
 /* 모달대화상자 */
@@ -229,9 +229,9 @@ function articleForm(calEvent) {
 	//var category=calEvent.category;
 	var color=calEvent.color;
 	var category="";
-	if(color=="#9565A4") category="개인일정";
-	else if(color=="#EDA900") category="회사일정";
-	else if(color=="red") category="부서일정";
+	if(color=="#D0A9F5") category="개인일정";
+	else if(color=="#F3F781") category="회사일정";
+	else if(color=="#F5A9A9") category="부서일정";
 	
 	var allDay=calEvent.allDay;
 	var startDate="", startTime="", sday="";
@@ -654,15 +654,15 @@ function classifyChange(category) {
 				.removeClass("btn-company")
 				.removeClass("btn-red");
 	
-	if(category=="#9565A4") {
+	if(category=="#D0A9F5") {
 		$("#btnTitle").html("개인일정")
 		$("#btnTitle").addClass("btn-private");
 		$("#btnDropdown").addClass("btn-private");
-	} else if(category=="#EDA900") {
+	} else if(category=="#F3F781") {
 		$("#btnTitle").html("회사일정")
 		$("#btnTitle").addClass("btn-company");
 		$("#btnDropdown").addClass("btn-company");
-	} else if(category=="red") {
+	} else if(category=="#F5A9A9") {
 		$("#btnTitle").html("부서일정")
 		$("#btnTitle").addClass("btn-red");
 		$("#btnDropdown").addClass("btn-red");
@@ -689,7 +689,7 @@ $(function(){
 
 </script>
 <div class="container">
-<div class="body-container"  style="width: 800px; float: left; margin: 30px 0 0 300px;">
+<div class="board-container"  style="width: 800px; float: left;">
     <div class="body-title" style=" margin-bottom: 30px;" align="center">
         <h1><i class="far fa-calendar-alt"></i> 일정관리 </h1>
     </div>
@@ -700,12 +700,12 @@ $(function(){
                     <div style="clear: both; display: inline-block;">
                          <a class="hbtn hbtn-bottom" style="background: white; color:#2f3741;"
                                href="javascript:classification('all', 0);">전체일정</a>
-                         <a class="hbtn" style="background: #9565A4;"
-                               href="javascript:classification('#9565A4', 1);">개인일정</a>          
-                         <a class="hbtn" style="background: #EDA900;"
-                               href="javascript:classification('#EDA900', 2);">회사일정</a>
-                         <a class="hbtn" style="background: red;"
-                               href="javascript:classification('red', 3);">부서일정</a>
+                         <a class="hbtn" style="background: #D0A9F5;"
+                               href="javascript:classification('#D0A9F5', 1);">개인일정</a>          
+                         <a class="hbtn" style="background: #F3F781;"
+                               href="javascript:classification('#F3F781', 2);">회사일정</a>
+                         <a class="hbtn" style="background: #F5A9A9;"
+                               href="javascript:classification('#F5A9A9', 3);">부서일정</a>
                      </div>
                 </div>
             </div>

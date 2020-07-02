@@ -33,9 +33,9 @@ $(function() {
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">일정분류</td>
 		      <td> 
 		        	<select name='category' class='selectField'>
-	                     <option value='#9565A4' ${dto.category=='#9565A4'?"selected='selected'":""}> 개인일정 </option>
-	                     <option value='#EDA900' ${dto.category=='#EDA900'?"selected='selected'":""}> 회사일정 </option>
-	                     <option value='red' ${dto.category=='red'?"selected='selected'":""}> 부서일정 </option>
+	                     <option value='#D0A9F5' ${dto.category=='#D0A9F5'?"selected='selected'":""}> 개인일정 </option>
+	                     <option value='#F3F781' ${dto.category=='#F3F781'?"selected='selected'":""}> 회사일정 </option>
+	                     <option value='#F5A9A9' ${dto.category=='#F5A9A9'?"selected='selected'":""}> 부서일정 </option>
                     </select>
 		      </td>
 	  </tr>

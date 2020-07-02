@@ -12,6 +12,7 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.min.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/weekcalendar.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.print.min.css" media='print' type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/fullcalendar/lib/moment.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/fullcalendar/fullcalendar.min.js"></script>
@@ -145,7 +146,37 @@ $(function(){
 //달력							
 	var calendar=null;							
 	var group="all";							
-	var tempContent;							
+	var tempContent;	
+	
+// 일정 리스트
+	$(function(){							
+		calendar = $("#schedule-list").fullCalendar({						
+		timeZone: 'UTC',							
+		defaultView: 'listDay',							
+		// customize the button names,							
+		// otherwise they'd all just say "list"							
+ 		views: {							
+		listDay: { buttonText: 'listday' }							
+		},	 			
+		
+		locale:'ko',							
+		events: function(start, end, timezone, callback){							
+				// 캘린더가 처음 실행되거나 월이 변경되면				
+				var startDate=start.format("YYYY-MM-DD");				
+				var endDate=end.format("YYYY-MM-DD");				
+								
+				var url="<%=cp%>/main/month";				
+				var query="start="+startDate+"&end="+endDate+"&group="+group+"&tmp="+new Date().getTime();				
+								
+				var fn = function(data){				
+					var events = eval(data.list);			
+					callback(events);			
+				};				
+								
+			ajaxJSON(url, "post", query, fn);					
+			}					
+	});	
+});
 							
 //위클리							
 							
@@ -154,7 +185,7 @@ $(function(){
 //start:2016-01-01, end:2016-01-03 => 2016-01-01 ~ 2016-01-02 일정							
 $(function() {							
 		calendar = $("#weekcalendar").fullCalendar({					
-			height:200,	
+			height:220,	
 			header: {				
 			left   : 'none'				
 			},				
@@ -183,7 +214,8 @@ $(function() {
 			ajaxJSON(url, "post", query, fn);											
 			}			
 		});					
-});							
+});	
+
 </script>
 
 <script>
@@ -202,7 +234,10 @@ $(function(){
 	        console.log("날씨 이미지 : "+ resp.weather[0].icon );
 	        console.log("바람   : "+ resp.wind.speed );
 	        console.log("상세날씨설명 : "+ resp.weather[0].description );
+	        console.log("현재습도 : "+ resp.main.humidity);
+	        console.log("구름  : "+ (resp.clouds.all) +"%" ); 
 	        
+	        var temp = Math.floor(resp.main.temp- 273.15);
 	        var wcondition = resp.weather[0].main; 	        
 	    	var out = "";
 	    	var wicon = "";
@@ -223,23 +258,24 @@ $(function(){
 		        	wicon = "<i class='fas fa-smog'></i>";
 		        }			
 			
-			out += "<table style='width: 100%;'>";
+			out += "<table style='width: 90%; border: none; padding: 0px; border-spacing: 0px;'>";
 			out += "<tr>";
-			out += "	<td rowspan='4' style='text-align: center; width: 60%; font-size: 70px;'>" + wicon + "</td>";
-			out += "	<td rowspan='2' style='text-align: center; font-size: 25px;'>" + (resp.main.temp- 273.15) + "ºC" + "</td>";
+			out += "	<td rowspan='2' style='text-align: right; width: 50%; font-size: 70px;'>" + wicon + "</td>";
+			out += "	<td style='text-align: left; font-size: 30px; padding-left: 15px;'><i class='fas fa-temperature-high'></i>"  + temp + "°C" + "</td>";
 		    out += "</tr>";
-		    out += "<tr></tr>";
 			out += "<tr>";
-			out += "	<td style='text-align: center; font-size: 20px;'>" + wcondition + "</td>";
+			out += "	<td style='text-align: left; font-size: 15px; font-style: italic; padding-left: 15px;'>" + "Seoul , KR" + "</td>";
 			out += "</tr>";
-			out += "<tr>";
-			out += "	<td style='text-align: center; font-size: 20px;'>" + resp.name + "</td>";
-			out += "</tr>";		
+			out += "	<td class='lastTd' colspan='2' style='text-align: center; font-size: 18px;  font-weight: bold;'>" 
+			out += "		<i class='fas fa-sun'></i> " +  resp.wind.speed + "&nbsp;&nbsp;&nbsp;<i class='fas fa-tint'></i> " + resp.main.humidity;
+			out += "		&nbsp;&nbsp;<i class='fas fa-umbrella'></i> " + (resp.clouds.all) + "%";
+			out += "	</td>";
+ 		 	out += "</tr>";
 			out += "</table>";
+
 			
 			$("#content-weather").append(out);
 	    }
-	    
 	});
 
 	
@@ -379,7 +415,9 @@ $(function(){
 				<div  id="weekcalendar" class="weekcalendar"></div>
 			</div>
 			<div class="schedule-list">
-				<p> 뭐냐 </p>
+				<div class="sl-title"> 오늘의 일정 
+					<a href="<%=cp%>/scheduler/scheduler"><i class="fas fa-plus"></i></a></div>
+				<div id="schedule-list"> </div>			
 			</div>
 		</div>
 
@@ -406,18 +444,15 @@ $(function(){
 	</div>
 	
 	<div class="nav-right">
-		<div class="container-top">
 			<div class="content-date">
 				<ul>
 					<li id="clockkk"></li>
 				</ul>
 			</div>
 			<div class="content-weather">	
-				
 				    <div id="content-weather"></div>
-			</div>
-		</div> 	
-	</div>
+			</div>			
+	</div> 	
 	
 	
 </div>
