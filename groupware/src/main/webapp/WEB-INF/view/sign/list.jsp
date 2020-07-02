@@ -138,6 +138,49 @@
 		});
 	});
 	
+	
+
+	function check() {
+		var f = document.inputForm;
+		var hiddenSnum = $("input[class=hiddenSnum]").val();
+		var option = $("input[class=option]").val();
+		
+		var pempNo2 = $("input[id=pempNo2]").val();
+		var pempNo3 = $("input[id=pempNo3]").val();
+		var pempNo4 = $("input[id=pempNo4]").val();
+		
+		var str = f.ssubject.value;
+		if(!str){
+			alert("제목을 입력하세요.");
+			f.ssubject.focus();
+			return false;
+		}
+		
+		str = f.scontent.value;
+		if(!str || str == "<p>&nbsp;</p>"){
+			alert("내용을 입력하세요.");
+			f.scontent.focus();
+			return false;
+		}
+		
+		
+		storage = f.sStorage.value;
+		
+		var chk =  $("input:checkbox[id='sStorage']").is(":checked");
+		
+		if(chk){
+			f.action = "<%=cp%>/sign/storage?option="+option+"&storage="+storage;
+			f.submit();
+			return;
+		}
+		
+		if(! chk){
+			f.action = "<%=cp%>/sign/created?option="+option+"&hiddenSnum="+hiddenSnum+"&pempNo2="+pempNo2+"&pempNo3="+pempNo3+"&pempNo4="+pempNo4+"&article=article";
+			f.submit();
+			return;
+		}
+	}
+	
 </script>
 
 <div class="container">
@@ -207,7 +250,7 @@
 			<c:forEach var="dto" items="${list}">
 			  <tr align="center" style="border-bottom: 1px solid #cccccc;"> 
 			      <td class="listNum">${dto.listNum}<input type="hidden" class="dtoSnum" value="${dto.snum}"></td>
-			      <td class="stNum">${dto.stnum}</td>
+			      <td class="stNum">${dto.stnum}<input type="hidden" class="dtoStnum" value="${dto.stnum}"></td>
 			      <td align="left" style="padding-left: 10px;" class="ssubject">
 			           <a class="articleSign">${dto.ssubject}</a>
 			      </td>
@@ -278,7 +321,7 @@
 
 <!-- 아티클 모달 -->
 <div id="articleModal-dialog" class="articleModal">
-	<div class="showSing"  style="  width: 1000px; height:950px; position:absolute; display: none; border: 1px solid black;">
+	<div class="showSing"  style="  width: 1000px; height:1000px; position:absolute; display: none; border: 1px solid black;">
 	</div>
 </div>
 

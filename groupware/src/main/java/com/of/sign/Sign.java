@@ -35,36 +35,36 @@ public class Sign {
 	private int enabled;
 	
 
-	private int fileNum;
-	private String originalFilename;
-	private String saveFilename;
+	private int sfNum;
+	private String sfOriginalFilename;
+	private String sfSaveFilename;
 	private int fileCount;
 	
 	private List<MultipartFile> upload;
 	
-	
-	public int getFileNum() {
-		return fileNum;
+ 
+	public int getSfNum() {
+		return sfNum;
 	}
 
-	public void setFileNum(int fileNum) {
-		this.fileNum = fileNum;
+	public void setSfNum(int sfNum) {
+		this.sfNum = sfNum;
 	}
 
-	public String getOriginalFilename() {
-		return originalFilename;
+	public String getSfOriginalFilename() {
+		return sfOriginalFilename;
 	}
 
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
+	public void setSfOriginalFilename(String sfOriginalFilename) {
+		this.sfOriginalFilename = sfOriginalFilename;
 	}
 
-	public String getSaveFilename() {
-		return saveFilename;
+	public String getSfSaveFilename() {
+		return sfSaveFilename;
 	}
 
-	public void setSaveFilename(String saveFilename) {
-		this.saveFilename = saveFilename;
+	public void setSfSaveFilename(String sfSaveFilename) {
+		this.sfSaveFilename = sfSaveFilename;
 	}
 
 	public int getFileCount() {

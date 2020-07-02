@@ -2,27 +2,31 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sign">
+	<select id="seq" resultType="Integer">
+		SELECT seq_sign.NEXTVAL FROM dual
+	</select>
+
 	<insert id="insertSign" parameterType="com.of.sign.Sign">
 		INSERT INTO sign( sNum,	stNum, sDept, sDate, sSubject, sContent, empNo, sEndStep, sCurrStep, startDay)
-		VALUES( seq_sign.NEXTVAL, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay})
+		VALUES( #{snum}, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay})
 	</insert>
 
 	<insert id="insertSignFile" parameterType="com.of.sign.Sign">
-		INSERT INTO	signFile(sfNum, sNum, sfOriginalfilename, sfSavefilename, sfFilesize)
-		VALUES( seq_signFile.NEXTVAL, seq_sign.CURRVAL, #{sfOriginalfilename},	#{sfSavefilename}, #{sfFilesize} )
+		INSERT INTO	signFile(sfNum, sNum, sfOriginalfilename, sfSavefilename)
+		VALUES( seq_signFile.NEXTVAL, #{snum}, #{sfOriginalFilename}, #{sfSaveFilename} )
 	</insert>
 
 	<insert id="insertSignPermission" parameterType="com.of.sign.Sign">
 		INSERT INTO permission( pNum, pStNum, pEmpNo2, pEmpNo3, pEmpNo4 )
 		<choose>
 			<when test="pEmpNo4 != 0 ">
-				VALUES( seq_permission.NEXTVAL, seq_sign.CURRVAL, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4} )
+				VALUES( seq_permission.NEXTVAL, #{snum}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4} )
 			</when>
 			<when test="pEmpNo3 != 0 ">
-				VALUES( seq_permission.NEXTVAL, seq_sign.CURRVAL, #{pEmpNo2},#{pEmpNo3}, null )
+				VALUES( seq_permission.NEXTVAL, #{snum}, #{pEmpNo2},#{pEmpNo3}, null )
 			</when>
 			<when test="pEmpNo2 != 0 ">
-				VALUES( seq_permission.NEXTVAL, seq_sign.CURRVAL, #{pEmpNo2}, null, null )
+				VALUES( seq_permission.NEXTVAL, #{snum}, #{pEmpNo2}, null, null )
 			</when>
 		</choose>
 	</insert>
@@ -114,6 +118,18 @@
 		ORDER BY sNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.of.sign.Sign">
+		SELECT sfNum, sNum, sfSaveFilename, sfOriginalFilename
+		FROM signFile
+		WHERE sNum = #{snum}
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.of.sign.Sign">
+		SELECT sfNum, sNum, sfSaveFilename, sfOriginalFilename
+		FROM signFile
+		WHERE sfNum = #{sfNum}
+	</select>
 
 <!-- ==============================================수신대기함============================================== -->
 	<select id="stepList" parameterType="map" resultType="com.of.sign.Sign">
@@ -152,6 +168,8 @@
 			<where>
 			pempNo4 = #{empNo} and sCurrStep = 3
 			</where>
+			ORDER BY sNum DESC
+			OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<select id="stepCount" parameterType="map" resultType="Integer">
@@ -262,9 +280,30 @@
 <!-- ==============================================임시보관함============================================== -->
 	
 	<insert id="insertStorage" parameterType="com.of.sign.Sign">
-		INSERT INTO storage( sNum,	stNum, sDept, sDate, sSubject, sContent, empNo, sEndStep, sCurrStep, startDay, sfOriginalfilename, sfSavefilename, sfFilesize
-							,pEmpNo2, pEmpNo3, pEmpNo4, )
-		VALUES( seq_sign.NEXTVAL, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay}
-		 					,#{sfOriginalfilename},	#{sfSavefilename}, #{sfFilesize}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4})
+		INSERT INTO storage( sNum,	stNum, sDept, sDate, sSubject, sContent, empNo, sEndStep, sCurrStep, startDay, sfOriginalfilename, sfSavefilename ,pEmpNo2, pEmpNo3, pEmpNo4 )
+		VALUES( seq_storage.NEXTVAL, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay} ,#{sfOriginalFilename},	#{sfSaveFilename}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4} )
 	</insert>
+	
+	<select id="listStorage" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT sNum, stNum, sDate, startDay, sSubject, sContent, sEndStep, sCurrStep, empNo, sfOriginalFilename, sfSaveFilename, pempNo2, pempNo3, pempNo4
+		FROM storage
+		WHERE empNo = #{empNo}
+		ORDER BY sNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="storageDataCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM storage
+		WHERE empNo = #{empNo}
+	</select>
+	
+	<select id="readStorage" parameterType="map" resultType="com.of.sign.Sign">
+		SELECT sNum, stNum, sDate, startDay, sSubject, sContent, sEndStep, sCurrStep, empNo, sfOriginalFilename, sfSaveFilename, pempNo2, pempNo3, pempNo4
+		FROM storage
+		WHERE sNum = #{valueSnum}
+	</select>
+	
+	<delete id="deleteStorage" parameterType="Integer">
+		DELETE FROM storage WHERE sNum = #{hiddenSnum}
+	</delete>
 </mapper>

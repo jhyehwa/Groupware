@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface SignService {
-	public void insertSign(Sign dto, String pathname) throws Exception;
+	public void insertSign(Sign dto, String pathname, String article,  String hiddenSnum) throws Exception;
 	public void insertFile(Sign dto) throws Exception;
+	public List<Sign> listFile(int snum);
+	public Sign readFile(int sfNum);
 	public int dataCount(Map<String, Object> map, String val);
 	public int stepCount(Map<String, Object> map);
 	
@@ -29,5 +31,8 @@ public interface SignService {
 	
 	public Sign readReturnSign(Map<String, Object> map);
 	
-	public void insertStorage(Sign dto) throws Exception;
+	public void insertStorage(Sign dto, String pathname) throws Exception;
+	public List<Sign> storageList(Map<String, Object> map);
+	public int storageDataCount(int empNo);
+	public Sign readStorage(Map<String, Object> map);
 }

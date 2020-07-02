@@ -20,23 +20,30 @@ public class SignServiceImpl implements SignService {
 	private FileManager fileManager;
 
 	@Override
-	public void insertSign(Sign dto, String pathname) throws Exception {
+	public void insertSign(Sign dto, String pathname, String article, String hiddenSnum) throws Exception {
 		try {
+			int seq = dao.selectOne("sign.seq");
+			dto.setSnum(seq);
+			
+			if(article.equals("article")) {
+				dao.deleteData("sign.deleteStorage", Integer.parseInt(hiddenSnum));
+			}
+			
+
 			dao.insertData("insertSign", dto);
 			dao.insertData("insertSignPermission", dto);
-//			dao.insertData("insertSign", dto);
-			
-			if(! dto.getUpload().isEmpty()) {
-				for(MultipartFile mf : dto.getUpload()) {
+
+			if (!dto.getUpload().isEmpty()) {
+				for (MultipartFile mf : dto.getUpload()) {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);
-					if(saveFilename==null) continue;
-					
+					if (saveFilename == null)
+						continue;
+
 					String originalFilename = mf.getOriginalFilename();
-					
-					dto.setOriginalFilename(originalFilename);
-					dto.setSaveFilename(saveFilename);
-					
-					//insertFile(dto);
+
+					dto.setSfOriginalFilename(originalFilename);
+					dto.setSfSaveFilename(saveFilename);
+					insertFile(dto);
 				}
 			}
 		} catch (Exception e) {
@@ -47,18 +54,21 @@ public class SignServiceImpl implements SignService {
 
 	@Override
 	public void insertFile(Sign dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			dao.insertData("sign.insertSignFile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	@Override
 	public int dataCount(Map<String, Object> map, String val) {
-		int result=0;
+		int result = 0;
 		try {
-			if(! val.equals("fini")) {
+			if (!val.equals("fini")) {
 				map.put("val", "wait");
 				result = dao.selectOne("sign.dataCount", map);
-			}else {
+			} else {
 				map.put("val", "fini");
 				result = dao.selectOne("sign.dataCount", map);
 			}
@@ -81,8 +91,19 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
+	public List<Sign> storageList(Map<String, Object> map) {
+		List<Sign> list = null;
+		try {
+			list = dao.selectList("sign.listStorage", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
 	public List<Sign> empList() {
-		List<Sign> list=null;
+		List<Sign> list = null;
 		try {
 			list = dao.selectList("sign.emplist");
 		} catch (Exception e) {
@@ -90,7 +111,6 @@ public class SignServiceImpl implements SignService {
 		}
 		return list;
 	}
-
 
 	@Override
 	public Sign readSign(Map<String, Object> map) {
@@ -106,17 +126,15 @@ public class SignServiceImpl implements SignService {
 	@Override
 	public Sign readEmp(int empNo) {
 		Sign dto = null;
-			try {
-				dto = dao.selectOne("sign.readEmp", empNo);
-			}catch (NullPointerException e) {
-				dto = null;
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			dto = dao.selectOne("sign.readEmp", empNo);
+		} catch (NullPointerException e) {
+			dto = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return dto;
 	}
-	
 
 	@Override
 	public Sign readWriter(int empNo) {
@@ -128,9 +146,9 @@ public class SignServiceImpl implements SignService {
 		}
 		return dto;
 	}
-	
+
 	@Override
-	public List<Sign> stepList(Map<String, Object> map, String keyword){
+	public List<Sign> stepList(Map<String, Object> map, String keyword) {
 		List<Sign> list = null;
 		try {
 			list = dao.selectList("sign.stepList", map);
@@ -139,17 +157,17 @@ public class SignServiceImpl implements SignService {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public void updateScurrStep(int sNum) throws Exception {
 		dao.updateData("sign.updateScurrStep", sNum);
 	}
-	
+
 	@Override
 	public int stepCount(Map<String, Object> map) {
-		int result=0;
+		int result = 0;
 		try {
-			result =dao.selectOne("sign.stepCount", map);
+			result = dao.selectOne("sign.stepCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -231,13 +249,75 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public void insertStorage(Sign dto) throws Exception {
-			try {
-				dao.insertData("sign.insertStorage", dto);
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw e;
+	public void insertStorage(Sign dto, String pathname) throws Exception {
+		try {
+			if (!dto.getUpload().isEmpty()) {
+				for (MultipartFile mf : dto.getUpload()) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if (saveFilename == null)
+						continue;
+
+					String originalFilename = mf.getOriginalFilename();
+
+					dto.setSfOriginalFilename(originalFilename);
+					dto.setSfSaveFilename(saveFilename);
+					dao.insertData("sign.insertStorage", dto);
+				}
 			}
+			if(dto.getSfOriginalFilename() == null && dto.getSfSaveFilename() == null) {
+				dto.setSfOriginalFilename("null");
+				dto.setSfSaveFilename("null");
+			}
+			dao.insertData("sign.insertStorage", dto);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
+	}
+
+	@Override
+	public List<Sign> listFile(int snum) {
+		List<Sign> listFile = null;
+		try {
+			listFile = dao.selectList("sign.listFile", snum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listFile;
+	}
+
+	@Override
+	public Sign readFile(int sfNum) {
+		Sign dto = null;
+		try {
+			dto = dao.selectOne("sign.readFile", sfNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public int storageDataCount(int empNo) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sign.storageDataCount", empNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Sign readStorage(Map<String, Object> map) {
+		Sign dto = null;
+		try {
+			dto = dao.selectOne("sign.readStorage", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
 
 }

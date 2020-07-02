@@ -133,8 +133,9 @@ textarea {
 }
 </style>
 
-<form method="post" name="inputForm" id="inputForm">
-	<input type="hidden" class="hiddenSnum" value="${sNum}">
+<form method="post" name="inputForm" id="inputForm" enctype="multipart/form-data">
+	<input type="hidden" class="hiddenSnum" id="hiddenSnum" value="${sNum}">
+	<input type="hidden" class="option" value="1">
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">
@@ -205,6 +206,7 @@ textarea {
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? pempNo4.name : " " }
+								<input type="hidden" id="pempNo4" value="${pempNo4.empNo}">
 							</td>
 						</tr>
 						<tr>
@@ -240,6 +242,7 @@ textarea {
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? pempNo3.name : " " }
+								<input type="hidden" id="pempNo3" value="${pempNo3.empNo}">
 							</td>
 							
 						</tr>
@@ -277,6 +280,7 @@ textarea {
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px;">${ mode=="article" ? pempNo2.name : " " }
+								<input type="hidden" id="pempNo2" value="${pempNo2.empNo}">
 							</td>
 						</tr>
 						<tr>
@@ -326,12 +330,20 @@ textarea {
 	</table>
 	<div class="contentDiv">
 		<table class="content">
+			<tbody  id="tb">
 			<tr>
 				<td style="width: 150px; background: #BDBDBD"><b>시행일자</b></td>
 				<c:if test="${mode == 'article'}">
-					<td style="width: 50%;">
-						<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none;">
-					</td>
+					<c:if test="${modes == null }">
+						<td style="width: 50%;">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none;">
+						</td>
+					</c:if>
+					<c:if test="${modes == '임시보관함' }">
+						<td style="width: 50%;">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}">
+						</td>
+					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
 					<td style="width: 50%;"><input type="date" id="startDay" name="startDay"></td>
@@ -346,8 +358,13 @@ textarea {
 				<td style="background: #BDBDBD"><b>제목</b></td>
 				<td colspan="3">
 				<c:if test="${mode == 'article'}">
-					<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
-						style="border: none;">
+					<c:if test="${modes == null }">				
+						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
+							style="border: none;">
+					</c:if>	
+					<c:if test="${modes == '임시보관함' }">		
+						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+					</c:if>	
 				</c:if>
 				<c:if test="${mode != 'article'}">
 					<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
@@ -360,35 +377,56 @@ textarea {
 			<tr>
 				<td colspan="4" style="padding-left: 40px;">
 				<c:if test="${mode == 'article'}">
-					<textarea rows="12"cols="50" style="border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent" disabled="disabled">${dto.scontent}</textarea>
+					<c:if test="${modes == null }">
+						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent" disabled="disabled">${dto.scontent}</textarea>
+					</c:if>
+					<c:if test="${modes == '임시보관함' }">
+						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent">${dto.scontent}</textarea>
+					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
 					<textarea rows="12"cols="50" style="width: 900px; height: 420px; resize: none;" id="sContent" name="scontent"></textarea>
 				</c:if>
 				</td>
 			</tr>
+		<c:if test="${mode != 'article'}">
 			<tr>
 				<td style="background: #eee"><b>첨부</b></td>
 				<td colspan="3">
-					<input type="file" id="upload" name="upload" style="padding-top: 13px;">
+					<input type="file" id="upload" name="upload" style="padding-top: 13px;" multiple="multiple">
 				</td>
 			</tr>
-		</table>
-		<c:if test="${mode=='article'}">
-			<c:forEach var="vo" items="${listFile}">
-				<tr id="f${vo.fileNum}" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td colspan="3" style="padding-left:10px;"> 
-								<a href="javascript:deleteFile('${vo.fileNum}');"><i class="far fa-trash-alt"></i></a> 
-								${vo.originalFilename}
-					</td>
-				</tr>
-			</c:forEach>
 		</c:if>
+		<c:if test="${mode == 'article' && modes == '임시보관함'}">
+			<tr>
+				<td style="background: #eee"><b>첨부</b></td>
+				<td colspan="3">
+					<input type="file" id="upload" name="upload" style="padding-top: 13px;" multiple="multiple">
+				</td>
+			</tr>
+		</c:if>
+		<c:if test="${mode == 'article'}">
+				<c:forEach var="vo" items="${listFile}">
+					<tr id="f${vo.sfNum}" height="40px;" style="border-bottom: 1px solid #cccccc;">
+						<td colspan="3" style="padding-left:10px;">
+							<a href="<%=cp%>/sign/download?sfNum=${vo.sfNum}">${vo.sfOriginalFilename}</a> 
+						</td>
+					</tr>
+				</c:forEach>
+		</c:if>
+		</table>
 	</div>
 	<c:if test="${mode != 'article' }">
-		<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<span style="height: 10px; font-size: 15px;">
-		<input type="checkbox" value="storage" id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
+			<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span style="height: 10px; font-size: 15px;">
+			<input type="checkbox" value="storage" 
+			id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
+	</c:if>
+	<c:if test="${mode == 'article' && modes == '임시보관함'}">
+			<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span style="height: 10px; font-size: 15px;">
+			<input type="checkbox" value="storage" 
+			id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
 	</c:if>
 </form>
 

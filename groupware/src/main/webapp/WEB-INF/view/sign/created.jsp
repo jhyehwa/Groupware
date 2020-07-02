@@ -144,11 +144,12 @@ $(function() {
 		
 });
 
+
 </script>
 
 
 <div id="listBody" style="margin-left: 500px; width: 1000px; padding-top: 40px;">
-	<select id="listSelect" style="height: 55px; font-weight: bold; border: none";>
+	<select id="listSelect" style="height: 55px; font-weight: bold; border: none;">
 		<option id="selectOption" value="0" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::선택::</option>
 		<option id="selectOption" value="1">1. 기안서</option>
 		<option id="selectOption" value="2">2. 휴가 신청서</option>

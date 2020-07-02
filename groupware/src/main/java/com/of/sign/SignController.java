@@ -1,6 +1,7 @@
 package com.of.sign;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.of.common.FileManager;
 import com.of.common.MyUtil;
 import com.of.employee.SessionInfo;
 
@@ -29,9 +32,10 @@ public class SignController {
 
 	@Autowired
 	private SignService service;
-
 	@Autowired
 	private MyUtil myUtil;
+	@Autowired
+	private FileManager fileManager;
 
 	// main리스트 출력
 	@RequestMapping(value = "mainList")
@@ -252,6 +256,28 @@ public class SignController {
 
 		case "6":
 			mode = "임시보관함";
+			empNo = Integer.parseInt(info.getEmpNo());
+			map.put("empNo", empNo);
+			
+			list = service.storageList(map);
+			
+			dataCount = service.storageDataCount(empNo); 
+			
+			if (dataCount != 0) {
+				total_page = myUtil.pageCount(rows, dataCount);
+			}
+
+			// 페이지 변화 시 설정
+			if (total_page < current_page) {
+				current_page = total_page;
+			}
+
+			for (Sign dto : list) {
+				listNum = dataCount - (offset + n);
+				dto.setListNum(listNum);
+				n++;
+			}
+			paging = myUtil.paging(current_page, total_page, listUrl);
 
 			break;
 		}
@@ -294,6 +320,11 @@ public class SignController {
 			@RequestParam String lineEmp2,
 			@RequestParam String lineEmp3,
 			@RequestParam String lineEmp4,
+			@RequestParam(defaultValue="") String pempNo2,
+			@RequestParam(defaultValue="") String pempNo3,
+			@RequestParam(defaultValue="") String pempNo4,
+			@RequestParam(defaultValue="") String article,
+			String hiddenSnum,
 			HttpSession session
 			) throws Exception {
 		try {
@@ -307,9 +338,13 @@ public class SignController {
 			dto.setName(info.getName());
 			dto.setSdept(info.getdType());
 			int count = 1;
-
-			System.out.println(dto.getStartDay());
-
+			
+			if(article.equals("article")) {
+				lineEmp2 = pempNo2;
+				lineEmp3 = pempNo3;
+				lineEmp4 = pempNo4;
+			}
+			
 			if (!lineEmp2.equals("0")) {
 				count++;
 			}
@@ -327,7 +362,7 @@ public class SignController {
 
 			dto.setSendStep(count);
 
-			service.insertSign(dto, pathname);
+			service.insertSign(dto, pathname, article, hiddenSnum);
 
 		} catch (Exception e) {
 		}
@@ -345,6 +380,9 @@ public class SignController {
 			@RequestParam String storage
 			) throws Exception {
 		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "sign";
+
 			dto.setStnum(option);
 
 			SessionInfo info = (SessionInfo) session.getAttribute("employee");
@@ -371,7 +409,7 @@ public class SignController {
 
 			dto.setSendStep(count);
 
-			service.insertStorage(dto);
+			service.insertStorage(dto, pathname);
 
 		} catch (Exception e) {
 		}
@@ -380,8 +418,11 @@ public class SignController {
 
 	// 문서 종류 호출
 	@RequestMapping(value = "search", method = RequestMethod.GET)
-	public String search(@RequestParam String option, @RequestParam(defaultValue = "") String mode,
-			@RequestParam(defaultValue = "") String valueSnum, @RequestParam(defaultValue = "") String listVal,
+	public String search(@RequestParam String option,
+			@RequestParam(defaultValue = "") String mode,
+			@RequestParam(defaultValue = "") String valueSnum,
+			@RequestParam(defaultValue = "") String listVal,
+			HttpSession session,
 			Model model) throws Exception {
 
 		String returnAddr = "sign/" + option;
@@ -390,6 +431,7 @@ public class SignController {
 		Sign pempNo2 = null;
 		Sign pempNo3 = null;
 		Sign pempNo4 = null;
+		List<Sign> listFile = null;
 
 		try {
 			if (mode.equalsIgnoreCase("article")) {
@@ -402,11 +444,19 @@ public class SignController {
 					
 					map.put("valueSnum", valueSnum);
 					
-					if(! listVal.equals("반려함")) {
+					if(! listVal.equals("반려함") && ! listVal.equals("임시보관함")) {
 						dto = service.readSign(map);
 					}else if(listVal.equals("반려함")) {
 						dto = service.readReturnSign(map);
 						model.addAttribute("listVal", listVal);
+					}else if(listVal.equals("임시보관함")) {
+						
+						SessionInfo info = (SessionInfo) session.getAttribute("employee");
+						
+						writer = service.readEmp(Integer.parseInt(info.getEmpNo()));
+						
+						dto = service.readStorage(map);
+						model.addAttribute("modes", "임시보관함");
 					}
 					
 					Date date = sdf.parse(dto.getSdate());
@@ -431,6 +481,8 @@ public class SignController {
 						pempNo4 = service.readEmp(Integer.parseInt(dto.getpEmpNo4()));
 						model.addAttribute("pempNo4", pempNo4);
 					}
+					
+					listFile = service.listFile(Integer.parseInt(valueSnum));
 				}
 
 			List<Sign> list = service.empList();
@@ -440,6 +492,7 @@ public class SignController {
 			model.addAttribute("sNum", valueSnum);
 			model.addAttribute("mode", mode);
 			model.addAttribute("writer", writer);
+			model.addAttribute("listFile", listFile);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -477,5 +530,32 @@ public class SignController {
 		
 		return map12;
 	}
-
+	@RequestMapping("download")
+	public void download(
+			@RequestParam int sfNum,
+			HttpServletResponse resp,
+			HttpSession session
+			) throws Exception{
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "sign";
+		
+		boolean b = false;
+		
+		Sign dto = service.readFile(sfNum);
+		if(dto != null) {
+			String saveFilename = dto.getSfSaveFilename();
+			String originalFilename = dto.getSfOriginalFilename();
+			
+			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+		
+		if(! b) {
+			try {
+				resp.setContentType("text/html;charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다!.');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
 }
