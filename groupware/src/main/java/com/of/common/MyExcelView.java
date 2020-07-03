@@ -65,26 +65,31 @@ public class MyExcelView extends AbstractXlsxView {
 
 			Object[] oo = values.get(i);
 			for (int col = 0; col < oo.length; col++) {
-				cell = row.createCell(col);
-				if (oo[col] instanceof Short) {
-					cell.setCellValue((Short) oo[col]);
-				} else if (oo[col] instanceof Integer) {
-					cell.setCellValue((Integer) oo[col]);
-				} else if (oo[col] instanceof Long) {
-					cell.setCellValue((Long) oo[col]);
-				} else if (oo[col] instanceof Float) {
-					cell.setCellValue((Float) oo[col]);
-				} else if (oo[col] instanceof Double) {
-					cell.setCellValue((Double) oo[col]);
-				} else if (oo[col] instanceof Character) {
-					cell.setCellValue((Character) oo[col]);
-				} else if (oo[col] instanceof Boolean) {
-					cell.setCellValue((Boolean) oo[col]);
-				} else if (oo[col] instanceof String) {
-					cell.setCellValue((String) oo[col]);
-				} else {
-					cell.setCellValue(oo[col].toString());
+				try {
+					cell = row.createCell(col);
+					if (oo[col] instanceof Short) {
+						cell.setCellValue((Short) oo[col]);
+					} else if (oo[col] instanceof Integer) {
+						cell.setCellValue((Integer) oo[col]);
+					} else if (oo[col] instanceof Long) {
+						cell.setCellValue((Long) oo[col]);
+					} else if (oo[col] instanceof Float) {
+						cell.setCellValue((Float) oo[col]);
+					} else if (oo[col] instanceof Double) {
+						cell.setCellValue((Double) oo[col]);
+					} else if (oo[col] instanceof Character) {
+						cell.setCellValue((Character) oo[col]);
+					} else if (oo[col] instanceof Boolean) {
+						cell.setCellValue((Boolean) oo[col]);
+					} else if (oo[col] instanceof String) {
+						cell.setCellValue((String) oo[col]);
+					} else {
+						cell.setCellValue(oo[col].toString());
+					}
+				} catch(Exception e) {
+					
 				}
+				
 			}
 		}
 	}

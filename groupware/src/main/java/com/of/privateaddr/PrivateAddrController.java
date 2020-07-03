@@ -1,7 +1,8 @@
 package com.of.privateaddr;
-
+ 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,42 +36,27 @@ public class PrivateAddrController {
 
 	@Autowired
 	private MyExcelView excelView;
-	
-	// ---------------------------------------------------------------------------------------------
-	// 주소록 리스트	
-	@RequestMapping("/privateAddr/main")
-	public String main() throws Exception {
-		return ".privateAddr.main";
-	}
 
-	@RequestMapping("/privateAddr/list")
-	public String list(
+	// ---------------------------------------------------------------------------------------------
+	// 개인 주소록 리스트
+	@RequestMapping("/privateAddr/main")
+	public String main(
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
-			@RequestParam(defaultValue = "all") String condition,
-			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "가") String kor, 
-			@RequestParam(defaultValue = "힣") String kor2,
 			HttpServletRequest req,
 			HttpSession session,
 			Model model) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
-		
+
 		String cp = req.getContextPath();
 
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
 
-		if (req.getMethod().equalsIgnoreCase("GET")) {
-			keyword = URLDecoder.decode(keyword, "UTF-8");
-		}
-
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
 		map.put("empNo", info.getEmpNo());
-		
+
 		dataCount = service.dataCount(map);
 		if (dataCount != 0) {
 			total_page = myUtil.pageCount(rows, dataCount);
@@ -84,10 +71,69 @@ public class PrivateAddrController {
 			offset = 0;
 		map.put("offset", offset);
 		map.put("rows", rows);
+
+		String paging = myUtil.paging(current_page, total_page);
+
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("paging", paging);
+
+		return ".privateAddr.main";
+	}
+
+	@RequestMapping("/privateAddr/list")
+	public String list(
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "가") String kor,
+			@RequestParam(defaultValue = "힣") String kor2,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+
+		String cp = req.getContextPath();
+
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("empNo", info.getEmpNo());
 		map.put("kor", kor);
 		map.put("kor2", kor2);
 
-		List<PrivateAddr> list = service.listPrivateAddr(map);
+		dataCount = service.dataCount(map);
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		List<PrivateAddr> list = null;
+
+		if (keyword.equals("")) {
+			list = service.listPrivateAddr(map);
+		} else {
+			list = service.listPrivateAddrSearch(map);
+		}
 
 		String query = "";
 
@@ -99,20 +145,20 @@ public class PrivateAddrController {
 
 		listUrl = cp + "/privateAddr/list";
 
-		List<PrivateAddr> modalList = service.modalList();
+		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
 		if (query.length() != 0) {
 			listUrl = listUrl + "?" + query;
 		}
 
 		String paging = myUtil.paging(current_page, total_page, listUrl);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 		model.addAttribute("modalList", modalList);
-		
+
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 
@@ -120,13 +166,13 @@ public class PrivateAddrController {
 	}
 
 	// ---------------------------------------------------------------------------------------------
-	// 주소록 등록
+	// 개인 주소록 등록
 	@RequestMapping(value = "/privateAddr/privateAddr", method = RequestMethod.GET)
 	public String privateAddrForm(Model model, HttpSession session) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 
-		List<PrivateAddr> modalList = service.modalList();
+		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
 
 		model.addAttribute("mode", "privateAddr");
 		model.addAttribute("modalList", modalList);
@@ -135,7 +181,11 @@ public class PrivateAddrController {
 	}
 
 	@RequestMapping(value = "/privateAddr/privateAddr", method = RequestMethod.POST)
-	public String privateAddrSubmit(PrivateAddr dto, final RedirectAttributes reAttr, Model model, HttpSession session) {
+	public String privateAddrSubmit(
+			PrivateAddr dto,
+			final RedirectAttributes reAttr,
+			Model model,
+			HttpSession session) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 
@@ -147,23 +197,27 @@ public class PrivateAddrController {
 			String tel3 = dto.getTel().substring(7);
 
 			dto.setTel(tel1 + "-" + tel2 + "-" + tel3);
-			
+
 			dto.setEmpNo(info.getEmpNo());
 
 			service.insertPrivateAddr(dto);
 		} catch (Exception e) {
 			model.addAttribute("mode", "privateAddr");
-			
+
 			return ".privateAddr.privateAddr";
 		}
 
 		return "redirect:/privateAddr/main";
 	}
-	
+
 	// ---------------------------------------------------------------------------------------------
-	// 주소록 빠른 등록
+	// 개인 주소록 빠른 등록
 	@RequestMapping(value = "/privateAddr/privateAddr2", method = RequestMethod.POST)
-	public String privateAddrSubmit2(PrivateAddr dto, final RedirectAttributes reAttr, Model model, HttpSession session) {
+	public String privateAddrSubmit2(
+			PrivateAddr dto,
+			final RedirectAttributes reAttr,
+			Model model,
+			HttpSession session) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 
@@ -175,19 +229,19 @@ public class PrivateAddrController {
 			String tel3 = dto.getTel().substring(7);
 
 			dto.setTel(tel1 + "-" + tel2 + "-" + tel3);
-			
+
 			dto.setEmpNo(info.getEmpNo());
 
 			service.insertPrivateAddrSpeed(dto);
 		} catch (Exception e) {
 			model.addAttribute("mode", "privateAddr");
-			
-			return ".privateAddr.list";
+
+			return ".privateAddr.main";
 		}
 
 		return "redirect:/privateAddr/main";
 	}
-	
+
 	// ---------------------------------------------------------------------------------------------
 	// 모달 그룹 추가
 	@RequestMapping(value = "/privateAddr/modalInsert", method = RequestMethod.POST)
@@ -197,13 +251,13 @@ public class PrivateAddrController {
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 
 		String state = "false";
-		
+
 		try {
 
 			dto.setEmpNo(info.getEmpNo());
-		
+
 			service.modalInsert(dto);
-			
+
 			state = "true";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -211,51 +265,53 @@ public class PrivateAddrController {
 
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);
+		model.put("dto", dto);
 
 		return model;
 	}
 
 	// ---------------------------------------------------------------------------------------------
-	// 주소록 수정
+	// 개인 주소록 수정
 	@RequestMapping(value = "/privateAddr/update", method = RequestMethod.GET)
-	public String updateForm(@RequestParam int addrNum, @RequestParam String page, @RequestParam(defaultValue = "title") String condition, @RequestParam(defaultValue = "") String keyword, Model model, HttpSession session) throws Exception {
+	public String updateForm(
+			@RequestParam int addrNum,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "title") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session,
+			Model model) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
-		
+
 		keyword = URLDecoder.decode(keyword, "UTF-8");
 
-	/*	String query = "page=" + page;
+		String query = "page=" + page;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}*/
-		
+		}
+
 		PrivateAddr dto = service.readAddress(addrNum);
 		if (dto == null) {
-			return "redirect:/privateAddr/list?page=" + page;
+			return "redirect:/privateAddr/main?page=" + page;
 		}
-		
-		List<PrivateAddr> modalList = service.modalList();
-		
-		model.addAttribute("addrNum", addrNum);
+
+		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
+
 		model.addAttribute("mode", "update");
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
-		/*model.addAttribute("query", query);*/
+		model.addAttribute("query", query);
 		model.addAttribute("modalList", modalList);
 
 		return ".privateAddr.privateAddr";
 	}
 
 	@RequestMapping(value = "/privateAddr/update", method = RequestMethod.POST)
-	public String updateSubmit(PrivateAddr dto,  @RequestParam(defaultValue="1") String page, HttpSession session) {
+	public String updateSubmit(PrivateAddr dto, @RequestParam(defaultValue = "1") String page, HttpSession session) {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
-		
+
 		try {
-			System.out.println(dto.getName());
-			System.out.println(dto.getAddrNum());
-			System.out.println(dto.getGroupNum());
-			
 			dto.setTel(dto.getTel().replaceAll("-", ""));
 
 			String tel1 = dto.getTel().substring(0, 3);
@@ -263,7 +319,7 @@ public class PrivateAddrController {
 			String tel3 = dto.getTel().substring(7);
 
 			dto.setTel(tel1 + "-" + tel2 + "-" + tel3);
-		
+
 			dto.setEmpNo(info.getEmpNo());
 
 			service.updatePrivateAddr(dto);
@@ -271,31 +327,77 @@ public class PrivateAddrController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/privateAddr/list?page=" + page;
+		return "redirect:/privateAddr/main?page=" + page;
 	}
 
 	// ---------------------------------------------------------------------------------------------
-	// 주소록 내보내기
+	// 개인 주소록 삭제
+	@RequestMapping(value = "/privateAddr/delete")
+	public String delete(
+			@RequestParam int addrNum,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+
+		keyword = URLDecoder.decode(keyword, "UTF-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		System.out.println(addrNum);
+		service.deletePrivateAddr(addrNum);
+
+		return "redirect:/privateAddr/main?" + query;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+	// 개인 주소록 내보내기
 	@RequestMapping("/privateAddr/excel")
-	public View excel(Map<String, Object> model) throws Exception {
-		/*
-		 * List<PrivateAddr> list = service.listAllPrivateAddr();
-		 * 
-		 * String sheetName = "개인 주소록"; List<String> columnLabels = new ArrayList<>();
-		 * List<Object[]> columnValues = new ArrayList<>();
-		 * 
-		 * columnLabels.add("이름"); columnLabels.add("전화번호"); columnLabels.add("이메일");
-		 * columnLabels.add("회사명"); columnLabels.add("그룹");
-		 * 
-		 * for (PrivateAddr dto : list) { columnValues.add(new Object[] { dto.getName(),
-		 * dto.getTel(), dto.getEmail(), dto.getCompany(), dto.getGrouptype()}); }
-		 * 
-		 * model.put("filename", "address.xls"); model.put("sheetName", sheetName);
-		 * model.put("columnLabels", columnLabels); model.put("columnValues",
-		 * columnValues);
-		 */
+	public View excel(Map<String, Object> model, HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+
+		List<PrivateAddr> list = service.listAllPrivateAddr(info.getEmpNo());
+
+		String sheetName = "개인 주소록";
+		List<String> columnLabels = new ArrayList<>();
+		List<Object[]> columnValues = new ArrayList<>();
+		
+		columnLabels.add("번호");
+		columnLabels.add("이름");
+		columnLabels.add("전화번호");
+		columnLabels.add("이메일");
+		columnLabels.add("회사명");
+		columnLabels.add("부서명");
+		columnLabels.add("회사번호");
+		columnLabels.add("회사주소");
+		columnLabels.add("메모");
+		columnLabels.add("그룹명");
+
+		for (PrivateAddr dto : list) {
+			columnValues.add(new Object[] {
+					dto.getAddrNum(),
+					dto.getName(),
+					dto.getTel(),
+					dto.getEmail(),
+					dto.getCompany(),
+					dto.getdName(),
+					dto.getdTel(),
+					dto.getdAddr(),
+					dto.getMemo(),
+					dto.getGroupType()
+			});
+		}
+
+		model.put("filename", "privateAddress.xls");
+		model.put("sheetName", sheetName);
+		model.put("columnLabels", columnLabels);
+		model.put("columnValues", columnValues);
 
 		return excelView;
 	}
-
 }

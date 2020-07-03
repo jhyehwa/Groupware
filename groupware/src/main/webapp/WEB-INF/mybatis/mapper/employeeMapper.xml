@@ -129,15 +129,4 @@
 		UPDATE career SET enterDate = #{enterDate}, exitDate = #{exitDate}
         WHERE empNo = #{empNo}
 	</update>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 </mapper>

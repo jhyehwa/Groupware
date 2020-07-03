@@ -4,11 +4,7 @@
 	font-family: DX명필명조;
 }
 
-/* list */
-#body-title {
-	font-size: 18px;
-}
-
+/* main */
 #list-container {
 	margin-left: 200px;
 	width: 1500px;
@@ -16,10 +12,18 @@
 	margin: 30px 0 0 300px;
 }
 
+#body-title {
+	font-size: 18px;
+}
+
+#body-title span {
+	font-size: 14px;
+}
+
 #listBtnBox {
 	float: left;
 	width: 20%;
-	background: aqua;
+	/* background: aqua; */
 }
 
 #listBtnBox-left {
@@ -29,8 +33,30 @@
 	margin-left: 15px;
 }
 
-.button {
-	width: 220px;
+.new-button1 {
+	width: 180px;
+	height: 50px;
+	background: #9565A4;
+	color: white;
+	font-size: 25px;
+	border: none;
+	border-radius: 10px;
+	outline: 0;
+}
+
+.new-button2 {
+	width: 50px;
+	height: 50px;
+	background: #9565A4;
+	color: white;
+	font-size: 25px;
+	border: none;
+	border-radius: 10px;
+	outline: 0;
+}
+
+.new-button3 {
+	width: 230px;
 	height: 50px;
 	background: #9565A4;
 	color: white;
@@ -49,7 +75,7 @@
 }
 
 .selectGroup-list .selectBox-list {
-	margin-top: 9px;	
+	margin-top: 9px;
 	width: 110px;
 	height: 25px;
 	position: absolute;
@@ -90,7 +116,8 @@
 	width: 30px;
 	height: 26px;
 	background-color: #6E3C89;
-	background-image: url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
+	background-image:
+		url(https://raw.githubusercontent.com/solodev/styling-select-boxes/master/select1.png);
 	background-position: center;
 	background-repeat: no-repeat;
 	z-index: 0;
@@ -104,36 +131,147 @@
 	border: solid 1px #cbc9c9;
 }
 
+#searchBox {
+	margin-left: 20px;
+	margin-top: -10px;
+}
 
+#searchBox p {
+	font-size: 20px;
+	border: 1px solid #cccccc;
+	width: 220px;
+}
 
+#searchBox p input {
+	width: 170px;
+	height: 35px;
+	border: none;
+	font-size: 15px;
+	padding-left: 10px;
+	outline: 0;
+	autocomplete: off;
+}
 
+#searchBox button {
+	border: none;
+	background: transparent;
+	outline: 0;
+	width: 30px;
+	height: 30px;
+	margin-top: 5px;
+}
 
-#listBtnBox-left {
-	width: 1300px;
+/* list */
+#list-Box {
+	width: 1000px;
+	margin: -100px 0 0 300px;
+	float: left;
+}
+
+#speedInsertBox {
+	/* background: yellow; */
 	height: 50px;
-	background: olive;
+	line-height: 55px;
+	font-size: 15px;
 }
 
-#new-button1 {
-	width: 50px;
-	height: 30px;
+#addrAdd {
+	width: 100px;
+	height: 35px;
+	background: none;
+	border: none;
+	outline: 0;
 }
 
-#new-button1>i {
+#addrAdd:hover {
+	cursor: pointer;
+	color: white;
+	background: #FFD228;
+}
+
+#excelOut {
+	width: 100px;
+	height: 35px;
+	background: none;
+	border: none;
+	outline: 0;
+}
+
+#excelOut:hover {
+	cursor: pointer;
+	color: white;
+	background: #FFD228;
+}
+
+#speedInsert {
+	/* background: aqua; */
+	height: 40px;
 	padding-top: 5px;
+	padding-left: 5px;
 }
 
-#new-button2 {
-	float: right;
+#textBox input {
 	height: 30px;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	border-bottom: 3px solid #9565A4;
+	margin-left: 5px;
+	outline: 0;
 }
+
+#groupButton {
+	height: 35px;
+	width: 80px;
+	font-weight: bold;
+	font-size: 14px;
+	background: white;
+	border: 1px solid gray;
+	outline: 0;
+}
+
+#groupButton:hover {
+	background: #9565A4;
+	color: white;
+}
+
+#groupAddButton {
+	height: 35px;
+	width: 60px;
+	font-size: 14px;
+	background: none;
+	border: 1px solid gray;
+}
+
+#groupAddButton:hover {
+	cursor: pointer;
+	background: #9565A4;
+	color: white;
+}
+
+#addrPrivate ul li {
+	float: left;
+	height: 20px;
+	margin-top: 10px;
+	padding-top: 10px;
+	margin-right: 20px;
+	cursor: pointer;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+#addrPrivate ul li:hover {
+	color: #EDA900;
+}
+
 #list-header table {
 	width: 1000px;
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin: 0px auto;
 	margin-top: 20px;
-	background: red;
+	/* background: red; */
 }
 
 #list-menu {
@@ -143,7 +281,7 @@
 #list-title {
 	height: 35px;
 	text-align: center;
-	background: #006461;
+	background: #9565A4;
 	color: white;
 }
 
@@ -153,130 +291,412 @@
 	border-bottom: 1px solid #cccccc;
 }
 
+#list-content:hover {
+	background: #F2F2F2;
+	font-weight: bold;
+}
+
+#list-content button {
+	background: none;
+	border: none;
+	outline: 0;
+	cursor: pointer;
+}
+
 #list-paging {
 	width: 1000px;
 	text-align: center;
 	padding-top: 20px;
 	font-size: 15px;
-	background: green;
+	/* background: green; */
 }
 
+h3 i {
+	font-size: 20px;
+}
 
-/* prAddress */
+.jyy button {
+	border: 1px solid gray;
+	height: 30px;
+	padding: 5px;
+	background: none;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 5px;
+	font-size: 17px;
+}
+
+.jyy>button:hover {
+	background: #9565A4;
+	color: white;
+	font-weight: bold;
+}
+
+.edit {
+	display: none;
+}
+
+#newGroupName {
+	height: 25px;
+	outline: 0;
+	margin-bottom: 10px;
+}
+
+#saveGroup {
+	background: none;
+	border: none;
+	height: 25px;
+	width: 25px;
+	outline: 0;
+}
+
+#saveGroup>i {
+	font-size: 20px;
+}
+
+#saveGroup:hover {
+	cursor: pointer;
+	color: #FFD228;
+	font-weight: bold;
+}
+
+#edit-reset {
+	background: none;
+	border: none;
+	height: 25px;
+	width: 25px;
+	outline: 0;
+}
+
+#edit-reset>i {
+	font-size: 20px;
+}
+
+#edit-reset:hover {
+	cursor: pointer;
+	color: #FFD228;
+	font-weight: bold;
+}
+
+#newGroupAdd {
+	margin-top: 10px;
+}
+
+#groupAdd {
+	float: right;
+	border: 1px solid gray;
+	height: 30px;
+	padding: 5px;
+	background: #9565A4;
+	color: white;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+/* privateAddr */
 
 /* Animation Keyframes */
-@keyframes scale_header {
-  0%   {max-height: 0px; margin-bottom: 0px; opacity: 0;}
-  100% {max-height: 117px; margin-bottom: 25px; opacity: 1;}
+@
+keyframes scale_header { 0% {
+	max-height: 0px;
+	margin-bottom: 0px;
+	opacity: 0;
 }
 
-@keyframes input_opacity {
-  0%   {transform: translateY(-10px); opacity: 0}
-  100% {transform: translateY(0px); opacity: 1}
+100%
+{
+max-height
+
+
+:
+
+ 
+
+117
+px
+
+
+;
+margin-bottom
+
+
+:
+
+ 
+
+25
+px
+
+
+;
+opacity
+
+
+:
+
+ 
+
+1;
+}
+}
+@
+keyframes input_opacity { 0% {
+	transform: translateY(-10px);
+	opacity: 0
 }
 
-@keyframes text_opacity {
-  0% {color: transparent;}
+100%
+{
+transform
+
+
+:
+
+ 
+
+translateY
+
+
+(0
+px
+);
+
+ 
+
+opacity
+
+
+:
+
+ 
+
+1
+}
+}
+@
+keyframes text_opacity { 0% {
+	color: transparent;
 }
 
-@keyframes error_before {
-  0%   {height: 5px; background: rgba(0, 0, 0, 0.156); color: transparent;}
-  10%  {height: 117px; background: #FFFFFF; color: #C62828}
-  90%  {height: 117px; background: #FFFFFF; color: #C62828}
-  100% {height: 5px; background: rgba(0, 0, 0, 0.156); color: transparent;}
+}
+@
+keyframes error_before { 0% {
+	height: 5px;
+	background: rgba(0, 0, 0, 0.156);
+	color: transparent;
 }
 
+10%
+{
+height
+
+
+:
+
+ 
+
+117
+px
+
+
+;
+background
+
+
+:
+
+ 
+
+#FFFFFF
+
+
+;
+color
+
+
+:
+
+ 
+
+#C62828
+
+
+}
+90%
+{
+height
+
+
+:
+
+ 
+
+117
+px
+
+
+;
+background
+
+
+:
+
+ 
+
+#FFFFFF
+
+
+;
+color
+
+
+:
+
+ 
+
+#C62828
+
+
+}
+100%
+{
+height
+
+
+:
+
+ 
+
+5
+px
+
+
+;
+background
+
+
+:
+
+ 
+
+rgba
+
+
+(0
+,
+0,
+0,
+0
+.156
+
+
+);
+color
+
+
+:
+
+ 
+
+transparent
+
+
+;
+}
+}
 .privateAddr-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  width: 800px;
-  height: auto;
-  padding: 5px;
-  box-sizing: border-box;
-  margin: 0px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	width: 800px;
+	height: auto;
+	padding: 5px;
+	box-sizing: border-box;
+	margin: 0px auto;
 }
 
 .privateAddr-title {
-  position: relative;
-  width: 100%;
-  padding: 10px;
-  margin: 40px 0 10px 0;
-  box-sizing: border-box;
-  border-radius: 3px;
-  background: #FAFAFA;
-  overflow: hidden;
-  animation: input_opacity 0.2s cubic-bezier(.55, 0, .1, 1);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-              0 1px 5px 0 rgba(0, 0, 0, 0.12),
-              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	position: relative;
+	width: 100%;
+	padding: 10px;
+	margin: 40px 0 10px 0;
+	box-sizing: border-box;
+	border-radius: 3px;
+	background: #FAFAFA;
+	overflow: hidden;
+	animation: input_opacity 0.2s cubic-bezier(.55, 0, .1, 1);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0
+		rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.privateAddr-title > h2 {
-  position: relative;
-  height: 100px;
-  padding: 10px;
-  padding-top: 30px;
-  margin: -10px -10px 25px -10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background: #9565A4;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.3rem;
-  color: #FAFAFA;
-  animation: scale_header 0.6s cubic-bezier(.55, 0, .1, 1), text_opacity 1s cubic-bezier(.55, 0, .1, 1);
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-              0px 1px 5px 0px rgba(0, 0, 0, 0.12),
-              0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+.privateAddr-title>h2 {
+	position: relative;
+	height: 100px;
+	padding: 10px;
+	padding-top: 30px;
+	margin: -10px -10px 25px -10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	background: #9565A4;
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.3rem;
+	color: #FAFAFA;
+	animation: scale_header 0.6s cubic-bezier(.55, 0, .1, 1), text_opacity
+		1s cubic-bezier(.55, 0, .1, 1);
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px
+		rgba(0, 0, 0, 0.12), 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.privateAddr-title > h2:before {
-  content: '';
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 5px;
-  padding: 10px;
-  margin: -30px 0 0 -10px;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.156);
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.9rem;
-  color: transparent;
-  z-index: 5;
+.privateAddr-title>h2:before {
+	content: '';
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	width: 100%;
+	height: 5px;
+	padding: 10px;
+	margin: -30px 0 0 -10px;
+	box-sizing: border-box;
+	background: rgba(0, 0, 0, 0.156);
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.9rem;
+	color: transparent;
+	z-index: 5;
 }
 
-.privateAddr-title > h2 {
-  margin: 10px 0 10px 0;
+.privateAddr-title>h2 {
+	margin: 10px 0 10px 0;
 }
 
 .privateAddr-form {
-  padding: 15px;
-  box-sizing: border-box;
+	padding: 15px;
+	box-sizing: border-box;
 }
 
 .privateAddr-input {
-  position: relative;
-  width: 90%;
-  padding: 10px 5px;
-  margin: 0 0 25px 0;
-  border: none;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  background: transparent;
-  font-size: 1rem;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  opacity: 1;
-  animation: input_opacity 0.8s cubic-bezier(.55, 0, .1, 1);
-  transition: border-bottom 0.2s cubic-bezier(.55, 0, .1, 1);
+	position: relative;
+	width: 90%;
+	padding: 10px 5px;
+	margin: 0 0 25px 0;
+	border: none;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+	box-sizing: border-box;
+	background: transparent;
+	font-size: 1rem;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	opacity: 1;
+	animation: input_opacity 0.8s cubic-bezier(.55, 0, .1, 1);
+	transition: border-bottom 0.2s cubic-bezier(.55, 0, .1, 1);
 }
 
 .privateAddr-input:focus {
-  outline: none;
-  border-bottom: 2px solid #EDA900;
+	outline: none;
+	border-bottom: 2px solid #EDA900;
 }
 
 .button_on {
@@ -288,35 +708,39 @@
 	font-size: 20px;
 }
 
+.button-container {
+	float: right;
+	margin-right: 70px;
+}
 
 .privateAddr-button {
-  padding: 10px;
-  border: none;
-  border-radius: 3px;
-  background: transparent;
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: black;
-  cursor: pointer;
-  opacity: 1;
-  animation: input_opacity 0.8s cubic-bezier(.55, 0, .1, 1);
-  transition: background 0.2s ease-in-out;
+	padding: 10px;
+	border: none;
+	border-radius: 3px;
+	background: transparent;
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: black;
+	cursor: pointer;
+	opacity: 1;
+	animation: input_opacity 0.8s cubic-bezier(.55, 0, .1, 1);
+	transition: background 0.2s ease-in-out;
+	padding: 10px;
 }
 
 .privateAddr-button.raised {
-  padding: 5px 10px;
-  color: #FAFAFA;
-  background: #9565A4;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.137255),
-              0px 1px 5px 0px rgba(0, 0, 0, 0.117647),
-              0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+	padding: 5px 10px;
+	color: #FAFAFA;
+	background: #9565A4;
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.137255), 0px 1px 5px 0px
+		rgba(0, 0, 0, 0.117647), 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .privateAddr-button:hover {
-  background: #EDA900;
+	background: #EDA900;
 }
 
 .privateAddr-button.raised:hover {
-  background: #9565A4;
+	background: #9565A4;
 }

@@ -43,6 +43,15 @@
 			return;
 		}
 		
+		str = f.groupNum.value;
+		str = str.trim();
+		
+		if(!str) {
+			alert("그룹을 추가해주세요.");
+			f.groupNum.focus();
+			return;
+		}
+		
 		$("#name").removeAttr("disabled");
 		$("#email").removeAttr("disabled");
 		$("#tel").removeAttr("disabled");
@@ -52,6 +61,7 @@
 		$("#dAddr").removeAttr("disabled");
 		$("#memo").removeAttr("disabled");
 		$("#groupType").removeAttr("disabled");
+		$("#groupNum").removeAttr("disabled");
 		
 	 	f.action = "<%=cp%>/privateAddr/${mode}";
 	 	
@@ -152,7 +162,9 @@
 				success:function(data) {
 					var state=data.state;
 					if(state=="true") {
-						location.href="<%=cp%>/privateAddr/privateAddr";
+						//location.href="<%=cp%>/privateAddr/privateAddr";
+						var s="<button type='button' class='groupNameList' name='groupNameList' data-groupType='"+data.dto.groupType+"' data-groupNum='"+data.dto.groupNum+"'>"+data.dto.groupType+"</button>";
+						$(".jyy").append(s);
 					}
 				},
 				beforeSend : function(jqXHR) {
@@ -169,29 +181,28 @@
 		});
 	});
 	
-
-	
 	// 모달창에 그룹 추가
-	function saveGroup() {
-		var f = document.privateAddrForm;
-		var str = $("#groupName").val();
-		
-		f.action = "<%=cp%>/privateAddr/modalList";
-	 	
-	   	f.submit();
-	}
-	
+	$(function(){
+		$("body").on("click", "#saveGroup", function(){		
+			var str;
 
+			str = $(this).closest("div").find("input[class=txt_mini]").text();
+			
+			if(!str) {
+				alert("그룹을 입력해주세요.");
+				return;
+			}
+		});
+	});
 	
 	 $(function(){
-		$(".groupNameList").click(function(){
-			
-			var groupType;
-	 		$("body").on("click", ".groupNameList", function(){
-	 			groupNum=$(this).attr("data-groupNum");
-			 	$("#groupNum").val(groupNum);
-			});
-		}); 
+ 		$("body").on("click", ".groupNameList", function(){
+ 			var groupNum=$(this).attr("data-groupNum");
+		 	$("#groupNum").val(groupNum);
+		 	
+		 	var groupType=$(this).attr("data-groupType");
+		 	$("#groupType").val(groupType);
+		});
 	});
 </script>
 
@@ -225,12 +236,13 @@
 				<input type="text" class="privateAddr-input" name="memo" id="memo" placeholder="메모" value="${dto.memo}" ${mode == "update" ? "disabled='disabled'" : ""}>
 				<button type="button" class="button_on" id="button_on8"><i class="far fa-edit"></i></button>
 				
-				<input type="text" class="privateAddr-input" name="groupNum" id="groupNum" value="${dto.groupNum}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}>
+				<input type="text" class="privateAddr-input" name="groupType" id="groupType" value="${dto.groupType}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}>
+				<input type="hidden" class="privateAddr-input" name="groupNum" id="groupNum" value="${dto.groupNum}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}>
 				<a class="btn" href="#ex7"><button type="button" class="button_on"><i class="far fa-plus-square" style="font-size: 20px;"></i></button></a>
 
 				<div class="button-container">
 					<button type="button" class="privateAddr-button" onclick="privateAddr();">${mode == "privateAddr" ? "저장" : "수정"}</button>
-					<button type="button" class="privateAddr-button" onclick="javascript:location.href='<%=cp%>/privateAddr/list';">목록</button>
+					<button type="button" class="privateAddr-button" onclick="javascript:location.href='<%=cp%>/privateAddr/main';">목록</button>
 					<button type="reset" class="privateAddr-button">취소</button>
 				</div>
 				<c:if test="${mode=='update'}">
@@ -254,9 +266,9 @@
 						</div>
 					
 						<div class="edit" id="edit" style="display: none;">
-							<input class="txt_mini edit" id="newGroupName" name="groupType" type="text" placeholder="새 그룹 이름">
-							<button type="button" id="saveGroup"><i class="far fa-check-square"></i></button>
-							<button type="reset"><i class="fas fa-undo-alt"></i></button>
+							<input class="txt_mini" id="newGroupName" name="groupType" type="text" placeholder="새 그룹 이름">
+							<button type="button" id="saveGroup" name="saveGroup"><i class="far fa-check-square"></i></button>
+							<button type="reset" id="edit-reset"><i class="fas fa-undo-alt"></i></button>
 						</div>
 					
 				  		<div style="width: 450px; margin-top: 10px;">

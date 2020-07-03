@@ -6,63 +6,30 @@
 	String cp = request.getContextPath();
 %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-<link rel="stylesheet" href="<%=cp%>/resource/css/privateAddr.css" type="text/css">
-
-<script>
-	$(function(){
-		$(".kor").click(function(){
-			//alert($(this).attr("data-kor"));
-			
-			var kor = $(this).attr("data-kor");
-			var kor2 = $(this).closest("li").next().find("span").attr("data-kor");
-			
-			var url = "<%=cp%>/privateAddr/list";
-			var query = "kor=" + kor + "&kor2=" + kor2 ;
-			var selector = "#tab-content";
-			
-			ajaxHTML(url, "get", query, selector);
-		});
-	});
-</script>
-
-<script>
-	//+버튼 누르면 hidden, show
-	$(document).ready(function(){
-		$("#addrAdd").click(function(){
-			$("#textBox").slideToggle();
-		});
-	});
-</script>
-
-<div style="width: 1000px; margin: -100px 0 0 300px; float: left;">		
-	<div style="background: yellow; height: 50px; line-height: 55px; font-size: 15px;">
-		<label id="addrAdd">&nbsp;<i class="fas fa-plus">&nbsp;빠른 등록</i></label>&nbsp;&nbsp;<!-- 호버 -->				
-		<label id="btnDeleteList"><i class="fas fa-trash-alt">&nbsp;삭제</i></label>&nbsp;&nbsp;
-		<label><a href="#"><i class="fas fa-copy">&nbsp;주소록 복사</i></a></label>&nbsp;&nbsp;
-		<label><a href="javascript:location.href='<%=cp%>/privateAddr/excel';"><i class="fas fa-file-export">&nbsp;내보내기</i></a></label>
+<div id="list-Box">		
+	<div id="speedInsertBox">
+		<label><button id="addrAdd"><i class="fas fa-plus">&nbsp;빠른 등록</i></button></label>&nbsp;&nbsp;<!-- 호버 -->
+		<label><button type="button" id="excelOut" onclick="javascript:location.href='<%=cp%>/privateAddr/excel';"><i class="fas fa-file-export">&nbsp;내보내기</i></button></label>
 	</div>
 	
 	<form name="addrAddForm" method="post">
-		<div style="background: aqua; height: 40px; padding-top: 5px; padding-left: 5px;">
+		<div id="speedInsert">
 			<label id="textBox">
-				<input type="text" name="name" id="name" placeholder="이름(표시명)" style="height: 30px;">
-				<input type="text" name="email" id="email" placeholder="이메일" style="height: 30px;">
-				<input type="text" name="tel" id="tel" placeholder="전화번호" style="height: 30px;">					
-				<input type="hidden" name="groupNum" id="groupNum" value="${dto.groupType}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}  style="height: 30px;">
-				<a class="btn" href="#ex7"><button type="button">그룹추가</button></a>
-				<button type="button" style="height: 35px; width: 30px;" onclick="addrAdd();"><i class="fas fa-user-plus" style="background: red; font-size: 18px;"></i></button>
-				<a href="#">상세정보추가</a>
+				<input type="text" name="name" id="name" placeholder="이름(표시명)"/>
+				<input type="text" name="email" id="email" placeholder="이메일">
+				<input type="text" name="tel" id="tel" placeholder="전화번호">
+				<input type="hidden" name="groupNum" id="groupNum" value="${dto.groupNum}" placeholder="그룹분류" ${mode == "update" ? "disabled='disabled'" : ""}>
+				<input type="text" name="groupType" id="groupType" value="${dto.groupType}" placeholder="그룹분류" readonly="readonly" ${mode == "update" ? "disabled='disabled'" : ""}>
+				<a class="btn" href="#ex7"><button type="button" id="groupButton">그룹추가</button></a>
+				<button type="button" id="groupAddButton" onclick="addrAdd();"><i class="fas fa-plus"> 추가</i></button>
 			</label>
 		</div>
-		
+
 		<div>
-			<div class="aa">
+			<div id="addrPrivate">
 				<ul>
 					<li>
-						<span data-kor="all">전체</span>
+						<span class="all">전체</span>
 					</li>
 					<li>
 						<span data-kor="가" class="kor">ㄱ</span>
@@ -106,9 +73,6 @@
 					<li>
 						<span data-kor="하" class="kor">ㅎ</span>
 					</li>
-					<li>
-						<span data-kor="etc" class="kor">etc</span>
-					</li>
 				</ul>
 			</div>
 		</div>
@@ -116,25 +80,25 @@
 		<div id="list-header">
 			<table id="list-menu">
 				<tr id="list-title">
-					<td><input type="checkbox" name="checkAll" id="checkAll" value="all"></td>
 					<td>이름</td>
 					<td>전화번호</td>
 					<td>이메일</td>
 					<td>회사명</td>
 					<td>그룹</td>
 					<td>상세</td>
+					<td>삭제</td>
 				</tr>
 				
 				<tr id="list-cotainer">
 					<c:forEach var="dto" items="${list}">
 						<tr id="list-content">
-							<td><input type="checkbox" name="addrNum" value="${dto.addrNum}"></td>
 							<td>${dto.name}</td>
 							<td>${dto.tel}</td>
 							<td>${dto.email}</td>
 							<td>${dto.company}</td>
 							<td>${dto.groupType}</td>
-							<td><a href="<%=cp%>/privateAddr/update?addrNum=${dto.addrNum}&page=${page}"><i class="fas fa-search"></i>${dto.addrNum}</a></td>
+							<td><a href="<%=cp%>/privateAddr/update?addrNum=${dto.addrNum}&page=${page}"><i class="fas fa-search"></i></a></td>
+							<td><button type="button" onclick="deletePrivateAddr('${dto.addrNum}');"><i class="fas fa-trash-alt"></i></button></td>
 						</tr>
 					</c:forEach>
 				</tr>
@@ -149,7 +113,7 @@
 	<!-- 모달창 -->
 	<div id="ex7" class="modal">
 		<p> &nbsp; </p>	
-		<h3><i class="far fa-object-group" style="font-size: 25px;"></i> 그룹 추가 </h3>		
+		<h3><i class="fas fa-object-group"></i> 그룹 추가 </h3>		
 
 		<div class="board-created">
 			<form name="modalGroup" method="post">
@@ -160,14 +124,14 @@
 					</c:forEach>
 				</div>
 			
-				<div class="edit" id="edit" style="display: none;">
-					<input class="txt_mini edit" id="newGroupName" name="groupType" type="text" placeholder="새 그룹 이름">
-					<button type="button" id="saveGroup"><i class="far fa-check-square"></i></button>
-					<button type="reset"><i class="fas fa-undo-alt"></i></button>
+				<div class="edit" id="edit">
+					<input class="txt_mini" id="newGroupName" name="groupType" type="text" placeholder="새 그룹 이름">
+					<button type="button" id="saveGroup" name="saveGroup"><i class="far fa-check-square"></i></button>
+					<button type="reset" id="edit-reset"><i class="fas fa-undo-alt"></i></button>
 				</div>
 			
-		  		<div style="width: 450px; margin-top: 10px;">
-		    		<button type="button" id="groupAdd">+ 새그룹</button>
+		  		<div id="newGroupAdd">
+		    		<button type="button" id="groupAdd">새 그룹 추가</button>
 		     	</div>
 			</form>
 		</div>
