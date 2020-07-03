@@ -135,7 +135,7 @@ textarea {
 
 <form method="post" name="inputForm" id="inputForm" enctype="multipart/form-data">
 	<input type="hidden" class="hiddenSnum" id="hiddenSnum" value="${sNum}">
-	<input type="hidden" class="option" value="1">
+	<input type="hidden" name="option" value="1">
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">
@@ -326,8 +326,8 @@ textarea {
 				</tr>
 			</table>
 		</div>
-
 	</table>
+	
 	<div class="contentDiv">
 		<table class="content">
 			<tbody  id="tb">
@@ -350,7 +350,7 @@ textarea {
 				</c:if>
 				<td style="background: #BDBDBD" width="100px;"><b>시행 부서</b></td>
 				<td>
-					<input type="text" id="sDept" value="${mode == 'acticle' ? dto.sdept : sessionScope.employee.dType }"
+					<input type="text" id="sDept" value="${mode == 'article' ? writer.sdept : sessionScope.employee.dType }"
 					 disabled="disabled" style="border: none;">
 				</td>
 			</tr>

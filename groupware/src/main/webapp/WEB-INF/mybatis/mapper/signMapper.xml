@@ -71,15 +71,15 @@
 
 	<sql id="where-list">
 		<choose>
-			<when test="condition == 'created' ">
-				( TO_CHAR(sDate, 'YYYYMMDD') = #{keyword}
-				OR TO_CHAR(sDate, 'YYYY-MM-DD') = #{keyword} )
-			</when>
 			<when test="condition == 'title'">
 				INSTR(sSubject, #{keyword}) &gt; 0
 			</when>
 			<when test="condition == 'content'">
 				INSTR(sContent, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'created' ">
+				( TO_CHAR(sDate, 'YYYYMMDD') = #{keyword}
+				OR TO_CHAR(sDate, 'YYYY-MM-DD') = #{keyword} )
 			</when>
 		</choose>
 	</sql>
@@ -104,6 +104,7 @@
 			</if>
 		</where>
 	</select>
+	
 
 	<select id="listSign" parameterType="map" resultType="com.of.sign.Sign">
 		SELECT sNum, stNum ,sSubject, sContent, s.empNo, name ,sDate, sCurrStep, sEndStep
@@ -113,7 +114,7 @@
 			<if test="val != null and val != '' ">
 				<include refid="val-list"/>
 			</if>
-			AND sEndStep != 0  AND sCurrStep != 0
+			AND sEndStep != 0  AND sCurrStep != 0 AND sEndStep != sCurrStep
 		</where>
 		ORDER BY sNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -133,7 +134,7 @@
 
 <!-- ==============================================수신대기함============================================== -->
 	<select id="stepList" parameterType="map" resultType="com.of.sign.Sign">
-		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, pEmpNO2 pEmpNO
+		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep,sDate, pEmpNO2 pEmpNO
 			FROM sign s
 				JOIN permission p ON s.snum = p.pstNum
 				JOIN employee e ON s.empno = e.empno
@@ -145,7 +146,7 @@
 			pempNo2 = #{empNo} and sCurrStep = 1
 			</where>
 		UNION ALL
-		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, pEmpNO3
+		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, sDate,pEmpNO3
 			FROM sign s
 				JOIN permission p ON s.snum = p.pstNum
 				JOIN employee e ON s.empno = e.empno
@@ -157,7 +158,7 @@
 			pempNo3 = #{empNo} and sCurrStep = 2
 			</where>
 		UNION ALL
-		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, pEmpNO4
+		SELECT snum,stNum, s.empno, name, dType, pType,sSubject, sContent, sCurrStep, sDate,pEmpNO4
 			FROM sign s
 				JOIN permission p ON s.snum = p.pstNum
 				JOIN employee e ON s.empno = e.empno
@@ -234,12 +235,38 @@
 	<select id="searchlist" parameterType="map" resultType="com.of.sign.Sign">
 		SELECT *
 		FROM sign s
-		<where>
-			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list" />
-			</if>
+		WHERE
+		<choose>
+			<when test="condition == 'title'">
+				INSTR(sSubject, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'content'">
+				INSTR(sContent, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'created' ">
+				( TO_CHAR(sDate, 'YYYYMMDD') = #{keyword}
+				OR TO_CHAR(sDate, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+		</choose>
 			AND empNo = #{empNo}
-		</where>
+	</select>
+	
+	<select id="searchDataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM sign
+		WHERE
+			<choose>
+			<when test="condition == 'title'">
+				INSTR(sSubject, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'content'">
+				INSTR(sContent, #{keyword}) &gt; 0
+			</when>
+			<when test="condition == 'created' ">
+				( TO_CHAR(sDate, 'YYYYMMDD') = #{keyword}
+				OR TO_CHAR(sDate, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+		</choose>
+			AND empNo = #{empNo}
 	</select>
 	
 <!-- ==============================================반려함 관련============================================== -->
@@ -253,7 +280,7 @@
 	</update>
 	
 	<select id="returnSignList" parameterType="map" resultType="com.of.sign.Sign">
-		SELECT rNum, rsNum,stNum ,writer, name , sSubject, sContent, startDay, sNum
+		SELECT rNum, rsNum,stNum ,writer, name , sSubject, sContent, sDate, sNum
 		FROM returnSign r
 		JOIN sign s ON r.rsNum = s.sNum
 		JOIN employee e ON r.writer = e.empNo

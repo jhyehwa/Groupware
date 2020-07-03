@@ -1,3 +1,4 @@
+
 package com.of.sign;
 
 import java.io.File;
@@ -29,6 +30,8 @@ import com.of.employee.SessionInfo;
 @Controller("sign.signController")
 @RequestMapping("/sign/*")
 public class SignController {
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd"); 
 
 	@Autowired
 	private SignService service;
@@ -61,14 +64,30 @@ public class SignController {
 		map.put("finish", "finish");
 
 		// 결재대기함
+		
+		for (Sign dto : list) {
+			Date date = sdf.parse(dto.getSdate());
+			String sd = sdf1.format(date);
+			dto.setSdate(sd);
+		}
 		model.addAttribute("list", list);
 
 		// 수신대기함
+		for (Sign dto : list2) {
+			Date date = sdf.parse(dto.getSdate());
+			String sd = sdf1.format(date);
+			dto.setSdate(sd);
+		}
 		model.addAttribute("rlist", list2);
-
+		
 		// 결재 완료함
+		for (Sign dto : list3) {
+			Date date = sdf.parse(dto.getSdate());
+			String sd = sdf1.format(date);
+			dto.setSdate(sd);
+		}
 		model.addAttribute("flist", list3);
-
+		
 		// 반려함
 		rows = 1;
 		offset = 0;
@@ -78,6 +97,7 @@ public class SignController {
 
 		List<Sign> returnList4 = service.returnSignList(map);
 		model.addAttribute("returnList", returnList4);
+		
 		return ".sign.mainList";
 	}
 
@@ -143,8 +163,13 @@ public class SignController {
 			}
 
 			for (Sign dto : list) {
-				listNum = dataCount - (offset + n);
+				listNum = dataCount - (offset + n)-1;
 				dto.setListNum(listNum);
+				
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
+				
 				n++;
 			}
 			paging = myUtil.paging(current_page, total_page, listUrl);
@@ -169,6 +194,11 @@ public class SignController {
 			for (Sign dto : list) {
 				listNum = dataCount - (offset + n);
 				dto.setListNum(listNum);
+
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
+				
 				n++;
 			}
 
@@ -199,6 +229,10 @@ public class SignController {
 			for (Sign dto : list) {
 				listNum = dataCount - (offset + n);
 				dto.setListNum(listNum);
+
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
 				n++;
 			}
 			paging = myUtil.paging(current_page, total_page, listUrl);
@@ -220,12 +254,17 @@ public class SignController {
 			if (total_page < current_page) {
 				current_page = total_page;
 			}
-
+			
 			for (Sign dto : list) {
 				listNum = dataCount - (offset + n);
 				dto.setListNum(listNum);
+
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
 				n++;
 			}
+
 			paging = myUtil.paging(current_page, total_page);
 
 			break;
@@ -234,7 +273,7 @@ public class SignController {
 
 			list = service.seatchList(map, "searching");
 
-			dataCount = service.dataCount(map, "searching");
+			dataCount = service.searchDataCount(map, "searching");
 
 			if (dataCount != 0) {
 				total_page = myUtil.pageCount(rows, dataCount);
@@ -248,6 +287,10 @@ public class SignController {
 			for (Sign dto : list) {
 				listNum = dataCount - (offset + n);
 				dto.setListNum(listNum);
+
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
 				n++;
 			}
 			paging = myUtil.paging(current_page, total_page, listUrl);
@@ -275,6 +318,10 @@ public class SignController {
 			for (Sign dto : list) {
 				listNum = dataCount - (offset + n);
 				dto.setListNum(listNum);
+
+				Date date = sdf.parse(dto.getSdate());
+				String sd = sdf1.format(date);
+				dto.setSdate(sd);
 				n++;
 			}
 			paging = myUtil.paging(current_page, total_page, listUrl);
@@ -324,7 +371,8 @@ public class SignController {
 			@RequestParam(defaultValue="") String pempNo3,
 			@RequestParam(defaultValue="") String pempNo4,
 			@RequestParam(defaultValue="") String article,
-			String hiddenSnum,
+			@RequestParam(defaultValue="") String endDate,
+			@RequestParam(defaultValue="") String hiddenSnum,
 			HttpSession session
 			) throws Exception {
 		try {
@@ -361,10 +409,15 @@ public class SignController {
 			dto.setpEmpNo4(lineEmp4);
 
 			dto.setSendStep(count);
-
+			
+			if(endDate.length() != 0) {
+				String content = dto.getScontent() + " / 종료날짜 :  " + endDate;
+				dto.setScontent(content);
+			}
 			service.insertSign(dto, pathname, article, hiddenSnum);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return "redirect:/sign/mainList";
 	}
@@ -438,8 +491,6 @@ public class SignController {
 				
 					Map<String, Object> map = new HashMap<>();
 
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-					SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 					writer = service.readWriter(Integer.parseInt(valueSnum));
 					
 					map.put("valueSnum", valueSnum);
@@ -483,10 +534,18 @@ public class SignController {
 					}
 					
 					listFile = service.listFile(Integer.parseInt(valueSnum));
+					
+					if(option.equals("2")) {
+						String[] a1 = dto.getScontent().split("/");
+						
+						model.addAttribute("a0", a1[0]);
+						model.addAttribute("a1", a1[1]);
+					}
+
 				}
 
 			List<Sign> list = service.empList();
-
+	
 			model.addAttribute("list", list);
 			model.addAttribute("dto", dto);
 			model.addAttribute("sNum", valueSnum);

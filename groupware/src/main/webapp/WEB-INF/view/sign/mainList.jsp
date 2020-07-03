@@ -6,7 +6,7 @@
 	String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/data.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/sign.css" type="text/css">
 <script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 <style>
@@ -44,6 +44,45 @@
 		f.submit();
 	}
 	
+	$(function(){
+		$("body").on("click", ".articleSign", function(){
+			var option = $(this).closest("tr").find("input[class=dtoStnum]").val();
+			alert(option);
+			var valueSnum = $(this).closest("tr").find("input[class=dtoSnum]").val();
+			var listVal = "${mode}";
+			
+			$("#articleModal-dialog").dialog({
+				modal : true,
+				width : 1050,
+				height : 1100,
+				position : {my:"center top", at:"center top"},
+				show : "fade",
+				resizable : false,
+				title : '결재',
+				open : function() {
+					
+					$(".showSing").show();
+					
+					var url = "<%=cp%>/sign/search";
+					
+					if(option==0){
+						return;
+					}
+					
+					var query = "option="+ option+ "&mode=article"+"&valueSnum="+valueSnum+"&listVal="+listVal;
+					
+					ajaxHTML(url, "GET", query, ".showSing");
+				
+					
+				},
+				close : function(event, ui) {
+						
+				}
+			});
+		});
+		
+	});
+	
 </script>
 <div class="container">
 	<div class="board-container">
@@ -62,7 +101,7 @@
 
 				<form name="searchForm" action="<%=cp%>/sign/list?mode=5"
 					method="post">
-					<div class="selectGroup">
+					<div class="selectGroup" style="margin-left: -0px;">
 						<select class="selectBox" id="condition" name="condition"
 							class="selectField">
 							<option value="emptyVal"
@@ -98,9 +137,10 @@
 				<div style="height: 140px;">
 					<table style="border-collapse: collapse; width: 800px;">
 						<tr align="center" bgcolor="#006461;">
+							<th width="80">부서</th>
 							<th width="80">기안자</th>
+							<th width="80">종류</th>
 							<th>제목</th>
-							<th width="100">첨부</th>
 							<th width="80">기안일</th>
 							<th width="60">결재상태</th>
 
@@ -115,10 +155,18 @@
 						</c:if>
 						<c:forEach var="dto" items="${list}">
 							<tr align="center" style="border-bottom: 1px solid #cccccc;">
-								<td>${dto.name}</td>
-								<td align="left" style="padding-left: 80px;"><a href="#">${dto.ssubject}</a>
+								<td>${dto.dType}</td>
+								<td>${dto.name}&nbsp;${dto.pType}</td>
+								<td>
+								<input type="hidden" class="hiddeSnum" value="${dto.snum}">
+									<c:choose>
+										<c:when test="${dto.stnum == 1}">기안</c:when>
+										<c:when test="${dto.stnum == 2}">휴가</c:when>
+									</c:choose>
 								</td>
-								<td>파일이미지</td>
+								<td align="left" style="padding-left: 80px;">
+								<a class="articleSign">${dto.ssubject}</a>
+								</td>
 								<td>${dto.sdate}</td>
 								<td>${dto.scurrStep!=dto.sendStep ?'미결':'완료'}</td>
 							</tr>
@@ -128,7 +176,7 @@
 
 				<div style="text-align: right;" class="buttonDiv">
 					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';">+</button>
+						onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';"><i class="far fa-plus-square"></i></button>
 				</div>
 
 
@@ -145,9 +193,10 @@
 					<table
 						style="border-collapse: collapse; width: 800px;">
 						<tr align="center" bgcolor="#006461;">
+							<th width="80">부서</th>
 							<th width="80">기안자</th>
+							<th width="80">종류</th>
 							<th>제목</th>
-							<th width="100">첨부</th>
 							<th width="80">기안일</th>
 							<th width="60">결재상태</th>
 						</tr>
@@ -161,10 +210,18 @@
 
 						<c:forEach var="dto" items="${rlist}">
 							<tr align="center" style="border-bottom: 1px solid #cccccc;">
-								<td>${dto.name}</td>
-								<td align="left" style="padding-left: 80px;"><a href="#">${dto.ssubject}</a>
+								<td>${dto.dType}</td>
+								<td>${dto.name}&nbsp;${dto.pType}</td>
+								<td>
+								<input type="hidden" class="hiddeSnum" value="${dto.snum}">
+									<c:choose>
+										<c:when test="${dto.stnum == 1}">기안</c:when>
+										<c:when test="${dto.stnum == 2}">휴가</c:when>
+									</c:choose>
 								</td>
-								<td>파일이미지</td>
+								<td align="left" style="padding-left: 30px;">
+								<a class="articleSign">${dto.ssubject}</a>
+								</td>
 								<td>${dto.sdate}</td>
 								<td>${dto.scurrStep!=dto.sendStep ?'미결':'완료'}</td>
 							</tr>
@@ -173,7 +230,9 @@
 				</div>
 				<div style="text-align: right;" class="buttonDiv">
 					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';">+</button>
+						onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';">
+						<i class="far fa-plus-square"></i>
+						</button>
 				</div>
 			</div>
 
@@ -190,9 +249,10 @@
 					<table
 						style="border-collapse: collapse; width: 800px;">
 						<tr align="center" bgcolor="#006461;">
+							<th width="80">부서</th>
 							<th width="80">기안자</th>
+							<th width="80">종류</th>
 							<th>제목</th>
-							<th width="100">첨부</th>
 							<th width="80">기안일</th>
 							<th width="60">결재상태</th>
 						</tr>
@@ -206,10 +266,18 @@
 
 						<c:forEach var="dto" items="${flist}">
 							<tr align="center" style="border-bottom: 1px solid #cccccc;">
-								<td>${dto.listNum}</td>
-								<td align="left" style="padding-left: 80px;"><a href="#">${dto.ssubject}</a>
+								<td>${dto.dType}</td>
+								<td>${dto.name}&nbsp;${dto.pType}</td>
+								<td>
+								<input type="hidden" class="hiddeSnum" value="${dto.snum}">
+									<c:choose>
+										<c:when test="${dto.stnum == 1}">기안</c:when>
+										<c:when test="${dto.stnum == 2}">휴가</c:when>
+									</c:choose>
 								</td>
-								<td>파일이미지</td>
+								<td align="left" style="padding-left: 80px;">
+								<a class="articleSign">${dto.ssubject}</a>
+								</td>
 								<td>${dto.sdate}</td>
 								<td>${dto.scurrStep=='0'?'미결':'완료'}</td>
 							</tr>
@@ -219,7 +287,7 @@
 
 				<div style="text-align: right;" class="buttonDiv">
 					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';">+</button>
+						onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';"><i class="far fa-plus-square"></i></button>
 				</div>
 			</div>
 			</div>
@@ -232,7 +300,7 @@
 									<td
 										style="font-weight: bold; font-size: 16px; padding-left: 10px;">
 										<a href="javascript:location.href='<%=cp%>/sign/list?mode=4' "
-										style="color: black;"> 반려함 </a>
+										style="color: black;"><i class="fas fa-list"> 반려함</i></a>
 									</td>
 								</tr>
 								<tr align="left">
@@ -248,23 +316,16 @@
 									<c:if test="${returnList.size() == 0 }">
 										<td
 											style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc;">
-											<i class="fas fa-arrow-right"></i> 반려함이 비어있습니다. <i
-											class="fas fa-clock"></i>
+											<i class="fas fa-arrow-right"></i> 반려함이 비어있습니다. 
+											<i class="fas fa-clock"></i>
 										</td>
 									</c:if>
 								</tr>
 								<tr align="left">
-									<td
-										style="font-weight: bold; font-size: 16px; padding-left: 10px;">
-										<a href="javascript:location.href='<%=cp%>/sign/list?mode=6' "
-										style="color: black;"> 임시저장함 </a>
-									</td>
-								</tr>
-								<tr align="left">
-									<td
-										style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc;">
-										<i class="fas fa-arrow-right"></i> ${dto.clubExp} [ <i
-										class="fas fa-clock"></i> 개설일 : ${dto.clubMake} ]
+									<td style="font-weight: bold; font-size: 16px; padding-left: 10px; border-bottom: 1px solid #cccccc;">
+										<a href="javascript:location.href='<%=cp%>/sign/list?mode=6' " style="color: black; ">
+											<i class="fas fa-list"> 임시저장함</i>
+										</a>
 									</td>
 								</tr>
 							</table>

@@ -189,7 +189,8 @@ public class SignServiceImpl implements SignService {
 	public List<Sign> seatchList(Map<String, Object> map, String keyword) {
 		List<Sign> list = null;
 		try {
-			System.out.println(keyword);
+			System.out.println(map.get("condition"));
+			System.out.println(map.get("keyword"));
 			list = dao.selectList("sign.searchlist", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -318,6 +319,17 @@ public class SignServiceImpl implements SignService {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	@Override
+	public int searchDataCount(Map<String, Object> map, String val) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sign.searchDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

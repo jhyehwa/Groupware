@@ -9,6 +9,7 @@ public interface SignService {
 	public List<Sign> listFile(int snum);
 	public Sign readFile(int sfNum);
 	public int dataCount(Map<String, Object> map, String val);
+	public int searchDataCount(Map<String, Object> map, String val);
 	public int stepCount(Map<String, Object> map);
 	
 	public List<Sign> listSign(Map<String, Object> map, String keyword);

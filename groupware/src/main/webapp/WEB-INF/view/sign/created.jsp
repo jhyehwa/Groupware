@@ -49,6 +49,20 @@ function ajaxHTML(url, type, query, selector) {
 		}
 	});
 }
+ 
+ 
+$(window).ready(function() {
+			var url = "<%=cp%>/sign/search";
+			
+			var option = 1;
+			
+			var query = "option="+ option;
+			
+			$("#signForm").css("border", "1px solid black");
+			
+			ajaxHTML(url, "GET", query, "#signForm");
+}); 
+
 
 /*====================================================*/
 $(function() {
@@ -57,9 +71,6 @@ $(function() {
 		
 		var option = $("#listSelect option:selected").val();
 		
-		if(option==0){
-			return;
-		}
 		var query = "option="+ option;
 		
 		$("#signForm").css("border", "1px solid black");
@@ -74,7 +85,6 @@ $(function() {
 
 function check() {
 	var f = document.inputForm;
-	
 	var str = f.ssubject.value;
 	
 	if(!str){
@@ -150,12 +160,12 @@ $(function() {
 
 <div id="listBody" style="margin-left: 500px; width: 1000px; padding-top: 40px;">
 	<select id="listSelect" style="height: 55px; font-weight: bold; border: none;">
-		<option id="selectOption" value="0" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::선택::</option>
-		<option id="selectOption" value="1">1. 기안서</option>
+		<option id="selectOption" value="emp" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::선택::</option>
+		<option id="selectOption" value="1" selected="selected">1. 기안서</option>
 		<option id="selectOption" value="2">2. 휴가 신청서</option>
-		<option id="selectOption" value="3">3. 지출 결의서</option>
+		<!-- <option id="selectOption" value="3">3. 지출 결의서</option>
 		<option id="selectOption" value="4">4. 외근 신청서</option>
-		<option id="selectOption" value="5">5. 교육/훈련 신청서</option>
+		<option id="selectOption" value="5">5. 교육/훈련 신청서</option> -->
 	</select>
 </div>
 
