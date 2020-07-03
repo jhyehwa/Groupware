@@ -6,6 +6,30 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/data.css" type="text/css">
+<style>
+
+.newsSort{
+	margin-left:20px;
+	padding-top: 22px;
+	cursor: pointer;
+}
+.newsSort a {color :#632A7E }
+.newsSort a:hover {color :#632A7E; font-weight: bold;}
+.newsSort a:focus {color :#632A7E; font-weight: bold;}
+.newsSort a:active {color :#632A7E; font-weight: bold;}
+
+#newsbtn{
+	background: transparent;
+	border:none;
+	height: 47px; 
+    margin-top: 10px;
+    text-align: left; 
+    line-height: 47px;
+    font-size: 16px;
+}
+
+</style>
+
 
 <script type="text/javascript">
 	function searchList() {
@@ -58,7 +82,7 @@
 		<div class="board-body" style="width: 58%; float: left;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
 				 <h3 style="font-size: 18px;">| 전체 소식
-          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -112,14 +136,13 @@
         
         <div class="board-body" style="width: 22%; float: left;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 소식별 글보기 </h3> 
           		  <div class="newsSort">
-	          		  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:searchList2('MR');"> 결혼  </button>
-					  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:searchList2('FU');"> 부고  </button>
-					  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:searchList2('BI');"> 출산  </button>
-					  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:searchList2('PR');"> 승진  </button>
-					  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:searchList2('COMPANY');"> 회사소식  </button>
-					  <button id="dbtn" type="button" style="margin-top: 25px;" onclick="javascript:searchList2('ETC');"> 기타  </button>
+	          		  <p><a id="newsbtn" onclick="javascript:searchList2('MR');"> <i class="fas fa-heart"></i>&nbsp;&nbsp; 결혼  </a></p>
+					  <p><a id="newsbtn" onclick="javascript:searchList2('FU');"> <i class="fas fa-ribbon"></i>&nbsp;&nbsp; 부고  </a></p>
+					  <p><a id="newsbtn" onclick="javascript:searchList2('BI');"> <i class="fas fa-baby"></i>&nbsp;&nbsp; 출산  </a>
+					  <p><a id="newsbtn" onclick="javascript:searchList2('PR');"> <i class="fas fa-level-up-alt"></i>&nbsp;&nbsp; 승진  </a></p>
+					  <p><a id="newsbtn" onclick="javascript:searchList2('COMPANY');"> <i class="fas fa-building"></i>&nbsp;&nbsp;회사소식  </a></p>
+					  <p><a id="newsbtn" onclick="javascript:searchList2('ETC');"> <i class="fas fa-asterisk"></i>&nbsp;&nbsp; 기타  </a></p>
 				</div>		
    			</div>
 		</div>

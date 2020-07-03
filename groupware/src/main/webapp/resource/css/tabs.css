@@ -28,3 +28,152 @@ ul.tabs li.active{
 	border: 1px solid #dddddd;
 	border-bottom-color:  transparent;
 }
+
+/* 모달대화상자 타이틀바 */
+.ui-widget-header {
+	background: none;
+	border: none;
+	height:35px;
+	line-height:35px;
+	border-bottom: 1px solid gold;
+	border-radius: 0px;
+	font-family: "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+}
+.help-block {
+	margin-top: 3px; 
+}
+
+.titleDate {
+	display: inline-block;
+	font-weight: 600; 
+	font-size: 19px;
+	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+	padding:2px 4px 4px;
+	text-align:center;
+	position: relative;
+	top: 4px;
+}
+.btnDate {
+	display: inline-block;
+	font-size: 10px;
+	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+	color:#333333;
+	padding:3px 5px 5px;
+	border:1px solid #cccccc;
+    background-color:#fff;
+    text-align:center;
+    cursor: pointer;
+    border-radius:2px;
+}
+
+
+.textDate {
+      font-weight: 500; cursor: pointer; font-size:20px; display: block;
+      
+}
+.preMonthDate, .nextMonthDate {
+      color:#aaaaaa;
+}
+.nowDate {
+      width:30px;
+	  height:30px;
+      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#333333;
+
+}
+.nowDate:hover {
+      width:30px;
+	  height:30px;
+      font-weight: 500; cursor: pointer; font-size:20px; display: block; background:#EDA900;
+      border-radius: 15px;
+}
+
+.saturdayDate{
+      width:30px;
+	  height:30px;
+      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#632A7E;
+}
+
+.saturdayDate .foodSubject {
+	 background:#EEE0F9;
+   opacity: 0.5;
+}
+
+.sundayDate{
+       width:30px;
+	  height:30px;
+      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:red;
+}
+
+.foodSubject {
+   display:block;
+   /*width:100%;*/
+   width:90px;
+   height:22px;
+   line-height: 22px;
+   margin:1.5px 0; 
+   color:#333333;
+   background:#EEE0F9;
+   cursor: pointer;
+   border-radius:10px;
+   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.foodBtn{
+	color: #6E3C89;
+	background:ghostwhite;
+	border:none;
+	/* border:1px solid #6E3C89;*/
+	border-top-left-radius: 5px; 
+	border-bottom-left-radius: 5px; 
+	border-top-right-radius: 5px; 
+	border-bottom-right-radius: 5px;
+	font-size:12px;
+	padding:5px;
+}
+
+.foodBtn:hover{ 
+	color:white; 
+	background-color: #6E3C89; 
+}
+
+#menuBtn{
+	border: 1px solid #632A7E;
+	border-radius: 5px;
+	background: white;
+	color:#632A7E;
+	padding: 5px;
+
+}
+select, input{
+	width: 70px;
+	height: 25px;
+	border-width: 0;
+	border:1px solid ghostwhite;
+	outline:none;
+}
+
+/* 
+select:hover, select:focus, select:active{
+	width: 70px;
+	height: 25px;
+	background: ghostwhite;
+	-webkit-tap-highlight-color : ghostwhite;
+}
+
+
+input:hover, input:focus, input:active{
+	width: 70px;
+	height: 25px;
+	-webkit-tap-highlight-color : ghostwhite;
+}
+ */
+ 
+.btn{
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	border:none;
+	background: transparent;
+}
+.btn i{font-size: 25px;}	
+

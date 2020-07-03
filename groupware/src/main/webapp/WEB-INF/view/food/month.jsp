@@ -5,121 +5,8 @@
 <%
    String cp = request.getContextPath();
 %>
+<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 
-<style type="text/css">
-/* 모달대화상자 타이틀바 */
-.ui-widget-header {
-	background: none;
-	border: none;
-	height:35px;
-	line-height:35px;
-	border-bottom: 1px solid #EDA900;
-	border-radius: 0px;
-}
-.help-block {
-	margin-top: 3px; 
-}
-
-.titleDate {
-	display: inline-block;
-	font-weight: 600; 
-	font-size: 19px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
-	padding:2px 4px 4px;
-	text-align:center;
-	position: relative;
-	top: 4px;
-}
-.btnDate {
-	display: inline-block;
-	font-size: 10px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
-	color:#333333;
-	padding:3px 5px 5px;
-	border:1px solid #cccccc;
-    background-color:#fff;
-    text-align:center;
-    cursor: pointer;
-    border-radius:2px;
-}
-
-
-.textDate {
-      font-weight: 500; cursor: pointer; font-size:20px; display: block;
-      
-}
-.preMonthDate, .nextMonthDate {
-      color:#aaaaaa;
-}
-.nowDate {
-      width:30px;
-	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#333333;
-
-}
-.nowDate:hover {
-      width:30px;
-	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; background:#EDA900;
-      border-radius: 15px;
-}
-
-.saturdayDate{
-      width:30px;
-	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#632A7E;
-}
-
-.saturdayDate .foodSubject {
-	 background:#EEE0F9;
-   opacity: 0.5;
-}
-
-.sundayDate{
-       width:30px;
-	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:red;
-}
-
-.foodSubject {
-   display:block;
-   /*width:100%;*/
-   width:110px;
-   height:25px;
-   line-height: 25px;
-   margin:1.5px 0; 
-   color:#333333;
-   background:#EEE0F9;
-   cursor: pointer;
-   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
-
-.foodBtn{
-	color: #6E3C89;
-	background:white;
-	border:1px solid #6E3C89;
-	border-top-left-radius: 5px; 
-	border-bottom-left-radius: 5px; 
-	border-top-right-radius: 5px; 
-	border-bottom-right-radius: 5px; 
-	padding:3px 3px;
-}
-
-.foodBtn:hover{ 
-	color:white; 
-	background-color: #6E3C89; 
-}
-
-#menuBtn{
-	border: 1px solid #632A7E;
-	border-radius: 5px;
-	background: white;
-	color:#632A7E;
-	padding: 5px;
-
-}
-
-</style>
 <script type="text/javascript">
 
 function ajaxHTML(url, method, query, selector) {
@@ -185,8 +72,8 @@ $(function(){
 		
 		$('#food-dialog').dialog({
 			  modal: true,
-			  height: 650,
-			  width: 600,
+			  height: 500,
+			  width: 500,
 			  title: '식단등록',
 			  close: function(event, ui) {
 			  }
@@ -274,8 +161,8 @@ $(function(){
 		date=date.substr(0,4)+"년"+date.substr(4,2)+"월"+date.substr(6,2);
 		$('#food-detail').dialog({
 			  modal: true,
-			  height: 650,
-			  width: 600,
+			  height: 500,
+			  width: 500,
 			  title: date+'일의 식단',
 			  
 			  close: function(event, ui) {
@@ -343,7 +230,7 @@ function deleteOk(num) {
 				<table style="width: 70%; margin-top:5px; border-spacing: 0px; border-collapse: collapse;">
 				<c:forEach var="dto" items="${list}">
 					<tr height="35" style="border-top: 1px solid #cccccc;">
-						<td style="text-align: center; padding-left: 7px;">
+						<td style="text-align: center; ">
 							<p style="margin-top: 1px; margin-bottom: 1px; font-weight: 900;">
 							<c:choose>
 							    <c:when test="${dto.subject=='LUNCH'}">점심</c:when>
@@ -354,9 +241,9 @@ function deleteOk(num) {
 						</td>
 					</tr>
 					<tr height="45" >
-						<td valign="top" style="text-align: left; margin-top: 5px; padding-left: 10px;">
-							<p style="margin: 15px 0 30px 0; text-align: center" >
-								<span style="white-space: pre;">${dto.content}</span>
+						<td valign="top" style="text-align: left; margin-top: 5px;">
+							<p style="margin: 15px 0 30px 0; text-align: center"  >
+								<span style="white-space: pre; ">${dto.content}</span>
 							</p>
 						</td>
 					</tr>
@@ -411,41 +298,45 @@ function deleteOk(num) {
 		<form name="foodForm">
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tr>
-			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				  <td width="90" valign="middle" style="text-align: center;">
 			            <label style="font-weight: 900;">분류</label>
 			      </td>
-			      <td style="padding: 0 0 15px 15px;">
-			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			      <td valign="middle" >
+			        <p>
 			            <select name="subject" id="form-subject" class="selectField">
 			              <option value="LUNCH">점심</option>
 			              <option value="DINNER">저녁</option>
 			              <option value="SNACK">간식</option>
 			          </select>
-			        </p>
-			        
+			        </p>			        
 			      </td>
-			  </tr>			
+			  </tr>
+			  		<tr>
+			  		<td colspan="2">&nbsp;</td>
+					</tr>	
 			  
 			
 			  <tr>
-			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			      <td width="90" valign="middle" style="text-align: center;">
 			            <label style="font-weight: 900;">날짜</label>
 			      </td>
-			      <td style="padding: 0 0 15px 15px;">
-			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="text" name="created" id="form-created" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
+			      <td valign="middle" >
+			        <p>
+			            <input type="text" name="created" id="form-created" maxlength="10" class="boxTF" readonly="readonly" style="width: 100px; height:25px; background: ghostwhite; padding-left: 3px;">
   			        </p>
 			      </td>
 			  </tr>
-
+					<tr>
+			  		<td colspan="2">&nbsp;</td>
+					</tr>	
 			  
 			  <tr>
-			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			      <td width="90" valign="top" style="text-align: center;">
 			            <label style="font-weight: 900;">내용</label>
 			      </td>
-			      <td style="padding: 0 0 15px 15px;">
+			      <td style="padding-bottom: 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <textarea name="content" id="form-content" class="boxTA" style="width:400px; height: 200px; resize: none;"></textarea>
+			            <textarea name="content" id="form-content" class="boxTA" style="width:300px; height: 200px; resize: none;"></textarea>
 			        </p>
 			      </td>
 			  </tr>

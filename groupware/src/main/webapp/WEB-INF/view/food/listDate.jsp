@@ -12,25 +12,26 @@
 		<form name="foodDetail-Form">
 			<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<c:forEach var="dto" items="${list}">
-			  <tr>
-			  		<td  style="padding: 30px 0 0 30px">
-						<p><button type="button" disabled="disabled" id="menuBtn">${dto.subject=='LUNCH'? '점심메뉴' : (dto.subject=='DINNER'? '저녁메뉴': '간식')}</button><p>
+			  <tr  height="20">
+			  		<td  style="padding: 10px 0 10px 50px; background:SEASHELL; border-radius:20px; font-size: 20px">
+						<span >${dto.subject=='LUNCH'? '점심' : (dto.subject=='DINNER'? '저녁': '간식')}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+						<span>
+						<c:if test="${sessionScope.employee.empNo=='10001'}">			      
+				        	<button type="button" class="btn" id="btnFoodDelete"  onclick="deleteOk('${dto.foodNum}');"><i class="fas fa-times"></i></button>
+			        	</c:if>
+			        	</span>
 					</td>
 			  </tr>	
 
 			  <tr height="45">
 			      <td style="padding: 15px 0 15px 50px;">
-			        <p style="margin-top: 1px; margin-bottom: 5px;">${dto.content}</p>
+			        <p style="margin-top: 2px; margin-bottom: 30px;">${dto.content}</p>
 			      </td>
 			  </tr>
 			  
-			  <tr height="45">
-			      <td align="center" style="border-bottom: 1px solid #632A7E;">			      
-			      	<c:if test="${sessionScope.employee.empNo==dto.writer}">			      
-				        <button type="button" class="btn" id="btnFoodDelete"  onclick="deleteOk('${dto.foodNum}');">삭제</button>
-			        </c:if>
-			      </td>
-			  </tr>
 			 </c:forEach> 
 
 			</table>
