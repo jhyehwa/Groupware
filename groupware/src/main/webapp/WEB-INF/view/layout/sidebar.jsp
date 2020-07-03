@@ -43,7 +43,6 @@
 			</div>
 			<ul class="sub-menu">
 				<li><a href="#">쪽지</a></li>
-				<li><a href="#">쪽지</a></li>
 			</ul>
 		</li>
 		
@@ -53,7 +52,7 @@
 			</div>
 			<ul class="sub-menu">
 				<li><p>주소록</p></li>
-				<li><a href="<%=cp%>/privateAddr/main">회사</a></li>
+				<li><a href="<%=cp%>/publicAddr/main">회사</a></li>
 				<li><a href="<%=cp%>/privateAddr/main">개인</a></li>
 			</ul>
 		</li>

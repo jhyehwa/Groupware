@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.of.employee.SessionInfo;
+import com.of.news.News;
+import com.of.news.NewsService;
+import com.of.notice.Notice;
+import com.of.notice.NoticeService;
 import com.of.scheduler.Scheduler;
 import com.of.scheduler.SchedulerJSON;
 
@@ -24,23 +28,49 @@ import com.of.scheduler.SchedulerJSON;
 public class MainController {
 	@Autowired
 	MainService service;
+	@Autowired
+	NoticeService nservice;
+	@Autowired
+	NewsService nwservice;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(
 			HttpSession session,
 			HttpServletRequest req,
-			Model model
+			Model model,
+			@RequestParam(defaultValue="") String nCode
 			) throws Exception{
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("employee");
 		String empNo = info.getEmpNo();
 		
+		// 투두 리스트 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
-		
 		List<Main> list=service.listTodo(map);
 		
+		// 공지 리스트 		
+		String cp=req.getContextPath();
+		String noticeUrl=cp+"/notice/article?page=";
+		
+		int offset = 0;
+		map.put("offset", offset);
+		map.put("rows", 10);
+		
+		List<Notice> nlist = nservice.listNotice(map);		
+		
+		// 소식 리스트
+		String newsUrl=cp+"/news/article?page=";
+		map.put("offset", offset);
+		map.put("rows", 10);
+		map.put("nCode", nCode);
+		List<News> nwlist = nwservice.listNews(map);		
+		
 		model.addAttribute("list", list);
+		model.addAttribute("nlist", nlist);
+		model.addAttribute("nwlist", nwlist);
+		model.addAttribute("newsUrl", newsUrl);
+		model.addAttribute("noticeUrl", noticeUrl);
 				
 		return ".mainLayout";		
 	}

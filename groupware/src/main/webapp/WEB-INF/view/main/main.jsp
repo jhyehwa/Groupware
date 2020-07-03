@@ -420,7 +420,6 @@ $(function(){
 				<div id="schedule-list"> </div>			
 			</div>
 		</div>
-
 		
 		<div class="content-bottom">
 			<div class="content-todayTalk" >
@@ -434,11 +433,52 @@ $(function(){
 						<li>쪼옥지 </li>
 					</ul>
 				</div>
-				<div class="content-notice" >
-					<ul>
-						<li >고옹지 </li>
-					</ul>
-				</div>
+				
+					<div class="content-notice" >
+						<p> <i class="fas fa-bullhorn"></i> 공지사항 </p>
+						<table>
+							<c:forEach var="dto" items="${nlist}" begin="0" end="5">
+							  <tr align="center"> 
+							      <td align="left" style="padding-left: 10px; width: 60%;">
+							           <a href="${noticeUrl}&noticeNum=${dto.noticeNum}">공지 :: ${dto.title}</a>
+							      </td>
+							  </tr>
+							</c:forEach>
+							  <tr>
+							  	<td class="moreTD"> <a href="<%=cp%>/notice/list"> <i class="fas fa-location-arrow"></i> 더보기 </a> </td>
+							  </tr>
+						 </table>
+					</div>
+					<div class="content-news">
+						<p> <i class="fas fa-newspaper"></i> 사내소식  </p>
+					<table>
+						<c:forEach var="dto" items="${nwlist}" begin="0" end="5">
+						  <tr align="center"> 
+				     		 <td align="left" style="padding-left: 10px;">
+				     		 	 <c:if test="${dto.nType=='결혼'}">
+				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-heart"></i>&nbsp;&nbsp;::&nbsp;${dto.title}</a>
+				     		 	 </c:if>
+				     		 	 <c:if test="${dto.nType=='부고'}">
+				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-ribbon"></i>&nbsp;&nbsp;:: ${dto.title}</a>
+				     		 	 </c:if>
+				     		 	 <c:if test="${dto.nType=='회사소식'}">
+				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-building"></i>&nbsp;&nbsp;:: ${dto.title}</a>
+				     		 	 </c:if>
+				     		 	 <c:if test="${dto.nType=='출산'}">
+				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-child"></i>&nbsp;&nbsp;:: ${dto.title}</a>
+				     		 	 </c:if>
+				     		 	 <c:if test="${dto.nType=='승진'}">
+				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-level-up-alt"></i>&nbsp;&nbsp;:: ${dto.title}</a>
+				     		 	 </c:if>
+				     		 </td>
+				 		 </tr>
+				 		 <input type="hidden" value="${dto.nCode}">
+						</c:forEach>
+						 <tr>
+							  	<td class="moreTD"> <a href="<%=cp%>/news/list"> <i class="fas fa-location-arrow"></i> 더보기 </a> </td>
+						</tr>
+					</table>
+					</div>				
 			</div>
 		</div>			
 	</div>
@@ -451,7 +491,13 @@ $(function(){
 			</div>
 			<div class="content-weather">	
 				    <div id="content-weather"></div>
-			</div>			
+			</div>	
+			<div class="mini-box">
+				<div class="mini-box-div1"> <a href="<%=cp%>/privateAddr/privateAddr"><span><i class="far fa-id-badge"></i></span> &nbsp;연락처 추가 </a></div>
+				<div class="mini-box-div2"> <span><i class="fas fa-comments"></i></span> &nbsp;채팅 </div>
+				<div class="mini-box-div1"> <span><i class="fab fa-digital-ocean"></i></span> &nbsp;다른거 </div>
+				<div class="mini-box-div2"> <a href="<%=cp%>/sign/created"><span><i class="fas fa-signature"></i></span> &nbsp;전자 결재</a> </div>
+			</div>		
 	</div> 	
 	
 	
