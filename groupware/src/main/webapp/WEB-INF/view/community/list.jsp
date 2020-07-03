@@ -115,14 +115,14 @@
 						         		<input type="hidden" class="hcommuNum" value="${dto.commuNum}">
 						         		<span id="hcontent${dto.commuNum}" style="display: none">${dto.content}</span>
 						         		<input type="hidden" class="hreplyCount" value="${dto.replyCount}">
-						         		<input type="hidden" class="hname" value="${dto.name}">
+						         		<input type="hidden" class="hname" value="[${dto.dType}]&nbsp;${dto.name}&nbsp;${dto.pType}">
  					            <c:if test="${dto.gap < 1}">
 		             	  			<img src='<%=cp%>/resource/images/new.png'>
 		        	  		    </c:if>
 				          </td>					          	      
 				      </tr>
 				      <tr align="left">
-					      <td style="color: #5a5a5a;">&nbsp;&nbsp;${dto.name}</td>	
+					      <td style="color: #5a5a5a;">&nbsp;&nbsp;[${dto.dType}]&nbsp;${dto.name}&nbsp;${dto.pType}</td>	
 					      <td style="color: #5a5a5a; text-align: center;">${dto.created}</td>	
 					  </tr>
 				</table>
@@ -143,7 +143,7 @@
         <div class="board-body" style="width: 30%; float: left; margin-left: 60px;"> 
         	<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
           		  <h3 style="font-size: 18px;">| 커뮤니티 정보</h3>           
-          		  <table style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none; background: white;">		 
+          		  <table class="clubTableList" style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none; background: white;">		 
           		  <c:forEach var="dto" items="${listClub}">          		  	  
 					  <tr align="left"> 		
 					      <td style="font-weight: bold; font-size: 16px; padding-left: 10px;">

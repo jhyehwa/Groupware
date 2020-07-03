@@ -24,6 +24,16 @@ public class Data {
 	private String dCode;
 	private String dType;
 	
+	private String pType;
+	
+	public String getpType() {
+		return pType;
+	}
+
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
+
 	public long getTotalFile() {
 		return totalFile;
 	}

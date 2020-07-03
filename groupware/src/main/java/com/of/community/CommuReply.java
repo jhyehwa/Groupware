@@ -10,6 +10,21 @@ public class CommuReply {
 	private int likeCount;
 	private int disLikeCount;
 	
+	private String pType;
+	private String dType;
+	
+	public String getpType() {
+		return pType;
+	}
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
+	public String getdType() {
+		return dType;
+	}
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
 	public int getReplyNum() {
 		return replyNum;
 	}

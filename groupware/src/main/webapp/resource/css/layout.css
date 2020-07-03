@@ -1,5 +1,9 @@
 ﻿@charset "UTF-8";
 
+* {
+	font-family: ;
+}
+
 .header {
 	clear: both;
 	height: 65px;
@@ -75,13 +79,15 @@ a {
 }
 
 .menu-icon i:hover {
-	color: #2ECCFA;
+	color: gold;
 /* 	-webkit-transform: scale(1.15);
 	-moz-transform: scale(1.15);
 	-ms-transform: scale(1.15);
 	-o-transform: scale(1.15);
 	transform: scale(1.15); */
 }
+
+
 
 .text {
 	position: absolute;
@@ -98,7 +104,7 @@ a {
 	padding-left: 3px;
 	height: 85px;
 	display: none;
-	background: #9565A4;
+	background: #D7BCDB;
 	li
 	{
 	border-bottom
@@ -117,9 +123,47 @@ a {
 	    /*  hover { background-color : #2ECCFA; */
 }
 
+.menu-icon ul li a {
+	color: white;
+}
+
 .sub-menu a:hover {
 	/* color: #2ECCFA; */
 	font-weight: bold;
+	color: white;
 }
+
+.sub-menu .sm1 {
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	margin-bottom: 0px;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+
+.sub-menu .sm2 {
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	margin-bottom: 0px;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+
+.sub-menu .sm3 {
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	margin-bottom: 0px;
+	padding-top: 10px;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.sub-menu .sm4 {
+	padding-left: 15px;
+}
+
 
 }

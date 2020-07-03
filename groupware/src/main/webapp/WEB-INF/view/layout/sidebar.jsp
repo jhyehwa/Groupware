@@ -39,10 +39,10 @@
 	<ul class="menu-bar">
 		<li>
 			<div class="menu-icon">
-				<a href="#"><i class="far fa-comment-alt"></i></a>
+				<a href="#"><i class="fas fa-briefcase"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">쪽지</a></li>
+				<li><a class="sm2" href="<%=cp%>/publicAddr/main">공용<br>주소록</a></li>
 			</ul>
 		</li>
 		
@@ -51,9 +51,16 @@
 				<a href="#"><i class="far fa-address-book"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><p>주소록</p></li>
-				<li><a href="<%=cp%>/publicAddr/main">회사</a></li>
-				<li><a href="<%=cp%>/privateAddr/main">개인</a></li>
+				<li><a class="sm2" href="<%=cp%>/privateAddr/main">개인<br>주소록</a></li>
+			</ul>
+		</li>	
+		
+		<li>
+			<div class="menu-icon">
+				<a href="#"><i class="fas fa-envelope"></i></a>
+			</div>
+			<ul class="sub-menu">
+				<li><a class="sm1" href="#">메일</a></li>
 			</ul>
 		</li>
 		
@@ -62,16 +69,16 @@
 				<a href="#"><i class="fas fa-file-signature"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="<%=cp%>/sign/mainList">전자결재</a></li>
+				<li><a class="sm3" href="<%=cp%>/sign/mainList">전자결재</a></li>
 			</ul>
-		</li>
+		</li>		
 		
 		<li>
 			<div class="menu-icon">
 				<a href="#"><i class="fas fa-calendar-alt"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="<%=cp%>/scheduler/scheduler">일정</a></li>
+				<li><a class="sm1" href="<%=cp%>/scheduler/scheduler">일정</a></li>
 			</ul>
 		</li>
 		
@@ -80,7 +87,7 @@
 				<a href="#"><i class="fas fa-users"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="<%=cp%>/community/list">커뮤니티</a></li>
+				<li><a class="sm3" href="<%=cp%>/community/list">커뮤니티</a></li>
 			</ul>
 		</li>
 		
@@ -89,9 +96,9 @@
 				<a href="#"><i class="fas fa-bullhorn"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="<%=cp%>/notice/list">공지</a></li>
-				<li><a href="<%=cp%>/news/list">News</a></li>
-				<li><a href="<%=cp%>/food/month">식단표</a></li>
+				<li><a class="sm4" href="<%=cp%>/notice/list">공지</a></li>
+				<li><a class="sm4" href="<%=cp%>/news/list">News</a></li>
+				<li><a class="sm4" href="<%=cp%>/food/month">식단표</a></li>
 			</ul>
 		</li>
 		
@@ -100,7 +107,7 @@
 				<a href="#"><i class="fas fa-user-clock"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="#">근태관리</a></li>
+				<li><a class="sm3" href="#">근태관리</a></li>
 			</ul>
 		</li>
 		
@@ -109,7 +116,7 @@
 				<a href="#"><i class="fas fa-download"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a href="<%=cp%>/data/list">자료실</a></li>
+				<li><a class="sm1" href="<%=cp%>/data/list">자료실</a></li>
 			</ul>
 		</li>
 	</ul>

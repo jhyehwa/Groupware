@@ -44,10 +44,12 @@
 	
 	<!-- 리스트 -->
 	<select id="listData" parameterType="map" resultType="com.of.data.Data">
-		SELECT d.dataNum, dg.dataType, e.name, title, created, d.dCode, dType,
+		SELECT d.dataNum, dg.dataType, e.name, title, created, d.dCode, dType, pType,
 		NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount, df.fileSize
 		FROM data d
 		JOIN employee e ON d.writer = e.empNo
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN position p ON p.pCode = h.pCode
 		JOIN dataGroup dg ON d.dataCode = dg.dataCode
 		LEFT OUTER JOIN dept dpt ON d.dCode = dpt.dCode
 		LEFT OUTER JOIN dataFile df ON d.dataNum = df.dataNum
@@ -132,11 +134,13 @@
 	
 	<!-- 글보기 -->
     <select id="readData" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT dataNum, dg.dataType, e.name, title, content, created, d.dCode, dpt.dType		  
+		SELECT dataNum, dg.dataType, e.name, title, content, created, d.dCode, dpt.dType, pType		  
 		FROM data d
-		JOIN dept dpt ON d.dCode = dpt.dCode
 		JOIN employee e ON d.writer = e.empNo
-		JOIN dataGroup dg ON d.dataCode = dg.dataCode 
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN dept dpt ON h.dCode = dpt.dCode
+		JOIN position p ON p.pCode = h.pCode
+		JOIN dataGroup dg ON d.dataCode = dg.dataCode
 		WHERE dataNum = #{dataNum}
 	</select>
 	
@@ -205,16 +209,19 @@
 	
 	<!-- 게시글의 댓글 리스트 -->
 	<select id="listReply" parameterType="map" resultType="com.of.data.DataReply">
-		SELECT r.replyNum, e.name, content, r.created,
+		SELECT r.replyNum, e.name, r.content, r.created, dpt.dType, p.pType,
 			   NVL(answerCount, 0) answerCount								
 		FROM dataReply r 
 		JOIN employee e ON r.replyWriter = e.empNo
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN dept dpt ON h.dCode = dpt.dCode
+		JOIN position p ON p.pCode = h.pCode
 		LEFT OUTER JOIN (						
 			SELECT answer, COUNT(*) answerCount
 			FROM dataReply
 			WHERE answer!=0 
 			GROUP BY answer 		
-		) a ON r.replyNum = a.answer	
+		) a ON r.replyNum = a.answer
 		WHERE dataNum = #{dataNum} AND r.answer = 0
 		ORDER BY r.replyNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -244,9 +251,12 @@
 	
 	<!-- 댓글의 답글 리스트 -->
 	<select id="listReplyAnswer" parameterType="Integer" resultType="com.of.data.DataReply">
-		SELECT replyNum, dataNum, name, content, created, answer 
+		SELECT replyNum, dataNum, name, content, created, answer, dpt.dType, p.pType
 		FROM dataReply d
 		JOIN employee e ON e.empNo = d.replyWriter
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN dept dpt ON h.dCode = dpt.dCode
+		JOIN position p ON p.pCode = h.pCode
 		WHERE answer= #{answer}
 		ORDER BY replyNum DESC
 	</select>	

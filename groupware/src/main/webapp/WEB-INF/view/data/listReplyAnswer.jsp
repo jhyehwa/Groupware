@@ -11,7 +11,7 @@
 		<div style='clear:both; padding: 10px 0px;'>
 			<div style='float: left; width: 3%;  color:#6E6E6E;'><i class="fas fa-angle-double-right"></i></div>
 			<div style='float: left; width:97%;'>
-				<div style='float: left; color: #424242;'><b>${vo.name}</b></div>
+				<div style='float: left; color: #424242;'><b> [${vo.dType}]&nbsp;${vo.name}&nbsp;${vo.pType}</b></div>
 				<div style='float: right; color: #424242;'>
 					<span>${vo.created}</span> |
 					<%-- <c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}"> --%>

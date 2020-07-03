@@ -18,6 +18,7 @@ public class Community {
 	private String created; 
 	private int hitCount;
 	private String pType;
+	private String dType;
 
 	private int fileNum;
 	private String originalFilename, saveFilename;	
@@ -28,7 +29,13 @@ public class Community {
 	private int replyCount;	
 	private int commuLikeCount;	
 	
-	
+	public String getdType() {
+		return dType;
+	}
+
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
 
 	public String getpType() {
 		return pType;

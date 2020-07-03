@@ -5,8 +5,26 @@ public class DataReply {
 	private String replyWriter, name;
 	private String content, created;
 	private int answer;
-	
 	private int answerCount;
+	
+	private String dType;
+	private String pType;
+	
+	public String getdType() {
+		return dType;
+	}
+
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+
+	public String getpType() {
+		return pType;
+	}
+
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
 
 	public int getReplyNum() {
 		return replyNum;

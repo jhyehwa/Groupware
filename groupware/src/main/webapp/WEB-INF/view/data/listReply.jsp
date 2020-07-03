@@ -14,7 +14,7 @@
 	<c:forEach var="vo" items="${listReply}">
 		<tr height='35' style='background: white;'>
 			<td class="replyNameTd" >
-				<span><b>${vo.name}</b></span>
+				<span><b> [${vo.dType}]&nbsp;${vo.name}&nbsp;${vo.pType}</b></span>
 			</td>
 			<td class="replyNameTd" align='right'>
 				<span>${vo.created}</span> |

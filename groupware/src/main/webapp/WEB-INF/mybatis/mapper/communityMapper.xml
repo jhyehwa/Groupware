@@ -48,13 +48,14 @@
 	
 	<!-- 리스트 -->
 	<select id="listCommu" parameterType="map" resultType="com.of.community.Community">
-		SELECT c.commuNum, cb.clubType, e.name, title, created, content, hitCount, p.pType,
+		SELECT c.commuNum, cb.clubType, e.name, title, created, content, hitCount, p.pType, d.dType,
 			   NVL(fileCount, 0) fileCount, NVL(replyCount, 0) replyCount,
 			   NVL(commuLikeCount, 0) commuLikeCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
 		JOIN history h ON h.empNo = e.empNo 
 		JOIN position p ON p.pCode = h.pCode
+		JOIN dept d ON d.dCode = h.dCode
 		JOIN club cb ON c.clubCode = cb.clubCode
  		LEFT OUTER JOIN (
 			SELECT commuNum, COUNT(*) fileCount FROM commuFile
@@ -108,13 +109,20 @@
 	
 	<!-- 글보기 -->
     <select id="readCommu" parameterType="Integer" resultType="com.of.community.Community">
-		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount, p.pType,
-			   NVL(commuLikeCount, 0) commuLikeCount
+		SELECT c.commuNum, cb.clubType, e.name, title, content, c.created, hitCount, p.pType, d.dType,
+			   NVL(commuLikeCount, 0) commuLikeCount,
+			   NVL(replyCount, 0) replyCount
 		FROM community c 
 		JOIN employee e ON c.writer = e.empNo
 		JOIN history h ON h.empNo = e.empNo 
 		JOIN position p ON p.pCode = h.pCode
+		JOIN dept d ON d.dCode = h.dCode
 		JOIN club cb ON c.clubCode = cb.clubCode 
+		LEFT OUTER JOIN (
+			SELECT commuNum, COUNT(*) replyCount FROM commuReply
+			WHERE answer=0
+			GROUP BY commuNum
+		) r ON c.commuNum=r.commuNum
 		LEFT OUTER JOIN (
 			SELECT commuNum, COUNT(*) commuLikeCount FROM commuLike
 			GROUP BY commuNum
@@ -195,12 +203,15 @@
 	
 	<!-- 게시글의 댓글 리스트 -->
 	<select id="listReply" parameterType="map" resultType="com.of.community.CommuReply">
-		SELECT r.replyNum, e.name, content, r.created,
+		SELECT r.replyNum, e.name, content, r.created, d.dType, p.pType,
 			   NVL(answerCount, 0) answerCount,
 			   NVL(likeCount, 0) likeCount, 
 			   NVL(disLikeCount, 0) disLikeCount 								
 		FROM commuReply r 
 		JOIN employee e ON r.replyWriter = e.empNo
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN position p ON p.pCode = h.pCode
+		JOIN dept d ON d.dCode = h.dCode
 		LEFT OUTER JOIN (							<!-- 답글개수 -->
 			SELECT answer, COUNT(*) answerCount
 			FROM commuReply
@@ -243,9 +254,12 @@
 	
 	<!-- 댓글의 답글 리스트 -->
 	<select id="listReplyAnswer" parameterType="Integer" resultType="com.of.community.CommuReply">
-		SELECT replyNum, commuNum, name, content, created, answer 
+		SELECT replyNum, commuNum, name, content, created, answer, d.dType, p.pType
 		FROM commuReply c 
 		JOIN employee e ON e.empNo = c.replyWriter
+		JOIN history h ON h.empNo = e.empNo 
+		JOIN position p ON p.pCode = h.pCode
+		JOIN dept d ON d.dCode = h.dCode
 		WHERE answer= #{answer}
 		ORDER BY replyNum DESC
 	</select>

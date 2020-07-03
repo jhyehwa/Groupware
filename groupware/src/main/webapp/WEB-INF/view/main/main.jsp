@@ -625,7 +625,7 @@ function deleteTalk(talkNum, page) {
 				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-building"></i>&nbsp;&nbsp;:: ${dto.title}</a>
 				     		 	 </c:if>
 				     		 	 <c:if test="${dto.nType=='출산'}">
-				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-child"></i>&nbsp;&nbsp;:: ${dto.title}</a>
+				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-baby"></i>&nbsp;&nbsp;:: ${dto.title}</a>
 				     		 	 </c:if>
 				     		 	 <c:if test="${dto.nType=='승진'}">
 				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-level-up-alt"></i>&nbsp;&nbsp;:: ${dto.title}</a>

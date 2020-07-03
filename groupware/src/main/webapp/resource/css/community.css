@@ -8,6 +8,10 @@
 	margin-left: 20px;
 }
 
+ a:link { color: #505050; text-decoration: none;}
+ a:visited { color: #505050; text-decoration: none;}
+ a:hover {color: #EDA900; text-decoration: none;}
+
 .selectGroup .selectBox {
 	margin-top: 9px;	
 	width: 110px;
