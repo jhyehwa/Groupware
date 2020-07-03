@@ -1,5 +1,5 @@
 package com.of.privateaddr;
- 
+  
 public class PrivateAddr {
 	private int addrNum;
 	private String empNo;
