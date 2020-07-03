@@ -6,23 +6,15 @@
    String cp = request.getContextPath();
 %>
 
-<style type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/talk.css" type="text/css">
+<style>
 .talk-container{
-	width: 800px;
+	width:800px;
 	align-content: center;
 	margin:30px 0 0 200px;
 }
-
-.talk-write {
-    border: #d5d5d5 solid 1px;
-    padding: 10px;
-    min-height: 50px;
-}
-.more:active, .more:focus, .more:hover {
-    cursor: pointer;
-    color: #333333;
-}
 </style>
+
 
 <script type="text/javascript">
 var pageNo=1;
@@ -65,7 +57,6 @@ function listPage(page) {
 	ajaxJSON(url, "get", query, fn);		
 }
 
-
 $(function(){
 	$(window).scroll(function(){
 		if($(window).scrollTop()+50>=$(document).height()-$(window).height()) {
@@ -82,7 +73,8 @@ $(function(){
 function printTalk(data) {
 	var uid="${sessionScope.employee.empNo}";
 	var dataCount = data.dataCount;
-	var page = data.pageNo;
+	pageNo=data.pageNo;
+	page=data.page;
 	totalPage = data.total_page;
 	
 	var out="";
@@ -93,18 +85,21 @@ function printTalk(data) {
 			var writer=data.list[idx].writer;
 			var content=data.list[idx].content;
 			var created=data.list[idx].created;
+			var image=data.list[idx].imageFilename;
 			
-			out+="    <tr height='35' bgcolor='#eeeeee'>";
-			out+="      <td width='50%' style='padding-left: 5px; border:1px solid #cccccc; border-right:none;'>"+ name+"</td>";
-			out+="      <td width='50%' align='right' style='padding-right: 5px; border:1px solid #cccccc; border-left:none;'>" + created;
-			if(uid==writer || uid=="admin") {
-				out+=" | <a onclick='deleteTalk(\""+talkNum+"\", \""+page+"\");'>삭제</a></td>" ;
+			out+="    <tr height='40'>";
+			if(image!=null){
+				out+="	<td style='font-size:18px; padding-top:10px'><img src='<%=cp%>/uploads/profile/"+image+"' style='width: 36px; height: 36px; margin: 0 5px 0 5px; border-radius: 18px; vertical-align:middle;'><a class='nameDropdown'>"+name+"</a>";
+				out+="	&nbsp;<i style='color:plum;' class='far fa-comment-dots'></i>&nbsp;&nbsp;"+content+"</td>";			
 			} else {
-				out+=" | <a href='#'>신고</a></td>" ;
-			}
+				out+=" <td style='font-size:18px; line-height:35px;'><i class='far fa-user-circle' style='margin: 0 5px 0 5px ;'></i>"+name+"<i class='far fa-comment-dots'></i>"+content+"</td>";
+			}			
 			out+="    </tr>";
-			out+="    <tr style='height: 50px;'>";
-			out+="      <td colspan='2' style='padding: 5px;' valign='top'>"+content+"</td>";
+			out+="    <tr style='height: 40px; border-bottom:1px solid #cccccc ; margin-bottom:10px' >";
+			out+="      <td  align='right' style='padding-right: 5px; border-left:none; color:#ABB2B9'>" + created;
+			if(uid==writer || uid=="10003") {
+				out+=" | <a  class='talkBtn' onclick='deleteTalk(\""+talkNum+"\", \""+page+"\");'>삭제</a></td>" ;
+			}
 			out+="    </tr>";
 		}
 		
@@ -155,6 +150,9 @@ function deleteTalk(talkNum, page) {
 	}
 }
 
+
+
+
 </script>
 
 
@@ -164,36 +162,24 @@ function deleteTalk(talkNum, page) {
 	    <div class="body-title">
 	        <h3><i class="far fa-edit"></i> 오늘의한마디이이^_^ </h3>
 	    </div>
-    
-    	<div>
-           <form name="talkForm" method="post" action="">
-           	 <div class="talk-write">
-                 <div>
-                       <span style="font-weight: bold;">오늘의한마디쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-                 </div>
-                 <div style="padding-top: 10px;">
-                       <textarea name="content" id="content" class="boxTF" rows="3" style="display:block; width: 100%; padding: 6px 12px; box-sizing:border-box;" required="required"></textarea>
+	    <div>
+    		<form name="talkForm" method="post" action="">
+           	 <div class="talk-write" align="center" >
+                 <div style="padding-top: 10px; float: left">
+                       <textarea name="content" id="content" class="boxTF" style="display:block; width: 700px; height:35px; padding: 6px 12px; box-sizing:border-box; resize: none;" required="required" placeholder="오늘의 한마디를 입력하세요..."></textarea>
                   </div>
-                  <div style="text-align: right; padding-top: 10px;">
-                       <button type="button" class="btn" onclick="sendTalk();" style="padding:8px 25px;"> 등록하기 </button>
+                  <div style="text-align: right; padding-top: 10px;float: left;">
+                       <a class="talkBtn" onclick="sendTalk();" ><i class="fas fa-chevron-circle-up"></i> </a>
                   </div>           
           	 </div>
-           </form>
-           <div id="listTalk">
-           	 <table style='width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;'>
-	           <thead>
-		           <tr height='35'>
-		                <td width='50%'>
-		                    <span style='color: #3EA9CD; font-weight: 700;'>방명록</span>
-		                    <span>[목록]</span>
-		                 </td>
-		                 <td width='50%'>&nbsp;</td>
-		           </tr>
-	           </thead>
-	           <tbody id="listTalkBody"></tbody>
-	         </table>
-           </div>                
- 	 </div>
+           </form>      	          
+	          <div id="listTalk" style=" height: 500px;">
+	           	<table style='width: 90%; margin: 10px auto 10px; border-spacing: 0px;  border-collapse: collapse;'>                   	           
+		         <tbody id="listTalkBody"></tbody>
+		        </table>
+	          </div> 
+                      
+ 	 	</div>
  	 
 	</div>   
 </div>

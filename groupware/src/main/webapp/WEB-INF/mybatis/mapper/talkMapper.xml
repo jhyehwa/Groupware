@@ -3,8 +3,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="talk">
 	<insert id="insertTalk" parameterType="com.of.talk.Talk">
-		INSERT INTO talk(talkNum, writer, content, created)
-			VALUES(seq_talk.NEXTVAL, #{writer}, #{content}, SYSDATE)
+		INSERT INTO talk(talkNum, writer, content, created,imageFilename)
+			VALUES(seq_talk.NEXTVAL, #{writer}, #{content}, SYSDATE, #{imageFilename})
 	</insert>
 	
 	<select id="dataCount" resultType="Integer">
@@ -12,10 +12,11 @@
 	</select>
 	
 	<select id="listTalk" parameterType="map" resultType="com.of.talk.Talk">
-		SELECT talkNum, writer, name, content, created 
+		SELECT talkNum, writer, name, content, created, p.imageFilename
 		FROM talk t 
-		JOIN employee e ON writer=empNo 
-		ORDER BY talkNum DESC 
+		JOIN employee e ON writer=e.empNo
+		JOIN profile p ON e.empNo=p.empNo
+		ORDER BY talkNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY	
 	</select>
 	

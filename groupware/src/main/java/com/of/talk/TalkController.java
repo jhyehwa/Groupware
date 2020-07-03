@@ -52,8 +52,7 @@ public class TalkController {
 		int listNum, n =0;
 		List<Talk> list = service.listTalk(map);
 		for(Talk dto : list) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-			
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));			
 			listNum=dataCount-(offset+n);
 			dto.setListNum(listNum);
 			n++;
@@ -79,6 +78,7 @@ public class TalkController {
 		String state="true";
 		try {
 			dto.setWriter(info.getEmpNo());
+			dto.setImageFilename(info.getImageFilename());
 			service.insertTalk(dto);
 		} catch (Exception e) {
 			state="false";

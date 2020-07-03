@@ -2,7 +2,7 @@ package com.of.talk;
 
 public class Talk {
 	private int talkNum, listNum;
-	private String writer, name, content, created;
+	private String writer, name, content, created, imageFilename;
 	
 	public int getTalkNum() {
 		return talkNum;
@@ -40,6 +40,13 @@ public class Talk {
 	public void setCreated(String created) {
 		this.created = created;
 	}
+	public String getImageFilename() {
+		return imageFilename;
+	}
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
+	}
+	
 	
 	
 
