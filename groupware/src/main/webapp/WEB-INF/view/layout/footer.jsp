@@ -20,7 +20,7 @@
 	
 }
 
-#icon {
+#footericon {
 	height:60px;
 	line-height:60px;
 	background: gold;
@@ -145,7 +145,7 @@ $(".dept-icon").click(function(){
 	<div class="footer-detail"style="background: aqua; width: 300px; height: 410px; display: none;">
 		<div class="footer-detail-top">
 				
-			<div id="icon" style="text-align: center; line-height: 60px;">
+			<div id="footericon" style="text-align: center; line-height: 60px;">
 				<a class="fixedIcon header1"><span><i class="fas fa-user"></i></span></a>
 				<a class="fixedIcon header2"><span><i class="fas fa-comments"></i></span></a>
 				<a class="fixedIcon header3"><span><i class="fas fa-paper-plane"></i></span></a>
