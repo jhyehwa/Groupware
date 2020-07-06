@@ -5,8 +5,8 @@
 <%
    String cp = request.getContextPath();
 %>
-<%-- <link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css"> --%>
-<link rel="stylesheet" href="<%=cp%>/resource/css/buddy2.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/buddy.css" type="text/css">
 
 <script type="text/javascript">
 
@@ -70,14 +70,30 @@ function ajaxHTML(url, method, query, selector) {
 }
 
 </script>
+</head>
+<body>
 
-
-<div style="margin-top: 10px; float: left; width: 500px; height: 700px;">
+	
+<div class="container">
+     <div class="board-container">
+       <div class="body-title" style="font-size: 18px;">
+            <h3> ♬ 메일 </h3>
+      </div>
+      
+       <div class="board-body" style="float: left; width: 20%;">	      
+	       <div class="leftside">	        	
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-envelope"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/rlist';"><i class="fas fa-list"></i></button>	
+	       </div>   
+      </div>
+        
+      <div class="board-article" style="margin-top: 10px; width: 80%; float: left;">
 			<table class="articleTable">
 			<tr align="left" height="40"  > 
 			      <td class="typeTd" colspan="2" style="font-size: 14px;">	     	 
 			
-			   	  
+			   	  <button type="button" class="articlebtn" onclick="deleteBuddy();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+			      &nbsp;<button type="button" class="articlebtn" onclick="deleteBuddy();"><i class="fas fa-reply"></i> <span style="font-size: 13px;"> 답장 </span></button>				 		
 			 	  
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -89,10 +105,9 @@ function ajaxHTML(url, method, query, selector) {
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;
 			 		
-			      	${dto.sDate} ${page}
+			      	${dto.sDate}
 			      </td>
 			</tr>		
 			 		
@@ -126,8 +141,8 @@ function ajaxHTML(url, method, query, selector) {
 			<tr> 
 				<td colspan="2" style="padding-top: 0px; padding-bottom: 10px; border-bottom: 1px solid #cccccc; height: 30px;"> 
 				<c:forEach var="vo" items="${listFile}">				
-						<a href="<%=cp%>/buddy/download?fileNum=${vo.fileNum}" style="font-size: 17px;   border: 1px solid #cccccc; border-radius: 5px; padding: 3px 6px; margin-left: 10px;"> <span style="font-size: 13px;">
-						${vo.originalFilename} </span> </a> 
+						<a href="<%=cp%>/buddy/download?fileNum=${vo.fileNum}" style="font-size: 20px; border: 1px solid #cccccc; border-radius: 5px; padding: 6px 8px; margin-left: 10px;"><i class="fas fa-file-pdf"></i> <span style="font-size: 13px;">
+						${vo.originalFilename} (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte) </span> </a> 
 				</c:forEach>
 				</td>
 			</tr>
@@ -140,26 +155,29 @@ function ajaxHTML(url, method, query, selector) {
 			</tr>	
 			
 			<tr> 			
-				<td rowspan="6" style="width: 18%; border-bottom: 1px solid #cccccc;  padding: 10px 0; padding-left: 15px; padding-top: 45px;">
+				<td rowspan="6" style="width: 18%; border-bottom: 1px solid #cccccc;  padding: 10px 0; padding-left: 15px;">
 					<img src="<%=cp%>/uploads/profile/${dto.imageFilename}" width="150" height="150" border="0"> 
 				</td>
 				<td style="font-size: 15px;"> &nbsp; </td>
 			</tr>
 			<tr>
-				<td style="font-weight: bold; font-size: 17px;">&nbsp;&nbsp;&nbsp;그룹웨어 오피스 </td>
+				<td style="font-weight: bold; font-size: 17px;"> 그룹웨어 오피스 </td>
 			</tr>
 			<tr> 
-				<td style="font-size: 15px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.name} </td>
+				<td style="font-size: 15px;">|&nbsp;&nbsp;${dto.name} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
+				<td style="font-size: 15px;">|&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.tel}  </td>
+				<td style="font-size: 15px;">|&nbsp;&nbsp;${dto.tel}  </td>
 			</tr>				
 			<tr>
-				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.email}  </td>
+				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;">|&nbsp;&nbsp;${dto.email}  </td>
 			</tr>
-			</table>	
-			
+			</table>		
          </div>
+    </div>
+</div>
+
+

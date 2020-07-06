@@ -32,6 +32,24 @@
 </script>
 
 <script type="text/javascript">
+function ajaxHTML(url, method, query, selector) {
+	$.ajax({
+		type: method, 
+		url: url,
+		data: query,
+		success: function(data){
+			$(selector).html(data);
+		}, 
+		error: function(jqXHR) {
+			if(jqXHR.state==403) {		
+				login(); 
+				return false;
+			} 			
+			console.log(jqXHR.responseText);
+		}
+	});	
+}
+
   $(document).ready(function() {
     $("#buddyTable").tablesorter();
   });
@@ -61,6 +79,17 @@ $(function() {
 			f.submit();
 		}
 	});
+});
+
+
+$("body").on("click", ".aTag", function(){
+ 	var buddyNum = $(this).closest("td").find("input[type=hidden]").val(); 
+	var page = $("input[name=page]").val();
+	
+	var url = "<%=cp%>/buddy/mail";
+	var query = "page="+page+"&buddyNum="+buddyNum;
+	
+	ajaxHTML(url, "GET", query, ".mailArticle");
 });
 </script>
 
@@ -154,6 +183,8 @@ $(function() {
 			      <td align="left" style="padding-left: 15px;">${dto.name}${dto.pType}</td>
 			      <td align="left" style="padding-left: 10px;">
 			           <a href="${articleUrl}&buddyNum=${dto.buddyNum}">${dto.title}</a>
+			           <a class="aTag" href="#"> <i class="fas fa-external-link-alt" style="font-size: 10px;"></i> </a>
+			           <input type="hidden" value="${dto.buddyNum}">
 			      </td>			   
 			      <td>
 			      	<c:if test="${dto.fileCount != 0}">
@@ -181,11 +212,9 @@ $(function() {
 		</div>
 		
 		
-		<div class="board-body" style="width: 22%; float: left;" > 
+		<div class="board-body" style="width: 22%; float: left; margin-left: -18px;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 메일 미리보기 (띄울것) </h3> 
-          		  <div id="mailarticle"></div>
-				  		 
+          		  <div class="mailArticle" id="mailArticle"></div>				  		 
             </div>
 		</div>		
 		  
