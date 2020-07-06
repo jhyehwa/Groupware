@@ -39,7 +39,10 @@
 		<div class="container">
 			<tiles:insertAttribute name="body" />
 		</div>
-	
+		
+		<div class="footer">
+			<tiles:insertAttribute name="footer" />
+		</div>
 	
 		<div id="loadingLayout" style="display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 9000; background: #eeeeee;">
 			<i id="loadingImage" class="fa fa-cog fa-spin fa-fw" style="font-size: 70px; color: 333;"></i>

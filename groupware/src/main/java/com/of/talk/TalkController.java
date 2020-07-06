@@ -32,6 +32,11 @@ public class TalkController {
 		return new ModelAndView(".talk.talk");
 	}
 	
+	@RequestMapping(value="chat")
+	public ModelAndView chat(Model model) {
+		return new ModelAndView(".chat.chat");
+	}
+	
 	@RequestMapping(value="list")
 	public Map<String, Object> list(
 			@RequestParam(value="pageNo", defaultValue="1") int current_page

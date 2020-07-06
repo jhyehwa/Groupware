@@ -6,7 +6,17 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
-
+<style>
+/*왼쪽메뉴리스트*/
+.leftMenu{
+	background-size: 180px 220px;
+	margin-left:10px;
+	width:180px;
+	height:220px; 
+	background-image: url("<%=cp%>/resource/images/menu.png");
+	
+}
+</style>
 <script type="text/javascript">
 
 function ajaxHTML(url, method, query, selector) {
@@ -39,7 +49,8 @@ $(function(){
 	$("#largeCalendar .textDate").each(function (i) {
         var s=$(this).attr("data-date");
         if(s==today) {
-        	$(this).parent().css("background", "#FFFDE6 ");
+        	$(this).parent().css("border", "1px solid gold ");
+        	$(this).parent().css("border-radius", "5px");
         }
     });
 });
@@ -152,8 +163,6 @@ function check() {
 
 // 스케쥴 제목 클릭 -----------------------
 
-
-
 $(function(){
 	$(".foodSubject").click(function(){
 		var selectDate = $(this).attr("data-date");
@@ -161,8 +170,8 @@ $(function(){
 		date=date.substr(0,4)+"년"+date.substr(4,2)+"월"+date.substr(6,2);
 		$('#food-detail').dialog({
 			  modal: true,
-			  height: 500,
-			  width: 500,
+			  height: 600,
+			  width: 450,
 			  title: date+'일의 식단',
 			  
 			  close: function(event, ui) {
@@ -203,35 +212,44 @@ function deleteOk(num) {
 <div class="container">	
 	<div class="board-container" style="margin-left: 200px;">
 	    <div class="body-title">
-	        <h3> 냠냠냠</h3>
+	        <h3>식단</h3>
 	    </div>
 	    
-    	<div class="board-body" style="float: left; width: 20%;">	      
-	        <div style="margin: 30px 0 0 20px; ">
-	        	<table >  	
+    	<div class="board-body " style="float: left; width: 20%;">	      
+	        <div style="margin: 70px 0 0 20px; ">
+	        	<table style="width: 170px; margin-top:5px; border-spacing: 0px; " >  	
 		        	<tr>
-		        		<td><button type="button" disabled="disabled" style="margin-left:55px; width: 100px; height: 100px; border-radius: 50px; background:#EEE0F9; border: none; color:#333333;" >오늘의메뉴</button></td>	        		
+		        		<td class="titleBtn" >   
+			        		<!-- <button type="button" class="titleBtn" disabled="disabled"; ></button> -->
+			        		<i  class="fas fa-utensils"></i>
+			        		
+		        		</td>	        		
 		        	</tr>
 		        	
 		        	<tr>
-		        		<td style="padding: 10px 0 0 50px; ">${todayYear}년 ${todayMonth}월  ${todayDate}일 </td>
+		        		<td style="text-align: center;">
+		        			<p>&nbsp;</p>
+		        			<p style="font-size: 18px; ">오늘의 식단</p>	
+		        			<p>&nbsp;</p>
+		        			<p>${todayYear}년 ${todayMonth}월  ${todayDate}일 </p>
+		        		</td>
 		        	</tr>
 	        	</table>
 	        	
 	        	<c:if test="${list.size()==0}">
-				<table style="width: 100%; margin-top:5px; border-spacing: 0px; border-collapse: collapse;">
-					<tr height="35">
+				<table class="leftMenu" style="margin-top: 50px">
+					<tr height="35" style="border:1px solid MISTYROSE; background: transparent;">
 						<td align="center">등록된 식단이 없습니다.</td>
 					</tr>
 				</table>
 				</c:if>
 				
 				
-				<table style="width: 70%; margin-top:5px; border-spacing: 0px; border-collapse: collapse;">
 				<c:forEach var="dto" items="${list}">
-					<tr height="35" style="border-top: 1px solid #cccccc;">
-						<td style="text-align: center; ">
-							<p style="margin-top: 1px; margin-bottom: 1px; font-weight: 900;">
+				<table class="leftMenu" style="margin-top: 10px;">
+					<tr height="35">
+						<td style="text-align: center; padding-bottom: 5px; ">
+							<p style="font-size:16px; font-weight: 900;">
 							<c:choose>
 							    <c:when test="${dto.subject=='LUNCH'}">점심</c:when>
 							    <c:when test="${dto.subject=='DINNER'}">저녁</c:when>
@@ -240,17 +258,16 @@ function deleteOk(num) {
 							</p>
 						</td>
 					</tr>
-					<tr height="45" >
-						<td valign="top" style="text-align: left; margin-top: 5px;">
-							<p style="margin: 15px 0 30px 0; text-align: center"  >
-								<span style="white-space: pre; ">${dto.content}</span>
+					<tr>
+						<td style="text-align: ; margin-top: 5px;">
+							<p style="text-align: ; padding-bottom: 10px; padding-left: 30px "  >
+								<span style="">${dto.content}</span>
 							</p>
 						</td>
 					</tr>
-				</c:forEach>	
-					
 				</table>
-	    	
+				</c:forEach>	
+
 	        </div>	       	       
         </div>
 
@@ -304,7 +321,7 @@ function deleteOk(num) {
 			      <td valign="middle" >
 			        <p>
 			            <select name="subject" id="form-subject" class="selectField">
-			              <option value="LUNCH">점심</option>
+			              <option  value="LUNCH">점심</option>
 			              <option value="DINNER">저녁</option>
 			              <option value="SNACK">간식</option>
 			          </select>
@@ -336,7 +353,7 @@ function deleteOk(num) {
 			      </td>
 			      <td style="padding-bottom: 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <textarea name="content" id="form-content" class="boxTA" style="width:300px; height: 200px; resize: none;"></textarea>
+			            <textarea name="content" id="form-content" class="boxTA" style=""></textarea>
 			        </p>
 			      </td>
 			  </tr>

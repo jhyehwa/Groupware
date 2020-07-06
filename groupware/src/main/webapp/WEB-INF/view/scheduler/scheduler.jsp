@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.min.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.print.min.css" media='print' type="text/css">
 
+
+
 <style type="text/css">
 .hbtn {
 	font-family: "Malgun Gothic", "맑은 고딕", NaschNumGothic, 나눔고딕, 돋움, sans-serif;
@@ -689,12 +691,12 @@ $(function(){
 
 </script>
 <div class="container">
-<div class="board-container"  style="width: 800px; float: left;">
+<div class="board-container"  style="width: 900px; float: left; position:absolute; margin-left: 300px;">
     <div class="body-title" style=" margin-bottom: 30px;" align="center">
-        <h1><i class="far fa-calendar-alt"></i> 일정관리 </h1>
+        <h3><i class="far fa-calendar-alt"></i> 일정관리 </h3>
     </div>
     
-    <div>
+    <div >
             <div id="calendarHeader" style="height: 35px; line-height: 35px;">
                 <div style="text-align: right;">
                     <div style="clear: both; display: inline-block;">

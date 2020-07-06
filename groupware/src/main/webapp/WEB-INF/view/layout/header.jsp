@@ -7,11 +7,12 @@
 %>
 <div class="header-top">
 	<div class="header-left">
-		<p style="margin: 2px;">
+		<p style="margin: 2px 0 0 20px;">
 			<a href="<%=cp%>/main">
-			<span>로 혜화네</span>
-			<br>
-			<span>고 회사</span>
+			<span>
+			<img src="<%=cp%>/resource/images/logo3.png" width="120" height="60">
+			</span>
+			<!-- <span style="font-size: 28px; font-weight:900; color:GHOSTWHITE">AMPPER</span> -->
 			</a>
 		</p>
 	</div>
