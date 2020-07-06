@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+
+*:focus { outline:none; }
+
+a:visited { color: #424242; text-decoration: none; }
+a:link { color: #424242; text-decoration: none; }
+
+.resultList {
+}
+
+.emplistTable {
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+.empListTable td {
+	font-size: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-spacing: 0px;
+	border-bottom: 1px solid #cccccc;
+	color: #424242;
+	text-align: center;
+}

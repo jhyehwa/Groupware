@@ -2,6 +2,9 @@
 
 *:focus { outline:none; }
 
+a:visited { color: #424242; text-decoration: none; }
+a:link { color: #424242; text-decoration: none; }
+
 .leftside {
 	margin-top: 20px;
 	margin-left: 20px;
@@ -46,7 +49,7 @@
 .articleTable .nameTd {
 	padding-left: 14px; 
 	font-size: 15px;
-	width: 50%;
+	width: 18%;
 }
 
 .articleTable .createdTd {

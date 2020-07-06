@@ -59,12 +59,12 @@ function deleteTodo(num) {
 	   
 	   var length = $(".todoT tr").length;
 	   
-       $(".todoT").append(out);
        
        if(length > 4) {
     	   return;
        }
 
+       $(".todoT").append(out);
 	});
 }); 
 </script>
@@ -268,7 +268,7 @@ $(function(){
 			out += "	<td style='text-align: left; font-size: 15px; font-style: italic; padding-left: 15px;'>" + "Seoul , KR" + "</td>";
 			out += "</tr>";
 			out += "	<td class='lastTd' colspan='2' style='text-align: center; font-size: 18px;  font-weight: bold;'>" 
-			out += "		<i class='fas fa-sun'></i> " +  resp.wind.speed + "&nbsp;&nbsp;&nbsp;<i class='fas fa-tint'></i> " + resp.main.humidity;
+			out += "		<i class='fas fa-wind'></i> " +  resp.wind.speed + "&nbsp;&nbsp;&nbsp;<i class='fas fa-tint'></i> " + resp.main.humidity;
 			out += "		&nbsp;&nbsp;<i class='fas fa-umbrella'></i> " + (resp.clouds.all) + "%";
 			out += "	</td>";
  		 	out += "</tr>";
@@ -630,6 +630,9 @@ function deleteTalk(talkNum, page) {
 				     		 	 <c:if test="${dto.nType=='승진'}">
 				       		   		 <a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-level-up-alt"></i>&nbsp;&nbsp;:: ${dto.title}</a>
 				     		 	 </c:if>
+				     		 	 <c:if test="${dto.nType=='기타'}">																		
+									<a href="${newsUrl}&newsNum=${dto.newsNum}"> <i class="fas fa-asterisk"></i>&nbsp;&nbsp;:: ${dto.title}</a>										
+								 </c:if>
 				     		 </td>
 				 		 </tr>
 				 		 <input type="hidden" value="${dto.nCode}">

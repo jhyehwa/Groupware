@@ -60,7 +60,7 @@
 				<a href="#"><i class="fas fa-envelope"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a class="sm1" href="#">메일</a></li>
+				<li><a class="sm1" href="<%=cp%>/buddy/rlist">메일</a></li>
 			</ul>
 		</li>
 		

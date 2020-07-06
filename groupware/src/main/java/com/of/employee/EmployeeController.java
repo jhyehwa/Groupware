@@ -197,6 +197,8 @@ public class EmployeeController {
 		info.setpCode(dto.getpCode());
 		info.setpType(dto.getpType());
 		info.setImageFilename(dto.getImageFilename());
+		info.setTel(dto.getTel());
+		info.setEmail(dto.getEmail());
 
 		session.setMaxInactiveInterval(30 * 60); // 세션유지시간 30분, 기본:30분
 

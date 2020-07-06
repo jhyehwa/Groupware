@@ -10,6 +10,8 @@ public class SessionInfo {
 	private String pCode;
 	private String pType;
 	private String imageFilename;
+	private String email;
+	private String tel;
 
 	public String getEmpNo() {
 		return empNo;
@@ -82,6 +84,24 @@ public class SessionInfo {
 	public void setImageFilename(String imageFilename) {
 		this.imageFilename = imageFilename;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	
+	
 	
 	
 
