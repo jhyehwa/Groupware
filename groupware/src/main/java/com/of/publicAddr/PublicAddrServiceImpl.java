@@ -29,20 +29,6 @@ public class PublicAddrServiceImpl implements PublicAddrService {
 	}
 
 	@Override
-	public List<PublicAddr> listPublicAddrSearch(Map<String, Object> map) {
-		
-		List<PublicAddr> list = null;
-
-		try {
-			list = dao.selectList("publicAddr.listPublicAddrSearch", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
-	@Override
 	public int dataCount(Map<String, Object> map) {
 		
 		int result = 0;
@@ -57,12 +43,12 @@ public class PublicAddrServiceImpl implements PublicAddrService {
 	}
 
 	@Override
-	public PublicAddr readAddress(int employeeNum) {
+	public PublicAddr readpublicAddr(int empNo) {
 		
 		PublicAddr dto = null;
 
 		try {
-			dto = dao.selectOne("publicAddr.readPublicAddr", employeeNum);
+			dto = dao.selectOne("publicAddr.readPublicAddr", empNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

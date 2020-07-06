@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.of.common.MyUtil;
+import com.of.publicAddr.PublicAddr;
 
 @Controller("employeeController")
 public class EmployeeController {
@@ -109,7 +110,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/employee/employee", method = RequestMethod.POST)
-	public String employeeSubmit(Employee dto, final RedirectAttributes reAttr, Model model) {
+	public String employeeSubmit(Employee dto, PublicAddr publicDto, final RedirectAttributes reAttr, Model model) {
 
 		try {
 			dto.setTel(dto.getTel().replaceAll("-", ""));
@@ -121,6 +122,7 @@ public class EmployeeController {
 			dto.setTel(tel1 + "-" + tel2 + "-" + tel3);
 
 			service.insertEmployee(dto);
+			service.insertPublicAddr(publicDto);
 
 		} catch (Exception e) {
 			model.addAttribute("mode", "employee");
@@ -128,10 +130,10 @@ public class EmployeeController {
 			return ".employee.employee";
 		}
 
-/*		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append(dto.getName() + "님의 사원 정보가 정상적으로 등록되었습니다.");
 
-		reAttr.addFlashAttribute("message", sb.toString());*/
+		reAttr.addFlashAttribute("message", sb.toString());
 		reAttr.addFlashAttribute("title", "사원 등록");
 
 		return "redirect:/employee/complete";
@@ -161,9 +163,10 @@ public class EmployeeController {
 	public String complete(@ModelAttribute("message") String message) throws Exception {
 
 		if (message == null || message.length() == 0) {
-			return "redirect:/";
+			return "redirect:/employee/complete";
 		}
 
+		
 		return ".employee.complete";
 	}
 
@@ -260,7 +263,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/employee/update", method = RequestMethod.POST)
-	public String updateSubmit(Employee dto, @RequestParam String page, Model model) {
+	public String updateSubmit(Employee dto, @RequestParam String page, final RedirectAttributes reAttr, Model model) {
 
 		try {
 			dto.setTel(dto.getTel().replaceAll("-", ""));
@@ -274,14 +277,15 @@ public class EmployeeController {
 			service.updateEmployee(dto);
 
 		} catch (Exception e) {
+			return ".employee.list";
 		}
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(dto.getName() + "님의 회원정보가 정상적으로 변경되었습니다.<br>");
 
-		model.addAttribute("title", "회원 정보 수정");
-		model.addAttribute("message", sb.toString());
+		reAttr.addFlashAttribute("message", sb.toString());
+		reAttr.addFlashAttribute("title", "회원 정보 수정");
 
-		return "redirect:/employee/list?page=" + page;
+		return "redirect:/employee/complete";
 	}
 }

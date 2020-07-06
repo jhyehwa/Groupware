@@ -134,22 +134,17 @@
 			$('#groupNum')[0].setSelectionRange(len, len);
 		});
 		
-	});
+	});	
 	
 	
-	
-	// 모달창 그룹 추가 버튼 누르면 효과
-	$(document).ready(function(){
-		$("#groupAdd").click(function(){
-			$("#edit").slideDown("slow");
-		});
-	});
-	
-	
-
-	// 모달창 리스트 & 추가
+	// 모달창에 그룹 추가
 	$(function(){
-		$("#saveGroup").click(function(){
+		$("body").on("click", "#saveGroup", function(){
+			if($("#newGroupName").val().length == 0) {
+				alert("그룹을 추가해 주세요.");
+				$(".txt_mini").focus();
+				return;
+			}
 			
 			var query=$("form[name=modalGroup]").serialize();
 			var url="<%=cp%>/privateAddr/modalInsert";
@@ -181,17 +176,10 @@
 		});
 	});
 	
-	// 모달창에 그룹 추가
+	// 모달창 그룹 추가 버튼 누르면 효과
 	$(function(){
-		$("body").on("click", "#saveGroup", function(){		
-			var str;
-
-			str = $(this).closest("div").find("input[class=txt_mini]").text();
-			
-			if(!str) {
-				alert("그룹을 입력해주세요.");
-				return;
-			}
+		$("body").on("click", "#groupAdd", function(){
+			$("#edit").slideToggle();
 		});
 	});
 	
@@ -212,7 +200,7 @@
 			<h2>${mode == "privateAddr" ? "연락처 추가" : "연락처 수정"}</h2>
 
 			<form name="privateAddrForm" method="post">
-				<input type="text" class="privateAddr-input" name="name" id="name" placeholder="이름" autofocus value="${dto.name}" ${mode == "update" ? "disabled='disabled'" : ""}>
+				<input type="text" class="privateAddr-input" name="name" id="name" placeholder="이름" value="${dto.name}" ${mode == "update" ? "disabled='disabled'" : ""}>
 				<button type="button" class="button_on" id="button_on1"><i class="far fa-edit"></i></button>
 						
 				<input type="text" class="privateAddr-input" name="email" id="email" placeholder="이메일" value="${dto.email}" ${mode == "update" ? "disabled='disabled'" : ""}>
@@ -241,9 +229,8 @@
 				<a class="btn" href="#ex7"><button type="button" class="button_on"><i class="far fa-plus-square" style="font-size: 20px;"></i></button></a>
 
 				<div class="button-container">
-					<button type="button" class="privateAddr-button" onclick="privateAddr();">${mode == "privateAddr" ? "저장" : "수정"}</button>
-					<button type="button" class="privateAddr-button" onclick="javascript:location.href='<%=cp%>/privateAddr/main';">목록</button>
-					<button type="reset" class="privateAddr-button">취소</button>
+					<button type="button" class="privateAddr-button" onclick="privateAddr();">${mode == 'privateAddr' ? '등록' : '수정'}</button>
+					<button type="button" class="privateAddr-button" onclick="javascript:location.href='<%=cp%>/privateAddr/main';">취소</button>
 				</div>
 				<c:if test="${mode=='update'}">
 					<input type="hidden" name="addrNum" value="${dto.addrNum}">
@@ -267,7 +254,7 @@
 					
 						<div class="edit" id="edit" style="display: none;">
 							<input class="txt_mini" id="newGroupName" name="groupType" type="text" placeholder="새 그룹 이름">
-							<button type="button" id="saveGroup" name="saveGroup"><i class="far fa-check-square"></i></button>
+							<button type="button" id="saveGroup" name="saveGroup"><i class="fas fa-check"></i></button>
 							<button type="reset" id="edit-reset"><i class="fas fa-undo-alt"></i></button>
 						</div>
 					

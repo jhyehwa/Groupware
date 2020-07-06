@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.of.common.dao.CommonDAO;
+import com.of.publicAddr.PublicAddr;
 
 @Service("employee.employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -77,6 +78,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw e;
 		}
 
+	}
+	
+	@Override
+	public void insertPublicAddr(PublicAddr publicDto) throws Exception {
+		
+		try {
+			dao.insertData("employee.insertEmployee5", publicDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 	// ---------------------------------------------------------------------------------------------

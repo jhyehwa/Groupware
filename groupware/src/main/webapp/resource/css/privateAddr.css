@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-* {
-	font-family: DX명필명조;
-}
-
 /* main */
 #list-container {
 	margin-left: 200px;
@@ -14,10 +10,19 @@
 
 #body-title {
 	font-size: 18px;
+	height: 30px;
+	/* background: lime; */
 }
 
-#body-title span {
-	font-size: 14px;
+#privateAddr-count {
+	float: right;
+	width: 35px;
+	height: 20px;
+	text-align: center;
+	padding-top: 4px;
+	color: gray;
+	font-size: 15px;
+	/* background: orange; */
 }
 
 #listBtnBox {
@@ -27,10 +32,11 @@
 }
 
 #listBtnBox-left {
-	width: 300px;
+	width: 280px;
 	height: 50px;
 	margin-top: 20px;
 	margin-left: 15px;
+	/* background: red; */
 }
 
 .new-button1 {
@@ -163,8 +169,8 @@
 
 /* list */
 #list-Box {
-	width: 1000px;
-	margin: -100px 0 0 300px;
+	width: 1100px;
+	margin: -130px 0 0 300px;
 	float: left;
 }
 
@@ -249,28 +255,38 @@
 	color: white;
 }
 
+#addrPrivate-container {
+	/* background: fuchsia; */
+	height: 50px;
+}
+
 #addrPrivate ul li {
 	float: left;
-	height: 20px;
+	width: 35px;
+	height: 25px;
 	margin-top: 10px;
 	padding-top: 10px;
-	margin-right: 20px;
+	margin-right: 10px;
 	cursor: pointer;
 	margin-left: 10px;
-	margin-bottom: 5px;
 	font-weight: bold;
+	text-align: center;
+	/* background: lime; */
 }
 
 #addrPrivate ul li:hover {
+	height: 25px;
 	color: #EDA900;
+	border-bottom: 2px solid #EDA900;
 }
 
 #list-header table {
-	width: 1000px;
+	width: 1100px;
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin: 0px auto;
-	margin-top: 20px;
+	margin-top: 10px;
+	font-size: 15px;
 	/* background: red; */
 }
 
@@ -279,14 +295,53 @@
 }
 
 #list-title {
-	height: 35px;
+	height: 50px;
 	text-align: center;
 	background: #9565A4;
 	color: white;
 }
 
+#name-title {
+	width: 150px;
+}
+
+#birth-title {
+	width: 150px;
+}
+
+#tel-title {
+	width: 200px;
+}
+
+#email-title {
+	width: 250px;
+}
+
+#dName-title {
+	width: 150px;
+}
+
+#dType-title {
+	width: 150px;
+}
+#pType-title {
+	width: 150px;
+}
+
+#group-title {
+	width: 150px;
+}
+
+#view-title {
+	width: 100px;
+}
+
+#delete-title {
+	width: 100px;
+}
+
 #list-content {
-	height: 35px;
+	height: 50px;
 	text-align: center;
 	border-bottom: 1px solid #cccccc;
 }
@@ -321,7 +376,7 @@ h3 i {
 	padding: 5px;
 	background: none;
 	margin-top: 20px;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	margin-right: 5px;
 	font-size: 17px;
 }
@@ -334,12 +389,13 @@ h3 i {
 
 .edit {
 	display: none;
+	margin-top: 10px;
 }
 
 #newGroupName {
 	height: 25px;
 	outline: 0;
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 }
 
 #saveGroup {
@@ -399,214 +455,65 @@ h3 i {
 /* privateAddr */
 
 /* Animation Keyframes */
+@keyframes scale_header { 
+	0% {
+		max-height: 0px;
+		margin-bottom: 0px;
+		opacity: 0;
+	}
+
+	100% {
+	max-height: 117px;
+	margin-bottom: 25px;
+	opacity:1;
+	}
+}
+
+@keyframes input_opacity {
+	0% {
+		transform: translateY(-10px);
+		opacity: 0
+	}
+
+	100% {
+		transform: translateY(0px);
+		opacity: 1
+	}
+}
+
 @
-keyframes scale_header { 0% {
-	max-height: 0px;
-	margin-bottom: 0px;
-	opacity: 0;
+keyframes text_opacity {
+	0% {
+		color: transparent;
+	}
 }
 
-100%
-{
-max-height
+@keyframes error_before {
+	0% {
+		height: 5px;
+		background: rgba(0, 0, 0, 0.156);
+		color: transparent;
+	}
 
+	10% {
+		height: 117px;
+		background: #FFFFFF;
+		color:#C62828
+	}
 
-:
-
- 
-
-117
-px
-
-
-;
-margin-bottom
-
-
-:
-
- 
-
-25
-px
-
-
-;
-opacity
-
-
-:
-
- 
-
-1;
-}
-}
-@
-keyframes input_opacity { 0% {
-	transform: translateY(-10px);
-	opacity: 0
+	90% {
+		height: 117px;
+		background: #FFFFFF;
+		color: #C62828
+	}
+	
+	100% {
+		height: 5px;
+		background: rgba(0,0,0,0.156);
+		color: transparent;
+	}
 }
 
-100%
-{
-transform
-
-
-:
-
- 
-
-translateY
-
-
-(0
-px
-);
-
- 
-
-opacity
-
-
-:
-
- 
-
-1
-}
-}
-@
-keyframes text_opacity { 0% {
-	color: transparent;
-}
-
-}
-@
-keyframes error_before { 0% {
-	height: 5px;
-	background: rgba(0, 0, 0, 0.156);
-	color: transparent;
-}
-
-10%
-{
-height
-
-
-:
-
- 
-
-117
-px
-
-
-;
-background
-
-
-:
-
- 
-
-#FFFFFF
-
-
-;
-color
-
-
-:
-
- 
-
-#C62828
-
-
-}
-90%
-{
-height
-
-
-:
-
- 
-
-117
-px
-
-
-;
-background
-
-
-:
-
- 
-
-#FFFFFF
-
-
-;
-color
-
-
-:
-
- 
-
-#C62828
-
-
-}
-100%
-{
-height
-
-
-:
-
- 
-
-5
-px
-
-
-;
-background
-
-
-:
-
- 
-
-rgba
-
-
-(0
-,
-0,
-0,
-0
-.156
-
-
-);
-color
-
-
-:
-
- 
-
-transparent
-
-
-;
-}
-}
 .privateAddr-container {
 	display: flex;
 	flex-direction: column;
@@ -704,8 +611,14 @@ transparent
 	height: 50px;
 	border: none;
 	background: none;
-	color: #EDA900;
 	font-size: 20px;
+	outline: 0;
+}
+
+.button_on:hover {
+	color: #EDA900;
+	cursor: pointer;
+	outline: 0;
 }
 
 .button-container {
@@ -739,6 +652,8 @@ transparent
 
 .privateAddr-button:hover {
 	background: #EDA900;
+	color: white;
+	font-weight: bold;
 }
 
 .privateAddr-button.raised:hover {

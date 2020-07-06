@@ -12,6 +12,53 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/privateAddr.css" type="text/css">
 
 <script>
+	function addrAdd() {
+		var f = document.addrAddForm;
+		var str;
+		
+		str = f.name.value;
+		str = str.trim();
+		
+		if(!str) {
+			alert("이름을 입력해주세요.");
+			f.name.focus();
+			return;
+		}
+		
+		str = f.email.value;
+		str = str.trim();
+		
+		if(!str) {
+			alert("이메일을 입력해주세요.");
+			f.email.focus();
+			return;
+		}
+		
+		str = f.tel.value;
+		str = str.trim();
+		
+		if(!str) {
+			alert("전화번호를 입력해주세요.");
+			f.tel.focus();
+			return;
+		}
+		
+		str = f.groupNum.value;
+		str = str.trim();
+		
+		if(!str) {
+			alert("그룹을 추가해주세요.");
+			f.groupNum.focus();
+			return;
+		}
+		
+	 	f.action = "<%=cp%>/privateAddr/privateAddr2";
+	 	
+	   	f.submit();
+	}
+</script>
+
+<script>
 	$(function(){
 		$("body").on("click", "#addrAdd", function(){
 			$("#textBox").slideToggle();
@@ -21,7 +68,7 @@
 
 <script type="text/javascript">	
 	$(function(){
-		listPage();
+		listPage(1);
 	});
 	
 	function ajaxJSON(url, type, query, fn) {
@@ -72,61 +119,14 @@
 	}
 	
 	//글리스트 및 페이징 처리
-	function listPage() {
-		
+	function listPage(page) {
 		var url="<%=cp%>/privateAddr/list";
-		var query="";
-	
+		var query="page="+page;
+		var search=$('form[name=privateAddrSearchForm]').serialize();
+		query = query + "&" + search;
 		var selector = "#tab-content";
 		
 		ajaxHTML(url, "get", query, selector);
-	}
-</script>
-
-<script>
-	function addrAdd() {
-		var f = document.addrAddForm;
-		var str;
-		
-		str = f.name.value;
-		str = str.trim();
-		
-		if(!str) {
-			alert("이름을 입력해주세요.");
-			f.name.focus();
-			return;
-		}
-		
-		str = f.email.value;
-		str = str.trim();
-		
-		if(!str) {
-			alert("이메일을 입력해주세요.");
-			f.email.focus();
-			return;
-		}
-		
-		str = f.tel.value;
-		str = str.trim();
-		
-		if(!str) {
-			alert("전화번호를 입력해주세요.");
-			f.tel.focus();
-			return;
-		}
-		
-		str = f.groupNum.value;
-		str = str.trim();
-		
-		if(!str) {
-			alert("그룹을 추가해주세요.");
-			f.groupNum.focus();
-			return;
-		}
-		
-	 	f.action = "<%=cp%>/privateAddr/privateAddr2";
-	 	
-	   	f.submit();
 	}
 </script>
 
@@ -140,7 +140,12 @@
 	
 	// 모달창 리스트 & 추가
 	$(function(){
-		$("#saveGroup").click(function(){
+		$("body").on("click", "#saveGroup", function(){
+			if($("#newGroupName").val().length == 0) {
+				alert("그룹을 추가해 주세요.");
+				$(".txt_mini").focus();
+				return;
+			}
 			
 			var query=$("form[name=modalGroup]").serialize();
 			var url="<%=cp%>/privateAddr/modalInsert";
@@ -153,7 +158,7 @@
 				success:function(data) {
 					var state=data.state;
 					if(state=="true") {
-						// location.href="<%=cp%>/privateAddr/privateAddr";
+						//location.href="<%=cp%>/privateAddr/privateAddr";
 						var s="<button type='button' class='groupNameList' name='groupNameList' data-groupType='"+data.dto.groupType+"' data-groupNum='"+data.dto.groupNum+"'>"+data.dto.groupType+"</button>";
 						$(".jyy").append(s);
 					}
@@ -168,22 +173,7 @@
 			    	}
 			    	console.log(jqXHR.responseText);
 			    }
-			});
-			
-		});
-	});
-	 
-	// 모달창에 그룹 추가
-	$(function(){
-		$("body").on("click", "#saveGroup", function(){		
-			var str;
-
-			str = $(this).closest("div").find("input[class=txt_mini]").text();
-			
-			if(!str) {
-				alert("그룹을 입력해주세요.");
-				return;
-			}
+			});		
 		});
 	});
 	
@@ -200,51 +190,62 @@
 
 <script>
 	function searchList() {
-		var url="<%=cp%>/privateAddr/list";
-		var condition = $("select[name=condition]").val();
-		var keyword = $("input[name=keyword]").val();
+		var f = document.privateAddrSearchForm;
+		f.condition.value = $("#condition").val();
+		f.keyword.value = $.trim($("#keyword").val());
 		
-		console.log(condition);
-		console.log(keyword);
-		
-		var query="condition=" + condition +"&keyword=" + keyword;
-		console.log(query);
-		
-		var selector = "#tab-content";
-		
-		ajaxHTML(url, "get", query, selector);
+		listPage(1);
 	}
 	
 	$(function(){
 		$("body").on("click", ".all", function(){
-			var url = "<%=cp%>/privateAddr/list";
-			var query = "";
-			var selector = "#tab-content";
 			
-			ajaxHTML(url, "get", query, selector);
+			var f = document.privateAddrSearchForm;
+			f.condition.value="name";
+			f.keyword.value="";
+			f.kor.value="";
+			f.kor2.value="";
+			
+			$("#condition").val("name");
+			$("#keyword").val("");
+			
+			listPage(1);
 		});
 	}); 
 
 	$(function(){
-		$("body").on("click", ".kor", function(){				
-			// alert($(this).attr("data-kor"));
-			
+		$("body").on("click", ".kor", function(){
+
 			var kor = $(this).attr("data-kor");
-			var kor2 = $(this).closest("li").next().find("span").attr("data-kor");
+			var kor2 = $(this).next().attr("data-kor");
 			
-			var url = "<%=cp%>/privateAddr/list";
-			var query = "kor=" + encodeURIComponent(kor) + "&kor2=" + encodeURIComponent(kor2);
-			var selector = "#tab-content";
+			var f = document.privateAddrSearchForm;
+			f.condition.value="name";
+			f.keyword.value="";
+			$("#condition").val("name");
+			$("#keyword").val("");
 			
-			ajaxHTML(url, "get", query, selector);
+			f.kor.value=kor;
+			f.kor2.value=kor2;
+			
+			listPage(1);
 		});
 	});
 </script>
 
 <script>
+	function updatePrivateAddr(addrNum, page) {
+		var query = "addrNum=" + addrNum + "&page=" + page;
+		var url = "<%=cp%>/privateAddr/update?" + query;
+		
+		console.log(addrNum);
+		
+		location.href = url;
+	} 
+
 	function deletePrivateAddr(addrNum) {
-		var q = "addrNum=" + addrNum + "&page=${page}";
-		var url = "<%=cp%>/privateAddr/delete?" + q;
+		var query = "addrNum=" + addrNum + "&page=${page}";
+		var url = "<%=cp%>/privateAddr/delete?" + query;
 	
 		if(confirm("선택한 주소록을 삭제 하시겠습니까 ? ")){
 			  	location.href=url;
@@ -255,7 +256,7 @@
 <div class="container">
 	<div id="list-container">
 		<div id="body-title">
-			<i class="fas fa-map-pin"> 개인주소록</i><span>&nbsp;&nbsp;${dataCount}개</span>
+			<i class="fas fa-map-pin"> 개인주소록 |<span id="privateAddr-count">${dataCount}개</span></i>
 		</div>
 	
 		<div id="listBtnBox">
@@ -266,7 +267,7 @@
 		
 			<form name="searchForm" action="<%=cp%>/privateAddr/main" method="post">
 				<div class="selectGroup-list">
-					<select name="condition" class="selectBox-list">
+					<select name="condition" id="condition" class="selectBox-list">
 						<option value="name" ${condition=="name"?"selected='selected'":""}>이름</option>
 						<option value="tel" ${condition=="tel"?"selected='selected'":""}>전화번호</option>
 						<option value="company" ${condition=="company"?"selected='selected'":""}>회사명</option>
@@ -274,13 +275,19 @@
 					</select>
 				</div>
 				<div id="searchBox">
-					<p><input type="text" name="keyword" value="${keyword}">
+					<p><input type="text" id="keyword" name="keyword" value="${keyword}">
 					<button type="button" onclick="searchList()"><i class="fas fa-search"></i></button>
 				</div>
 			</form>
 			
 			<div id="tab-content"></div>
-	
 		</div>
+		
+		<form name="privateAddrSearchForm" action="" method="post">
+			<input type="hidden" name="condition" value="all">
+			<input type="hidden" name="keyword" value="">
+			<input type="hidden" name="kor" value="">
+			<input type="hidden" name="kor2" value="">
+		</form>
 	</div>
 </div>

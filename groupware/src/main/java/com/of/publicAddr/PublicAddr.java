@@ -1,36 +1,13 @@
 package com.of.publicAddr;
 
 public class PublicAddr {
-	private int employeeNum;
 	private String empNo;
-	private String pwd;
 	private String name;
 	private String birth;
 	private String tel;
 	private String email;
-	private String addr;
-	private int enable;
-	private String rCode;
-	private String dCode;
-	private String pCode;
-	private String apDate;
-	private String memo;
-	private String enterDate;
-	private String enterType;
-	private String exitDate;
-	private String rType;
 	private String dType;
 	private String pType;
-	private String lastLogin;
-	private String imageFilename;
-
-	public int getEmployeeNum() {
-		return employeeNum;
-	}
-
-	public void setEmployeeNum(int employeeNum) {
-		this.employeeNum = employeeNum;
-	}
 
 	public String getEmpNo() {
 		return empNo;
@@ -38,14 +15,6 @@ public class PublicAddr {
 
 	public void setEmpNo(String empNo) {
 		this.empNo = empNo;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
 	}
 
 	public String getName() {
@@ -80,94 +49,6 @@ public class PublicAddr {
 		this.email = email;
 	}
 
-	public String getAddr() {
-		return addr;
-	}
-
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-
-	public int getEnable() {
-		return enable;
-	}
-
-	public void setEnable(int enable) {
-		this.enable = enable;
-	}
-
-	public String getrCode() {
-		return rCode;
-	}
-
-	public void setrCode(String rCode) {
-		this.rCode = rCode;
-	}
-
-	public String getdCode() {
-		return dCode;
-	}
-
-	public void setdCode(String dCode) {
-		this.dCode = dCode;
-	}
-
-	public String getpCode() {
-		return pCode;
-	}
-
-	public void setpCode(String pCode) {
-		this.pCode = pCode;
-	}
-
-	public String getApDate() {
-		return apDate;
-	}
-
-	public void setApDate(String apDate) {
-		this.apDate = apDate;
-	}
-
-	public String getMemo() {
-		return memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-
-	public String getEnterDate() {
-		return enterDate;
-	}
-
-	public void setEnterDate(String enterDate) {
-		this.enterDate = enterDate;
-	}
-
-	public String getEnterType() {
-		return enterType;
-	}
-
-	public void setEnterType(String enterType) {
-		this.enterType = enterType;
-	}
-
-	public String getExitDate() {
-		return exitDate;
-	}
-
-	public void setExitDate(String exitDate) {
-		this.exitDate = exitDate;
-	}
-
-	public String getrType() {
-		return rType;
-	}
-
-	public void setrType(String rType) {
-		this.rType = rType;
-	}
-
 	public String getdType() {
 		return dType;
 	}
@@ -183,23 +64,5 @@ public class PublicAddr {
 	public void setpType(String pType) {
 		this.pType = pType;
 	}
-
-	public String getLastLogin() {
-		return lastLogin;
-	}
-
-	public void setLastLogin(String lastLogin) {
-		this.lastLogin = lastLogin;
-	}
-
-	public String getImageFilename() {
-		return imageFilename;
-	}
-
-	public void setImageFilename(String imageFilename) {
-		this.imageFilename = imageFilename;
-	}
-	
-	
 
 }

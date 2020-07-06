@@ -8,7 +8,7 @@
 
 <div id="list-Box">		
 	<div id="speedInsertBox">
-		<label><button id="addrAdd"><i class="fas fa-plus">&nbsp;빠른 등록</i></button></label>&nbsp;&nbsp;<!-- 호버 -->
+		<label><button id="addrAdd"><i class="fas fa-plus">&nbsp;빠른 등록</i></button></label>&nbsp;&nbsp;
 		<label><button type="button" id="excelOut" onclick="javascript:location.href='<%=cp%>/privateAddr/excel';"><i class="fas fa-file-export">&nbsp;내보내기</i></button></label>
 	</div>
 	
@@ -25,53 +25,53 @@
 			</label>
 		</div>
 
-		<div>
+		<div id="addrPrivate-container">
 			<div id="addrPrivate">
 				<ul>
-					<li>
-						<span class="all">전체</span>
+					<li class="all">
+						<span>전체</span>
 					</li>
-					<li>
-						<span data-kor="가" class="kor">ㄱ</span>
+					<li class="kor" data-kor="가">
+						<span>ㄱ</span>
 					</li>
-					<li>
-						<span data-kor="나" class="kor">ㄴ</span>
+					<li class="kor" data-kor="나">
+						<span>ㄴ</span>
 					</li>
-					<li>
-						<span data-kor="다" class="kor">ㄷ</span>
+					<li data-kor="다" class="kor">
+						<span>ㄷ</span>
 					</li>
-					<li>
-						<span data-kor="라" class="kor">ㄹ</span>
+					<li data-kor="라" class="kor">
+						<span>ㄹ</span>
 					</li>
-					<li>
-						<span data-kor="마" class="kor">ㅁ</span>
+					<li data-kor="마" class="kor">
+						<span>ㅁ</span>
 					</li>
-					<li>
-						<span data-kor="바" class="kor">ㅂ</span>
+					<li data-kor="바" class="kor">
+						<span>ㅂ</span>
 					</li>
-					<li>
-						<span data-kor="사" class="kor">ㅅ</span>
+					<li data-kor="사" class="kor">
+						<span>ㅅ</span>
 					</li>
-					<li>
-						<span data-kor="아" class="kor">ㅇ</span>
+					<li data-kor="아" class="kor">
+						<span>ㅇ</span>
 					</li>
-					<li>
-						<span data-kor="자" class="kor">ㅈ</span>
+					<li data-kor="자" class="kor">
+						<span>ㅈ</span>
 					</li>
-					<li>
-						<span data-kor="차" class="kor">ㅊ</span>
+					<li data-kor="차" class="kor">
+						<span>ㅊ</span>
 					</li>
-					<li>
-						<span data-kor="카" class="kor">ㅋ</span>
+					<li data-kor="카" class="kor">
+						<span>ㅋ</span>
 					</li>
-					<li>
-						<span data-kor="타" class="kor">ㅌ</span>
+					<li data-kor="타" class="kor">
+						<span>ㅌ</span>
 					</li>
-					<li>
-						<span data-kor="파" class="kor">ㅍ</span>
+					<li data-kor="파" class="kor">
+						<span>ㅍ</span>
 					</li>
-					<li>
-						<span data-kor="하" class="kor">ㅎ</span>
+					<li data-kor="하" class="kor">
+						<span>ㅎ</span>
 					</li>
 				</ul>
 			</div>
@@ -80,13 +80,13 @@
 		<div id="list-header">
 			<table id="list-menu">
 				<tr id="list-title">
-					<td>이름</td>
-					<td>전화번호</td>
-					<td>이메일</td>
-					<td>회사명</td>
-					<td>그룹</td>
-					<td>상세</td>
-					<td>삭제</td>
+					<td id="name-title">이름</td>
+					<td id="tel-title">전화번호</td>
+					<td id="email-title">이메일</td>
+					<td id="dName-title">회사명</td>
+					<td id="group-title">그룹</td>
+					<td id="view-title">상세</td>
+					<td id="delete-title">삭제</td>
 				</tr>
 				
 				<tr id="list-cotainer">
@@ -97,14 +97,14 @@
 							<td>${dto.email}</td>
 							<td>${dto.company}</td>
 							<td>${dto.groupType}</td>
-							<td><a href="<%=cp%>/privateAddr/update?addrNum=${dto.addrNum}&page=${page}"><i class="fas fa-search"></i></a></td>
-							<td><button type="button" onclick="deletePrivateAddr('${dto.addrNum}');"><i class="fas fa-trash-alt"></i></button></td>
+							<td><button type="button" onclick="updatePrivateAddr('${dto.addrNum}', '${page}');"><i class="fas fa-search"></i></button></td>
+							<td><button type="button" onclick="deletePrivateAddr('${dto.addrNum}', '${page}');"><i class="fas fa-trash-alt"></i></button></td>
 						</tr>
 					</c:forEach>
 				</tr>
 				
 				<tr>
-					<td colspan="8" id="list-paging">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</td>
+					<td colspan="8" id="list-paging">${dataCount == 0 ? "등록된 연락처가 없습니다." : paging}</td>
 				</tr>
 			</table>
 		</div>
@@ -126,7 +126,7 @@
 			
 				<div class="edit" id="edit">
 					<input class="txt_mini" id="newGroupName" name="groupType" type="text" placeholder="새 그룹 이름">
-					<button type="button" id="saveGroup" name="saveGroup"><i class="far fa-check-square"></i></button>
+					<button type="button" id="saveGroup" name="saveGroup"><i class="fas fa-check"></i></button>
 					<button type="reset" id="edit-reset"><i class="fas fa-undo-alt"></i></button>
 				</div>
 			

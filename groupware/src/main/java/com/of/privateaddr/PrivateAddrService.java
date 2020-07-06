@@ -5,7 +5,6 @@ import java.util.Map;
 
 public interface PrivateAddrService {
 	public List<PrivateAddr> listPrivateAddr(Map<String, Object> map);
-	public List<PrivateAddr> listPrivateAddrSearch(Map<String, Object> map);
 	public List<PrivateAddr> listAllPrivateAddr(String empNo);
 
 	public int dataCount(Map<String, Object> map);

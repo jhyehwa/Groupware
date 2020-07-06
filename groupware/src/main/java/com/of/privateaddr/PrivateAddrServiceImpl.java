@@ -17,9 +17,6 @@ public class PrivateAddrServiceImpl implements PrivateAddrService {
 	@Autowired
 	private CommonDAO dao;
 
-	@Resource(name = "sqlSession")
-	private SqlSession sqlSession;
-
 	// ---------------------------------------------------------------------------------------------
 	// 개인 주소록 리스트
 	@Override
@@ -29,22 +26,6 @@ public class PrivateAddrServiceImpl implements PrivateAddrService {
 
 		try {
 			list = dao.selectList("privateAddr.listPrivateAddr", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
-	// ---------------------------------------------------------------------------------------------
-	// 개인 주소록 검색 리스트
-	@Override
-	public List<PrivateAddr> listPrivateAddrSearch(Map<String, Object> map) {
-
-		List<PrivateAddr> list = null;
-
-		try {
-			list = dao.selectList("privateAddr.listPrivateAddrSearch", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

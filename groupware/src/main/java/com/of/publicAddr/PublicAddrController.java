@@ -19,6 +19,7 @@ import org.springframework.web.servlet.View;
 
 import com.of.common.MyExcelView;
 import com.of.common.MyUtil;
+import com.of.employee.Employee;
 import com.of.employee.SessionInfo;
 
 @Controller("publicAddrController")
@@ -36,51 +37,24 @@ public class PublicAddrController {
 	// ---------------------------------------------------------------------------------------------
 	// 공용 주소록 리스트
 	@RequestMapping("/publicAddr/main")
-	public String main(
-			@RequestParam(value = "page", defaultValue = "1") int current_page,
-			HttpServletRequest req,
-			HttpSession session,
-			Model model) throws Exception {
-
+	public String main(HttpSession session, Model model) throws Exception {
+		
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+		String empNo = info.getEmpNo();
 
-		String cp = req.getContextPath();
-
-		int rows = 10;
-		int total_page = 0;
 		int dataCount = 0;
-
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empNo", info.getEmpNo());
-
 		dataCount = service.dataCount(map);
-		if (dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
-		}
-
-		if (total_page < current_page) {
-			current_page = total_page;
-		}
-
-		int offset = (current_page - 1) * rows;
-		if (offset < 0)
-			offset = 0;
-		map.put("offset", offset);
-		map.put("rows", rows);
-
-		String paging = myUtil.paging(current_page, total_page);
-
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
+		
 		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("paging", paging);
-
+		
 		return ".publicAddr.main";
 	}
 
 	@RequestMapping("/publicAddr/list")
 	public String list(
-			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(value="page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "가") String kor,
@@ -88,14 +62,12 @@ public class PublicAddrController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 
-		String cp = req.getContextPath();
-
 		int rows = 10;
 		int total_page = 0;
 		int dataCount = 0;
 
-		if (req.getMethod().equalsIgnoreCase("GET")) {
-			keyword = URLDecoder.decode(keyword, "UTF-8");
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword=URLDecoder.decode(keyword, "UTF-8");
 		}
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -105,47 +77,31 @@ public class PublicAddrController {
 		map.put("kor2", kor2);
 
 		dataCount = service.dataCount(map);
-		if (dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
+		
+		if(dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);			
 		}
 
-		if (total_page < current_page) {
-			current_page = total_page;
+		if(current_page>total_page) {
+			current_page=total_page;
 		}
 
-		int offset = (current_page - 1) * rows;
-		if (offset < 0)
-			offset = 0;
+		int offset = (current_page-1)*rows;
+		if(offset < 0) offset=0;
 		map.put("offset", offset);
 		map.put("rows", rows);
 
 		List<PublicAddr> list = null;
 		
-		if (keyword.equals("")) {
-			list = service.listPublicAddr(map);
-		} else {
-			list = service.listPublicAddrSearch(map);
-		}
-
-		String query = "";
-
-		String listUrl;
-
-		if (keyword.length() != 0) {
-			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
-
-		listUrl = cp + "/publicAddr/list";
-		if (query.length() != 0) {
-			listUrl = listUrl + "?" + query;
-		}
-
-		String paging = myUtil.paging(current_page, total_page, listUrl);
+		list = service.listPublicAddr(map);
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		
 		model.addAttribute("list", list);
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("total_page", total_page);
 
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,45 +39,16 @@ public class PrivateAddrController {
 	// ---------------------------------------------------------------------------------------------
 	// 개인 주소록 리스트
 	@RequestMapping("/privateAddr/main")
-	public String main(
-			@RequestParam(value = "page", defaultValue = "1") int current_page,
-			HttpServletRequest req,
-			HttpSession session,
-			Model model) throws Exception {
-
-		SessionInfo info = (SessionInfo) session.getAttribute("employee");
-
-		String cp = req.getContextPath();
-
-		int rows = 10;
-		int total_page = 0;
+	public String main(Model model) throws Exception {
+		
 		int dataCount = 0;
-
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empNo", info.getEmpNo());
-
+		
 		dataCount = service.dataCount(map);
-		if (dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
-		}
-
-		if (total_page < current_page) {
-			current_page = total_page;
-		}
-
-		int offset = (current_page - 1) * rows;
-		if (offset < 0)
-			offset = 0;
-		map.put("offset", offset);
-		map.put("rows", rows);
-
-		String paging = myUtil.paging(current_page, total_page);
-
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
+		
 		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("paging", paging);
-
+		
 		return ".privateAddr.main";
 	}
 
@@ -95,9 +65,7 @@ public class PrivateAddrController {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 
-		String cp = req.getContextPath();
-
-		int rows = 10;
+		int rows = 5;
 		int total_page = 0;
 		int dataCount = 0;
 
@@ -113,50 +81,33 @@ public class PrivateAddrController {
 		map.put("kor2", kor2);
 
 		dataCount = service.dataCount(map);
-		if (dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
+		
+		if(dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);			
 		}
 
-		if (total_page < current_page) {
-			current_page = total_page;
+		if(current_page>total_page) {
+			current_page=total_page;
 		}
 
-		int offset = (current_page - 1) * rows;
-		if (offset < 0)
-			offset = 0;
+		int offset = (current_page-1)*rows;
+		if(offset < 0) offset=0;
 		map.put("offset", offset);
 		map.put("rows", rows);
 
 		List<PrivateAddr> list = null;
 
-		if (keyword.equals("")) {
-			list = service.listPrivateAddr(map);
-		} else {
-			list = service.listPrivateAddrSearch(map);
-		}
-
-		String query = "";
-
-		String listUrl;
-
-		if (keyword.length() != 0) {
-			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
-
-		listUrl = cp + "/privateAddr/list";
+		list = service.listPrivateAddr(map);
 
 		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
-		if (query.length() != 0) {
-			listUrl = listUrl + "?" + query;
-		}
 
-		String paging = myUtil.paging(current_page, total_page, listUrl);
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 
 		model.addAttribute("list", list);
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("total_page", total_page);
 		model.addAttribute("modalList", modalList);
 
 		model.addAttribute("condition", condition);
@@ -174,6 +125,7 @@ public class PrivateAddrController {
 
 		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
 
+		model.addAttribute("page", 1);
 		model.addAttribute("mode", "privateAddr");
 		model.addAttribute("modalList", modalList);
 
@@ -234,7 +186,7 @@ public class PrivateAddrController {
 
 			service.insertPrivateAddrSpeed(dto);
 		} catch (Exception e) {
-			model.addAttribute("mode", "privateAddr");
+			model.addAttribute("mode", "privateAddr2");
 
 			return ".privateAddr.main";
 		}
@@ -253,7 +205,6 @@ public class PrivateAddrController {
 		String state = "false";
 
 		try {
-
 			dto.setEmpNo(info.getEmpNo());
 
 			service.modalInsert(dto);
@@ -276,42 +227,39 @@ public class PrivateAddrController {
 	public String updateForm(
 			@RequestParam int addrNum,
 			@RequestParam String page,
-			@RequestParam(defaultValue = "title") String condition,
-			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session,
 			Model model) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 
-		keyword = URLDecoder.decode(keyword, "UTF-8");
+		PrivateAddr dto = service.readAddress(addrNum);		
 
-		String query = "page=" + page;
-		if (keyword.length() != 0) {
-			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
-
-		PrivateAddr dto = service.readAddress(addrNum);
-		if (dto == null) {
-			return "redirect:/privateAddr/main?page=" + page;
-		}
+		/*if (dto == null) {
+			return "privateAddr/error";
+		}*/
+		
+		/*if(!info.getEmpNo().equals(dto.getEmpNo())) {
+			return "private/error";
+		}*/
 
 		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
 
 		model.addAttribute("mode", "update");
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
-		model.addAttribute("query", query);
 		model.addAttribute("modalList", modalList);
 
 		return ".privateAddr.privateAddr";
 	}
 
 	@RequestMapping(value = "/privateAddr/update", method = RequestMethod.POST)
-	public String updateSubmit(PrivateAddr dto, @RequestParam(defaultValue = "1") String page, HttpSession session) {
-
-		SessionInfo info = (SessionInfo) session.getAttribute("employee");
-
+	@ResponseBody
+	public Map<String, Object> updateSubmit(PrivateAddr dto, HttpSession session) throws Exception {
+		String state = "true";
+		
 		try {
+			SessionInfo info = (SessionInfo) session.getAttribute("employee");
+		
 			dto.setTel(dto.getTel().replaceAll("-", ""));
 
 			String tel1 = dto.getTel().substring(0, 3);
@@ -324,10 +272,13 @@ public class PrivateAddrController {
 
 			service.updatePrivateAddr(dto);
 		} catch (Exception e) {
-			e.printStackTrace();
+			state = "false";
 		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
 
-		return "redirect:/privateAddr/main?page=" + page;
+		return model;
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -349,6 +300,17 @@ public class PrivateAddrController {
 		}
 
 		System.out.println(addrNum);
+		System.out.println(addrNum);
+		
+		System.out.println(addrNum);System.out.println(addrNum);
+		System.out.println(addrNum);
+		
+		System.out.println(addrNum);
+		System.out.println(addrNum);
+		System.out.println(addrNum);
+		System.out.println(addrNum);
+		System.out.println(addrNum);
+		
 		service.deletePrivateAddr(addrNum);
 
 		return "redirect:/privateAddr/main?" + query;

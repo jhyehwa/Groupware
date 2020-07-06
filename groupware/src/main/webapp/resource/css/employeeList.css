@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-* {
-	font-family: DX명필명조;	
-}
-
 /* list */
 .body-title {
 	font-size: 18px;
@@ -115,8 +111,44 @@
 	border: solid 1px #cbc9c9;
 }
 
-#list-header table {
+#searchBox {
+	margin-left: 20px;
+	margin-top: -10px;
+}
+
+#searchBox p {
+	font-size: 20px;
+	border: 1px solid #cccccc;
+	width: 220px;
+}
+
+#searchBox p input {
+	width: 170px;
+	height: 35px;
+	border: none;
+	font-size: 15px;
+	padding-left: 10px;
+	outline: 0;
+	autocomplete: off;
+}
+
+#searchBox button {
+	border: none;
+	background: transparent;
+	outline: 0;
+	width: 30px;
+	height: 30px;
+	margin-top: 5px;
+}
+
+#container-list {
 	width: 1000px;
+	margin: -100px 0 0 300px;
+	float: left;
+}
+
+#list-header table {
+	width: 1100px;
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin: 0px auto;
@@ -135,14 +167,51 @@
 	color: white;
 }
 
+#empNo-list {
+	width: 100px;
+}
+
+#name-list {
+	width: 150px;
+}
+
+#tel-list {
+	width: 150px;
+}
+
+#email-list {
+	width: 250px;
+}
+
+#enterDate-list {
+	width: 150px;
+}
+
+#dType-list {
+	width: 125px;
+}
+
+#pType-list {
+	width: 125px;
+}
+
+#search-list {
+	width: 100px;
+}
+
 #list-content {
 	height: 50px;
 	text-align: center;
 	border-bottom: 1px solid #cccccc;
 }
 
+#list-content:hover {
+	background: #F2F2F2;
+	font-weight: bold;
+}
+
 #list-paging {
-	width: 1000px;
+	width: 1100px;
 	text-align: center;
 	padding-top: 20px;
 	font-size: 15px;
@@ -161,59 +230,3 @@
 .listBtn:hover { 
 	color:white; 
 	background-color: #9565A4;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
-complete
-#complete-form  {
-	margin: 0px auto;
-	margin-top: 150px;
-	border: 1px solid black;
-	width: 500px;
-	height: 150px;
-	padding-top: 50px;
-}
-
-#title-form {
-	text-align: center;
-}
-
-#title-form span {
-	font-size: 25px;
-	font-weight: bold;
-}
-
-#messageBox>div {
-	text-align: center;
-	padding-top: 50px;
-	font-size: 15px;
-}
-
-#button-form  {
-	width: 500px;
-	height: 50px;
-	margin: 0px auto;
-}
-
-#button-form div  {
-	margin-top: 20px;
-	float: right;
-} */

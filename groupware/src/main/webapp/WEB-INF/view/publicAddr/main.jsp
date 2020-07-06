@@ -13,7 +13,7 @@
 
 <script type="text/javascript">	
 	$(function(){
-		listPage();
+		listPage(1);
 	});
 	
 	function ajaxJSON(url, type, query, fn) {
@@ -64,11 +64,11 @@
 	}
 	
 	//글리스트 및 페이징 처리
-	function listPage() {
-		
+	function listPage(page) {
 		var url="<%=cp%>/publicAddr/list";
-		var query="";
-	
+		var query="page="+page;
+		var search=$('form[name=publicAddrSearchForm]').serialize();
+		query = query + "&" + search;
 		var selector = "#tab-content";
 		
 		ajaxHTML(url, "get", query, selector);
@@ -77,43 +77,45 @@
 
 <script>
 	function searchList() {
-		var url="<%=cp%>/publicAddr/list";
-		var condition = $("select[name=condition]").val();
-		var keyword = $("input[name=keyword]").val();
+		var f = document.publicAddrSearchForm;
+		f.condition.value = $("#condition").val();
+		f.keyword.value = $.trim($("#keyword").val());
 		
-		console.log(condition);
-		console.log(keyword);
-		
-		var query="condition=" + condition +"&keyword=" + keyword;
-		console.log(query);
-		
-		var selector = "#tab-content";
-		
-		ajaxHTML(url, "get", query, selector);
+		listPage(1);
 	}
 	
 	$(function(){
 		$("body").on("click", ".all", function(){
-			var url = "<%=cp%>/publicAddr/list";
-			var query = "";
-			var selector = "#tab-content";
 			
-			ajaxHTML(url, "get", query, selector);
+			var f = document.publicAddrSearchForm;
+			f.condition.value="name";
+			f.keyword.value="";
+			f.kor.value="";
+			f.kor2.value="";
+			
+			$("#condition").val("name");
+			$("#keyword").val("");
+			
+			listPage(1);
 		});
 	}); 
 
 	$(function(){
 		$("body").on("click", ".kor", function(){				
-			// alert($(this).attr("data-kor"));
-			
+	
 			var kor = $(this).attr("data-kor");
-			var kor2 = $(this).closest("li").next().find("span").attr("data-kor");
+			var kor2 = $(this).next().attr("data-kor");
 			
-			var url = "<%=cp%>/publicAddr/list";
-			var query = "kor=" + encodeURIComponent(kor) + "&kor2=" + encodeURIComponent(kor2);
-			var selector = "#tab-content";
+			var f = document.publicAddrSearchForm;
+			f.condition.value="name";
+			f.keyword.value="";
+			$("#condition").val("name");
+			$("#keyword").val("");
 			
-			ajaxHTML(url, "get", query, selector);
+			f.kor.value=kor;
+			f.kor2.value=kor2;
+			
+			listPage(1);
 		});
 	});
 </script>
@@ -121,17 +123,17 @@
 <div class="container">
 	<div id="list-container">
 		<div id="body-title">
-			<i class="fas fa-map-pin"> 공용주소록</i><span>&nbsp;&nbsp;${dataCount}개</span>
+			<i class="fas fa-map-pin"> 공용주소록 |<span id="privateAddr-count">${dataCount}개</span></i>
 		</div>
 	
-		<div id="listBtnBox">
+		<div id="listBtnBox">	
 			<div id="listBtnBox-left">
 				<button type="button" class="new-button3" onclick="javascript:location.href='<%=cp%>/publicAddr/main';"><i class="fas fa-undo-alt"></i></button>
 			</div>
-		
+			
 			<form name="searchForm" action="<%=cp%>/publicAddr/main" method="post">
 				<div class="selectGroup-list">
-					<select name="condition" class="selectBox-list">
+					<select name="condition" id="condition" class="selectBox-list">
 						<option value="name" ${condition=="name"?"selected='selected'":""}>이름</option>
 						<option value="birth" ${condition=="birth"?"selected='selected'":""}>생년월일</option>
 						<option value="tel" ${condition=="tel"?"selected='selected'":""}>전화번호</option>
@@ -140,12 +142,19 @@
 					</select>
 				</div>
 				<div id="searchBox">
-					<p><input type="text" name="keyword" value="${keyword}">
+					<p><input type="text" id="keyword" name="keyword" value="${keyword}">
 					<button type="button" onclick="searchList()"><i class="fas fa-search"></i></button>
 				</div>
 			</form>
-			
+		
 			<div id="tab-content"></div>
 		</div>
+		
+		<form name="publicAddrSearchForm" action="" method="post">
+			<input type="hidden" name="condition" value="all">
+			<input type="hidden" name="keyword" value="">
+			<input type="hidden" name="kor" value="">
+			<input type="hidden" name="kor2" value="">
+		</form>
 	</div>
 </div>

@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 * {
-	font-family: DX명필명조;	
 	font-size: 18px;
 }
 
@@ -13,12 +12,12 @@
 	margin-bottom: 20px;
 }
 
-h1 {
+.testbox>i {
 	width: 740px;
 	font-size: 32px;
 	font-weight: 300;
 	color: #4c4c4c;
-	text-align: center;
+	margin-top: 20px;
 	padding-top: 10px;
 }
 
@@ -33,6 +32,7 @@ form {
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	padding-top: 10px;
+	margin-top: 30px;
 }
 
 #div-one-right {
@@ -214,4 +214,52 @@ input:focus {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
+}
+
+/* complete */
+#complete-form  {
+	margin: 0px auto;
+	margin-top: 200px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	width: 500px;
+	height: 150px;
+	padding-top: 50px;
+}
+
+#title-form {
+	text-align: center;
+}
+
+#title-form span {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+#messageBox>div {
+	text-align: center;
+	padding-top: 50px;
+	font-size: 17px;
+}
+
+#button-form  {
+	width: 500px;
+	height: 50px;
+	margin: 0px auto;
+}
+
+#button-form>div>button {
+	margin-top: 20px;
+	float: right;
+	font-weight: bold;
+	font-size: 14px;
+	border: 1px solid gray;
+	outline: 0;
+	background: #9565A4;
+	color: white;
+}
+
+#button-form>div>button:hover {
+	background: white;
+	color: black;
 }

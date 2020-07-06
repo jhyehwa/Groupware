@@ -39,25 +39,25 @@
 						<option value="pType" ${condition == "pType" ? "selected='selected'" : ""}>직급</option>
 					</select>
 				</div>
-				<div style="margin-left: 20px; margin-top: -10px;">
-					<p style="font-size: 20px; border: 1px solid #cccccc; width: 220px;"><input type="text" name="keyword" style="width: 170px; height: 35px; border: none; font-size: 15px; padding-left: 10px; outline: 0; autocomplete: off;">
-					<button type="button" onclick="searchList()" style="border: none; background: transparent; outline: 0; width: 30px; height: 30px; margin-top: 5px;"><i class="fas fa-search"></i></button>
+				<div id="searchBox">
+					<p><input type="text" name="keyword">
+					<button type="button" onclick="searchList()"><i class="fas fa-search"></i></button>
 					</p>
 				</div>
 			</form>
 		
-			<div style="width: 1000px; margin: -100px 0 0 300px; float: left;">
+			<div id="container-list">
 				<div id="list-header">
 					<table id="list-menu">
 						<tr id="list-title">
-							<td>사원번호</td>
-							<td>이름</td>
-							<td>전화번호</td>
-							<td>이메일</td>
-							<td>입사</td>
-							<td>부서</td>
-							<td>직위</td>
-							<td>상세</td>
+							<td id="empNo-list">사원번호</td>
+							<td id="name-list">이름</td>
+							<td id="tel-list">전화번호</td>
+							<td id="email-list">이메일</td>
+							<td id="enterDate-list">입사</td>
+							<td id="dType-list">부서</td>
+							<td id="pType-list">직위</td>
+							<td id="search-list">상세</td>
 						</tr>
 						
 						<c:forEach var="dto" items="${list}">

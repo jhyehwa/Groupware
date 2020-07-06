@@ -38,6 +38,10 @@
 		INSERT INTO profile(empNo, intro, imageFilename)
 			VALUES (#{empNo}, '', '')
 	</insert>
+	
+	<insert id="insertEmployee5" parameterType="com.of.employee.Employee">
+		INSERT INTO publicAddr(empNo) VALUES(#{empNo})
+	</insert>
 
 	<!-- 사원 리스트 -->
 	<select id="listEmployee"  resultType="com.of.employee.Employee" parameterType="map">
@@ -56,7 +60,6 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 
-	<!-- 사원 상세정보 보기 -->
 	<select id="readEmployee" parameterType="Integer" resultType="com.of.employee.Employee">
 		SELECT e.empNo, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, tel, email, addr, d.dCode, dType, p.pCode, pType,
 			TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, TO_CHAR(exitDate, 'YYYY-MM-DD') exitDate, TO_CHAR(apDate, 'YYYY-MM-DD') apDate, memo
