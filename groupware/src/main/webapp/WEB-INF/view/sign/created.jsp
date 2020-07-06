@@ -158,7 +158,7 @@ $(function() {
 </script>
 
 
-<div id="listBody" style="margin-left: 500px; width: 1000px; padding-top: 40px;">
+<div id="listBody" style="margin-left: 500px; width: 1000px;">
 	<select id="listSelect" style="height: 55px; font-weight: bold; border: none;">
 		<option id="selectOption" value="emp" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::선택::</option>
 		<option id="selectOption" value="1" selected="selected">1. 기안서</option>

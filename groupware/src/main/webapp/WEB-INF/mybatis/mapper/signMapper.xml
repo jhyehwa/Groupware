@@ -107,9 +107,14 @@
 	
 
 	<select id="listSign" parameterType="map" resultType="com.of.sign.Sign">
-		SELECT sNum, stNum ,sSubject, sContent, s.empNo, name ,sDate, sCurrStep, sEndStep
+		SELECT sNum, stNum ,sSubject, sContent, s.empNo, name ,sDate, sCurrStep, sEndStep, dType, pType
 		FROM sign s
-		JOIN employee e ON s.empNo=e.empNo
+		JOIN permission p ON s.snum = p.pstNum
+		JOIN employee e ON s.empno = e.empno
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+		JOIN dept d ON d.dCode = h.dCode
+		JOIN position p ON p.pCode = h.pCode
 		<where>
 			<if test="val != null and val != '' ">
 				<include refid="val-list"/>
@@ -221,20 +226,31 @@
 	</update>
 <!-- ==============================================결재완료함============================================== -->
 	<select id="finishSignList" resultType="com.of.sign.Sign">
-		SELECT sNum,stNum , sDept, sDate, startDay, sSubject, sContent, sEndStep, sCurrStep, empNo, pEmpNo2,pEmpNo3,pEmpNo4
+		SELECT s.sNum,stNum, name, sDept, sDate, startDay, sSubject, sContent, sEndStep, sCurrStep, s.empNo, pEmpNo2, pEmpNo3, pEmpNo4, dType, pType
 		FROM sign s
 		JOIN permission p ON s.sNum = p.pstNum
+		JOIN employee e ON s.empno = e.empno
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+		JOIN dept d ON d.dCode = h.dCode
+		JOIN position p ON p.pCode = h.pCode
 		<where>
-			sEndStep = sCurrStep AND empNo = #{empNo} AND sCurrStep != 0
+			sEndStep = sCurrStep AND s.empNo = #{empNo} AND sCurrStep != 0
 		</where>
-		ORDER BY sNum DESC
+		ORDER BY s.sNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 <!-- ==============================================결재함 통합 검색============================================== -->
 	<select id="searchlist" parameterType="map" resultType="com.of.sign.Sign">
-		SELECT *
+		SELECT s.sNum,stNum, name, sDept, sDate, startDay, sSubject, sContent, sEndStep, sCurrStep, s.empNo, pEmpNo2, pEmpNo3, pEmpNo4, dType, pType
 		FROM sign s
+		JOIN permission p ON s.sNum = p.pstNum
+		JOIN employee e ON s.empno = e.empno
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+		JOIN dept d ON d.dCode = h.dCode
+		JOIN position p ON p.pCode = h.pCode
 		WHERE
 		<choose>
 			<when test="condition == 'title'">
@@ -244,11 +260,12 @@
 				INSTR(sContent, #{keyword}) &gt; 0
 			</when>
 			<when test="condition == 'created' ">
+			
 				( TO_CHAR(sDate, 'YYYYMMDD') = #{keyword}
 				OR TO_CHAR(sDate, 'YYYY-MM-DD') = #{keyword} )
 			</when>
 		</choose>
-			AND empNo = #{empNo}
+			AND s.empNo = #{empNo}
 	</select>
 	
 	<select id="searchDataCount" parameterType="map" resultType="Integer">
@@ -280,10 +297,15 @@
 	</update>
 	
 	<select id="returnSignList" parameterType="map" resultType="com.of.sign.Sign">
-		SELECT rNum, rsNum,stNum ,writer, name , sSubject, sContent, sDate, sNum
+		SELECT rNum, rsNum,stNum ,writer, name , sSubject, sContent, sDate, sNum, dType, pType
 		FROM returnSign r
 		JOIN sign s ON r.rsNum = s.sNum
-		JOIN employee e ON r.writer = e.empNo
+		JOIN permission p ON s.sNum = p.pstNum
+		JOIN employee e ON s.empno = e.empno
+		JOIN history h ON e.empNo = h.empNo
+		JOIN career c ON c.empNo = h.empNo
+		JOIN dept d ON d.dCode = h.dCode
+		JOIN position p ON p.pCode = h.pCode
 		WHERE writer = #{empNo}
 		ORDER BY rNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY

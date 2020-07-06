@@ -46,10 +46,8 @@
 	
 	$(function(){
 		$("body").on("click", ".articleSign", function(){
-			var option = $(this).closest("tr").find("input[class=dtoStnum]").val();
-			alert(option);
+			var option = $(this).closest("tr").find("input[class=dtostNum]").val();
 			var valueSnum = $(this).closest("tr").find("input[class=dtoSnum]").val();
-			var listVal = "${mode}";
 			
 			$("#articleModal-dialog").dialog({
 				modal : true,
@@ -58,10 +56,12 @@
 				position : {my:"center top", at:"center top"},
 				show : "fade",
 				resizable : false,
-				title : '결재',
 				open : function() {
 					
 					$(".showSing").show();
+					
+					$(".ui-draggable .ui-dialog-titlebar").css("background", "white");
+					$(".ui-draggable .ui-dialog-titlebar").css("border", "white");
 					
 					var url = "<%=cp%>/sign/search";
 					
@@ -69,7 +69,7 @@
 						return;
 					}
 					
-					var query = "option="+ option+ "&mode=article"+"&valueSnum="+valueSnum+"&listVal="+listVal;
+					var query = "option="+ option+ "&mode=article"+"&valueSnum="+valueSnum;
 					
 					ajaxHTML(url, "GET", query, ".showSing");
 				
@@ -82,6 +82,42 @@
 		});
 		
 	});
+	
+
+	$(function(){
+		$("body").on("click", ".choiceBtn", function(){
+			var sNum = $(this).closest("form").find("input[class=hiddenSnum]").val();
+			var option = $("input[name=option]").val();
+			var val = $(this).val();
+			
+			var url = "<%=cp%>/sign/passSign";
+			
+			if(val == "ok"){
+				var result = confirm("승인하시겠습니까?");
+				
+				if(result){
+					var query = "passVal="+val+"&sNum="+sNum;
+					ajaxHTML(url, "GET", query,"");
+					
+					location.reload();					
+				}
+			}else if(val == "no"){
+				$(".returnMemoDiv").show();
+				
+				$("body").on("click", ".returnMemo", function(){
+					var writer = $(this).closest("div").find("input[type=hidden]").val();
+					var returnMemo = $(this).closest("div").find("textarea").val();
+					
+					var query = "passVal="+val+"&sNum="+sNum+"&writer="+writer+"&returnMemo="+returnMemo;
+					var fn = function(data){
+						location.href="<%=cp%>/sign/list?mode="+option;
+					}
+					ajaxJSON(url, "GET", query, fn);
+				});
+			}
+		});
+	});
+	
 	
 </script>
 <div class="container">
@@ -127,15 +163,17 @@
 		</div>
 	
 		<div class="board-body" style="float: left; width: 58%;">
-			<div class="board-bodys" id="div1" style="border-bottom: 3px solid #9565A4; height: 300px;">
-				<table>
-					<tr>
-						<td align="left" data-tab="wait"><h3>결재대기함</h3></td>
-					</tr>
-				</table>
-
+			<div class="board-bodys" id="div1" style="height: 300px;">
+				<div style=" border-bottom: 3px solid #9565A4; ">
+					<table>
+						<tr>
+							<td align="left" data-tab="wait"><h3>결재대기함</h3></td>
+						</tr>
+					</table>
+				</div>
+				
 				<div style="height: 140px;">
-					<table style="border-collapse: collapse; width: 800px;">
+					<table style="border-collapse: collapse; width: 800px; margin-top: 15px;">
 						<tr align="center" bgcolor="#006461;">
 							<th width="80">부서</th>
 							<th width="80">기안자</th>
@@ -149,7 +187,8 @@
 						<c:if test="${list.size()==0}">
 							<tr>
 								<td class="board-paging" align="center" colspan="5">
-									<p>등록된 게시물이 없습니다.</p>
+									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
 								</td>
 							</tr>
 						</c:if>
@@ -158,7 +197,8 @@
 								<td>${dto.dType}</td>
 								<td>${dto.name}&nbsp;${dto.pType}</td>
 								<td>
-								<input type="hidden" class="hiddeSnum" value="${dto.snum}">
+								<input type="hidden" class="dtoSnum" value="${dto.snum}">
+								<input type="hidden" class="dtostNum" value="${dto.stnum}">
 									<c:choose>
 										<c:when test="${dto.stnum == 1}">기안</c:when>
 										<c:when test="${dto.stnum == 2}">휴가</c:when>
@@ -176,22 +216,25 @@
 
 				<div style="text-align: right;" class="buttonDiv">
 					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';"><i class="far fa-plus-square"></i></button>
+						onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';" style="border: none;">
+							<i class="far fa-plus-square"></i>
+						</button>
 				</div>
 
 
 			</div>
 
-			<div class="board-bodys" id="div1" style="border-bottom: 3px solid #9565A4; height: 300px; margin-top: 20px;">
-				<table>
-					<tr>
-						<td align="left"><h3>수신대기함</h3></td>
-					</tr>
-				</table>
+			<div class="board-bodys" id="div1" style="height: 300px; margin-top: 20px;">
+				<div style=" border-bottom: 3px solid #9565A4; ">	
+					<table>
+						<tr>
+							<td align="left"><h3>수신대기함</h3></td>
+						</tr>
+					</table>
+				</div>
 
 				<div style="height: 140px; ">
-					<table
-						style="border-collapse: collapse; width: 800px;">
+					<table style="border-collapse: collapse; width: 800px; margin-top: 15px;">
 						<tr align="center" bgcolor="#006461;">
 							<th width="80">부서</th>
 							<th width="80">기안자</th>
@@ -203,7 +246,8 @@
 						<c:if test="${rlist.size()==0}">
 							<tr>
 								<td class="board-paging" align="center" colspan="5">
-									<p>등록된 게시물이 없습니다.</p>
+									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
 								</td>
 							</tr>
 						</c:if>
@@ -213,7 +257,8 @@
 								<td>${dto.dType}</td>
 								<td>${dto.name}&nbsp;${dto.pType}</td>
 								<td>
-								<input type="hidden" class="hiddeSnum" value="${dto.snum}">
+								<input type="hidden" class="dtoSnum" value="${dto.snum}">
+								<input type="hidden" class="dtostNum" value="${dto.stnum}">
 									<c:choose>
 										<c:when test="${dto.stnum == 1}">기안</c:when>
 										<c:when test="${dto.stnum == 2}">휴가</c:when>
@@ -230,24 +275,25 @@
 				</div>
 				<div style="text-align: right;" class="buttonDiv">
 					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';">
+						onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';" style="border: none;">
 						<i class="far fa-plus-square"></i>
 						</button>
 				</div>
 			</div>
 
 			<div class="board-bodys" id="div1"
-				style="border-bottom: 3px solid #9565A4; height: 300px;  margin-top: 20px;">
-				<table>
-					<tr>
-						<td align="left"><h3>결재완료함</h3></td>
-					</tr>
-				</table>
+				style="height: 300px;  margin-top: 20px;">
+				<div style=" border-bottom: 3px solid #9565A4; ">
+					<table>
+						<tr>
+							<td align="left"><h3>결재완료함</h3></td>
+						</tr>
+					</table>
+				</div>
 
 
 				<div style="height: 140px;">
-					<table
-						style="border-collapse: collapse; width: 800px;">
+					<table style="border-collapse: collapse; width: 800px; margin-top: 15px;">
 						<tr align="center" bgcolor="#006461;">
 							<th width="80">부서</th>
 							<th width="80">기안자</th>
@@ -259,7 +305,8 @@
 						<c:if test="${flist.size()==0}">
 							<tr>
 								<td class="board-paging" align="center" colspan="5">
-									<p>등록된 게시물이 없습니다.</p>
+									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
 								</td>
 							</tr>
 						</c:if>
@@ -269,7 +316,8 @@
 								<td>${dto.dType}</td>
 								<td>${dto.name}&nbsp;${dto.pType}</td>
 								<td>
-								<input type="hidden" class="hiddeSnum" value="${dto.snum}">
+								<input type="hidden" class="dtoSnum" value="${dto.snum}">
+								<input type="hidden" class="dtostNum" value="${dto.stnum}">
 									<c:choose>
 										<c:when test="${dto.stnum == 1}">기안</c:when>
 										<c:when test="${dto.stnum == 2}">휴가</c:when>
@@ -287,7 +335,9 @@
 
 				<div style="text-align: right;" class="buttonDiv">
 					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';"><i class="far fa-plus-square"></i></button>
+						onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';" style="border: none;">
+						<i class="far fa-plus-square"></i>
+						</button>
 				</div>
 			</div>
 			</div>
@@ -330,7 +380,16 @@
 								</tr>
 							</table>
 						</div>
-						</div>
-						</div>
-
+				</div>
+		</div>
 </div>
+
+
+
+
+<!-- 아티클 모달 -->
+<div id="articleModal-dialog" class="articleModal">
+	<div class="showSing">
+	</div>
+</div>
+

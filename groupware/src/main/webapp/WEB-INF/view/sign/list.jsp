@@ -7,8 +7,8 @@
 %>
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/sign.css" type="text/css">
-<script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
-<script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 <style>
 .board-bodys{
 	width: 800px;
@@ -20,6 +20,20 @@
 
 .signList:hover{
 	color: black;
+}
+
+.articleModal{
+	margin: auto;
+}
+
+.showSing{
+	width: 1000px; 
+	height:1000px;
+	position:absolute; 
+	display: none; 
+	border: 1px solid black; 
+	padding-left: 20px; 
+	padding-right: 20px; 
 }
 
 </style>
@@ -74,15 +88,17 @@
 			
 			$("#articleModal-dialog").dialog({
 				modal : true,
-				width : 1050,
+				width : 1070,
 				height : 1100,
 				position : {my:"center top", at:"center top"},
 				show : "fade",
 				resizable : false,
-				title : '결재',
 				open : function() {
 					
 					$(".showSing").show();
+					
+					$(".ui-draggable .ui-dialog-titlebar").css("background", "white");
+					$(".ui-draggable .ui-dialog-titlebar").css("border", "white");
 					
 					var url = "<%=cp%>/sign/search";
 					
@@ -185,9 +201,10 @@
 
 <div class="container">
 	<div class="board-container">
-       <div class="body-title" style="height: 50px;">
-				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;">${mode}</span>
+		<div class="body-title" style="height: 50px;">
+				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;">♬ 전자결재</span>
 		</div>
+	
 		
 		<div class="board-body" style="float: left; width: 20%">
 			<div>
@@ -200,18 +217,13 @@
 			</div>
 		</div>
 		
-        
+		 
         <div class="board-body">
 			<div class="board-body" style="float: left; width: 58%;">
-				<table style="margin-top: 20px; width: 800px;">
-			   <tr>
-			      <td align="left">
-			          &nbsp;
-			      </td>
-			   </tr>
-			</table>
 			
-			<table class="trData" style="border-collapse: collapse; width: 800px;">
+				  <h3 style="font-size: 18px;">| ${mode}</h3>
+				  
+			<table class="trData" style="border-collapse: collapse; width: 800px; margin-top: 20px;">
 			  <tr align="center" bgcolor="#006461;"> 
 			      <th width="70">부서</th>
 				  <th width="80">기안자</th>
@@ -243,7 +255,7 @@
 			<table style="width: 800px;">
 			   <tr>
 				<td class="board-paging" align="center">
-			         ${dataCount==0 ? "등록된 게시물이 없습니다.":paging}
+			         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dataCount==0 ? "등록된 게시물이 없습니다.":paging}
 				</td>
 			   </tr>
 			</table>
@@ -293,7 +305,7 @@
 
 <!-- 아티클 모달 -->
 <div id="articleModal-dialog" class="articleModal">
-	<div class="showSing"  style="  width: 1000px; height:1000px; position:absolute; display: none; border: 1px solid black;">
+	<div class="showSing">
 	</div>
 </div>
 
