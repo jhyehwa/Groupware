@@ -86,13 +86,15 @@ function printTalk(data) {
 			var content=data.list[idx].content;
 			var created=data.list[idx].created;
 			var image=data.list[idx].imageFilename;
+			var dType=data.list[idx].dType;
+			var pType=data.list[idx].pType;
 			
 			out+="    <tr height='40'>";
 			if(image!=null){
-				out+="	<td style='font-size:18px; padding-top:10px'><img src='<%=cp%>/uploads/profile/"+image+"' style='width: 36px; height: 36px; margin: 0 5px 0 5px; border-radius: 18px; vertical-align:middle;'><a class='nameDropdown'>"+name+"</a>";
+				out+="	<td style='font-size:18px; padding-top:10px'><img src='<%=cp%>/uploads/profile/"+image+"' style='width: 36px; height: 36px; margin: 0 5px 0 5px; border-radius: 18px; vertical-align:middle;'><a class='nameDropdown'>["+dType+"]&nbsp;"+name+"&nbsp;"+pType+"</a>";
 				out+="	&nbsp;<i style='color:plum;' class='far fa-comment-dots'></i>&nbsp;&nbsp;"+content+"</td>";			
 			} else {
-				out+=" <td style='font-size:18px; line-height:35px;'><i class='far fa-user-circle' style='margin: 0 5px 0 5px ;'></i>"+name+"<i class='far fa-comment-dots'></i>"+content+"</td>";
+				out+=" <td style='font-size:18px; line-height:35px;'><i class='far fa-user-circle' style='margin: 0 5px 0 5px ;'></i>["+dType+"]&nbsp;"+name+"&nbsp;"+pType+"<i class='far fa-comment-dots'></i>"+content+"</td>";
 			}			
 			out+="    </tr>";
 			out+="    <tr style='height: 40px; border-bottom:1px solid #cccccc ; margin-bottom:10px' >";

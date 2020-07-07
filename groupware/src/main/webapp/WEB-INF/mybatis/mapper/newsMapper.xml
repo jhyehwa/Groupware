@@ -49,10 +49,14 @@
 	<!-- 리스트 -->
 	<select id="listNews" parameterType="map" resultType="com.of.news.News">
 		SELECT n.newsNum, writer, name, title, TO_CHAR(created, 'YYYY-MM-DD')created, 
-			p.nCode, nType, NVL(replyCount, 0) replyCount
+			p.nCode, nType, NVL(replyCount, 0) replyCount,
+			dType, pType
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN newsType p ON n.nCode=p.nCode
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		LEFT OUTER JOIN (
 			SELECT newsNum, COUNT(*) replyCount FROM newsReply
 			GROUP BY newsNum
@@ -77,19 +81,27 @@
 
     <!-- 글보기 -->
     <select id="readNews" parameterType="Integer" resultType="com.of.news.News">
-		SELECT newsNum, writer, name, title, content, created,  p.nCode, nType
+		SELECT n.newsNum, writer, name, title,  content, TO_CHAR(created, 'YYYY-MM-DD')created, 
+			p.nCode, nType, 
+			dType, pType
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
-		JOIN newsType p ON n.nCode=p.nCode 
+		JOIN newsType p ON n.nCode=p.nCode
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		WHERE newsNum = #{newsNum}
 	</select>
 
 	<!-- 이전글 -->
 	<select id="preReadNews" parameterType="map" resultType="com.of.news.News">
-		SELECT newsNum, title 
+		SELECT newsNum, title, dType, pType
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN newsType p ON n.nCode=p.nCode
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
@@ -102,10 +114,13 @@
 
     <!-- 다음글 -->
     <select id="nextReadNews" parameterType="map" resultType="com.of.news.News">
-		SELECT newsNum, title
+		SELECT newsNum, title, dType, pType
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN newsType p ON n.nCode=p.nCode
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
@@ -136,9 +151,12 @@
 	</insert>
 
 	<select id="listReply" parameterType="map" resultType="com.of.news.NewsReply">
-		SELECT replyNum, replyWriter, name, newsNum, content, created 
-		FROM newsReply
-		JOIN employee ON replyWriter = empNo
+		SELECT replyNum, replyWriter, name, newsNum, content, created, dType, pType
+		FROM newsReply r
+		JOIN employee e ON replyWriter = e.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		WHERE newsNum=#{newsNum}
 		ORDER BY replyNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY

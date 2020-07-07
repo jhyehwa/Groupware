@@ -5,6 +5,9 @@ public class NewsReply {
 	private String replyWriter, name;
 	private String content, created;
 	
+	private String dType;
+	private String pType;
+	
 	public int getNewsNum() {
 		return newsNum;
 	}
@@ -40,6 +43,18 @@ public class NewsReply {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public String getdType() {
+		return dType;
+	}
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+	public String getpType() {
+		return pType;
+	}
+	public void setpType(String pType) {
+		this.pType = pType;
 	}
 	
 	

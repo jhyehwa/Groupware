@@ -12,10 +12,13 @@
 	</select>
 	
 	<select id="listTalk" parameterType="map" resultType="com.of.talk.Talk">
-		SELECT talkNum, writer, name, content, created, p.imageFilename
+		SELECT talkNum, writer, name, content, created, p.imageFilename,dType, pType
 		FROM talk t 
 		JOIN employee e ON writer=e.empNo
 		JOIN profile p ON e.empNo=p.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		ORDER BY talkNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY	
 	</select>

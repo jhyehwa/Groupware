@@ -83,7 +83,7 @@
 			               	<i class="fas fa-ad"></i>
 			          	   </c:if>
 				      </td>
-				      <td>${dto.name}</td>
+				      <td>${dto.name}&nbsp;${dto.pType }</td>
 				      <td>${dto.created}</td>
 				      <td>${dto.hitCount}</td>
 				  </tr>

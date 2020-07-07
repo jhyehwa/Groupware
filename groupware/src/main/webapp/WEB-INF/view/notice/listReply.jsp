@@ -14,7 +14,7 @@
 	<c:forEach var="vo" items="${listReply}">
 		<tr height='35' style='background: white;'>
 			<td class="replyNameTd" >
-				<span><b>${vo.name}</b></span>
+				<span><b>[${vo.dType}]&nbsp;${vo.name}&nbsp;${vo.pType}</b></span>
 			</td>
 			<td class="replyNameTd" align='right'>
 				<span>${vo.created}</span> |
@@ -22,7 +22,7 @@
 					<span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</span>
 			<%-- 	</c:if> --%>
 		<%-- 		<c:if test="${sessionScope.member.userId!=vo.userId || sessionScope.member.userId!='admin'}"> --%>
-					<span class="notifyReply">신고</span>
+					
 			<%-- 	</c:if> --%>
 			</td>
 		</tr>

@@ -18,6 +18,9 @@ public class Notice {
 	private String saveFilename;
 	private int fileCount;
 	
+	private String dType;	
+	private String pType;
+	
 	// 스프링에서 파일 받기, 여러개
 	private List<MultipartFile> upload;
 	
@@ -146,6 +149,22 @@ public class Notice {
 
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
+	}
+
+	public String getdType() {
+		return dType;
+	}
+
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+
+	public String getpType() {
+		return pType;
+	}
+
+	public void setpType(String pType) {
+		this.pType = pType;
 	}
 	
 	

@@ -9,6 +9,10 @@ public class News {
 	private String created;
 	private String nCode, nType;
 	
+	private String dCode;
+	private String dType;	
+	private String pType;
+	
 	private int replyCount;
 	
 	public int getListNum() {
@@ -71,6 +75,25 @@ public class News {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
+	public String getdCode() {
+		return dCode;
+	}
+	public void setdCode(String dCode) {
+		this.dCode = dCode;
+	}
+	public String getdType() {
+		return dType;
+	}
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+	public String getpType() {
+		return pType;
+	}
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
+	
 	
 	
 	

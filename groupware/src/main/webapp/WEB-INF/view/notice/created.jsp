@@ -82,9 +82,9 @@ $(function(){
 			  <table class="boardtable">
 			  	  <tbody id="tb">
 			  	  <tr align="left" height="50"  > 
-				      <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">작성자</td>
-				      <td style="padding-left:10px; border-bottom: 1px solid #cccccc;"> 
-				      	${sessionScope.employee.name }
+				      <td style="width: 100px; background: white; color: #424242; text-align: center; "></td>
+				      <td style="padding-left:10px;"> 
+				      	
 				      </td>
 				  </tr>	
 				  <tr align="left" height="50"  > 

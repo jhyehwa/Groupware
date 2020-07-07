@@ -10,7 +10,7 @@
 /*왼쪽메뉴리스트*/
 .leftMenu{
 	background-size: 180px 220px;
-	margin-left:10px;
+
 	width:180px;
 	height:220px; 
 	background-image: url("<%=cp%>/resource/images/menu.png");

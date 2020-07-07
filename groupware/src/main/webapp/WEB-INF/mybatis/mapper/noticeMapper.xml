@@ -41,9 +41,12 @@
 	
 	<!-- 리스트 -->
 	<select id="listNotice" parameterType="map" resultType="com.of.notice.Notice">
-		SELECT n.noticeNum, writer, name, title, hitCount,created 
+		SELECT n.noticeNum, writer, name, title, hitCount,created ,dType, pType
 		FROM notice n
 		JOIN employee e ON n.writer=e.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<include refid="where-list"/>
@@ -55,9 +58,12 @@
 
     <!-- 글보기 -->
     <select id="readNotice" parameterType="Integer" resultType="com.of.notice.Notice">
-		SELECT noticeNum, writer, name, title, content, created, hitCount
+		SELECT noticeNum, writer, name, title, content, created, hitCount,dType, pType
 		FROM notice n
 		JOIN employee e ON n.writer=e.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		WHERE noticeNum = #{noticeNum}
 	</select>
 
@@ -68,9 +74,12 @@
 
 	<!-- 이전글 -->
 	<select id="preReadNotice" parameterType="map" resultType="com.of.notice.Notice">
-		SELECT noticeNum, title 
+		SELECT noticeNum, title, dType, pType
 		FROM notice n
 		JOIN employee e ON n.writer=e.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
@@ -83,9 +92,12 @@
 
     <!-- 다음글 -->
     <select id="nextReadNotice" parameterType="map" resultType="com.of.notice.Notice">
-		SELECT noticeNum, title
+		SELECT noticeNum, title, dType, pType
 		FROM notice n
 		JOIN employee e ON n.writer=e.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
@@ -146,9 +158,12 @@
 	
 	<!-- 게시글의 댓글 리스트 -->
 	<select id="listReply" parameterType="map" resultType="com.of.notice.NoticeReply">
-		SELECT replyNum, r.replyWriter, name, content, created
+		SELECT replyNum, r.replyWriter, name, content, created, dType, pType
 		FROM noticeReply r 
 		JOIN employee e ON r.replyWriter=e.empNo
+		JOIN history h ON h.empNo = e.empNo
+		JOIN position pos ON pos.pCode=h.pCode
+		JOIN dept dpt ON h.dCode=dpt.dCode
 		WHERE noticeNum = #{noticeNum} 
 		ORDER BY replyNum DESC 
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY

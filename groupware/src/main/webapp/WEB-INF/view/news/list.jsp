@@ -104,9 +104,9 @@
 				<table class="tablesorter" style="border-collapse: collapse; border-bottom: 1px solid #cccccc;">
 				  <tr align="center" style="border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; font-size: 14px; font-weight: bold; color: #424242;"> 
 				      <th width="90">번호</th>
-				      <th width="110">분류</th>
-				      <th width="400">제목</th>
-				      <th width="100">작성자</th>
+				      <th width="80">분류</th>
+				      <th width="410">제목</th>
+				      <th width="120">작성자</th>
 				      <th width="100">작성일</th>
 				  </tr>
 				<c:forEach var="dto" items="${list}">
@@ -116,7 +116,7 @@
 				      <td align="left" style="padding-left: 10px;">
 				           <a href="${articleUrl}&newsNum=${dto.newsNum}">${dto.title}&nbsp;(${dto.replyCount})</a>
 				      </td>
-				      <td>${dto.name}</td>
+				      <td>${dto.name}&nbsp;${dto.pType} </td>
 				      <td>${dto.created}</td>
 				  </tr>
 				</c:forEach>
@@ -135,7 +135,7 @@
 
         
         <div class="board-body" style="width: 22%; float: left;" > 
-			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
+			<div class="body-title" style="margin-top: 25px; margin-bottom: 15px;">
           		  <div class="newsSort">
 	          		  <p><a id="newsbtn" onclick="javascript:searchList2('MR');"> <i class="fas fa-heart"></i>&nbsp;&nbsp; 결혼  </a></p>
 					  <p><a id="newsbtn" onclick="javascript:searchList2('FU');"> <i class="fas fa-ribbon"></i>&nbsp;&nbsp; 부고  </a></p>

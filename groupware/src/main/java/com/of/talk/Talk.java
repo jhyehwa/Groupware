@@ -3,6 +3,7 @@ package com.of.talk;
 public class Talk {
 	private int talkNum, listNum;
 	private String writer, name, content, created, imageFilename;
+	private String dType, pType;
 	
 	public int getTalkNum() {
 		return talkNum;
@@ -45,6 +46,18 @@ public class Talk {
 	}
 	public void setImageFilename(String imageFilename) {
 		this.imageFilename = imageFilename;
+	}
+	public String getdType() {
+		return dType;
+	}
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+	public String getpType() {
+		return pType;
+	}
+	public void setpType(String pType) {
+		this.pType = pType;
 	}
 	
 	

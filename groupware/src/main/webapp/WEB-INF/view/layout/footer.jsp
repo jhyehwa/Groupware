@@ -60,13 +60,103 @@
 
 </style>
 
-<script>
+
+
+<script type="text/javascript">
+
 $(function(){
 	$(".footer-icon").click(function(){
-		$(".footer-detail").toggle(100);
+		$(".footer-detail").toggle(100);		
 	});
-
 });
+
+
+
+function ajaxJSON(url, type, query, fn) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			fn(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+
+
+function listPage(page) {
+	var url="<%=cp%>/employee/listOrg";
+	var query="";
+	
+	var fn = function(data){
+		printOrg(data);
+	};
+	
+	ajaxJSON(url, "get", query, fn);		
+}
+
+
+
+
+function printOrg(data) {
+	var uid="${sessionScope.employee.empNo}";
+	var dataCount = data.dataCount;
+	
+	var out="";
+	if(dataCount!=0) {
+		for(var idx=0; idx<data.listOrg.length; idx++) {
+			var name=data.listOrg[idx].name;
+			var dType=data.listOrg[idx].dType;
+			var pType=data.listOrg[idx].pType;
+			
+			out+="<tr ><td class='fp-dept'>";
+			out+="<span class='dept-icon fp-dept-more'><i class='fas fa-caret-down'></i>"+dType+"</span>";
+			out+="<span class='dept-icon fp-dept-less' style='display:none'><i class='fas fa-caret-up'></i>"+dType+"</span></td></tr>";		         			
+			out+=" <tr><td><p> <i class='fas fa-circle' style='font-size: 8px'></i>&nbsp;&nbsp;&nbsp;";
+			out+=" <i class='fas fa-user-circle'>"+pType+"|"+name+"</i>";
+			out+=" <a class='chatInput'><span><i class='fas fa-comments'></i></span></a>";
+			out+=" <a class='messageInput'><span><i class='fas fa-paper-plane'></i></span></a>";
+			out+=" <a class='information'><span><i class='fas fa-info-circle'></i></span></a></p></td></tr>";	
+							
+			}
+		
+		$("#listPerson").append(out);
+		
+	}
+}
+
+$(function(){
+	$(".dept-icon").on("click",function(){
+	  var obj = $(this);
+	  if( obj.hasClass("fp-dept-more") ){
+	    obj.hide();
+	    obj.next().show();            
+	    obj.parent().parent().next().show();
+	  }else{
+	     obj.hide();
+	     obj.prev().show();
+	     obj.parent().parent().next().hide();
+	  }
+	});
+});
+
+
+
+
+
+
 
 $(function(){
 	
@@ -95,51 +185,13 @@ $(function(){
 
 </script>
 <script>
-$(function(){
-	$(".dept-icon").on("click",function(){
-	  var obj = $(this);
-	  if( obj.hasClass("fp-dept-more") ){
-	    obj.hide();
-	    obj.next().show();            
-	    obj.parent().parent().next().show();
-	  }else{
-	     obj.hide();
-	     obj.prev().show();
-	     obj.parent().parent().next().hide();
-	  }
-	});
-});
 
-/* $(function(){
-	$(".dept-icon").click(function(){
-		if($(this).hasClass("fp-dept-more") ){
-			$(this).css("display", "none");
-			$('.fp-dept-less').css("display", "");		
-			$('.fp-person').css("display", "");
-		} else{
-			$(this).css("display", "");
-			$('.fp-dept-less').css("display", "none");							
-			$('.fp-person').css("display", "none");
-			$('.fp-dept-more').css("display", "");	
-		}	
-	});
-}); */
-
-
-/* 
-$(".dept-icon").click(function(){
-	  var obj = $(this);
-	  if( obj.hasClass("fdc-dept-more") ){
-	    obj.hide();
-	    obj.next().show();            
-	    obj.parent().parent().next().show();
-	  }else{
-	     obj.hide();
-	     obj.prev().show();
-	     obj.parent().parent().next().hide();
-	  }
-	}); */
 </script>
+
+
+
+
+
 
 <div class="footer">
 	<div class="footer-detail"style="background: aqua; width: 300px; height: 410px; display: none;">
@@ -154,22 +206,22 @@ $(".dept-icon").click(function(){
 			<div class="footer-detail-content" style="width: 300px; height: 350px; text-align: left; overflow: auto ">
 				<div class="footer-profile" style="width: 300px; height: 340px; overflow: auto; display: inline-block; ">				
 					<table class="footer-profileTB" style="/* display: none; */">
-						<tr >
+		  					<tbody  id="listPerson" ></tbody>
+						<%-- <tr >
 		   					<td class="fp-dept">
-		   						<span class="dept-icon fp-dept-more "><i class="fas fa-caret-down"></i>부서이름쓰세욘</span>
-		         				<span class="dept-icon fp-dept-less " style="display:none"><i class="fas fa-caret-up"></i>부서이름쓰세욘</span> 
+		   						<span class="dept-icon fp-dept-more "><i class="fas fa-caret-down"></i>${dto.dType}</span>
+		         				<span class="dept-icon fp-dept-less " style="display:none"><i class="fas fa-caret-up"></i>${dto.dType}</span> 
 		         			</td>
-		  				</tr>
-		  				<tr style="display:none;">
-		    				<td  class="fp-person" >
+		  				</tr> --%>
+		    				<%-- <td  class="fp-person" >
 		    					<p> <i class="fas fa-circle" style="font-size: 8px"></i>&nbsp;&nbsp;&nbsp;
-		    						<i class="fas fa-user-circle"></i>ㅇㅇㅇ부장
+		    						<i class="fas fa-user-circle"></i>${dto.pType} | ${dto.name}
 		    						<a class="chatInput"><span><i class="fas fa-comments"></i></span></a>
 		    						<a class="messageInput"><span><i class="fas fa-paper-plane"></i></span></a>
-		    						<a class="information"><span><i class="fas fa-info-circle"></i></span></a>	    						
+		    						<a class="information"><span><i class="fas fa-info-circle"></i></span></a>			
 		    					</p>
-		    				</td>
-		  				</tr>
+		    				</td> --%>
+		  				
 		  				
 					</table>														
 				</div>	

@@ -170,7 +170,7 @@ $(function(){
 				</tr>	
 				<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				    <td class="nameTd" align="left">
-				      ${dto.name}
+				      	작성자 : [${dto.dType}]&nbsp;${dto.name}&nbsp;${dto.pType}
 				    </td>
 				    <td class="createdTd" align="right">
 				        ${dto.created}
