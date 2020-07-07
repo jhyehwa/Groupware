@@ -56,7 +56,7 @@
 		</li>	
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="메일">
 				<a href="#"><i class="fas fa-envelope"></i></a>
 			</div>
 			<ul class="sub-menu">

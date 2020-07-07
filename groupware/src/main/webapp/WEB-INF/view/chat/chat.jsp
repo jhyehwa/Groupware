@@ -8,6 +8,8 @@
    String wsURL = "ws://"+request.getServerName()+":"+request.getServerPort()+cp+"/chat.msg";
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resource/css/chat.css" type="text/css">
+
 <style type="text/css">
 #chatMsgContainer{
    clear:both;
@@ -202,11 +204,13 @@ function writeToScreen(message) {
 	     
 		    <div style="clear: both;">
 		    	<div style="float: left; width: 300px;">
-		             <div style="clear: both; padding-bottom: 5px;">
-		                 <span style="font-weight: 600;">＞</span>
-		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">접속자 리스트</span>
-		             </div>
-		             <div id="guestListContainer"></div>
+		            <div style="clear: both; padding-bottom: 5px;">
+		                <span style="font-weight: 600;">＞</span>
+		                <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">접속자 리스트</span>
+		            </div>
+		            <div id="guestListContainer">
+					
+					</div>
 		        </div>
 		        
 		        <div style="float: left; width: 20px;">&nbsp;</div>
@@ -216,7 +220,30 @@ function writeToScreen(message) {
 		                 <span style="font-weight: 600;">＞</span>
 		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅 메시지</span>
 		             </div>
-		             <div id="chatRoomContainer"></div>
+		             <div id="chatRoomContainer">
+		             	 <ul>
+					        <li>
+					            <div class="my_message">
+					                <div class="tooltip">test1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+					            </div>
+					        </li>
+					        <li>
+					            <div class="my_message">
+					                <div class="tooltip">test2</div>
+					            </div>
+					        </li>
+					        <li>
+					            <div class="my_message">
+					                <div class="tooltip">test3</div>
+					            </div>
+					        </li>
+					        <li>
+					            <div class="you_message">
+					                <div class="tooltip">test4</div>
+					            </div>
+					        </li>
+					    </ul>
+		             </div>
 		             <div style="clear: both; padding-top: 5px;">
 		                 <input type="text" id="chatMsg" class="boxTF"  style="width: 98%;"
 		                            placeholder="채팅 메시지를 입력 하세요...">

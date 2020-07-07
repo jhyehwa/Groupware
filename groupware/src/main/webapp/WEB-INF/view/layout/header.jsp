@@ -29,9 +29,9 @@
 				&nbsp;
 			</c:if>
 			
-			<a href="#"><i class="far fa-bell"></i></a> <!-- 알림 -->
+			<a href="<%=cp%>/main"><i class="far fa-bell" id="aa"></i></a> <!-- 알림 -->
 			&nbsp;
-			<a href="#"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
+			<a href="<%=cp%>/main"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
 			&nbsp;
 			<c:if test="${sessionScope.employee.rCode == 'admin'}">
 				<a href="<%=cp%>/employee/list"><i class="fas fa-user-cog"></i></a> <!-- 관리자 -->

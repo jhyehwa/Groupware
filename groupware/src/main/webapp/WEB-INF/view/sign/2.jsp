@@ -177,7 +177,7 @@ textarea {
 								padding: 15px; color: red; " readonly="readonly">반려 사유 : ${dto.rreason}</textarea>
 					</c:if>
 			</div>
-			<p class="pTag">휴가신청서</p>
+			<p class="pTag">휴 가 신 청 서</p>
 			</td>
 		</tr>
 		<tr>
@@ -225,7 +225,7 @@ textarea {
 					<input type="hidden" value="4" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " }&nbsp;
+							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " } | 
 								${ mode=="article" ? pempNo4.pType : " " }</td>
 						</tr>
 						<tr>
@@ -246,7 +246,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 3}">
@@ -270,7 +270,7 @@ textarea {
 					<input type="hidden" value="3" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " }&nbsp;
+							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " } | 
 								${ mode=="article" ? pempNo3.pType : " " }</td>
 						</tr>
 						<tr>
@@ -292,7 +292,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 2}">
@@ -317,7 +317,7 @@ textarea {
 					<table style="width: 110px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
-							${ mode=="article" ? pempNo2.dType : " " }&nbsp;
+							${ mode=="article" ? pempNo2.dType : " " } | 
 								${ mode=="article" ? pempNo2.pType : " " }</td>
 						</tr>
 						<tr>
@@ -338,7 +338,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 1}">
@@ -365,7 +365,7 @@ textarea {
 					<td rowspan="3"
 						style="background: #DDDDDD; width: 70px; text-align: left;"><b>결재</b></td>
 					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? writer.dType : sessionScope.employee.dType }
-						&nbsp; ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
+						| ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
 					</td>
 				</tr>
 				<tr>
@@ -389,22 +389,22 @@ textarea {
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
 						<td style="width: 50%;">
-							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none;">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none; outline: 0;">
 						</td>
 					</c:if>
 					<c:if test="${modes == '임시보관함' }">
 						<td style="width: 50%;">
-							<input type="text" id="startDay" name="startDay" value="${dto.startDay}">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" style="outline: 0;">
 						</td>
 					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<td style="width: 50%;"><input style="margin-left: 10px;" type="date" id="startDay" name="startDay"></td>
+					<td style="width: 50%;"><input style="margin-left: 10px; outline: 0;" type="date" id="startDay" name="startDay"></td>
 				</c:if>
 			<td style="width: 100px; background: #DDDDDD; text-align: center; "><b>시행 부서</b></td>
 				<td>
 					<input type="text" id="sDept" value="${mode == 'acticle' ? dto.sdept : sessionScope.employee.dType }"
-					 disabled="disabled" style="border: none;">
+					 disabled="disabled" style="border: none; outline: 0;">
 				</td>
 			</tr>
 			<tr>
@@ -413,39 +413,39 @@ textarea {
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">				
 						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
-							style="border: none;">
+							style="border: none; outline: 0;">
 					</c:if>	
 					<c:if test="${modes == '임시보관함' }">		
-						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" style="outline: 0;">
 					</c:if>	
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<input style="margin-left: 10px;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+					<input style="margin-left: 10px; outline: 0;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
 				</c:if>
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 100px; background: #DDDDDD; text-align: center; " colspan="4"><b>내용</b></td>
+				<td style="width: 100px; background: #DDDDDD; text-align: center; outline: 0;" colspan="4"><b>내용</b></td>
 			</tr>
 			<tr>
-				<td colspan="4" style="padding-left: 40px;height: 420px; vertical-align: top;">
-					<h6>1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다.</h6> 
-					<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를1 차용하여 월 1회 사용 할 수 있다.</h6>
-					<h6>2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출</h6>
+				<td colspan="4" style="padding-left: 40px; height: 420px; vertical-align: top;">
+					<h6 style="margin-bottom: 5px; margin-top: 5px;">1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다.</h6> 
+					<h6 style="margin-bottom: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를1 차용하여 월 1회 사용 할 수 있다.</h6>
+					<h6 style="margin-bottom: 5px;">2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출</h6>
 					<h6 style="padding-bottom: 25px;">3. 공가(예비군/민방위)는 사전에 통지서를, 사후에 참석증을 반드시 제출</h6>
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
-						<p style="font-size: 15px; font-weight: bold; padding-bottom: 25px;">${a1}</p>
-						<p style="font-size: 15px; font-weight: bold; padding-bottom: 15px;">${a0}</p>
+						<p style="font-size: 15px; font-weight: bold; padding-bottom: 25px; outline: 0;">${a1}</p>
+						<p style="font-size: 15px; font-weight: bold; padding-bottom: 15px; outline: 0;">${a0}</p>
 					</c:if>
 					<c:if test="${modes == '임시보관함' }">
-						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 220px; resize: none;" id="sContent" name="scontent">${dto.scontent}</textarea>
+						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 220px; resize: none; outline: 0;" id="sContent" name="scontent">${dto.scontent}</textarea>
 					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
 						<span style="font-weight: bold; font-size: 15px;">종료 날짜 : </span>
-						<input type="date" id="endDate" name="endDate">
-					<textarea rows="12"cols="50" style="width: 900px; height: 220px; margin-top:40px; padding-top:5px; resize: none;" id="sContent" name="scontent"> 사유 : </textarea>
+						<input type="date" id="endDate" name="endDate" style="outline: 0;">
+					<textarea rows="12"cols="50" style="width: 900px; height: 220px; margin-top:40px; padding-top:5px; outline: 0; resize: none;" id="sContent" name="scontent">&nbsp;&nbsp;사유 :&nbsp;&nbsp;&nbsp;</textarea>
 				</c:if>
 				</td>
 			</tr>
@@ -453,7 +453,7 @@ textarea {
 			<tr>
 					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
 				<td colspan="3">
-					<input type="file" id="upload" name="upload" style="padding-top: 13px;" multiple="multiple">
+					<input type="file" id="upload" name="upload" style="padding-top: 13px; outline: 0; border: none;" multiple="multiple">
 				</td>
 			</tr>
 		</c:if>
@@ -477,16 +477,16 @@ textarea {
 		</table>
 	</div>
 	<c:if test="${mode != 'article' }">
-			<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<span style="height: 10px; font-size: 15px;">
+			<button type="button" style="float: right; height: 25px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
 			<input type="checkbox" value="storage" 
-			id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
+			id="sStorage" name="sStorage" style="width: 20px; height: 30px; margin-top: 5px; appearance: none;"> 임시보관여부</span>
 	</c:if>
 	<c:if test="${mode == 'article' && modes == '임시보관함'}">
-			<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<span style="height: 10px; font-size: 15px;">
+			<button type="button" style="float: right; height: 25px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
 			<input type="checkbox" value="storage" 
-			id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
+			id="sStorage" name="sStorage" style="width: 20px; height: 30px; margin-top: 5px; appearance: none;"> 임시보관여부</span>
 	</c:if>
 </form>
 
@@ -495,14 +495,13 @@ textarea {
 <!-- 크리에이트 모달 -->
 <div id="lineModal-dialog" class="lineModal">
 
-
 	<div class="listDiv">
 		<table id="listTable" class="listTable" style="width: 580px;">
-			<tr style="background: #E3F6CE; text-align: center;">
+			<tr style="background: #9565A4; color: white; font-weight: bold; height: 30px; text-align: center;">
 				<td style="width: 50px;">선택</td>
-				<td style="width: 50px;">부서</td>
-				<td style="width: 50px;">직급</td>
-				<td style="width: 150px;">이름</td>
+				<td style="width: 140px;">부서</td>
+				<td style="width: 140px;">직급</td>
+				<td style="width: 250px;">이름</td>
 			</tr>
 			<c:forEach var="dto" items="${list}">
 				<tr style="text-align: center;">
@@ -513,9 +512,6 @@ textarea {
 				</tr>
 			</c:forEach>
 		</table>
-		<button type="button" id="btnLineSelectOk" class="close">선택</button>
+		<button type="button" id="btnLineSelectOk" class="close" style="float: right; height: 30px; width: 50px; margin-top: 20px; background: #9565A4; color: white; font-weight: bold;">선택</button>
 	</div>
-
 </div>
-
-

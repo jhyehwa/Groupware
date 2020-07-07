@@ -81,6 +81,7 @@ public class PrivateAddrController {
 		map.put("kor2", kor2);
 
 		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(rows, dataCount);
 		
 		if(dataCount != 0) {
 			total_page = myUtil.pageCount(rows, dataCount);			
@@ -90,8 +91,8 @@ public class PrivateAddrController {
 			current_page=total_page;
 		}
 
-		int offset = (current_page-1)*rows;
-		if(offset < 0) offset=0;
+		int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
 		map.put("offset", offset);
 		map.put("rows", rows);
 
@@ -100,7 +101,7 @@ public class PrivateAddrController {
 		list = service.listPrivateAddr(map);
 
 		List<PrivateAddr> modalList = service.modalList(info.getEmpNo());
-
+		
 		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 
 		model.addAttribute("list", list);

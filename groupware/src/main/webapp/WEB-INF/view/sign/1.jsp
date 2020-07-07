@@ -225,7 +225,7 @@ textarea {
 					<input type="hidden" value="4" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " }&nbsp;
+							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " } | 
 								${ mode=="article" ? pempNo4.pType : " " }</td>
 						</tr>
 						<tr>
@@ -246,7 +246,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 3}">
@@ -270,7 +270,7 @@ textarea {
 					<input type="hidden" value="3" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " }&nbsp;
+							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " } | 
 								${ mode=="article" ? pempNo3.pType : " " }</td>
 						</tr>
 						<tr>
@@ -292,7 +292,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 2}">
@@ -317,7 +317,7 @@ textarea {
 					<table style="width: 110px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
-							${ mode=="article" ? pempNo2.dType : " " }&nbsp;
+							${ mode=="article" ? pempNo2.dType : " " } | 
 								${ mode=="article" ? pempNo2.pType : " " }</td>
 						</tr>
 						<tr>
@@ -338,7 +338,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold">+${mode}</button>
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 1}">
@@ -365,7 +365,7 @@ textarea {
 					<td rowspan="3"
 						style="background: #DDDDDD; width: 70px; text-align: left;"><b>결재</b></td>
 					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? writer.dType : sessionScope.employee.dType }
-						&nbsp; ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
+						| ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
 					</td>
 				</tr>
 				<tr>
@@ -389,40 +389,40 @@ textarea {
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
 						<td style="width: 50%;" style="padding-left: 10px;" >
-							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none;">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="outline: 0; border: none;">
 						</td>
 					</c:if>
 					<c:if test="${modes == '임시보관함' }">
 						<td style="width: 50%;" style="padding-left: 10px;" >
-							<input type="text" id="startDay" name="startDay" value="${dto.startDay}">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" style="outline: 0;">
 						</td>
 					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
 					<td style="width: 50%; padding-left: 10px;" >
-						<input type="date" id="startDay" name="startDay">
+						<input type="date" id="startDay" name="startDay" style="outline: 0;">
 					</td>
 				</c:if>
-				<td style="background: #DDDDDD;  text-align: center;" width="100px;"><b>시행 부서</b></td>
+				<td style="background: #DDDDDD; text-align: center;" width="100px;"><b>시행 부서</b></td>
 				<td>
 					<input type="text" id="sDept" value="${mode == 'article' ? writer.sdept : sessionScope.employee.dType }"
 					 disabled="disabled" style="border: none;">
 				</td>
 			</tr>
 			<tr>
-				<td style="background: #DDDDDD;  text-align: center;"><b>제목</b></td>
+				<td style="background: #DDDDDD; text-align: center;"><b>제목</b></td>
 				<td colspan="3"> 
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">				
 						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
-							style="border: none;">
+							style="border: none; outline: 0;">
 					</c:if>	
 					<c:if test="${modes == '임시보관함' }">		
-						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" style="outline: 0;">
 					</c:if>	
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<input style="margin-left: 10px;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+					<input style="margin-left: 10px; outline: 0;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
 				</c:if>
 				</td>
 			</tr>
@@ -430,25 +430,25 @@ textarea {
 				<td style="background: #DDDDDD;  text-align: center; " colspan="4"><b>내용</b></td>
 			</tr>
 			<tr>
-				<td colspan="4" style="padding-left: 40px;">
+				<td colspan="4" style="padding-left: 30px; padding-top: 10px;">
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
-						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent" disabled="disabled">${dto.scontent}</textarea>
+						<textarea rows="12"cols="50" style="outline: 0; border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent" disabled="disabled">${dto.scontent}</textarea>
 					</c:if>
 					<c:if test="${modes == '임시보관함' }">
-						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent">${dto.scontent}</textarea>
+						<textarea rows="12"cols="50" style="outline: 0; border:none; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent">${dto.scontent}</textarea>
 					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<textarea rows="12"cols="50" style="width: 900px; height: 420px; resize: none;" id="sContent" name="scontent"></textarea>
+					<textarea rows="12"cols="50" style="outline: 0; width: 900px; height: 420px; resize: none;" id="sContent" name="scontent"></textarea>
 				</c:if>
 				</td>
 			</tr>
 		<c:if test="${mode != 'article'}">
 			<tr>
 				<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
-				<td colspan="3" style="padding-left: 10px;" >
-					<input type="file" id="upload" name="upload" style="padding-top: 13px;" multiple="multiple">
+				<td colspan="3" style="padding-left: 10px;">
+					<input type="file" id="upload" name="upload" style="padding-top: 13px; border: none; outline: 0;" multiple="multiple">
 				</td>
 			</tr>
 		</c:if>
@@ -472,16 +472,14 @@ textarea {
 		</table>
 	</div>
 	<c:if test="${mode != 'article' }">
-			<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<span style="height: 10px; font-size: 15px;">
-			<input type="checkbox" value="storage" 
-			id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
+			<button type="button" style="float: right; height: 25px;" onclick="check();">등록하기</button>
+			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
+			<input type="checkbox" value="storage" id="sStorage" name="sStorage" style="width: 20px; height: 30px; margin-top: 5px; appearance: none;">&nbsp;&nbsp;임시보관여부</span>
 	</c:if>
 	<c:if test="${mode == 'article' && modes == '임시보관함'}">
-			<button type="button" style="margin-left: 20px;" onclick="check();">등록하기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<span style="height: 10px; font-size: 15px;">
-			<input type="checkbox" value="storage" 
-			id="sStorage" name="sStorage" style="height: 10px;"> 임시보관여부</span>
+			<button type="button" style="float: right; height: 25px;" onclick="check();">등록하기</button>
+			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
+			<input type="checkbox" value="storage" id="sStorage" name="sStorage"  style="width: 20px; height: 30px; margin-top: 5px; appearance: none;">&nbsp;&nbsp;임시보관여부</span>
 	</c:if>
 </form>
 
@@ -489,15 +487,13 @@ textarea {
 
 <!-- 크리에이트 모달 -->
 <div id="lineModal-dialog" class="lineModal">
-
-
 	<div class="listDiv">
 		<table id="listTable" class="listTable" style="width: 580px;">
-			<tr style="background: #E3F6CE; text-align: center;">
+			<tr style="background: #9565A4; color: white; font-weight: bold; height: 30px; text-align: center;">
 				<td style="width: 50px;">선택</td>
-				<td style="width: 50px;">부서</td>
-				<td style="width: 50px;">직급</td>
-				<td style="width: 150px;">이름</td>
+				<td style="width: 140px;">부서</td>
+				<td style="width: 140px;">직급</td>
+				<td style="width: 250px;">이름</td>
 			</tr>
 			<c:forEach var="dto" items="${list}">
 				<tr style="text-align: center;">
@@ -508,9 +504,6 @@ textarea {
 				</tr>
 			</c:forEach>
 		</table>
-		<button type="button" id="btnLineSelectOk" class="close">선택</button>
+		<button type="button" id="btnLineSelectOk" class="close" style="float: right; height: 30px; width: 50px; margin-top: 20px; background: #9565A4; color: white; font-weight: bold;">선택</button>
 	</div>
-
 </div>
-
-

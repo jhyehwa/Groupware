@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ul li {
+	list-style: none;
+}
+
+.my_message {
+	position: relative;
+	width: 100%;
+	height: 80px;
+	display: block;
+}
+
+.my_message>.tooltip {
+	position: absolute;
+	display: block;
+	background-color: #9565A4;
+	width: 200px;
+	left: 150px;
+	top: 40px;
+	border-radius: 10px;
+	padding: 10px;
+	color: white;
+}
+
+.my_message>.tooltip:before {
+	position: absolute;
+	content: '';
+	border-width: 10px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) #9565A4
+		rgba(255, 255, 255, 0);
+	top: 36px;
+	left: 150px;
+	transform: rotate(180deg);
+}
+
+.you_message {
+	position: relative;
+	width: 100%;
+	height: 300px;
+}
+
+.you_message>.tooltip {
+	position: absolute;
+	display: block;
+	background-color: #EDA900;
+	width: 200px;
+	left: 50px;
+	top: 40px;
+	border-radius: 10px;
+	padding: 10px;
+	color: white;
+}
+
+.you_message>.tooltip:before {
+	position: absolute;
+	content: '';
+	border-width: 10px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) #EDA900
+		rgba(255, 255, 255, 0);
+	top: 36px;
+	left: 40px;
+	transform: rotate(180deg);
+}

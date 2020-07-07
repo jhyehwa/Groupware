@@ -9,34 +9,6 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/sign.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
-<style>
-.board-bodys{
-	width: 800px;
-}
-
-.signList {
-	color: #cccccc;
-}
-
-.signList:hover{
-	color: black;
-}
-
-.articleModal{
-	margin: auto;
-}
-
-.showSing{
-	width: 1000px; 
-	height:1000px;
-	position:absolute; 
-	display: none; 
-	border: 1px solid black; 
-	padding-left: 20px; 
-	padding-right: 20px; 
-}
-
-</style>
 <script type="text/javascript">
 	function searchList() {
 		var f=document.searchForm;
@@ -200,7 +172,7 @@
 </script>
 
 <div class="container">
-	<div class="board-container">
+	<div class="board-container" style="width: 1600px;">
 		<div class="body-title" style="height: 50px;">
 				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;">♬ 전자결재</span>
 		</div>
@@ -208,10 +180,10 @@
 		
 		<div class="board-body" style="float: left; width: 20%">
 			<div>
-				<button type="button" class="btnSend" style="width: 98px; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
-					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;</i><i class="fas fa-plus" style="color: white; font-size: 18px;"></i>
+				<button type="button" class="btnSend" style="width: 98px; cursor: pointer; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
+					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;Add</i>
 				</button>
-				<button type="button" class="boardBtn"style="width: 98px; height: 50px; border-radius: 10px; border: none; background: #9565A4;"  onclick="javascript:location.href='<%=cp%>/sign/mainList';">
+				<button type="button" class="boardBtn"style="width: 98px; cursor: pointer; height: 50px; border-radius: 10px; border: none; background: #9565A4;"  onclick="javascript:location.href='<%=cp%>/sign/mainList';">
 					<i class="far fa-arrow-alt-circle-left" style="color: white; font-size: 18px; font-weight: bold">&nbsp;back</i>
 				</button>
 			</div>
@@ -223,17 +195,17 @@
 			
 				  <h3 style="font-size: 18px;">| ${mode}</h3>
 				  
-			<table class="trData" style="border-collapse: collapse; width: 800px; margin-top: 20px;">
-			  <tr align="center" bgcolor="#006461;"> 
-			      <th width="70">부서</th>
-				  <th width="80">기안자</th>
-			      <th width="60">종류</th>
-			      <th>제목</th>
-			      <th width="80">기안일</th>
-			      <th width="60">상태</th>
+			<table class="trData" style="border-collapse: collapse; width: 850px; margin-top: 20px;">
+			  <tr align="center" bgcolor="#006461;" style="border-top: 3px solid #9565A4;"> 
+			      <th width="100">부서</th>
+				  <th width="100">기안자</th>
+			      <th width="100">종류</th>
+			      <th width="350">제목</th>
+			      <th width="100">기안일</th>
+			      <th width="100">상태</th>
 			  </tr>
 			<c:forEach var="dto" items="${list}">
-			  <tr align="center" style="border-bottom: 1px solid #cccccc;">
+			  <tr id="sList" align="center" style="border-bottom: 1px solid #cccccc; cursor: pointer;">
 			      <td>${dto.dType} 
 			      <input type="hidden" class="dtoSnum" value="${dto.snum}"></td>
 				  <td>${dto.name}&nbsp;${dto.pType}</td>
@@ -243,7 +215,7 @@
 			      	<c:when test="${dto.stnum == 2}">휴가</c:when>
 			      </c:choose>
 			      	<input type="hidden" class="dtoStnum" value="${dto.stnum}"></td>
-			      <td align="left" style="padding-left: 40px;" class="ssubject">
+			      <td align="left" style="padding-left: 10px;" class="ssubject">
 			           <a class="articleSign">${dto.ssubject}</a>
 			      </td>
 			      <td>${dto.sdate}</td>
@@ -252,10 +224,10 @@
 			</c:forEach>
 			</table>
 			 
-			<table style="width: 800px;">
+			<table style="width: 850px;">
 			   <tr>
-				<td class="board-paging" align="center">
-			         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dataCount==0 ? "등록된 게시물이 없습니다.":paging}
+				<td class="board-paging" align="center" id="list-paging">
+			        ${dataCount==0 ? "등록된 게시물이 없습니다.":paging}
 				</td>
 			   </tr>
 			</table>
@@ -263,42 +235,40 @@
         </div>
         
         <div class="board-body" style="float: left;">
-				<table style="width: 100%; border: 1px solid #cccccc; border-bottom: none; width: 300px;">
-								<tr align="left">
-									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
-									<i class="fas fa-arrow-right"></i>
-										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=1'"> 결재대기함 </a>
-									</td>
-								</tr>
-								<tr align="left">
-									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
-									<i class="fas fa-arrow-right"></i>
-										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=2'" > 수신대기함 </a>
-									</td>
-								</tr>
-								<tr align="left">
-									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
-									<i class="fas fa-arrow-right"></i>
-										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=3'"> 결재완료함 </a>
-									</td>
-								</tr>
-								<tr align="left">
-									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
-									<i class="fas fa-arrow-right"></i>
-										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=4'"> 반려함 </a>
-									</td>
-								</tr>
-								<tr align="left">
-									<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 16px; ">
-									<i class="fas fa-arrow-right"></i>
-										<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=6'"> 임시보관함 </a>
-									</td>
-								</tr>
-							</table>
-						</div>
-						</div>
-        
-        
+				<table style="width: 100%; border: 1px solid #cccccc; border-bottom: none; width: 250px; margin-top: 40px;">
+					<tr align="left">
+						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-arrow-right" style="color: gray;"></i>
+							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=1'">&nbsp;&nbsp;결재대기함 </a>
+						</td>
+					</tr>
+					<tr align="left">
+						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-arrow-right" style="color: gray;"></i>
+							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=2'">&nbsp;&nbsp;수신대기함 </a>
+						</td>
+					</tr>
+					<tr align="left">
+						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-arrow-right" style="color: gray;"></i>
+							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=3'">&nbsp;&nbsp;결재완료함 </a>
+						</td>
+					</tr>
+					<tr align="left">
+						<td style="padding-left: 12px;border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-arrow-right" style="color: gray;"></i>
+							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=6'">&nbsp;&nbsp;임시보관함 </a>
+						</td>
+					</tr>
+					<tr align="left">
+						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-arrow-right" style="color: gray;"></i>
+							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=4'">&nbsp;&nbsp;반려함 </a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>        
     </div>
 
 

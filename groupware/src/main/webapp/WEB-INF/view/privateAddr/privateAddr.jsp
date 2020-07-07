@@ -72,63 +72,63 @@
 <script type="text/javascript">
 	$(function(){
 		$('#button_on1').click(function() {
-			$("input[name=name]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=name]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#name').val().length;
 			$('#name').focus();
 			$('#name')[0].setSelectionRange(len, len);
 		});
 				
 		$('#button_on2').click(function() {
-			$("input[name=email]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=email]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#email').val().length;
 			$('#email').focus();
 			$('#email')[0].setSelectionRange(len, len);
 		});
 		
 		$('#button_on3').click(function() {
-			$("input[name=tel]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=tel]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#tel').val().length;
 			$('#tel').focus();
 			$('#tel')[0].setSelectionRange(len, len);
 			
 		});
 		$('#button_on4').click(function() {
-			$("input[name=company]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=company]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#company').val().length;
 			$('#company').focus();
 			$('#company')[0].setSelectionRange(len, len);
 		});
 		
 		$('#button_on5').click(function() {
-			$("input[name=dName]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=dName]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#dName').val().length;
 			$('#dName').focus();
 			$('#dName')[0].setSelectionRange(len, len);
 		});
 		
 		$('#button_on6').click(function() {
-			$("input[name=dTel]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=dTel]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#dTel').val().length;
 			$('#dTel').focus();
 			$('#dTel')[0].setSelectionRange(len, len);
 		});
 		
 		$('#button_on7').click(function() {
-			$("input[name=dAddr]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=dAddr]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#dAddr').val().length;
 			$('#dAddr').focus();
 			$('#dAddr')[0].setSelectionRange(len, len);
 		});
 		
 		$('#button_on8').click(function() {
-			$("input[name=memo]").prop('disabled', false).css('border-bottom', '2px solid #FF3232');
+			$("input[name=memo]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#memo').val().length;
 			$('#memo').focus();
 			$('#memo')[0].setSelectionRange(len, len);
 		});
 		
 		$('#button_on9').click(function() {
-			$("input[name=groupNum]").prop('disabled', false).css('border-bottom', '2px solid #FF3232').focus("");
+			$("input[name=groupNum]").prop('disabled', false).css('border-bottom', '2px solid #B336ED').focus("");
 			var len = $('#groupNum').val().length;
 			$('#groupNum').focus();
 			$('#groupNum')[0].setSelectionRange(len, len);

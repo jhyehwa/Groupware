@@ -9,11 +9,7 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/sign.css" type="text/css">
 <script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript"	src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
-<style>
-.board-bodys{
-	width: 800px;
-}
-</style>
+
 <script type="text/javascript">
 	function ajaxHTML(url, type, query, selector) {
 		$.ajax({
@@ -51,7 +47,7 @@
 			
 			$("#articleModal-dialog").dialog({
 				modal : true,
-				width : 1050,
+				width : 1070,
 				height : 1100,
 				position : {my:"center top", at:"center top"},
 				show : "fade",
@@ -121,33 +117,25 @@
 	
 </script>
 <div class="container">
-	<div class="board-container">
+	<div class="board-container" style="width: 1600px;">
 			<div class="body-title" style="height: 50px;">
 				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;">♬ 전자결재</span>
 			</div>
 			
 			<div class="board-body" style="float: left; width: 20%">
 			<div>
-					<button type="button" class="btnSend" style="width: 200px; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
-					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;새결재진행
-						&nbsp;</i><i class="fas fa-plus"
-						style="color: white; font-size: 18px;"></i>
-					</button>
+				<button type="button" class="btnSend" style="width: 220px; cursor: pointer; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
+				<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;&nbsp;새결재진행</i>
+				</button>
 				<br>
 
-				<form name="searchForm" action="<%=cp%>/sign/list?mode=5"
-					method="post">
+				<form name="searchForm" action="<%=cp%>/sign/list?mode=5" method="post">
 					<div class="selectGroup" style="margin-left: -0px;">
-						<select class="selectBox" id="condition" name="condition"
-							class="selectField">
-							<option value="emptyVal"
-								${condition=="emptyVal"?"selected='selected'":""}>::선택::</option>
-							<option value="title"
-								${condition=="title"?"selected='selected'":""}>제목</option>
-							<option value="content"
-								${condition=="content"?"selected='selected'":""}>내용</option>
-							<option value="created"
-								${condition=="created"?"selected='selected'":""}>기안일</option>
+						<select class="selectBox" id="condition" name="condition" class="selectField">
+							<option value="emptyVal" ${condition=="emptyVal"?"selected='selected'":""}>&nbsp;&nbsp;::선택::&nbsp;&nbsp;</option>
+							<option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
+							<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
+							<option value="created" ${condition=="created"?"selected='selected'":""}>기안일</option>
 						</select>
 					</div>
 					<div style="margin-top: -10px;">
@@ -167,20 +155,20 @@
 				<div style=" border-bottom: 3px solid #9565A4; ">
 					<table>
 						<tr>
-							<td align="left" data-tab="wait"><h3>결재대기함</h3></td>
+							<td align="left" data-tab="wait"><h3>| 결재대기함</h3></td>
 						</tr>
 					</table>
 				</div>
 				
 				<div style="height: 140px;">
-					<table style="border-collapse: collapse; width: 800px; margin-top: 15px;">
-						<tr align="center" bgcolor="#006461;">
-							<th width="80">부서</th>
-							<th width="80">기안자</th>
-							<th width="80">종류</th>
-							<th>제목</th>
-							<th width="80">기안일</th>
-							<th width="60">결재상태</th>
+					<table style="border-collapse: collapse; width: 850px;">
+						<tr align="center" bgcolor="#9565A4;">
+							<th width="100">부서</th>
+							<th width="100">기안자</th>
+							<th width="100">종류</th>
+							<th width="350">제목</th>
+							<th width="100">기안일</th>
+							<th width="100">결재상태</th>
 
 						</tr>
 
@@ -193,10 +181,10 @@
 							</tr>
 						</c:if>
 						<c:forEach var="dto" items="${list}">
-							<tr align="center" style="border-bottom: 1px solid #cccccc;">
-								<td>${dto.dType}</td>
-								<td>${dto.name}&nbsp;${dto.pType}</td>
-								<td>
+							<tr id="sList" align="center" style="border-bottom: 1px solid #cccccc; cursor: pointer;">
+								<td width="100">${dto.dType}</td>
+								<td width="100">${dto.name}&nbsp;${dto.pType}</td>
+								<td width="100">
 								<input type="hidden" class="dtoSnum" value="${dto.snum}">
 								<input type="hidden" class="dtostNum" value="${dto.stnum}">
 									<c:choose>
@@ -204,50 +192,46 @@
 										<c:when test="${dto.stnum == 2}">휴가</c:when>
 									</c:choose>
 								</td>
-								<td align="left" style="padding-left: 80px;">
-								<a class="articleSign">${dto.ssubject}</a>
+								<td align="left" style="padding-left: 10px; width: 350px;">
+									<a class="articleSign" >${dto.ssubject}</a>
 								</td>
-								<td>${dto.sdate}</td>
-								<td>${dto.scurrStep!=dto.sendStep ?'미결':'완료'}</td>
+								<td width="100">${dto.sdate}</td>
+								<td width="100">${dto.scurrStep!=dto.sendStep ?'미결':'완료'}</td>
 							</tr>
 						</c:forEach>
 					</table>
 				</div>
 
 				<div style="text-align: right;" class="buttonDiv">
-					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';" style="border: none;">
-							<i class="far fa-plus-square"></i>
-						</button>
+					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';" style="border: none;">
+						<i class="far fa-plus-square" style="font-size: 20px; margin-top: 10px; background: none;"></i>
+					</button>
 				</div>
-
-
 			</div>
 
 			<div class="board-bodys" id="div1" style="height: 300px; margin-top: 20px;">
 				<div style=" border-bottom: 3px solid #9565A4; ">	
 					<table>
 						<tr>
-							<td align="left"><h3>수신대기함</h3></td>
+							<td align="left"><h3>| 수신대기함</h3></td>
 						</tr>
 					</table>
 				</div>
 
-				<div style="height: 140px; ">
-					<table style="border-collapse: collapse; width: 800px; margin-top: 15px;">
+				<div style="height: 140px;">
+					<table style="border-collapse: collapse; width: 850px;">
 						<tr align="center" bgcolor="#006461;">
-							<th width="80">부서</th>
-							<th width="80">기안자</th>
-							<th width="80">종류</th>
-							<th>제목</th>
-							<th width="80">기안일</th>
-							<th width="60">결재상태</th>
+							<th width="100">부서</th>
+							<th width="100">기안자</th>
+							<th width="100">종류</th>
+							<th width="350">제목</th>
+							<th width="100">기안일</th>
+							<th width="100">결재상태</th>
 						</tr>
 						<c:if test="${rlist.size()==0}">
-							<tr>
-								<td class="board-paging" align="center" colspan="5">
-									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
+							<tr id="sList" style="">
+								<td class="board-paging" align="center" colspan="6" style="cursor: pointer;">
+									<p style="text-align: center;">등록된 게시물이 없습니다.</p>
 								</td>
 							</tr>
 						</c:if>
@@ -264,7 +248,7 @@
 										<c:when test="${dto.stnum == 2}">휴가</c:when>
 									</c:choose>
 								</td>
-								<td align="left" style="padding-left: 30px;">
+								<td align="left" style="padding-left: 10px;">
 								<a class="articleSign">${dto.ssubject}</a>
 								</td>
 								<td>${dto.sdate}</td>
@@ -274,10 +258,9 @@
 					</table>
 				</div>
 				<div style="text-align: right;" class="buttonDiv">
-					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';" style="border: none;">
-						<i class="far fa-plus-square"></i>
-						</button>
+					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';" style="border: none;">
+						<i class="far fa-plus-square" style="font-size: 20px; margin-top: 10px;"></i>
+					</button>
 				</div>
 			</div>
 
@@ -286,25 +269,25 @@
 				<div style=" border-bottom: 3px solid #9565A4; ">
 					<table>
 						<tr>
-							<td align="left"><h3>결재완료함</h3></td>
+							<td align="left"><h3>| 결재완료함</h3></td>
 						</tr>
 					</table>
 				</div>
 
 
 				<div style="height: 140px;">
-					<table style="border-collapse: collapse; width: 800px; margin-top: 15px;">
+					<table style="border-collapse: collapse; width: 850px;">
 						<tr align="center" bgcolor="#006461;">
-							<th width="80">부서</th>
-							<th width="80">기안자</th>
-							<th width="80">종류</th>
-							<th>제목</th>
-							<th width="80">기안일</th>
-							<th width="60">결재상태</th>
+							<th width="100">부서</th>
+							<th width="100">기안자</th>
+							<th width="100">종류</th>
+							<th width="350">제목</th>
+							<th width="100">기안일</th>
+							<th width="100">결재상태</th>
 						</tr>
 						<c:if test="${flist.size()==0}">
-							<tr>
-								<td class="board-paging" align="center" colspan="5">
+							<tr id="sList">
+								<td class="board-paging" align="center" colspan="6">
 									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
 								</td>
@@ -312,7 +295,7 @@
 						</c:if>
 
 						<c:forEach var="dto" items="${flist}">
-							<tr align="center" style="border-bottom: 1px solid #cccccc;">
+							<tr id="sList" align="center" style="border-bottom: 1px solid #cccccc; cursor: pointer;">
 								<td>${dto.dType}</td>
 								<td>${dto.name}&nbsp;${dto.pType}</td>
 								<td>
@@ -323,7 +306,7 @@
 										<c:when test="${dto.stnum == 2}">휴가</c:when>
 									</c:choose>
 								</td>
-								<td align="left" style="padding-left: 80px;">
+								<td align="left" style="padding-left: 10px;">
 								<a class="articleSign">${dto.ssubject}</a>
 								</td>
 								<td>${dto.sdate}</td>
@@ -334,30 +317,26 @@
 				</div>
 
 				<div style="text-align: right;" class="buttonDiv">
-					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus"
-						onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';" style="border: none;">
-						<i class="far fa-plus-square"></i>
-						</button>
+					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';" style="border: none;">
+						<i class="far fa-plus-square" style="font-size: 20px; margin-top: 10px;"></i>
+					</button>
 				</div>
 			</div>
 			</div>
 		
-					<div class="board-body" style="float: left; width: 22%">
+					<div class="board-body" style="float:left; width: 22%;">
 						<div class="body-title" style="margin-top: -20px; margin-bottom: 15px;" >
 							<table
-								style="margin-top: 15px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none;">
+								style="margin-top: 30px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none;">
 								<tr align="left">
-									<td
-										style="font-weight: bold; font-size: 16px; padding-left: 10px;">
-										<a href="javascript:location.href='<%=cp%>/sign/list?mode=4' "
-										style="color: black;"><i class="fas fa-list"> 반려함</i></a>
+									<td style="font-weight: bold; font-size: 16px; padding-left: 10px;">
+										<a href="javascript:location.href='<%=cp%>/sign/list?mode=4' " style="color: black;"><i class="fas fa-list">&nbsp;&nbsp;반려함</i></a>
 									</td>
 								</tr>
 								<tr align="left">
 									<c:if test="${returnList.size() != 0 }">
 										<c:forEach var="dto" items="${returnList}">
-											<td
-												style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc;">
+											<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc;">
 												<i class="fas fa-arrow-right"></i> ${dto.name} :
 												${dto.ssubject}
 											</td>
@@ -374,7 +353,7 @@
 								<tr align="left">
 									<td style="font-weight: bold; font-size: 16px; padding-left: 10px; border-bottom: 1px solid #cccccc;">
 										<a href="javascript:location.href='<%=cp%>/sign/list?mode=6' " style="color: black; ">
-											<i class="fas fa-list"> 임시저장함</i>
+											<i class="fas fa-list">&nbsp;&nbsp;임시저장함</i>
 										</a>
 									</td>
 								</tr>
