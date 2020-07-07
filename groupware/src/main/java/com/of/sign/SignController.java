@@ -52,7 +52,6 @@ public class SignController {
 		map.put("rows", rows);
 
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
-		System.out.println(info.getEmpNo());
 		map.put("empNo", info.getEmpNo());
 
 		List<Sign> list = service.listSign(map, "wait");
