@@ -9,7 +9,6 @@
 	<thead id='listReplyHeader' style="margin: 20px auto 0px;">
 	</thead>
 	
-
 	<tbody id='listReplyBody'>
 	<c:forEach var="vo" items="${listReply}">
 		<tr height='35' style='background: white;'>

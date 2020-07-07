@@ -40,7 +40,6 @@
 
         return true;
     }
- 
 </script>
 
 <div class="container">

@@ -13,7 +13,6 @@
 	}
 </script>
 
-
 <div class="container">
     <div class="board-container"  style="margin-left: 200px;">
         <div class="board-title"  style="font-size: 18px;">

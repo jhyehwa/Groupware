@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+
 <script type="text/javascript">
 $(function(){
 	$("form input[name=upload]").change(function(){

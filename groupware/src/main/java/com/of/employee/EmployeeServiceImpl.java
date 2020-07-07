@@ -149,4 +149,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	}
 
+	// 조직도
+	@Override
+	public List<Employee> listEmpOrg(Map<String, Object> map) {
+		List<Employee> list = null;
+
+		try {
+			list = dao.selectList("employee.listEmpOrg", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public Employee readDepartment(String dType) {
+		Employee dto = null;
+
+		try {
+			dto = dao.selectOne("employee.readDepartment", dType);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
 }

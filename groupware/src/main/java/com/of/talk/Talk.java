@@ -60,7 +60,5 @@ public class Talk {
 		this.pType = pType;
 	}
 	
-	
-	
 
 }

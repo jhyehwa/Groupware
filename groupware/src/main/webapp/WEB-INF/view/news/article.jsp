@@ -22,8 +22,7 @@ function updateNews() {
 	  var url = "<%=cp%>/news/update?" + q;
 
 	  location.href=url;
-}
-	  
+}  
 	  
 function ajaxJSON(url, method, query, fn) {
 	$.ajax({

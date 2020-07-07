@@ -30,7 +30,6 @@
 
 </style>
 
-
 <script type="text/javascript">
 	function searchList() {
 		var f=document.searchForm;

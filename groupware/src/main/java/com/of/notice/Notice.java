@@ -52,7 +52,6 @@ public class Notice {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	
 
 	public String getName() {
 		return name;

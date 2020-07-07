@@ -64,7 +64,8 @@ function ajaxHTML(url, method, query, selector) {
 			} 			
 			console.log(jqXHR.responseText);
 		}
-	});		}
+	});		
+}
 
 //댓글 리스트, 페이징처리 
 $(function(){

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.of.common.MyUtil;
@@ -283,11 +284,34 @@ public class EmployeeController {
 		}
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(dto.getName() + "님의 회원정보가 정상적으로 변경되었습니다.<br>");
+		sb.append(dto.getName() + "님의 사원정보가 정상적으로 변경되었습니다.<br>");
 
 		reAttr.addFlashAttribute("message", sb.toString());
-		reAttr.addFlashAttribute("title", "회원 정보 수정");
+		reAttr.addFlashAttribute("title", "사원 정보 수정");
 
 		return "redirect:/employee/complete";
 	}
+	
+	// 조직도 사원 리스트
+		@RequestMapping(value="employee/org")
+		public ModelAndView org(Model model) {
+			return new ModelAndView(".layout.footer");
+		}
+		
+		@RequestMapping(value="employee/listOrg")
+		@ResponseBody
+		public Map<String, Object> listOrg() throws Exception{
+			
+			Map<String, Object> map = new HashMap<>();
+
+			List<Employee> listOrg = service.listEmpOrg(map);
+			
+			// 작업 결과를 json으로 전송
+			Map<String, Object> model = new HashMap<>();
+			model.put("listOrg", listOrg);
+			// 게시물 리스트
+			return model;
+		}
+	
+	
 }
