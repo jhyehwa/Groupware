@@ -26,7 +26,7 @@ $(window).load(function(){
 	var msg = "${msg}";
 	
 	if(msg == 'no'){
-		alert("오늘 출근 하셨습니다.");
+		alert("오늘출근 하셨습니다.");
 	}
 });
 
