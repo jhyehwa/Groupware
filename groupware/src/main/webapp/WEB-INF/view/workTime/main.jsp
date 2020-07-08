@@ -23,6 +23,7 @@ function ajaxGET(url, type, query) {
 }
 
 $(window).load(function(){
+	
 	var msg = "${msg}";
 	
 	if(msg == 'no'){
