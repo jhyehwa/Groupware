@@ -173,8 +173,10 @@ textarea {
 						<br><button type="button" class="returnMemo">반려하기</button>
 					</c:if>
 					<c:if test="${listVal != null}">
-						<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="" style="width: 350px; height: 100px; resize: none;
-								padding-top: 5px; color: red; " readonly="readonly">반려 사유 : ${dto.rreason}</textarea>
+					<div style=" float: left; border: 1px solid black; margin-top: 10px; width: 300px; height: 125px; padding-top: 5px; border: none; color: #EB5A5A; font-weight: bold; font-size: 20px;">
+						반려 사유
+						<textarea class="returnTxADiv" rows="4" cols="8" placeholder="" style="color: #EB5A5A; margin-top: 10px; width: 290px; height: 80px; border: none; font-size: 15px; resize: none;" readonly="readonly">: ${dto.rreason}</textarea>
+					</div>
 					</c:if>
 			</div>
 			<p class="pTag">업 무 기 안</p>
@@ -225,8 +227,7 @@ textarea {
 					<input type="hidden" value="4" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " } | 
-								${ mode=="article" ? pempNo4.pType : " " }</td>
+							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " } &nbsp;&nbsp; ${ mode=="article" ? pempNo4.pType : " " }</td>
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px;">
@@ -270,8 +271,7 @@ textarea {
 					<input type="hidden" value="3" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " } | 
-								${ mode=="article" ? pempNo3.pType : " " }</td>
+							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " } &nbsp;&nbsp; ${ mode=="article" ? pempNo3.pType : " " }</td>
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
@@ -317,8 +317,7 @@ textarea {
 					<table style="width: 110px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
-							${ mode=="article" ? pempNo2.dType : " " } | 
-								${ mode=="article" ? pempNo2.pType : " " }</td>
+							${ mode=="article" ? pempNo2.dType : " " } &nbsp;&nbsp; ${ mode=="article" ? pempNo2.pType : " " }</td>
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
@@ -365,7 +364,7 @@ textarea {
 					<td rowspan="3"
 						style="background: #DDDDDD; width: 70px; text-align: left;"><b>결재</b></td>
 					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? writer.dType : sessionScope.employee.dType }
-						| ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
+						&nbsp;&nbsp; ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
 					</td>
 				</tr>
 				<tr>
@@ -472,12 +471,14 @@ textarea {
 		</table>
 	</div>
 	<c:if test="${mode != 'article' }">
-			<button type="button" style="float: right; height: 25px;" onclick="check();">등록하기</button>
+			<button type="button" style="float: right; height: 25px; padding: 5px;" onclick="check();">등록하기</button>
+			<button type="button" style="float: right; height: 25px; margin-right: 10px; padding: 5px;" onclick="javascript:location.href='<%=cp%>/sign/mainList'">목록</button>
 			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
 			<input type="checkbox" value="storage" id="sStorage" name="sStorage" style="width: 20px; height: 30px; margin-top: 5px; appearance: none;">&nbsp;&nbsp;임시보관여부</span>
 	</c:if>
 	<c:if test="${mode == 'article' && modes == '임시보관함'}">
-			<button type="button" style="float: right; height: 25px;" onclick="check();">등록하기</button>
+			<button type="button" style="float: right; height: 25px; padding: 5px;" onclick="check();">등록하기</button>
+			<button type="button" style="float: right; height: 25px; margin-right: 10px; padding: 5px;" onclick="javascript:location.href='<%=cp%>/sign/mainList'">목록</button>
 			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
 			<input type="checkbox" value="storage" id="sStorage" name="sStorage"  style="width: 20px; height: 30px; margin-top: 5px; appearance: none;">&nbsp;&nbsp;임시보관여부</span>
 	</c:if>

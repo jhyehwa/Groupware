@@ -234,35 +234,35 @@
 			</div>
         </div>
         
-        <div class="board-body" style="float: left;">
+        <div class="board-body" style="float: left; color: #323232">
 				<table style="width: 100%; border: 1px solid #cccccc; border-bottom: none; width: 250px; margin-top: 40px;">
 					<tr align="left">
-						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
-						<i class="fas fa-arrow-right" style="color: gray;"></i>
+						<td style="padding-left: 12px; padding: 13px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-bookmark" style="color: #323232;"></i>
 							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=1'">&nbsp;&nbsp;결재대기함 </a>
 						</td>
 					</tr>
 					<tr align="left">
-						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
-						<i class="fas fa-arrow-right" style="color: gray;"></i>
+						<td style="padding-left: 12px; padding: 13px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-bookmark" style="color: #323232;"></i>
 							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=2'">&nbsp;&nbsp;수신대기함 </a>
 						</td>
 					</tr>
 					<tr align="left">
-						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
-						<i class="fas fa-arrow-right" style="color: gray;"></i>
+						<td style="padding-left: 12px; padding: 13px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-bookmark" style="color: #323232;"></i>
 							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=3'">&nbsp;&nbsp;결재완료함 </a>
 						</td>
 					</tr>
 					<tr align="left">
-						<td style="padding-left: 12px;border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
-						<i class="fas fa-arrow-right" style="color: gray;"></i>
+						<td style="padding-left: 12px; padding: 13px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-bookmark" style="color: #323232;"></i>
 							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=6'">&nbsp;&nbsp;임시보관함 </a>
 						</td>
 					</tr>
 					<tr align="left">
-						<td style="padding-left: 12px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
-						<i class="fas fa-arrow-right" style="color: gray;"></i>
+						<td style="padding-left: 12px; padding: 13px; border-bottom: 1px solid #cccccc; font-weight: bold; font-size: 18px; ">
+						<i class="fas fa-bookmark" style="color: #323232;"></i>
 							<a class="signList" href="javascript:location.href='<%=cp%>/sign/list?mode=4'">&nbsp;&nbsp;반려함 </a>
 						</td>
 					</tr>

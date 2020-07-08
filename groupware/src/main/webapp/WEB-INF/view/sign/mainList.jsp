@@ -203,8 +203,8 @@
 				</div>
 
 				<div style="text-align: right;" class="buttonDiv">
-					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';" style="border: none;">
-						<i class="far fa-plus-square" style="font-size: 20px; margin-top: 10px; background: none;"></i>
+					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=1';" style="border: none; background: none;">
+						<i class="fas fa-plus" style="font-size: 20px; margin-top: 10px; color: #9565A4; color: #9565A4;"></i>
 					</button>
 				</div>
 			</div>
@@ -258,8 +258,8 @@
 					</table>
 				</div>
 				<div style="text-align: right;" class="buttonDiv">
-					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';" style="border: none;">
-						<i class="far fa-plus-square" style="font-size: 20px; margin-top: 10px;"></i>
+					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=2';" style="border: none; background: none;">
+						<i class="fas fa-plus" style="font-size: 20px; margin-top: 10px; color: #9565A4;"></i>
 					</button>
 				</div>
 			</div>
@@ -317,8 +317,8 @@
 				</div>
 
 				<div style="text-align: right;" class="buttonDiv">
-					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';" style="border: none;">
-						<i class="far fa-plus-square" style="font-size: 20px; margin-top: 10px;"></i>
+					<button type="button" class="btnPlus" id="btnPlus" name="btnPlus" onclick="javascript:location.href='<%=cp%>/sign/list?mode=3';" style="border: none; background: none;">
+						<i class="fas fa-plus" style="font-size: 20px; margin-top: 10px; color: #9565A4;"></i>
 					</button>
 				</div>
 			</div>
@@ -330,7 +330,7 @@
 								style="margin-top: 30px; margin-bottom: 5px; width: 100%; border: 1px solid #cccccc; border-bottom: none;">
 								<tr align="left">
 									<td style="font-weight: bold; font-size: 16px; padding-left: 10px;">
-										<a href="javascript:location.href='<%=cp%>/sign/list?mode=4' " style="color: black;"><i class="fas fa-list">&nbsp;&nbsp;반려함</i></a>
+										<a href="javascript:location.href='<%=cp%>/sign/list?mode=4' " style="color: black;"><i class="fas fa-inbox">&nbsp;&nbsp;반려함</i></a>
 									</td>
 								</tr>
 								<tr align="left">
@@ -353,7 +353,7 @@
 								<tr align="left">
 									<td style="font-weight: bold; font-size: 16px; padding-left: 10px; border-bottom: 1px solid #cccccc;">
 										<a href="javascript:location.href='<%=cp%>/sign/list?mode=6' " style="color: black; ">
-											<i class="fas fa-list">&nbsp;&nbsp;임시저장함</i>
+											<i class="fas fa-save">&nbsp;&nbsp;임시저장함</i>
 										</a>
 									</td>
 								</tr>
