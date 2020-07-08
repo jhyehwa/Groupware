@@ -255,7 +255,7 @@
 							<option value="PM" ${dto.dCode=="PM"?"selected='selected'":"" }>기획부</option>
 							<option value="HR" ${dto.dCode=="HR"?"selected='selected'":"" }>인사부</option>
 							<option value="PR" ${dto.dCode=="PR"?"selected='selected'":"" }>홍보부</option>
-							<option value="TOP" ${dto.dCode=="TOP"?"selected='selected'":"" }>임원진</option>
+							<option value="TOP" ${dto.dCode=="TOP"?"selected='selected'":"" }>대표이사</option>
 							<option value="BM" ${dto.dCode=="BM"?"selected='selected'":"" }>경영지원부</option>
 						</select>
 					</div>
@@ -267,10 +267,11 @@
 							<option value="01" ${dto.pCode=="01"?"selected='selected'":"" }>사원</option>
 							<option value="02" ${dto.pCode=="02"?"selected='selected'":"" }>대리</option>
 							<option value="03" ${dto.pCode=="03"?"selected='selected'":"" }>과장</option>
-							<option value="04" ${dto.pCode=="04"?"selected='selected'":"" }>부장</option>
-							<option value="05" ${dto.pCode=="05"?"selected='selected'":"" }>이사</option>
+							<option value="04" ${dto.pCode=="04"?"selected='selected'":"" }>차장</option>
+							<option value="05" ${dto.pCode=="05"?"selected='selected'":"" }>부장</option>
+							<option value="06" ${dto.pCode=="05"?"selected='selected'":"" }>이사</option>
 							<option value="11" ${dto.pCode=="11"?"selected='selected'":"" }>부사장</option>
-							<option value="12" ${dto.pCode=="12"?"selected='selected'":"" }>사장</option>
+							<option value="12" ${dto.pCode=="12"?"selected='selected'":"" }>대표이사</option>
 						</select>
 					</div>
 					
