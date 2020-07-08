@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface BuddyService {
-	public void sendBuddy(Buddy dto, String pathname) throws Exception;
+	public void sendBuddy(Buddy dto, String pathname) throws Exception;	// 메일 쓰기
+	public void replyBuddy(Buddy dto, int buddyNum, String pathname) throws Exception;	// 답장
+	public void forwardBuddy(Buddy dto, int buddyNum, String pathname) throws Exception; // 전달
 	
-	public int buddyCount(Map<String, Object> map);
 	public int rbuddyCount(Map<String, Object> map);	// 받은 편지함 개수 
 	public int sbuddyCount(Map<String, Object> map); 	// 보낸 편지함 개수 
 	public int keepCount(Map<String, Object> map); 		// 보관함 개수
+	public int unreadCount(String receiver);	// 읽지 않은 메일 개수
 	
 	public List<Buddy> listRbuddy(Map<String, Object> map);	// 받은 쪽지함
 	public List<Buddy> listSbuddy(Map<String, Object> map);		// 보낸 쪽지함
@@ -25,8 +27,8 @@ public interface BuddyService {
 	public void updateState(int buddyNum) throws Exception;	// 중요도 (보관)
 	public void updateState2(int buddyNum) throws Exception;	// 중요도2 (해제)
 	
-	public void deleteBuddy(int buddyNum, String pathname) throws Exception;
-	public int deleteListBuddy(List<String> buddyNums) throws Exception;
+	public void deleteBuddy(int buddyNum, String pathname) throws Exception;	// 메일 삭제
+	public int deleteListBuddy(List<String> buddyNums) throws Exception;		// 체크박스 이용해 삭제
 	
 	public void insertFile(Buddy dto) throws Exception;
 	public List<Buddy> listFile(int num);

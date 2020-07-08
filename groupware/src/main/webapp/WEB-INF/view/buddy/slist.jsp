@@ -50,6 +50,35 @@ $(function() {
 });
 </script>
 
+<script type="text/javascript">
+function ajaxHTML(url, method, query, selector) {
+	$.ajax({
+		type: method, 
+		url: url,
+		data: query,
+		success: function(data){
+			$(selector).html(data);
+		}, 
+		error: function(jqXHR) {
+			if(jqXHR.state==403) {		
+				login(); 
+				return false;
+			} 			
+			console.log(jqXHR.responseText);
+		}
+	});	
+}
+
+$("body").on("click", ".aTag", function(){
+ 	var buddyNum = $(this).closest("td").find("input[type=hidden]").val(); 
+	var page = $("input[name=page]").val();
+	
+	var url = "<%=cp%>/buddy/mail";
+	var query = "page="+page+"&buddyNum="+buddyNum;
+	
+	ajaxHTML(url, "GET", query, ".mailArticle");
+});
+</script>
 
 
 <div class="container">
@@ -63,7 +92,10 @@ $(function() {
 	        		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-pen"></i>  </button>
 	       	</div>	
 	       	<div style="margin-top: 5px; margin-left: 20px;">
-	       		    <button type="button" style="width: 107px; margin-right: 2px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/rlist';"><i class="fas fa-archive"></i> </button>
+	       		    <button type="button" style="width: 107px; margin-right: 2px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/rlist';">
+	       		    			&nbsp;&nbsp;<span><i class="fas fa-archive"></i></span>
+	       		    			<span style="font-size: 13px; font-weight: bold;">${unreadCount==0? "": unreadCount}</span>
+	       		    </button>
 	       	        <button type="button" style="width: 107px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/keep';"><i class="fas fa-star"></i></button>
 	       	</div>
 	      	       	
@@ -87,7 +119,7 @@ $(function() {
 			
 		<div class="board-body" style="width: 58%; float: left;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 보낸 메일함 
+          		  <h3 style="font-size: 18px;">| 보낸 메일함
           		  &nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -132,6 +164,8 @@ $(function() {
 			      <td align="left" style="padding-left: 15px;">${dto.name}${dto.pType}</td>
 			      <td align="left" style="padding-left: 10px;">
 			           <a href="${articleUrl}&buddyNum=${dto.buddyNum}&empNo=${dto.empNo}">${dto.title}</a>
+			           <a class="aTag" href="#"> <i class="fas fa-external-link-alt" style="font-size: 10px;"></i> </a>
+			           <input type="hidden" value="${dto.buddyNum}">
 			      </td>			   
 			      <td>
 			      	<c:if test="${dto.fileCount != 0}">
@@ -151,21 +185,15 @@ $(function() {
 			 
 			<table style="margin-top: 10px;">
 			   <tr>
-				<td class="board-paging" align="center">
-			        ${dataCount==0 ? "보낸 메일이 없습니다.":paging}
-				</td>
+				<td colspan="8" id="list-paging">${dataCount == 0 ? "받은 메일이 없습니다." : paging}</td>
 			   </tr>
 			</table>
 		</div>
 		
 		
-		<div class="board-body" style="width: 22%; float: left;" > 
+		<div class="board-body" style="width: 22%; float: left; margin-left: -18px;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 메일 미리보기 (띄울것) </h3> 
-          		  <div class="mailarticle">
-          		   	 
-				</div>
-				  		 
+          		  <div class="mailArticle" id="mailArticle"></div>				  		 
             </div>
 		</div>		
 		  

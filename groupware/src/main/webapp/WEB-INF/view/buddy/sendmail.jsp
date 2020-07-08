@@ -82,7 +82,7 @@ function ajaxHTML(url, method, query, selector) {
       
        <div class="board-body" style="float: left; width: 20%;">	      
 	       <div class="leftside">	        	
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-envelope"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-pen"></i></button>
 	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/slist';"><i class="fas fa-list"></i></button>	
 	       </div>   
       </div>
@@ -156,19 +156,19 @@ function ajaxHTML(url, method, query, selector) {
 				<td style="font-size: 15px;"> &nbsp; </td>
 			</tr>
 			<tr>
-				<td style="font-weight: bold; font-size: 17px;"> 그룹웨어 오피스 </td>
+				<td style="font-weight: bold; font-size: 18px; border-bottom: 1px solid #cccccc;"> <i class="fas fa-warehouse"></i>&nbsp; Mamp connect </td>
 			</tr>
 			<tr> 
-				<td style="font-size: 15px;">|&nbsp;&nbsp;${sessionScope.employee.name} </td>
+				<td style="font-size: 15px; padding-top: 3px;"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;${dto.name} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">|&nbsp;&nbsp;${sessionScope.employee.dType} &nbsp; ${sessionScope.employee.pType} </td>
+				<td style="font-size: 15px;"><i class="fas fa-crosshairs"></i>&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">|&nbsp;&nbsp;${sessionScope.employee.tel} </td>
+				<td style="font-size: 15px;">&nbsp;<i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;${dto.tel}  </td>
 			</tr>				
 			<tr>
-				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;">|&nbsp;&nbsp;${sessionScope.employee.email} </td>
+				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;${dto.email}  </td>
 			</tr>
 			</table>				
          </div>

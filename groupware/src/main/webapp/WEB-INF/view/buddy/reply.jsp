@@ -87,7 +87,7 @@ $(function() {
 		$("#searchEmail-dialog").dialog({
 			modal : true,
 			width : 530,
-			title : '[사원 검색]',
+			title : '사원 검색',
 			open : function() {
 			},
 			close : function(event, ui) {
@@ -107,7 +107,7 @@ $(function() {
 			 var email = $(this).data("email");
 			 var dType = $(this).data("dtype");
 			 var pType = $(this).data("ptype");
-			 $("#receiverEmpList").append("<p style='padding-top: 3px;'>"+ "&nbsp;&nbsp;| " + dType + " " + name + pType + "  [" + email +  "] " + " ;" + "</p>");
+			 $("#receiverEmpList").append("<p style='padding-top: 3px;' value='${dto.receiver}'>"+ "&nbsp;&nbsp;| " + dType + " " + name + pType + "  [" + email +  "] " + " ;" + "</p>");
 			 
 			 empNos += val + ",";
 			 rempNos = empNos.substr(0,empNos.length-1);
@@ -134,7 +134,7 @@ $(function() {
 			
 			var out="";
 			
-			out += "<table class='empListTable' style='margin-top: 5px; margin-bottom: 20px; width: 500px; border-top: 1px solid #cccccc;'>";
+			out += "<table class='empListTable' style='margin-top: 10px; margin-bottom: 20px; width: 500px; border-top: 1px solid #cccccc;'>";
 			out += "	<tr>";
 			out += " 		<td width='5%' style='margin-left: 10px;'> <input type='checkbox' name='chkAll' id='chkAll' value='all' > </td>";
 			out += "    	<td width='20%'> 부서 </td>";
@@ -198,23 +198,38 @@ $(function() {
 				   <tr align="left" height="50"  > 
 				      <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">수신</td>
 					      <td style="padding-left:10px; border-bottom: 1px solid #cccccc;"> 
-						      <button type="button" id="searchEmail" style="background: none; border: none;  margin-top: 5px;"> <i class="fas fa-plus-circle" style="color: #585858; font-size: 15px;"></i></button>
-						      <div id="receiverEmpList" style="display: inline-block; vertical-align: top; margin-top: 5px; margin-bottom: 5px;"></div> 
-						       <input type="hidden" name="receiver">		    
+						     <div id="receiverEmpList" style="display: inline-block; vertical-align: top; margin-top: 5px; margin-bottom: 5px;">&nbsp;|&nbsp;${dto.dType}&nbsp;${dto.name}${dto.pType}&nbsp;[${dto.email}]</div> 
+						       <input type="hidden" name="receiver" value="${dto.empNo}">	    
 					      </td>
 				  </tr>	
 				  
 				   <tr align="left" height="50"  > 
 				      <td style="width: 100px; background: white; color: #424242; text-align: center; border-bottom: 1px solid #cccccc;">제목</td>
 				      <td style="padding-left:10px; border-bottom: 1px solid #cccccc;"> 
-				        <input type="text" name="title" maxlength="100" style="height: 27px; width: 930px; border: 1px solid #cccccc;" value="${dto.title}">
+				        <input type="text" name="title" maxlength="100" style="height: 27px; width: 930px; border: 1px solid #cccccc;" value="[RE] :: ${dto.title}">
 				      </td>
 				  </tr>				  
 				   
 				  <tr align="left" height="300"> 
 				      <td style="width: 100px; background: white; color: #424242; border-bottom: 1px solid #cccccc; text-align: center; padding-top:10px;" valign="middle">내용</td>
 				      <td valign="top" style="padding:20px 0px 20px 10px; border-bottom: 1px solid #cccccc;"> 
-				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
+				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;">
+				        		<br>
+				        		<br>
+				        		<br>
+				        		<br>
+				        		<br>
+				        		<br>
+				        		<br>
+				        		<br>
+				        		 ------------Original Message ------------<br>
+				        		From : ${dto.dType}&nbsp;${dto.name}${dto.pType}<br>
+				        		TO   : ${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}${sessionScope.employee.pType}<br>	
+				        		Sent : ${dto.sDate}<br>
+				        		Subject : ${dto.title}<br>
+				    			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			        		
+				        		${dto.content}
+				        </textarea>
 				      </td>
 				  </tr> 
 			  	
@@ -249,7 +264,7 @@ $(function() {
 <div id="searchEmail-dialog" class="emailModal" style="display: none;">
 	<div class="searchList">
 	    <form name="searchEmpForm">
-	    	<div style="margin-top: 10px; height: 35px;">
+	    	<div style="margin-top: 20px; height: 35px;">
 				<select name="col" style="width: 60px; height: 30px; border: 1px solid #cccccc; text-align: center; color: #424242;">
 					<option value="d.dType"> 부서 </option>
 					<option value="name"> 이름 </option>	

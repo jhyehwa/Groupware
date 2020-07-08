@@ -19,9 +19,16 @@ function deleteBuddy() {
 	}
 }
 
-function updateBuddy() {
+function replyBuddy() {
 	  var q = "buddyNum=${dto.buddyNum}&page=${page}";
-	  var url = "<%=cp%>/buddy/update?" + q;
+	  var url = "<%=cp%>/buddy/reply?" + q;
+
+	  location.href=url;
+}
+
+function forwardBuddy() {
+	  var q = "buddyNum=${dto.buddyNum}&page=${page}";
+	  var url = "<%=cp%>/buddy/forward?" + q;
 
 	  location.href=url;
 }
@@ -82,7 +89,7 @@ function ajaxHTML(url, method, query, selector) {
       
        <div class="board-body" style="float: left; width: 20%;">	      
 	       <div class="leftside">	        	
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-envelope"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-pen"></i></button>
 	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/rlist';"><i class="fas fa-list"></i></button>	
 	       </div>   
       </div>
@@ -93,7 +100,8 @@ function ajaxHTML(url, method, query, selector) {
 			      <td class="typeTd" colspan="2" style="font-size: 14px;">	     	 
 			
 			   	  <button type="button" class="articlebtn" onclick="deleteBuddy();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
-			      &nbsp;<button type="button" class="articlebtn" onclick="deleteBuddy();"><i class="fas fa-reply"></i> <span style="font-size: 13px;"> 답장 </span></button>				 		
+			      &nbsp;<button type="button" class="articlebtn" onclick="replyBuddy();"><i class="fas fa-reply"></i> <span style="font-size: 13px;"> 답장 </span></button>				 		
+			 	  &nbsp;<button type="button" class="articlebtn" onclick="forwardBuddy();"><i class="fas fa-share"></i> <span style="font-size: 13px;"> 전달 </span></button>				 		
 			 	  
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -104,7 +112,7 @@ function ajaxHTML(url, method, query, selector) {
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;
 			 		
 			      	${dto.sDate}
@@ -161,19 +169,19 @@ function ajaxHTML(url, method, query, selector) {
 				<td style="font-size: 15px;"> &nbsp; </td>
 			</tr>
 			<tr>
-				<td style="font-weight: bold; font-size: 17px;"> 그룹웨어 오피스 </td>
+				<td style="font-weight: bold; font-size: 18px; border-bottom: 1px solid #cccccc;"> <i class="fas fa-warehouse"></i>&nbsp; Mamp connect </td>
 			</tr>
 			<tr> 
-				<td style="font-size: 15px;">|&nbsp;&nbsp;${dto.name} </td>
+				<td style="font-size: 15px; padding-top: 3px;"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;${dto.name} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">|&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
+				<td style="font-size: 15px;"><i class="fas fa-crosshairs"></i>&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">|&nbsp;&nbsp;${dto.tel}  </td>
+				<td style="font-size: 15px;">&nbsp;<i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;${dto.tel}  </td>
 			</tr>				
 			<tr>
-				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;">|&nbsp;&nbsp;${dto.email}  </td>
+				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;${dto.email}  </td>
 			</tr>
 			</table>		
          </div>

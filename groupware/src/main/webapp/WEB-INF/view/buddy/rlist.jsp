@@ -128,14 +128,18 @@ $("body").on("click", ".aTag", function(){
 			
 		<div class="board-body" style="width: 58%; float: left;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
-          		  <h3 style="font-size: 18px;">| 받은 메일함 
-          		  &nbsp;&nbsp;&nbsp;
+          		  <h3 style="font-size: 18px;">| 받은 메일함
+          		 					<span style="font-size: 13px;">&nbsp;
+          		  						<span style="font-size: 9px; background: #9565A4; padding: 1.5px 3px; border-radius: 4px; color: white; margin-bottom: 5px;">N</span>&nbsp;
+          		  						<span style="color:  #9565A4; font-weight: bolder; padding-top: 3px;">${unreadCount}</span>&nbsp;/ ${dataCount} 
+          		  				    </span>
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  
           		  
           		  <button type="button" id="btnDeleteList" style="border:none; background: none; font-size: 20px; margin-bottom: 7px; margin-left: 5px; color: #353535;"> <i class="far fa-trash-alt"></i></button>   
           		  &nbsp;
@@ -204,9 +208,7 @@ $("body").on("click", ".aTag", function(){
 			 
 			<table style="margin-top: 10px;">
 			   <tr>
-				<td class="board-paging" align="center">
-			        ${dataCount==0 ? "받은 메일이 없습니다.":paging}
-				</td>
+				<td colspan="8" id="list-paging">${dataCount == 0 ? "받은 메일이 없습니다." : paging}</td>
 			   </tr>
 			</table>
 		</div>

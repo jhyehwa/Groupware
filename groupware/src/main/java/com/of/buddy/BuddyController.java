@@ -57,6 +57,87 @@ public class BuddyController {
 		return "redirect:/buddy/rlist";
 	}
 	
+	/* 답장 쓰기 */
+	@RequestMapping(value = "/buddy/reply", method = RequestMethod.GET)
+	public String replyForm(
+			Model model, 
+			HttpSession session,
+			@RequestParam int buddyNum,
+			@RequestParam String page
+			) throws Exception {		
+		
+		Buddy dto = service.readBuddy(buddyNum);
+		
+		if(dto==null) {
+			return "redirect:/buddy/rlist?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);		
+		
+		return ".buddy.reply";
+	}	
+	
+
+	@RequestMapping(value = "/buddy/reply", method = RequestMethod.POST)
+	public String replySubmit(
+			Buddy dto,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "buddy";
+		
+			dto.setSender(info.getEmpNo());
+			service.sendBuddy(dto, pathname);
+		} catch (Exception e) {
+		}
+		return "redirect:/buddy/rlist?page="+page;
+	}
+	
+	/* 전달하기 */
+	@RequestMapping(value = "/buddy/forward", method = RequestMethod.GET)
+	public String forwardForm(
+			Model model, 
+			HttpSession session,
+			@RequestParam int buddyNum,
+			@RequestParam String page
+			) throws Exception {		
+		
+		Buddy dto = service.readBuddy(buddyNum);
+		List<Buddy> listFile=service.listFile(buddyNum);
+		
+		if(dto==null) {
+			return "redirect:/buddy/rlist?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);	
+		model.addAttribute("listFile", listFile);
+		
+		return ".buddy.forward";
+	}
+	
+	@RequestMapping(value = "/buddy/forward", method = RequestMethod.POST)
+	public String forwardSubmit(
+			Buddy dto,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "buddy";
+		
+			dto.setSender(info.getEmpNo());
+			service.sendBuddy(dto, pathname);
+		} catch (Exception e) {
+		}
+		return "redirect:/buddy/rlist?page="+page;
+	}
+	
 	/*받는 사람 검색*/
 	@ResponseBody
 	@RequestMapping(value="/buddy/searchEmailList", method=RequestMethod.GET)
@@ -126,6 +207,9 @@ public class BuddyController {
         	dto.setrDate(dto.getrDate().substring(0, 16));
         }
         
+        // 읽지 않은 메일 개수 
+        int unreadCount = service.unreadCount(receiver);
+        
         String cp=req.getContextPath();
         String query = "";
         String listUrl = cp+"/buddy/rlist";
@@ -148,6 +232,7 @@ public class BuddyController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);		
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("unreadCount", unreadCount);
 			
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -196,6 +281,9 @@ public class BuddyController {
 		if(offset < 0) offset = 0;
         map.put("offset", offset);
         map.put("rows", rows);
+        
+        // 읽지 않은 메일 개수 
+        int unreadCount = service.unreadCount(sender);
        
         List<Buddy> slist = service.listSbuddy(map);  
         
@@ -225,6 +313,7 @@ public class BuddyController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);		
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("unreadCount", unreadCount);
 			
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -272,6 +361,9 @@ public class BuddyController {
 		if(offset < 0) offset = 0;
         map.put("offset", offset);
         map.put("rows", rows);
+        
+        // 읽지 않은 메일 개수 
+        int unreadCount = service.unreadCount(receiver);
        
         List<Buddy> klist = service.listKeep(map);  
         
@@ -282,7 +374,7 @@ public class BuddyController {
         String cp=req.getContextPath();
         String query = "";
         String listUrl = cp+"/buddy/keep";
-        String articleUrl = cp+"/buddy/mail?page=" + current_page;
+        String articleUrl = cp+"/buddy/mail2?page=" + current_page;
         if(keyword.length()!=0) {
         	query = "condition=" + condition + 
         	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
@@ -290,7 +382,7 @@ public class BuddyController {
         
         if(query.length()!=0) {
         	listUrl = cp+"/buddy/keep?" + query;
-        	articleUrl = cp+"/buddy/mail?page=" + current_page + "&"+ query;
+        	articleUrl = cp+"/buddy/mail2?page=" + current_page + "&"+ query;
         }
         
         String paging = myUtil.paging(current_page, total_page, listUrl);   
@@ -301,6 +393,7 @@ public class BuddyController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);		
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("unreadCount", unreadCount);
 			
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -615,7 +708,7 @@ public class BuddyController {
 		service.deleteListBuddy(buddyNums);		
 		
 		return "redirect:/buddy/rlist?page="+page;
-	}	
+	}
 	
 	// 파일 삭제
 	@RequestMapping(value="/buddy/deleteFile", method=RequestMethod.POST)

@@ -92,6 +92,27 @@
 		</where>
 	</select>
 	
+	<!-- 읽지 않은 메일 개수 -->
+	<select id="unreadCount" parameterType="String" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM buddy b
+		JOIN rbuddy r ON b.buddyNum = r.buddyNum
+		JOIN sbuddy s ON b.buddyNum = s.buddyNum
+		WHERE receiver = #{receiver} AND buddyCheck = 0
+	</select>
+	
+	<!-- 안 읽은 메일 삭제  // 구현 안 함 -->
+	<delete id="deleteUnreadBuddy" parameterType="String" >
+		DELETE 
+		FROM rbuddy r 
+		WHERE EXISTS (
+	  	  SELECT '1' 
+	   	  FROM sbuddy s
+	      WHERE s.buddyNum = r.buddyNum 
+	      AND receiver = #{receiver}
+	    ) AND buddyCheck = 1
+	</delete>
+	
 	<!-- 받은 편지함  -->
 	<select id="listRbuddy" parameterType="map" resultType="com.of.buddy.Buddy">
 		SELECT b.buddyNum, buddyState, buddyCheck, sender, receiver, title, rDate, NVL(fileCount, 0) fileCount,
@@ -157,11 +178,11 @@
 				SELECT buddyNum, COUNT(*) fileCount FROM buddyFile
 				GROUP BY buddyNum
 			) f ON b.buddyNum=f.buddyNum
-		WHERE receiver = #{receiver} AND buddyState = 1
+		WHERE receiver = #{receiver} AND buddyState = 1		
 		
 			<if test="keyword != null and keyword != ''">
 				AND <include refid="where-list"/>
-			</if>
+			</if>			
 			
 		ORDER BY b.buddyNum DESC
    	    OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY	
@@ -177,7 +198,7 @@
 	<!-- 받은 메일 읽기 --> 
 	 <select id="readBuddy" parameterType="Integer" resultType="com.of.buddy.Buddy">
 		SELECT DISTINCT b.buddyNum, title, content, e.name, dType, pType, email, sDate, tel, buddyState,
-			   NVL(fileCount, 0) fileCount, imageFilename
+			   NVL(fileCount, 0) fileCount, imageFilename, e.empNo
 		FROM buddy b
         JOIN rbuddy r ON b.buddyNum = r.buddyNum
 		JOIN sbuddy s ON b.buddyNum = s.buddyNum

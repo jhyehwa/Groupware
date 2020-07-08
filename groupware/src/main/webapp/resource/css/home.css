@@ -17,6 +17,10 @@ body {
  .content-news a:link { color: #2E2E2E; text-decoration: none;}
  .content-news a:visited { color: #2E2E2E; text-decoration: none;}
  .content-news a:hover { color: #EDA900; text-decoration: none;}
+ 
+ .content-sign a:link { color: #2E2E2E; text-decoration: none;}
+ .content-sign a:visited { color: #2E2E2E; text-decoration: none;}
+ .content-sign a:hover { color: #EDA900; text-decoration: none;}
 
 
 
@@ -111,15 +115,6 @@ body {
 	float: left;
 }
 
-.content-buddy{
-	width: 555px; 
-	height: 285px; 
-	margin-left: 25px; 
-	margin-top: 0px;
-	background: red;
-}
-
-
 .content-notice{
 	width: 268px;
 	height: 285px; 
@@ -129,8 +124,6 @@ body {
 	background: white;
 	float: left;
 } 
-
-
 
 .content-notice p {
 	font-size: 20px;
@@ -202,6 +195,56 @@ body {
 	font-size: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.content-sign {
+	width: 555px; 
+	height: 285px; 
+	margin-left: 25px; 
+	margin-top: 0px;
+	background: white;
+	border: 1px solid #cccccc;
+	border-style: dotted;
+}
+
+.content-sign p {
+	font-size: 20px;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+	border-bottom: 1px solid #E6E6E6;
+	/* border-bottom: 2px solid #632A7E; */
+}
+
+.content-sign table {
+	padding-top: 5px;
+	table-layout: fixed;
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.content-sign tr {
+	height: 32px;
+}
+
+.content-sign td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	align: left;
+}
+
+.ftd {
+	font-size: 15px;
+	border-bottom: 1px solid #E6E6E6;
+	font-weight: bold;
+	margin-bottom: 10px;
+/* 	background: #E3CEF6; */
+}
+
+.std {
+	font-size: 14px;
 }
 
 .timeBtn {

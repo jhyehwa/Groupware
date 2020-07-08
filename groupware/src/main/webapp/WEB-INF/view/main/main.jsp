@@ -220,6 +220,7 @@ $(function() {
 </script>
 
 <script>
+// 날씨
 $(function(){
 	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+"Seoul"+"&appid="+"92014bb042cf34f71371c60e82477360";
 	
@@ -262,7 +263,7 @@ $(function(){
 			out += "<table style='width: 90%; border: none; padding: 0px; border-spacing: 0px;'>";
 			out += "<tr>";
 			out += "	<td rowspan='2' style='text-align: right; width: 50%; font-size: 70px;'>" + wicon + "</td>";
-			out += "	<td style='text-align: left; font-size: 30px; padding-left: 15px;'><i class='fas fa-temperature-high'></i>"  + temp + "°C" + "</td>";
+			out += "	<td style='text-align: left; font-size: 30px; padding-left: 15px;'><i class='fas fa-temperature-high'></i>&nbsp;" + temp  + "</td>";
 		    out += "</tr>";
 			out += "<tr>";
 			out += "	<td style='text-align: left; font-size: 15px; font-style: italic; padding-left: 15px;'>" + "Seoul , KR" + "</td>";
@@ -588,10 +589,33 @@ function deleteTalk(talkNum, page) {
 				</div>   
 			</div>
 			<div class="content-right">
-				<div class="content-buddy" >
-					<ul >
-						<li>쪼옥지 </li>
-					</ul>
+				<div class="content-sign" >
+					<p> 
+						<i class="fas fa-inbox"></i> 결재 수신함 
+						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						  &nbsp;
+						<a href="<%=cp%>/sign/list?mode=2"><i class="fas fa-angle-double-right" style="font-size: 17px;"></i></a>
+				    </p>
+					<table>
+						<tr align="center">
+								<td class="ftd" style="width: 12%;"> 부서 </td>
+								<td class="ftd" style="width: 17%;"> 기안자 </td>
+								<td class="ftd" style="width: 38%;"> 제목 </td>
+								<td class="ftd" style="width: 21%;"> 기안일 </td>
+								<td class="ftd"> 상태 </td>					
+						</tr>
+						<c:forEach var="dto" items="${sglist}" begin="0" end="5">
+							 <tr align="center"> 
+							      <td class="std">${dto.dType}</td>
+							      <td class="std">${dto.name}${dto.pType}</td>
+							      <td class="std" style="text-align: left; padding-left: 3px;">${dto.ssubject}</td>
+							      <td class="std">${dto.sdate}</td>
+							      <td class="std">${dto.scurrStep!=dto.sendStep ?'미결':'완료'}</td>
+							  </tr>
+							</c:forEach>				
+					</table>
 				</div>
 				
 					<div class="content-notice" >

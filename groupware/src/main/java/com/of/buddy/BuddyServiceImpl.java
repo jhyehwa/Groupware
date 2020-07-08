@@ -68,11 +68,81 @@ public class BuddyServiceImpl implements BuddyService {
 		}
 
 	}
+	
+	@Override	// 답장 쓰기 
+	public void replyBuddy(Buddy dto, int buddyNum, String pathname) throws Exception {
+		try {
+			int seq = dao.selectOne("buddy.seq");
+			dto.setBuddyNum(seq);
+			dao.insertData("buddy.sendBuddy1", dto);
+			dao.insertData("buddy.sendBuddy2", dto);
+			
+			String []ss = dto.getReceiver().split(",");
+			for(int i=0; i<ss.length; i++) {
+				dto.setReceiver(ss[i]);				
+				dao.insertData("buddy.sendBuddy3", dto);
+			}
+			
+			// 파일 업로드
+			if (!dto.getUpload().isEmpty()) {
+				for (MultipartFile mf : dto.getUpload()) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if (saveFilename == null)
+						continue;
 
-	@Override
-	public int buddyCount(Map<String, Object> map) {
+					String originalFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
+					
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
 
-		return 0;
+					insertFile(dto);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
+	@Override // 전달하기 
+	public void forwardBuddy(Buddy dto, int buddyNum, String pathname) throws Exception {
+		try {
+			int seq = dao.selectOne("buddy.seq");
+			dto.setBuddyNum(seq);
+			dao.insertData("buddy.sendBuddy1", dto);
+			dao.insertData("buddy.sendBuddy2", dto);
+			
+			String []ss = dto.getReceiver().split(",");
+			for(int i=0; i<ss.length; i++) {
+				dto.setReceiver(ss[i]);				
+				dao.insertData("buddy.sendBuddy3", dto);
+			}
+			
+			// 파일 업로드
+			if (!dto.getUpload().isEmpty()) {
+				for (MultipartFile mf : dto.getUpload()) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if (saveFilename == null)
+						continue;
+
+					String originalFilename = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
+					
+					dto.setOriginalFilename(originalFilename);
+					dto.setSaveFilename(saveFilename);
+					dto.setFileSize(fileSize);
+
+					insertFile(dto);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 	
 	@Override	// 받은 편지함 개수 
@@ -105,6 +175,18 @@ public class BuddyServiceImpl implements BuddyService {
 		
 		try {
 			result = dao.selectOne("buddy.keepCount", map);
+		} catch (Exception e) {
+		}
+		
+		return result;
+	}
+	
+	@Override	// 읽지 않은 메일 개수 
+	public int unreadCount(String receiver) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("buddy.unreadCount", receiver);
 		} catch (Exception e) {
 		}
 		
@@ -276,6 +358,7 @@ public class BuddyServiceImpl implements BuddyService {
 		}
 
 	}
+	
 
 	@Override	// 읽음 표시 
 	public void updateCheck(int buddyNum) throws Exception {
@@ -309,6 +392,16 @@ public class BuddyServiceImpl implements BuddyService {
 		}
 		
 	}
+
+	
+
+	
+
+
+
+
+
+	
 
 	
 
