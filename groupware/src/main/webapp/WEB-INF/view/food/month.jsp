@@ -8,14 +8,14 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 <style>
 /*왼쪽메뉴리스트*/
-.leftMenu{
+<%-- .leftMenu{
 	background-size: 180px 220px;
 
 	width:180px;
 	height:220px; 
 	background-image: url("<%=cp%>/resource/images/menu.png");
 	
-}
+} --%>
 </style>
 <script type="text/javascript">
 
@@ -159,6 +159,19 @@ function check() {
 	return true;
 }
 
+$(function(){
+	if($("#form-subject option:selected").val()=='LUNCH'){
+		$(".foodSubject").css("background", "salmon");
+	}
+	if ($("#form-subject option:selected").val()=='DINNER') {
+		$(".foodSubject").css("background", "gold");
+	}
+	
+	if ($("#form-subject option:selected").val()=='SNACK') {
+		$(".foodSubject").css("background", "blue");
+	}
+	
+});
 
 
 // 스케쥴 제목 클릭 -----------------------
@@ -170,7 +183,7 @@ $(function(){
 		date=date.substr(0,4)+"년"+date.substr(4,2)+"월"+date.substr(6,2);
 		$('#food-detail').dialog({
 			  modal: true,
-			  height: 600,
+			  height: 550,
 			  width: 450,
 			  title: date+'일의 식단',
 			  
@@ -188,8 +201,9 @@ $(function(){
 						$(this).dialog("close");
 					}
 				}
-		});
+		});		
 	});
+
 });
 
 //식단상자 닫기
@@ -211,15 +225,15 @@ function deleteOk(num) {
 </script>
 <div class="container">	
 	<div class="board-container" style="margin-left: 200px;">
-	    <div class="body-title">
-	        <h3>식단</h3>
-	    </div>
+	  <!--   <div class="board-title">
+	        <h3>식단표</h3>
+	    </div> -->
 	    
     	<div class="board-body " style="float: left; width: 20%;">	      
 	        <div style="margin: 70px 0 0 20px; ">
-	        	<table style="width: 170px; margin-top:5px; border-spacing: 0px; " >  	
+	        	<table style="width: 200px; margin-top:5px; border-spacing: 0px; " >  	
 		        	<tr>
-		        		<td class="titleBtn" >   
+		        		<td class="titleBtn" >   	        				        			
 			        		<!-- <button type="button" class="titleBtn" disabled="disabled"; ></button> -->
 			        		<i  class="fas fa-utensils"></i>
 			        		
@@ -229,7 +243,7 @@ function deleteOk(num) {
 		        	<tr>
 		        		<td style="text-align: center;">
 		        			<p>&nbsp;</p>
-		        			<p style="font-size: 18px; ">오늘의 식단</p>	
+		        			<p style="font-size: 20px; font-weight: 800; color: #545454; ">오늘의 식단</p>	
 		        			<p>&nbsp;</p>
 		        			<p>${todayYear}년 ${todayMonth}월  ${todayDate}일 </p>
 		        		</td>
@@ -246,15 +260,16 @@ function deleteOk(num) {
 				
 				
 				<c:forEach var="dto" items="${list}">
-				<table class="leftMenu" style="margin-top: 10px;">
+				<table class="leftMenu" style="margin-top: 20px;">
 					<tr height="35">
-						<td style="text-align: center; padding-bottom: 5px; ">
-							<p style="font-size:16px; font-weight: 900;">
+						<td style="text-align: left;  padding-left: 15px;  padding-bottom: 5px; ">
+							<p style="font-size:16px; font-weight: 900;"><i class="fas fa-apple-alt" style="color: ${dto.subject=='LUNCH'? 'salmon' : (dto.subject=='DINNER'? '#F7E5F3': 'SEASHELL')};"></i>
 							<c:choose>
 							    <c:when test="${dto.subject=='LUNCH'}">점심</c:when>
 							    <c:when test="${dto.subject=='DINNER'}">저녁</c:when>
 						    <c:otherwise>간식</c:otherwise>
 						    </c:choose>
+						    
 							</p>
 						</td>
 					</tr>
@@ -285,7 +300,7 @@ function deleteOk(num) {
 		   			</tr>
 		   		</table>
 		   		
-			    <table id="largeCalendar" style="width: 840px; margin:10px auto;" >
+			    <table id="largeCalendar" style="width: 840px; margin:10px auto; font-weight: 700" >
 					<tr align="center" height="30" bgcolor="#ffffff">
 						<td width="120" style="color:#cccccc;">일</td>
 						<td width="120">월</td>
@@ -321,9 +336,9 @@ function deleteOk(num) {
 			      <td valign="middle" >
 			        <p>
 			            <select name="subject" id="form-subject" class="selectField">
-			              <option  value="LUNCH">점심</option>
-			              <option value="DINNER">저녁</option>
-			              <option value="SNACK">간식</option>
+			              <option name="titleOPT" value="LUNCH">점심</option>
+			              <option class="titleOPT" value="DINNER">저녁</option>
+			              <option class="titleOPT" value="SNACK">간식</option>
 			          </select>
 			        </p>			        
 			      </td>

@@ -21,5 +21,5 @@ public interface EmployeeService {
 	public Employee readEmployee(String empNo);
 	
 	public List<Employee> listEmpOrg(Map<String, Object> map);
-	public Employee readDepartment(String dType);
+	public List<String> listDept();
 }

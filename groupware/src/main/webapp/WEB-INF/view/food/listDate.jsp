@@ -11,10 +11,11 @@
  <div id="food-detail" >
 		<form name="foodDetail-Form">
 			<c:forEach var="dto" items="${list}">
-			<table style="width: 80%; margin:0 auto 10px; border-spacing: 0px; border:1px solid ${dto.subject=='LUNCH'? '#F7E5F3' : (dto.subject=='DINNER'? 'salmon': 'SEASHELL')}; border-radius:5px; ">
+			<table style="width: 80%; margin:0 auto 10px; border-spacing: 0px; border:1px solid ${dto.subject=='LUNCH'? 'salmon' : (dto.subject=='DINNER'? '#F7E5F3': 'SEASHELL')}; border-radius:5px; ">
 			  <tr  height="20">
-			  		<td  style="padding: 10px 0 10px 30px; background: ${dto.subject=='LUNCH'? '#F7E5F3' : (dto.subject=='DINNER'? 'salmon': 'SEASHELL')}; ">
-						<span style="font-size: 20px">${dto.subject=='LUNCH'? '점심' : (dto.subject=='DINNER'? '저녁': '간식')}</span>
+			  		<td  style="padding: 10px 0 10px 30px;">
+			  			<span style="color: ${dto.subject=='LUNCH'? 'salmon' : (dto.subject=='DINNER'? '#F7E5F3': 'SEASHELL')};"><i class="fas fa-apple-alt"></i></span>
+						<span style="font-size: 18px; font-weight: 800;">${dto.subject=='LUNCH'? '점심' : (dto.subject=='DINNER'? '저녁': '간식')}</span>
 						<span>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

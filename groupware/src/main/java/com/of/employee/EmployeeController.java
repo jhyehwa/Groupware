@@ -293,25 +293,35 @@ public class EmployeeController {
 	}
 	
 	// 조직도 사원 리스트
-		@RequestMapping(value="employee/org")
-		public ModelAndView org(Model model) {
-			return new ModelAndView(".layout.footer");
-		}
-		
-		@RequestMapping(value="employee/listOrg")
-		@ResponseBody
-		public Map<String, Object> listOrg() throws Exception{
-			
-			Map<String, Object> map = new HashMap<>();
-
-			List<Employee> listOrg = service.listEmpOrg(map);
-			
-			// 작업 결과를 json으로 전송
-			Map<String, Object> model = new HashMap<>();
-			model.put("listOrg", listOrg);
-			// 게시물 리스트
-			return model;
-		}
+	@RequestMapping(value="/employee/org")
+	public ModelAndView org(Model model) {
+		return new ModelAndView(".layout.footer");
+	}
 	
+	// 부서명
+	@RequestMapping(value="/employee/listDept")
+	@ResponseBody
+	public List<String> listDept() throws Exception{
+		
+		List<String> listDept=service.listDept();
+		
+		return listDept;
+	}
+	
+	// 부서 인간
+	@RequestMapping(value="/employee/listOrg")
+	@ResponseBody
+	public Map<String, Object> listOrg(@RequestParam String dept) throws Exception{
+			
+		Map<String, Object> map = new HashMap<>();
+		map.put("dept", dept);		
+		List<Employee> listOrg = service.listEmpOrg(map);
+			
+		// 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>();
+		model.put("listOrg", listOrg);
+			// 게시물 리스트
+		return model;
+	}
 	
 }

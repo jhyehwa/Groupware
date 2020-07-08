@@ -164,16 +164,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee readDepartment(String dType) {
-		Employee dto = null;
+	public List<String> listDept() {
+		List<String> list = null;
 
 		try {
-			dto = dao.selectOne("employee.readDepartment", dType);
+			list = dao.selectList("employee.listDept");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return dto;
+		return list;
 	}
+
+	
 
 }

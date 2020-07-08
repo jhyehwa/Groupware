@@ -70,7 +70,7 @@ ul.tabs li.active{
 }
 
 .titleBtn i{
-	font-size:70px; color:#F5A9A9; /* #EEE0F9 */;
+	font-size:70px; color:#fdc608;/* #F5A9A9; */ /* #EEE0F9 */;
 	text-align: center;
 }
 
@@ -84,7 +84,7 @@ ul.tabs li.active{
 
 
 .leftMenu{
-	width: 170px;
+	width: 200px;
 	margin-top:5px; 
 	border-spacing: 0px; 
 
@@ -171,7 +171,9 @@ ul.tabs li.active{
    line-height: 22px;
    margin:1.5px 0; 
    color:#333333;
-   background:LAVENDERBLUSH;
+   background:#F7E5F3;
+   /* LAVENDERBLUSH; */
+   
    cursor: pointer;
    border-radius:10px;
    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;

@@ -56,110 +56,135 @@
 	padding-top: 10px
 }
 
-
-
 </style>
 
-
+<script type="text/javascript">
+$(function(){
+	$(document)
+	   .ajaxStart(function(){ // AJAX 시작시
+		   $("#loadingImage").center();
+		   $("#loadingLayout").fadeTo("slow", 0.5);
+	   })
+	   .ajaxComplete(function(){ // AJAX 종료시
+		   $("#loadingLayout").hide();
+	   });
+});
+</script>
 
 <script type="text/javascript">
+$(function(){
+	function ajaxJSON(url, type, query, fn) {
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				fn(data);
+			}
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
+	
+	function listDept() {
+		var url="<%=cp%>/employee/listDept";
+		var query="";
+		
+		var fn = function(data){
+			printDept(data);
+		};
+		
+		ajaxJSON(url, "get", query, fn);		
+	}
+	
+	function printDept(data) {
+	
+		var uid="${sessionScope.employee.empNo}";		
+		
+		var out="";
+		for(var idx=0; idx<data.length; idx++) {
+			var dType=data[idx];
+			
+			out+="<tr ><td class='fp-dept'>";
+			out+="<span class='dept-icon fp-dept-more' data-dept='"+dType+"'><i class='fas fa-caret-down'></i>"+dType+"</span>";
+			out+="<span class='dept-icon fp-dept-less' style='display:none'><i class='fas fa-caret-up'></i>"+dType+"</span></td></tr>";
+			out+="<tr style='display:none;'><td class='fp-person'></td></tr>";
+		}
+		
+		$("#listPerson").append(out);
+	}
+	
+	listDept();
+	
+	$("body").on("click", ".dept-icon",function(){
+		  var obj = $(this);
+		  var $td = $(this).closest("tr").next("tr").children("td");
+		  if( obj.hasClass("fp-dept-more") ){
+		    obj.hide();
+		    obj.next().show();            
+		    obj.parent().parent().next().show();
+		    
+		    $td.empty();
+		    
+		    var dept = obj.attr("data-dept");
+		    
+		    var url="<%=cp%>/employee/listOrg";
+			var query="dept="+dept;
+			
+			var fn = function(data){
+				printOrg(data, $td);
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+		    
+ 
+		  }else{
+		     obj.hide();
+		     obj.prev().show();
+		     obj.parent().parent().next().hide();
+		  }
+	});	
+	
+	function printOrg(data,obj) {
+		var uid="${sessionScope.employee.empNo}";
+
+		var out="";
+		for(var idx=0; idx<data.listOrg.length; idx++) {
+			var dType=data.listOrg[idx].dType;
+			var name=data.listOrg[idx].name;
+			var pType=data.listOrg[idx].pType;
+			var image=data.listOrg[idx].imageFilename;
+			
+			out+=" <p> <i class='fas fa-circle' style='font-size: 8px'></i>&nbsp;&nbsp;&nbsp;";
+			out+=" <img src='<%=cp%>/uploads/profile/"+image+"' style='width: 20px; height: 20px; border-radius: 10px; vertical-align:middle;'>"+pType+"|"+name+"</i>";
+			out+=" <a class='chatInput'><span><i class='fas fa-comments'></i></span></a>";
+			out+=" <a class='messageInput' href='<%=cp%>/buddy/created'><span><i class='fas fa-paper-plane'></i></span></a>";
+			out+=" <a class='information'><span><i class='fas fa-info-circle'></i></span></a></p>";							
+		}		
+		obj.html(out);
+	}
+	
+});
+
+
 
 $(function(){
 	$(".footer-icon").click(function(){
-		$(".footer-detail").toggle(100);		
+		$(".footer-detail").toggle(100);
 	});
+
 });
 
-
-
-function ajaxJSON(url, type, query, fn) {
-	$.ajax({
-		type:type
-		,url:url
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			fn(data);
-		}
-		,beforeSend:function(jqXHR) {
-	        jqXHR.setRequestHeader("AJAX", true);
-	    }
-	    ,error:function(jqXHR) {
-	    	if(jqXHR.status==403) {
-	    		login();
-	    		return false;
-	    	}
-	    	console.log(jqXHR.responseText);
-	    }
-	});
-}
-
-
-
-function listPage(page) {
-	var url="<%=cp%>/employee/listOrg";
-	var query="";
-	
-	var fn = function(data){
-		printOrg(data);
-	};
-	
-	ajaxJSON(url, "get", query, fn);		
-}
-
-
-
-
-function printOrg(data) {
-	var uid="${sessionScope.employee.empNo}";
-	var dataCount = data.dataCount;
-	
-	var out="";
-	if(dataCount!=0) {
-		for(var idx=0; idx<data.listOrg.length; idx++) {
-			var name=data.listOrg[idx].name;
-			var dType=data.listOrg[idx].dType;
-			var pType=data.listOrg[idx].pType;
-			
-			out+="<tr ><td class='fp-dept'>";
-			out+="<span class='dept-icon fp-dept-more'><i class='fas fa-caret-down'></i>"+dType+"</span>";
-			out+="<span class='dept-icon fp-dept-less' style='display:none'><i class='fas fa-caret-up'></i>"+dType+"</span></td></tr>";		         			
-			out+=" <tr><td><p> <i class='fas fa-circle' style='font-size: 8px'></i>&nbsp;&nbsp;&nbsp;";
-			out+=" <i class='fas fa-user-circle'>"+pType+"|"+name+"</i>";
-			out+=" <a class='chatInput'><span><i class='fas fa-comments'></i></span></a>";
-			out+=" <a class='messageInput'><span><i class='fas fa-paper-plane'></i></span></a>";
-			out+=" <a class='information'><span><i class='fas fa-info-circle'></i></span></a></p></td></tr>";	
-							
-			}
-		
-		$("#listPerson").append(out);
-		
-	}
-}
-
 $(function(){
-	$(".dept-icon").on("click",function(){
-	  var obj = $(this);
-	  if( obj.hasClass("fp-dept-more") ){
-	    obj.hide();
-	    obj.next().show();            
-	    obj.parent().parent().next().show();
-	  }else{
-	     obj.hide();
-	     obj.prev().show();
-	     obj.parent().parent().next().hide();
-	  }
-	});
-});
-
-
-
-
-
-
-
-$(function(){
-	
 	$(".header1").on("click",function(){
 		$(".footer-profileTB").css("display", "inline-block");
 		$(".footer-chatTB").css("display", "none");
@@ -177,17 +202,11 @@ $(function(){
 		$(".footer-chatTB").css("display", "none");
 		$(".footer-messageTB").css("display", "inline-block");
 	});
-	
-	
 });
 
 
 
 </script>
-<script>
-
-</script>
-
 
 
 
