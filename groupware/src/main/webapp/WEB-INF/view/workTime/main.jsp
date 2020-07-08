@@ -11,6 +11,8 @@
 
 <script type="text/javascript">
 
+
+
 function ajaxGET(url, type, query) {
 	$.ajax({
 		type:type,
