@@ -140,25 +140,25 @@ function ajaxHTML(url, method, query, selector) {
 			</tr>	
 			
 			<tr> 			
-				<td rowspan="6" style="width: 18%; border-bottom: 1px solid #cccccc;  padding: 10px 0; padding-left: 15px; padding-top: 45px;">
+				<td rowspan="6" style="width: 18%; border-bottom: 1px solid #cccccc;  padding: 10px 0; padding-left: 3px; padding-top: 45px; padding-right: 5px;">
 					<img src="<%=cp%>/uploads/profile/${dto.imageFilename}" width="150" height="150" border="0"> 
 				</td>
 				<td style="font-size: 15px;"> &nbsp; </td>
 			</tr>
 			<tr>
-				<td style="font-weight: bold; font-size: 17px;">&nbsp;&nbsp;&nbsp;그룹웨어 오피스 </td>
+				<td style="font-weight: bold; font-size: 18px; border-bottom: 1px solid #cccccc; padding-left: 10px;"> <i class="fas fa-warehouse"></i>&nbsp; Mamp connect </td>
 			</tr>
 			<tr> 
-				<td style="font-size: 15px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.name} </td>
+				<td style="font-size: 15px; padding-top: 3px; padding-left: 10px;"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;${dto.name} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
+				<td style="font-size: 15px; padding-left: 10px;"><i class="fas fa-crosshairs"></i>&nbsp;&nbsp;${dto.dType} &nbsp; ${dto.pType} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.tel}  </td>
+				<td style="font-size: 15px; padding-left: 10px;">&nbsp;<i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;${dto.tel}  </td>
 			</tr>				
 			<tr>
-				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;${dto.email}  </td>
+				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px; padding-left: 10px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;${dto.email}  </td>
 			</tr>
 			</table>	
 			

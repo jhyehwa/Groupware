@@ -7,7 +7,7 @@
 
    String wsURL = "ws://"+request.getServerName()+":"+request.getServerPort()+cp+"/chat.msg";
 %>
-
+ 
 <link rel="stylesheet" href="<%=cp%>/resource/css/chat.css" type="text/css">
 
 <style type="text/css">

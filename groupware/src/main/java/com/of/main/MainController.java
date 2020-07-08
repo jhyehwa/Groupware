@@ -23,6 +23,8 @@ import com.of.notice.Notice;
 import com.of.notice.NoticeService;
 import com.of.scheduler.Scheduler;
 import com.of.scheduler.SchedulerJSON;
+import com.of.sign.Sign;
+import com.of.sign.SignService;
 
 @Controller("mainController")
 public class MainController {
@@ -32,6 +34,8 @@ public class MainController {
 	NoticeService nservice;
 	@Autowired
 	NewsService nwservice;
+	@Autowired
+	SignService sgservice;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(
@@ -64,13 +68,26 @@ public class MainController {
 		map.put("offset", offset);
 		map.put("rows", 10);
 		map.put("nCode", nCode);
-		List<News> nwlist = nwservice.listNews(map);		
+		List<News> nwlist = nwservice.listNews(map);	
+		
+		// 결재 수신함 리스트
+		String signUrl = cp + "/sign/article?page=";
+		map.put("offset", offset);
+		map.put("rows", 10);
+		
+		List<Sign> sglist = sgservice.stepList(map,"reci");
+		
+		for(Sign dto : sglist) {
+			dto.setSdate(dto.getSdate().substring(0,10));
+		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("nwlist", nwlist);
+		model.addAttribute("sglist", sglist);
 		model.addAttribute("newsUrl", newsUrl);
 		model.addAttribute("noticeUrl", noticeUrl);
+		model.addAttribute("signUrl", signUrl);
 				
 		return ".mainLayout";		
 	}
