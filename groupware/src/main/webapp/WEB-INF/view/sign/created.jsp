@@ -82,8 +82,15 @@ $(function() {
 
 function check() {
 	var f = document.inputForm;
-	var str = f.ssubject.value;
+	var str = f.startDay.value;
 	
+	if(!str || str == "<p>&nbsp;</p>"){
+		alert("시행일자를 입력하세요.");
+		f.startDay.focus();
+		return false;
+	}
+	
+	str = f.ssubject.value;
 	if(!str){
 		alert("제목을 입력하세요.");
 		f.ssubject.focus();
@@ -96,6 +103,8 @@ function check() {
 		f.scontent.focus();
 		return false;
 	}
+	
+	
 	
 	var option = $("#listSelect option:selected").val();
 	
@@ -134,7 +143,7 @@ $(function() {
 					var dType = $("#listTable input[name=cb]:checked").closest("td").next().children("input[name=hDType]").val();
 					var pType = $("#listTable input[name=cb]:checked").closest("td").next().next().children("input[name=hPType]").val();
 					var tdName = $("#listTable input[name=cb]:checked").closest("td").next().next().next().children("input[name=hName]").val();
-					$btn.closest("table").find(".typeTd").append("<span>"+ dType + " " + pType + "</span>");
+					$btn.closest("table").find(".typeTd").append("<span>"+ dType + " | " + pType + "</span>");
 					$btn.closest("table").find(".nameTd").append("<span>"+ tdName + "</span>");
 					
 					
@@ -157,7 +166,7 @@ $(function() {
 
 <div id="listBody" style="margin-left: 500px; width: 1000px;">
 	<select id="listSelect" style="height: 50px; font-weight: bold; border: none; outline: 0;">
-		<option id="selectOption" value="emp" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::선택::</option>
+		<option id="selectOption" value="emp" style="text-align: center;">::선택::</option>
 		<option id="selectOption" value="1" selected="selected">1. 기안서</option>
 		<option id="selectOption" value="2">2. 휴가 신청서</option>
 		<!-- <option id="selectOption" value="3">3. 지출 결의서</option>

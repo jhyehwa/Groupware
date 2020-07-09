@@ -274,7 +274,7 @@
 
 
 <!-- 아티클 모달 -->
-<div id="articleModal-dialog" class="articleModal">
+<div id="articleModal-dialog" class="articleModal" style="font-family: NanumSquareRound;">
 	<div class="showSing">
 	</div>
 </div>

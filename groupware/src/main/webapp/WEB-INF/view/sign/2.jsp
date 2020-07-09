@@ -48,7 +48,6 @@ textarea {
 
 .pTag {
 	font-size: 40px;
-	font-family: "맑은고딕";
 	font-weight: 900;
 	padding: 60px;
 }
@@ -157,11 +156,23 @@ textarea {
 	vertical-align: middle;
 	line-height: 50px;
 }
+
+.ui-widget-header {
+	background: none;
+	border: none;
+	font-size: 20px;
+	border-bottom: 1px solid #cccccc;
+	margin-bottom: 10px;
+}
+
+.ui-button .ui-icon {
+	border: none;
+}
 </style>
 
 <form method="post" name="inputForm" id="inputForm" enctype="multipart/form-data" style="width: 980px; margin: auto;">
 	<input type="hidden" class="hiddenSnum" id="hiddenSnum" value="${sNum}">
-	<input type="hidden" name="option" value="1">
+	<input type="hidden" name="option" value="2">
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">
@@ -225,8 +236,8 @@ textarea {
 					<input type="hidden" value="4" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px;">${ mode=="article" ? pempNo4.dType : " " } &nbsp;&nbsp;
-								${ mode=="article" ? pempNo4.pType : " " }</td>
+							<td class="typeTd" style="height: 17px; width: 1000px;">
+							${ mode=="article" ? pempNo4.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo4.pType : " " }</td>
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px;">
@@ -270,8 +281,8 @@ textarea {
 					<input type="hidden" value="3" name="lineDivChild">
 					<table style="width: 110px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? pempNo3.dType : " " } &nbsp;&nbsp;
-								${ mode=="article" ? pempNo3.pType : " " }</td>
+							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
+							${ mode=="article" ? pempNo3.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo3.pType : " " }</td>
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
@@ -317,8 +328,7 @@ textarea {
 					<table style="width: 110px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
-							${ mode=="article" ? pempNo2.dType : " " } &nbsp;&nbsp; 
-								${ mode=="article" ? pempNo2.pType : " " }</td>
+							${ mode=="article" ? pempNo2.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo2.pType : " " }</td>
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
@@ -364,8 +374,8 @@ textarea {
 				<tr>
 					<td rowspan="3"
 						style="background: #DDDDDD; width: 70px; text-align: left;"><b>결재</b></td>
-					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">${ mode=="article" ? writer.dType : sessionScope.employee.dType }
-						&nbsp;&nbsp; ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
+					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
+					${ mode=="article" ? writer.dType : sessionScope.employee.dType } | ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
 					</td>
 				</tr>
 				<tr>
@@ -383,76 +393,86 @@ textarea {
 	
 	<div class="contentDiv">
 		<table class="content">
-			<tbody  id="tb">
+			<tbody id="tb">
 			<tr>
 				<td style="width: 100px; background: #DDDDDD; text-align: center;"><b>시행일자</b></td>
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
-						<td style="width: 50%;">
-							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none; outline: 0;">
+						<td style="width: 25%;">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" disabled="disabled" style="border: none; outline: 0;  background: none;">
 						</td>
 					</c:if>
 					<c:if test="${modes == '임시보관함' }">
-						<td style="width: 50%;">
-							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" style="outline: 0;">
+						<td style="width: 25%;">
+							<input type="text" id="startDay" name="startDay" value="${dto.startDay}" style="outline: 0;  background: none;">
 						</td>
 					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<td style="width: 50%;"><input style="margin-left: 10px; outline: 0;" type="date" id="startDay" name="startDay"></td>
+					<td style="width: 30%;"><input style="margin-left: 10px; outline: 0; background: none;" type="date" id="startDay" name="startDay"></td>
+				</c:if>
+				<td style="width: 100px; background: #DDDDDD; text-align: center;"><b>종료일자</b></td>
+				
+				<c:if test="${mode != 'article'}">
+					<td width="25%;">
+						<input type="date" id="endDate" name="endDate" style="outline: 0; margin-left: 10px; background: none;">
+					</td>
+				</c:if>
+				<c:if test="${mode == 'article'}">
+					<td width="25%;">
+						<span style="margin-left: 10px;">${a1}</span>
+					</td>
 				</c:if>
 			<td style="width: 100px; background: #DDDDDD; text-align: center; "><b>시행 부서</b></td>
 				<td>
 					<input type="text" id="sDept" value="${mode == 'acticle' ? dto.sdept : sessionScope.employee.dType }"
-					 disabled="disabled" style="border: none; outline: 0;">
+					 disabled="disabled" style="border: none; outline: 0; background: none;">
 				</td>
 			</tr>
 			<tr>
 				<td style="background: #DDDDDD;  text-align: center;"><b>제목</b></td>
-				<td colspan="3"> 
+				<td colspan="5"> 
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">				
 						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
-							style="border: none; outline: 0;">
+							style="border: none; outline: 0; background: none;">
 					</c:if>	
 					<c:if test="${modes == '임시보관함' }">		
-						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" style="outline: 0;">
+						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" style="outline: 0; background: none;">
 					</c:if>	
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<input style="margin-left: 10px; outline: 0;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+					<input style="margin-left: 10px; outline: 0; background: none;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
 				</c:if>
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 100px; background: #DDDDDD; text-align: center; outline: 0;" colspan="4"><b>내용</b></td>
+				<td style="width: 100px; background: #DDDDDD; text-align: center; outline: 0;" colspan="6"><b>내용</b></td>
 			</tr>
 			<tr>
-				<td colspan="4" style="padding-left: 40px; height: 420px; vertical-align: top;">
+				<td colspan="6" style="padding-left: 40px; height: 420px; vertical-align: top;">
 					<h6 style="margin-bottom: 5px; margin-top: 5px;">1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여 사용함을 원칙으로 한다.</h6> 
 					<h6 style="margin-bottom: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를1 차용하여 월 1회 사용 할 수 있다.</h6>
 					<h6 style="margin-bottom: 5px;">2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출</h6>
-					<h6 style="padding-bottom: 25px;">3. 공가(예비군/민방위)는 사전에 통지서를, 사후에 참석증을 반드시 제출</h6>
+					<h6 style="padding-bottom: 15px;">3. 공가(예비군/민방위)는 사전에 통지서를, 사후에 참석증을 반드시 제출</h6>
+					<p style="padding-bottom: 15px;">---------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
-						<p style="font-size: 15px; font-weight: bold; padding-bottom: 25px; outline: 0;">${a1}</p>
-						<p style="font-size: 15px; font-weight: bold; padding-bottom: 15px; outline: 0;">${a0}</p>
+						<p style="font-size: 15px; font-weight: bold; padding-bottom: 15px; outline: 0; background: none;">${a0}</p>
 					</c:if>
 					<c:if test="${modes == '임시보관함' }">
-						<textarea rows="12"cols="50" style="border:none; width: 900px; height: 220px; resize: none; outline: 0;" id="sContent" name="scontent">${dto.scontent}</textarea>
+						<textarea rows="12"cols="50" style="border:none; width: 880px; height: 220px; background: none; resize: none; outline: 0;" id="sContent" name="scontent">${dto.scontent}</textarea>
 					</c:if>
 				</c:if>
 				<c:if test="${mode != 'article'}">
-						<span style="font-weight: bold; font-size: 15px;">종료 날짜 : </span>
-						<input type="date" id="endDate" name="endDate" style="outline: 0;">
-					<textarea rows="12"cols="50" style="width: 900px; height: 220px; margin-top:40px; padding-top:5px; outline: 0; resize: none;" id="sContent" name="scontent">&nbsp;&nbsp;사유 :&nbsp;&nbsp;&nbsp;</textarea>
+					<textarea rows="12"cols="50" style="width: 880px; height: 220px; margin-top:15px; background: none; padding-top:5px; outline: 0; resize: none;" id="sContent" name="scontent">사유 :&nbsp;&nbsp;&nbsp;</textarea>
 				</c:if>
 				</td>
 			</tr>
 		<c:if test="${mode != 'article'}">
 			<tr>
 					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
-				<td colspan="3">
+				<td colspan="5">
 					<input type="file" id="upload" name="upload" style="padding-top: 13px; outline: 0; border: none;" multiple="multiple">
 				</td>
 			</tr>
@@ -477,18 +497,14 @@ textarea {
 		</table>
 	</div>
 	<c:if test="${mode != 'article' }">
-			<button type="button" style="float: right; height: 25px; padding: 5px;" onclick="check();">등록하기</button>
-			<button type="button" style="float: right; height: 25px; margin-right: 10px; padding: 5px;" onclick="javascript:location.href='<%=cp%>/sign/mainList'">목록</button>
-			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
-			<input type="checkbox" value="storage" 
-			id="sStorage" name="sStorage" style="width: 20px; height: 30px; margin-top: 5px; appearance: none;"> 임시보관여부</span>
+			<button type="button" style="float: right; height: 25px; padding: 5px; margin-top: 10px;" onclick="check();">등록하기</button>
+			<button type="button" style="float: right; height: 25px; margin-right: 10px; padding: 5px; margin-top: 10px;" onclick="javascript:location.href='<%=cp%>/sign/mainList'">목록</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="storage" id="sStorage" name="sStorage" style="zoom:1.25; margin-top: 5px;"><span style="margin-top: 15px; font-size: 15px; float: left;">임시보관여부</span>
 	</c:if>
 	<c:if test="${mode == 'article' && modes == '임시보관함'}">
-			<button type="button" style="float: right; height: 25px; padding: 5px;" onclick="check();">등록하기</button>
-			<button type="button" style="float: right; height: 25px; margin-right: 10px; padding: 5px;" onclick="javascript:location.href='<%=cp%>/sign/mainList'">목록</button>
-			<span style="height: 40px; font-size: 17px; float: left; line-height: -10px;">
-			<input type="checkbox" value="storage" 
-			id="sStorage" name="sStorage" style="width: 20px; height: 30px; margin-top: 5px; appearance: none;"> 임시보관여부</span>
+			<button type="button" style="float: right; height: 25px; padding: 5px; margin-top: 10px;" onclick="check();">등록하기</button>
+			<button type="button" style="float: right; height: 25px; margin-right: 10px; padding: 5px; margin-top: 10px;" onclick="javascript:location.href='<%=cp%>/sign/mainList'">목록</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="storage" id="sStorage" name="sStorage" style="zoom:1.25; margin-top: 5px;"><span style="margin-top: 15px; font-size: 15px; float: left;">임시보관여부</span>
 	</c:if>
 </form>
 

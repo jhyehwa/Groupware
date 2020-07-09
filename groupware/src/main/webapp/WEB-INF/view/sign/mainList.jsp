@@ -125,7 +125,7 @@
 			<div class="board-body" style="float: left; width: 20%">
 			<div>
 				<button type="button" class="btnSend" style="width: 220px; cursor: pointer; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
-					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;&nbsp;새결재진행</i>
+					<i class="fas fa-paste" style="color: white;"><span style="font-family: NanumSquareRound; font-size: 18px;">&nbsp;&nbsp;새결재진행</span></i>
 				</button>
 				<br>
 
@@ -353,7 +353,7 @@
 								<tr align="left">
 									<td style="font-weight: bold; font-size: 16px; padding-left: 10px; border-bottom: 1px solid #cccccc;">
 										<a href="javascript:location.href='<%=cp%>/sign/list?mode=6' " style="color: black; ">
-											<i class="fas fa-save">&nbsp;&nbsp;임시저장함</i>
+											<i class="fas fa-save">&nbsp;&nbsp;임시보관함</i>
 										</a>
 									</td>
 								</tr>
@@ -367,7 +367,7 @@
 
 
 <!-- 아티클 모달 -->
-<div id="articleModal-dialog" class="articleModal">
+<div id="articleModal-dialog" class="articleModal" style="font-family: NanumSquareRound;">
 	<div class="showSing">
 	</div>
 </div>

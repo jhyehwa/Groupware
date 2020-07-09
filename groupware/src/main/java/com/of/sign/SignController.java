@@ -410,7 +410,7 @@ public class SignController {
 			dto.setSendStep(count);
 			
 			if(endDate.length() != 0) {
-				String content = dto.getScontent() + " / 종료날짜 :  " + endDate;
+				String content = dto.getScontent() + " / " + endDate;
 				dto.setScontent(content);
 			}
 			service.insertSign(dto, pathname, article, hiddenSnum);
