@@ -372,6 +372,7 @@ public class SignController {
 			@RequestParam(defaultValue="") String article,
 			@RequestParam(defaultValue="") String endDate,
 			@RequestParam(defaultValue="") String hiddenSnum,
+			@RequestParam(defaultValue="") String modes,
 			HttpSession session
 			) throws Exception {
 		try {
@@ -385,6 +386,10 @@ public class SignController {
 			dto.setName(info.getName());
 			dto.setSdept(info.getdType());
 			int count = 1;
+			
+			if(modes.equals("임시보관함")) {
+				article = "";
+			}
 			
 			if(article.equals("article")) {
 				lineEmp2 = pempNo2;

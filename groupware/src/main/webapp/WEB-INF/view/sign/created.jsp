@@ -105,7 +105,6 @@ function check() {
 	}
 	
 	
-	
 	var option = $("#listSelect option:selected").val();
 	
 	storage = f.sStorage.value;
@@ -146,10 +145,10 @@ $(function() {
 					$btn.closest("table").find(".typeTd").append("<span>"+ dType + " | " + pType + "</span>");
 					$btn.closest("table").find(".nameTd").append("<span>"+ tdName + "</span>");
 					
-					
 					$("#listTable input[name=cb]").prop("checked", false);
 					
 					$btn.closest("td").find("input").val(empNo);
+					
 			}
 		});
 	});

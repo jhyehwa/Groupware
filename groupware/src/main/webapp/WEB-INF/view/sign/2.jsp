@@ -173,6 +173,7 @@ textarea {
 <form method="post" name="inputForm" id="inputForm" enctype="multipart/form-data" style="width: 980px; margin: auto;">
 	<input type="hidden" class="hiddenSnum" id="hiddenSnum" value="${sNum}">
 	<input type="hidden" name="option" value="2">
+	<input type="hidden" name="modes" value="${modes}">
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">

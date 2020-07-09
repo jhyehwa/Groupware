@@ -169,6 +169,43 @@
 		}
 	}
 	
+
+	$(function() {
+		$("body").on("click", "#btnLine", function(){
+			var value = $(this).closest("div").find("input[name=lineDivChild]").val();
+			var $btn = $(this);
+			$("#lineModal-dialog").dialog({
+				modal : true,
+				width : 600,
+				title : '결제라인',
+				open : function() {
+				},
+				close : function(event, ui) {
+						var empNo = $("#listTable input[name=cb]:checked").val();
+						if(empNo == undefined){
+							return;
+						}
+						var dType = $("#listTable input[name=cb]:checked").closest("td").next().children("input[name=hDType]").val();
+						var pType = $("#listTable input[name=cb]:checked").closest("td").next().next().children("input[name=hPType]").val();
+						var tdName = $("#listTable input[name=cb]:checked").closest("td").next().next().next().children("input[name=hName]").val();
+						$btn.closest("table").find(".typeTd").append("<span>"+ dType + " | " + pType + "</span>");
+						$btn.closest("table").find(".nameTd").append("<span>"+ tdName + "</span>");
+						
+						
+						$("#listTable input[name=cb]").prop("checked", false);
+						
+						$btn.closest("td").find("input").val(empNo);
+				}
+			});
+		});
+		
+		$("body").on("click", "#btnLineSelectOk", function(){
+			$('#lineModal-dialog').dialog("close");
+		});
+			
+	});
+
+	
 </script>
 
 <div class="container">

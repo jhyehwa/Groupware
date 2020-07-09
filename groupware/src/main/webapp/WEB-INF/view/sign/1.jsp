@@ -173,6 +173,8 @@ textarea {
 <form method="post" name="inputForm" id="inputForm" enctype="multipart/form-data" style="width: 980px; margin: auto;">
 	<input type="hidden" class="hiddenSnum" id="hiddenSnum" value="${sNum}">
 	<input type="hidden" name="option" value="1">
+	<input type="hidden" name="modes" value="${modes}">
+	<input type="hidden" name="option" value="1">
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">
@@ -258,8 +260,8 @@ textarea {
 							</td>
 						</tr>
 						<tr>
-							<td style="height: 20px;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
+							<td style="height: 20px;"><c:if test="${empty mode || modes=='임시보관함'}">
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 3}">
@@ -305,8 +307,9 @@ textarea {
 							
 						</tr>
 						<tr>
-							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
+							<td style="height: 20px; border-right: none;">
+							<c:if test="${empty mode || modes=='임시보관함'}">
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 2}">
@@ -350,8 +353,8 @@ textarea {
 							</td>
 						</tr>
 						<tr>
-							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
+							<td style="height: 20px; border-right: none;"><c:if test="${empty mode || modes=='임시보관함'}">
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 1}">
@@ -398,7 +401,7 @@ textarea {
 		<table class="content">
 			<tbody  id="tb">
 			<tr>
-				<td style="width: 100px; background: #DDDDDD; text-align: center; "><b>시행일자</b></td>
+				<td style="width: 100px; background: #DDDDDD; text-align: center; "><b>시행일자${mode}${modes}</b></td>
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
 						<td style="width: 50%;" style="padding-left: 10px;" >
