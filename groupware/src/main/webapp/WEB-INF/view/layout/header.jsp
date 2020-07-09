@@ -5,6 +5,60 @@
 <%
 	String cp = request.getContextPath();
 %>
+
+<script>
+	$(function(){
+		function ajaxJSON(url, type, query, fn) {
+			$.ajax({
+				type:type,
+				url:url,
+				data:query,
+				dataType:"JSON",
+				success:function(data) {
+					fn(data);
+				},
+				beforeSend:function(jqXHR) {
+			        jqXHR.setRequestHeader("AJAX", true);
+			    },
+			    error:function(jqXHR) {
+			    	if(jqXHR.status==403) {
+			    		login();
+			    		return false;
+			    	}
+			    	console.log(jqXHR.responseText);
+			    }
+			});
+		}
+		
+		function mailAlert() {
+			var url = "<%=cp%>/main/mainAlert";
+			var fn = function(data) {
+				var mailCnt = data.mailCnt;
+				var stepCnt = data.stepCnt;
+				
+				var out = "<p>새로운메일" + mailCnt + "</p>";
+				out += "<p>수신대기" + stepCnt + "</p>";
+				
+				$(".alertInfo").html(out);
+			};
+			var query = "";
+			
+			ajaxJSON(url, "post", query, fn);
+		}
+		mailAlert();
+	});
+	
+	$(function(){
+		$("body").on("click", "#headerAlert", function(){
+			$(".alertTable").slideToggle();
+		});
+	});
+	
+	$(function(){
+		$(".alertTable").hide();
+	});
+</script>
+
 <div class="header-top">
 	<div class="header-left">
 		<p style="margin: 2px 0 0 20px;">
@@ -29,7 +83,7 @@
 				&nbsp;
 			</c:if>
 			
-			<a href="<%=cp%>/main"><i class="far fa-bell" id="aa"></i></a> <!-- 알림 -->
+			<a href="#" id="headerAlert"><i class="far fa-bell" id="aa"></i></a> <!-- 알림 -->
 			&nbsp;
 			<a href="<%=cp%>/main"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
 			&nbsp;
@@ -40,6 +94,12 @@
 			<c:if test="${not empty sessionScope.employee}">
 				<a href="<%=cp%>/employee/logout"><i class="fas fa-sign-out-alt"></i></a>
 			</c:if>
+		</div>
+	</div>
+	
+	<div class="alertTable" style="position: absolute; right: 0; top: 65px;">
+		<div class="alertList" style="background: aqua; width: 200px; height: 200px;">
+			<span class="alertInfo"></span>
 		</div>
 	</div>
 </div>

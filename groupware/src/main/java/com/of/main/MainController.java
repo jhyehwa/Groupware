@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.of.buddy.BuddyService;
 import com.of.employee.SessionInfo;
 import com.of.news.News;
 import com.of.news.NewsService;
@@ -30,12 +31,18 @@ import com.of.sign.SignService;
 public class MainController {
 	@Autowired
 	MainService service;
+	
 	@Autowired
 	NoticeService nservice;
+	
 	@Autowired
 	NewsService nwservice;
+	
 	@Autowired
 	SignService sgservice;
+	
+	@Autowired
+	BuddyService bdService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(
@@ -193,9 +200,32 @@ public class MainController {
 		// 작업결과를 json으로 전송
 		Map<String, Object> model = new HashMap<>();
 		model.put("list", listJSON);
-		return model;		
+		return model;
 	}
 	
-	
-	
+	@RequestMapping(value = "/main/mainAlert")
+	@ResponseBody
+	public Map<String, Object> mainAlert(HttpSession session) throws Exception {		
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("empNo", info.getEmpNo());
+		
+		int mailCnt = 0;
+		int stepCnt = 0;
+		
+		try {
+			mailCnt = bdService.unreadCount(info.getEmpNo());
+			stepCnt = sgservice.stepCount(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("mailCnt", mailCnt);
+		model.put("stepCnt", stepCnt);
+		
+		return model;
+	}
 }
