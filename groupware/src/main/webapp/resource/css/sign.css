@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+body {
+	font-family: NanumSquareRound, 나눔바른고딕, "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+}
+
+.btnSend {
+	font-family: NanumSquareRound, 나눔바른고딕, "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+}
+
+a {
+	font-family: NanumSquareRound, 나눔바른고딕, "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+}
+
 .board-bodys {
 	width: 850px;
 }

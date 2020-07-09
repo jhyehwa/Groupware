@@ -156,6 +156,8 @@ a:active {
 
 .numBox {
    margin-right: 15px;
+   background: none;
+   border: none;
 }
 
 

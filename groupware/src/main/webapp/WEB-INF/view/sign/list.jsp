@@ -174,14 +174,14 @@
 <div class="container">
 	<div class="board-container" style="width: 1600px;">
 		<div class="body-title" style="height: 50px;">
-				<span style="font-size: 20px; font-family: '맑은고딕'; font-weight: 900;">♬ 전자결재</span>
+				<span style="font-size: 20px; font-weight: 900;">♬ 전자결재</span>
 		</div>
 	
 		
 		<div class="board-body" style="float: left; width: 20%">
 			<div>
 				<button type="button" class="btnSend" style="width: 98px; cursor: pointer; height: 50px; border-radius: 10px; border: none; background: #9565A4;" onclick="javascript:location.href='<%=cp%>/sign/created';">
-					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;Add</i>
+					<i class="fas fa-paste" style="color: white; font-size: 18px;">&nbsp;New</i>
 				</button>
 				<button type="button" class="boardBtn"style="width: 98px; cursor: pointer; height: 50px; border-radius: 10px; border: none; background: #9565A4;"  onclick="javascript:location.href='<%=cp%>/sign/mainList';">
 					<i class="far fa-arrow-alt-circle-left" style="color: white; font-size: 18px; font-weight: bold">&nbsp;back</i>
