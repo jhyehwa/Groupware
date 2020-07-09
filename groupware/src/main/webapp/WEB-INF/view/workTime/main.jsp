@@ -22,28 +22,19 @@ function ajaxGET(url, type, query) {
 	});
 }
 
-$(window).load(function(){
-	
-	var msg = "${msg}";
-	
-	if(msg == 'no'){
-		alert("오늘출근 하셨습니다.");
-	}
-});
-
 
 $("body").on("click", ".workingBtn", function(){
 	var val = $(this).data("val");
 	var empNo = $("input[name=empNo]").val();
 	
-	if(val == 'home'){
+	/* if(val == 'home'){
 		var now = new Date();
 		nowMin = now.getHours();
 		if(nowMin < 12){
 			alert("퇴근시간이 아닙니다.");
 			return;
 		}
-	}
+	} */
 	
 	$(".modal").dialog({
 		modal : true,
@@ -56,6 +47,25 @@ $("body").on("click", ".workingBtn", function(){
 			$("form[name=sendForm]").append("<input type='hidden' id='empNo' name='empNo' value='" + empNo + "'>");
 			$("form[name=sendForm]").append("<input type='hidden' id='val' name='val' value='" + val + "'>");
 			
+			$(".ui-draggable .ui-dialog-titlebar").css("background", "white");
+			$(".ui-draggable .ui-dialog-titlebar").css("border", "white");
+			
+		},close : function(){
+			
+		}
+	});
+});
+
+$("body").on("click", ".restBtn", function(){
+	
+	$(".vation").dialog({
+		modal : true,
+		width : 500,
+		height : 100,
+		position : {my:"center top", at:"center top"},
+		show : "fade",
+		resizable : false,
+		open : function(){
 			$(".ui-draggable .ui-dialog-titlebar").css("background", "white");
 			$(".ui-draggable .ui-dialog-titlebar").css("border", "white");
 			
@@ -100,6 +110,27 @@ function updateMemo(){
 	f.submit();
 }
 
+function vacation(){
+	var f = document.vacationForm;
+	
+	var str = f.startDay.value;
+	if(!str){
+		alert("시작 날짜를 지정하세요.");
+		f.startDay.focus();
+		return;
+	}
+	
+	var str = f.endDay.value;
+	if(!str){
+		alert("종료 날짜를 지정하세요.");
+		f.endDay.focus();
+		return;
+	}
+	
+	f.action="<%=cp%>/workTime/vacation";
+	
+	f.submit();
+}
 </script>
 
 <div class="container">
@@ -152,6 +183,12 @@ function updateMemo(){
 								</c:if>
 								</td> 
 								<td>${wk.workCode}</td>
+							</tr>
+							<tr class="vacaiontTr">
+								<td colspan="2" class="vacaiontTd">
+									<button type="button" name="restBtn" class="restBtn"><i class="fas fa-plane-departure"></i>&nbsp;
+									<span class="restSpan">연차사용</span></button>
+								</td>
 							</tr>
 						</table>		
 					</div>
@@ -244,16 +281,29 @@ function updateMemo(){
 						<c:forEach var="dto" items="${monthList}" >
 							<tr>
 								<td>${dto.workDate}</td>
-								<td>
-									<c:if test="${dto.out1 != null}">
-										<span>${dto.clockIn} [외근]</span>
-									</c:if>
-									<c:if test="${dto.out1 == null}">
-										<span>${dto.clockIn}</span>
-									</c:if>
-								</td>
-								<td>
+								<c:if test="${dto.workCode=='연차'}">
+									<td>
+										<span>-</span>
+									</td>
+								</c:if>
+								<c:if test="${dto.workCode!='연차'}">
+									<td>
+										<c:if test="${dto.out1 != null}">
+											<span>${dto.clockIn} [외근]</span>
+										</c:if>
+										<c:if test="${dto.out1 == null}">
+											<span>${dto.clockIn}</span>
+										</c:if>
+									</td>
+								</c:if>
 								
+								<c:if test="${dto.workCode=='연차'}">
+									<td>
+										<span>-</span>
+									</td>
+								</c:if>
+								<c:if test="${dto.workCode!='연차'}">
+								<td>
 								<c:if test="${dto.out2 != null }">
 										<span>${dto.clockOut} [외근]</span>
 									</c:if>
@@ -261,8 +311,9 @@ function updateMemo(){
 										<span>${dto.clockOut}</span>
 									</c:if>
 								</td>
+								</c:if>
 								<td>${dto.workCode}</td>
-								<td> IP 주소 </td>
+								<td>${dto.ipAddr}</td>
 								<td>
 									<c:if test="${dto.other == null}">
 									<form method="post" id="updateForm" name="updateForm">
@@ -280,9 +331,9 @@ function updateMemo(){
 			
 				
 				<div class="detailedMonth">
-					<span>지각 : 횟수 | </span>
-					<span>결근 : 횟수 | </span>
-					<span>연차 : 횟수</span>
+					<span>지각 : ${codeB == null ? '0' : codeB}회 | </span>
+					<span>결근 : ${codeC == null ? '0' : codeC}회 | </span>
+					<span>연차 : ${codeG == null ? '0' : codeG}회 사용</span>
 				</div>
 			</div>
         </div>   
@@ -300,5 +351,15 @@ function updateMemo(){
 	<form method="POST" id="sendForm" name="sendForm">
 		<button type="button" class="sendBtn" onclick="send();">확인</button>
 		<button type="button" class="sendBtns" onclick="sendOut();">외근</button>
+	</form>
+</div>
+
+
+<!-- 휴가 사용 -->
+<div id ="vation" class="vation" style="width: 600px; height: 250px; display: none;">
+	<form method="POST" id="vacationForm" name="vacationForm">
+		<input type="Date" name="startDay"> ~
+		<input type="Date" name="endDay">
+		<button type="button" class="vacationBtn" onclick="vacation();">확인</button>
 	</form>
 </div>

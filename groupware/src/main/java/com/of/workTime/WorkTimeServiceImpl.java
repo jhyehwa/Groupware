@@ -1,5 +1,6 @@
 package com.of.workTime;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +99,33 @@ public class WorkTimeServiceImpl implements WorkTimeService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void insertVacation(Map<String, Object> map) {
+		try {
+			dao.insertData("workTime.insertVacation", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Map<String, Integer> countCode(Map<String, Object> map) {
+		Map<String, Integer> countMap = new HashMap<String, Integer>();
+		try {
+			int result = dao.selectOne("workTime.countCodeB", map);
+			countMap.put("codeB", result);
+			
+			result = dao.selectOne("workTime.countCodeC", map);
+			countMap.put("codeC", result);
+			
+			result = dao.selectOne("workTime.countCodeG", map);
+			countMap.put("codeG", result);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return countMap;
 	}
 }

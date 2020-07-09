@@ -20,6 +20,8 @@ import com.of.employee.SessionInfo;
 @Controller("workTime.workTimeController")
 @RequestMapping("/workTime/*")
 public class WorkTimeController {
+	
+
 	@Autowired
 	private WorkTimeService service;
 
@@ -69,6 +71,9 @@ public class WorkTimeController {
 				break;
 			case "F":
 				wk.setWorkCode("정상");
+				break;
+			case "G":
+				wk.setWorkCode("연차");
 				break;
 			case "EE":
 				wk.setWorkCode("정상");
@@ -125,13 +130,27 @@ public class WorkTimeController {
 			case "F":
 				dto.setWorkCode("정상");
 				break;
+			case "G":
+				dto.setWorkCode("연차");
+				break;
 			case "EE":
 				dto.setWorkCode("정상");
 				model.addAttribute("stat", "EE");
 				break;
+			
 			}
 		}
-
+		
+		map.put("empNo", info.getEmpNo());
+		map.put("currDate2", currDate.substring(0, 4));
+		
+		Map<String, Integer> resultMap = new HashMap<>();
+		
+		resultMap = service.countCode(map);
+		
+		model.addAttribute("codeB", resultMap.get("codeB"));
+		model.addAttribute("codeC", resultMap.get("codeC"));
+		model.addAttribute("codeG", resultMap.get("codeG"));
 		model.addAttribute("monthList", monthList);
 		model.addAttribute("wk", wk);
 		model.addAttribute("empNo", info.getEmpNo());
@@ -140,7 +159,12 @@ public class WorkTimeController {
 	};
 
 	@RequestMapping(value = "workOrHome")
-	public String workOrHome(HttpSession session, String val, Model model) throws Exception {
+	public String workOrHome(
+			HttpSession session,
+			HttpServletRequest req,
+			String val,
+			Model model
+			) throws Exception {
 		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
 		SimpleDateFormat sdf4 = new SimpleDateFormat("yyyyMMdd");
 		
@@ -156,7 +180,7 @@ public class WorkTimeController {
 		int min = Integer.parseInt(time[1]);
 
 		map.put("empNo", info.getEmpNo());
-
+		map.put("ipAddr", req.getRemoteAddr());
 		switch (val) {
 		case "work":
 			if (hour < 9) {
@@ -194,6 +218,7 @@ public class WorkTimeController {
 	public String out(
 			@RequestParam String out,
 			HttpSession session,
+			HttpServletRequest req,
 			String val,
 			Model model
 			) throws Exception{
@@ -212,7 +237,7 @@ public class WorkTimeController {
 		int min = Integer.parseInt(time[1]);
 
 		map.put("empNo", info.getEmpNo());
-
+		map.put("ipAddr", req.getRemoteAddr());
 		switch (val) {
 		case "work":
 			if (hour < 9) {
@@ -269,6 +294,28 @@ public class WorkTimeController {
 		}
 		
 		model.addAttribute("empNo", info.getEmpNo());
+		return "redirect:/workTime/main";
+	}
+	
+	@RequestMapping(value="vacation")
+	public String vacation(
+			String startDay,
+			String endDay,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model
+			) {
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("ipAddr", req.getRemoteAddr());
+		map.put("empNo", info.getEmpNo());
+		map.put("startDay", startDay);
+		map.put("endDay", "~ "+endDay);
+		map.put("workCode", "G");
+		
+		service.insertVacation(map);
+		
 		return "redirect:/workTime/main";
 	}
 }

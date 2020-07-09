@@ -3,15 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="workTime">
 	<insert id="insertWorkTime" parameterType="map">
-		INSERT INTO workTime(empNo, workDate, clockIn, workCode) 
-		VALUES( #{empNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD') , SYSDATE,
-		  #{workCode} )
+		INSERT INTO workTime(empNo, workDate, clockIn, workCode, ipAddr) 
+		VALUES( #{empNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD') , SYSDATE, #{workCode}, #{ipAddr} )
 	</insert>
 	
 	<insert id="insertOutWorkTime" parameterType="map">
-		INSERT INTO workTime(empNo, workDate, clockIn, workCode, out1) 
-		VALUES( #{empNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD') , SYSDATE,
-		  #{workCode}, 'E')
+		INSERT INTO workTime(empNo, workDate, clockIn, workCode, out1, ipAddr) 
+		VALUES( #{empNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD') , SYSDATE, #{workCode}, 'E', #{ipAddr} )
 	</insert>
 	
 	<update id="otherMemo" parameterType="map">
@@ -42,7 +40,7 @@
 	</update>
 	
 	<select id="toDayChekc" parameterType="Integer" resultType="com.of.workTime.WorkTime">
-		SELECT empNo, workDate, clockIn, clockOut, workCode, out1,out2
+		SELECT empNo, workDate, clockIn, clockOut, workCode, out1,out2, ipAddr
 		FROM workTime
 		WHERE empNo = #{empNo} AND TO_CHAR(workDate, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
 	</select>
@@ -52,7 +50,7 @@
 	</sql>
 	
 	<select id="monthList" parameterType="map" resultType="com.of.workTime.WorkTime">
-		SELECT empNo, workDate, clockIn, clockOut, workCode, out1,out2,other
+		SELECT empNo, workDate, clockIn, clockOut, workCode, out1,out2,other, ipAddr
 		FROM workTime w
 		WHERE empNo = #{empNo} AND TO_CHAR(workDate, 'YYYY-MM') = #{currDate}
 		ORDER BY workDate ASC
@@ -60,7 +58,7 @@
 	</select>
 	
 	<select id="weekList" parameterType="map" resultType="com.of.workTime.WorkTime">
-		SELECT empNo, workDate, clockIn, clockOut, workCode, out1,out2,other
+		SELECT empNo, workDate, clockIn, clockOut, workCode, out1,out2,other, ipAddr
 		FROM workTime w
 		JOIN empNo e ON w.empNo = e.empNo
 		JOIN history h ON e.empNo = h.empNo
@@ -74,6 +72,29 @@
 		</where>
 		ORDER BY workDate DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{row} ROWS ONLY
+	</select>
+	
+	<insert id="insertVacation" parameterType="map">
+		INSERT INTO workTime(empNo, workDate, workCode, ipAddr, other , clockIn) 
+		VALUES( #{empNo}, #{startDay}, #{workCode}, #{ipAddr}, #{endDay}, SYSDATE )
+	</insert>
+	
+	<select id="countCodeB" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM workTime
+		WHERE empNO = #{empNo} AND workCode = 'B' AND TO_CHAR(workDate, 'YYYY-MM') = #{currDate}
+	</select>
+	
+	<select id="countCodeC" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM workTime
+		WHERE empNO = #{empNo} AND workCode = 'C' AND TO_CHAR(workDate, 'YYYY-MM') = #{currDate}
+	</select>
+	
+	<select id="countCodeG" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM workTime
+		WHERE empNO = #{empNo} AND workCode = 'G' AND TO_CHAR(workDate, 'YYYY') = #{currDate2}
 	</select>
 	
 </mapper>

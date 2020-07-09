@@ -118,3 +118,23 @@
 	font-size: 14px;
 	text-align: right;
 }
+
+.vacaiontTr{
+	background: #9565A4;
+	line-height: 50px;
+}
+.vacaiontTd{
+	height: 100px;
+}
+.restBtn{
+	margin-top:8px;
+	border-top: 1px solid #cccccc;
+	background: #9565A4; 
+	color: white;
+	font-weight: bold;
+	font-size: 40px;
+	border: none;
+}
+.restSpan{
+	font-size: 14px;
+}

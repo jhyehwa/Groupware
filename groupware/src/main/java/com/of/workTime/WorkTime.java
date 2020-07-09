@@ -9,8 +9,15 @@ public class WorkTime {
 	private String other;
 	private String out1;
 	private String out2;
+	private String ipAddr;
 	
 	
+	public String getIpAddr() {
+		return ipAddr;
+	}
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
 	public String getOut1() {
 		return out1;
 	}

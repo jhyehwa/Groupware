@@ -13,4 +13,8 @@ public interface WorkTimeService {
 	public void otherMemo(Map<String, Object> map) throws Exception;
 	public void outInsert(Map<String, Object> map) throws Exception;
 	public void outUpdate(Map<String, Object> map) throws Exception;
+	
+	public void insertVacation(Map<String, Object> map);
+	
+	public Map<String, Integer> countCode(Map<String, Object> map);
 }
