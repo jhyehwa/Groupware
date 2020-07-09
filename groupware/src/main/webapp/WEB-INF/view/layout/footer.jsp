@@ -6,7 +6,6 @@
 	String cp = request.getContextPath();
 %>
 <style>
-/*footer*/
 .footer {
 	background: transparent;
  	position: fixed;
@@ -15,16 +14,33 @@
 }
 .footer-icon {  	
 	font-size: 30px;
-	color: fuchsia;
+	color: /* fuchsia; */#632A7E; 
 	padding: 10px 0 10px 27.5px ;
 	
 }
 
+
+.footer-detail{
+	background: /* aqua;  */ #EDE0EE;
+	width: 300px; 
+	height: 410px; 
+	display: none;
+	border-radius: 20px;
+}
+
+
+
 #footericon {
 	height:60px;
 	line-height:60px;
-	background: gold;
+	border-radius:20px 20px 0 0;
+	background: /* gold; */ #CDBBDC;
 }
+
+#footericon a, a:active{
+	color: DARKSLATEGRAY;
+}
+
 .fixedIcon{
 	
 	font-size: 30px;
@@ -39,12 +55,26 @@
 
 .fp-dept{
 	font-size:20px;
+	font-weight:700;
 	padding: 10px 0 0 10px;
+	color: DARKSLATEGRAY;
 }
+
+
+
 
 .fp-person{
 	 padding: 5px 0 5px 20px;
-	 font-size: 18px;
+	 font-size: 17px;
+	 color: DARKSLATEGRAY;
+}
+
+.fp-person i {
+	color: 9B9B9B;
+}
+
+.fp-person a {
+	color: gold;
 }
 
 .footer-chatTB, .footer-messageTB{
@@ -115,8 +145,8 @@ $(function(){
 			var dType=data[idx];
 			
 			out+="<tr ><td class='fp-dept'>";
-			out+="<span class='dept-icon fp-dept-more' data-dept='"+dType+"'><i class='fas fa-caret-down'></i>"+dType+"</span>";
-			out+="<span class='dept-icon fp-dept-less' style='display:none'><i class='fas fa-caret-up'></i>"+dType+"</span></td></tr>";
+			out+="<span class='dept-icon fp-dept-more' data-dept='"+dType+"'><i class='fas fa-caret-down'></i>&nbsp;"+dType+"</span>";
+			out+="<span class='dept-icon fp-dept-less' style='display:none'><i class='fas fa-caret-up'></i>&nbsp;"+dType+"</span></td></tr>";
 			out+="<tr style='display:none;'><td class='fp-person'></td></tr>";
 		}
 		
@@ -163,19 +193,52 @@ $(function(){
 			var name=data.listOrg[idx].name;
 			var pType=data.listOrg[idx].pType;
 			var image=data.listOrg[idx].imageFilename;
+			var empNo=data.listOrg[idx].empNo
 			
-			out+=" <p> <i class='fas fa-circle' style='font-size: 8px'></i>&nbsp;&nbsp;&nbsp;";
-			out+=" <img src='<%=cp%>/uploads/profile/"+image+"' style='width: 20px; height: 20px; border-radius: 10px; vertical-align:middle;'>"+pType+"|"+name+"</i>";
-			out+=" <a class='chatInput'><span><i class='fas fa-comments'></i></span></a>";
-			out+=" <a class='messageInput' href='<%=cp%>/buddy/created'><span><i class='fas fa-paper-plane'></i></span></a>";
-			out+=" <a class='information'><span><i class='fas fa-info-circle'></i></span></a></p>";							
+			out+=" <p> <i class='fas fa-circle' style='font-size: 8px; color:gray;'></i>&nbsp;&nbsp;&nbsp;";
+			out+=" <img src='<%=cp%>/uploads/profile/"+image+"' style='width: 30px; height: 30px; border-radius: 15px; vertical-align:middle;'>&nbsp;"+pType+"&nbsp;|&nbsp;"+name+"</i>";
+			out+=" <a class='chatInput' <%-- href=' --%>'><span><i class='fas fa-comments'></i></span></a>";
+			out+=" <a class='messageInput' <%-- href='<%=cp%>/buddy/created --%>'><span><i class='fas fa-paper-plane'></i></span></a>";
+			out+=" <a class='information' data-empNo='"+empNo+"' data-name='"+name+"'><span><i class='fas fa-info-circle'></i></span></a></p>";							
 		}		
-		obj.html(out);
+		obj.html(out);	
 	}
+	
 	
 });
 
+<%-- 		//===========
+$(function(){
+	$("body").on("click", ".information",function(){
+		var selectEmp = $(this).attr("data-empNo");
+		var selectName =$(this).attr("data-name");
+		var dlg = $("#person-detail").dialog({
+				  autoOpen: false,
+				  modal: true,
+				  buttons: {
+				       " 닫기 " : function() {
+				    	   $(this).dialog("close");
+				        }
+				  },
+				  height: 480,
+				  width: 550,
+				  title: "사원정보",
+				  close: function(event, ui) {
+				  }
+			});	
+		$('.information').load("<%=cp%>/publicAddr/main", function() {
+			$("#schedulerTitle").html(name);
+			$("#schedulerName").html(name);
+			$("#schedulerCategory").html();
+			$("#schedulerAllDay").html();
 
+			
+			dlg.dialog("open");
+		});
+		
+	});
+});	
+		//=============== --%>
 
 $(function(){
 	$(".footer-icon").click(function(){
@@ -213,13 +276,13 @@ $(function(){
 
 
 <div class="footer">
-	<div class="footer-detail"style="background: aqua; width: 300px; height: 410px; display: none;">
+	<div class="footer-detail"style="">
 		<div class="footer-detail-top">
 				
 			<div id="footericon" style="text-align: center; line-height: 60px;">
 				<a class="fixedIcon header1"><span><i class="fas fa-user"></i></span></a>
-				<a class="fixedIcon header2"><span><i class="fas fa-comments"></i></span></a>
-				<a class="fixedIcon header3"><span><i class="fas fa-paper-plane"></i></span></a>
+				<a class="fixedIcon header2" href="<%=cp%>/chat/main"><span><i class="fas fa-comments"></i></span></a>
+				<a class="fixedIcon header3" href="<%=cp%>/buddy/created"><span><i class="fas fa-paper-plane"></i></span></a>
 			</div>
 		
 			<div class="footer-detail-content" style="width: 300px; height: 350px; text-align: left; overflow: auto ">
@@ -240,8 +303,6 @@ $(function(){
 		    						<a class="information"><span><i class="fas fa-info-circle"></i></span></a>			
 		    					</p>
 		    				</td> --%>
-		  				
-		  				
 					</table>														
 				</div>	
 				
@@ -279,9 +340,12 @@ $(function(){
 	
 	
 	<div class="footer-icon">
-		<a><i class="fas fa-columns"></i></a>
+		<a><i class="fas fa-sitemap"></i></a>
 	</div>
 	
+<!-- 	
+	 <div id="person-detail" style="display: none;" ></div>
+	 -->
 	
 	
 </div>

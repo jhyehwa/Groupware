@@ -23,6 +23,7 @@ public class Employee {
 	private String pType;
 	private String lastLogin;
 	private String imageFilename;
+	private String workCode;
 
 	public int getEmployeeNum() {
 		return employeeNum;
@@ -198,6 +199,14 @@ public class Employee {
 
 	public void setImageFilename(String imageFilename) {
 		this.imageFilename = imageFilename;
+	}
+
+	public String getWorkCode() {
+		return workCode;
+	}
+
+	public void setWorkCode(String workCode) {
+		this.workCode = workCode;
 	}
 	
 	

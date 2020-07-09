@@ -4,192 +4,368 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
    String cp = request.getContextPath();
-
-   String wsURL = "ws://"+request.getServerName()+":"+request.getServerPort()+cp+"/chat.msg";
 %>
- 
+
 <link rel="stylesheet" href="<%=cp%>/resource/css/chat.css" type="text/css">
 
-<style type="text/css">
-#chatMsgContainer{
-   clear:both;
-   border: 1px solid #ccc;
-   height: 280px;
-   overflow-y: scroll;
-   padding: 3px;
-   width: 100%;
-}
-#chatMsgContainer p{
-   padding-bottom: 0px;
-   margin-bottom: 0px;
-}
 
-#guestListContainer{
-	clear:both;
-	width: 100%;
-	height: 570px;
-	text-align:left;
-	padding:5px 5px 5px 5px;
-	overflow-y:scroll;
-    border: 1px solid #ccc;
-}
-
-#chatRoomContainer{
-   clear:both;
-   border: 1px solid #ccc;
-   height: 280px;
-   overflow-y: scroll;
-   padding: 3px;
-   width: 100%;
-}
-#chatRoomContainer p{
-   padding-bottom: 0px;
-   margin-bottom: 0px;
-}
-
-
-</style>
-
+<script src="http://localhost:3001/socket.io/socket.io.js"></script>
 <script type="text/javascript">
-// ---------------------------------------------
+
+//왼쪽 사원 리스트 출력
 $(function(){
-	var socket=null;
-	
-	// 채팅 서버(IP 주소를 사용 해야함)
-	//   ws://ip주소:포트번호/cp/chat.msg
-	var host="<%=wsURL%>";
-	// var host='wss://' + window.location.host + '/wchat.msg';  // https
-	
-	if ('WebSocket' in window) {
-		socket = new WebSocket(host);
-    } else if ('MozWebSocket' in window) {
-    	socket = new MozWebSocket(host);
-    } else {
-    	writeToScreen('Your browser does not support WebSockets');
-        return false;
-    }
-
-	socket.onopen = function(evt) { onOpen(evt) };
-	socket.onclose = function(evt) { onClose(evt) };
-	socket.onmessage = function(evt) { onMessage(evt) };
-	socket.onerror = function(evt) { onError(evt) };
-	
-	 // 서버 접속이 성공한 경우 호출되는 콜백함수
-	function onOpen(evt) {
-	    var userId = "${sessionScope.member.userId}";
-	    var nickName = "${sessionScope.member.userName}";
-	    if(! userId) {
-	    	location.href="<%=cp%>/member/login";
-	    	return;
-	    }
-	    
-		writeToScreen("채팅방에 입장했습니다.");
-	    
-	    // 서버 접속이 성공 하면 아이디와 이름을 JSON으로 서버에 전송
-	    var obj = {};
-	    var jsonStr;
-	    obj.cmd="connect";
-	    obj.userId=userId;
-	    obj.nickName=nickName;
-	    jsonStr = JSON.stringify(obj);  // JSON.stringify() : 자바스크립트 값을 JSON 문자열로 변환
-	    socket.send(jsonStr);
-	    
-	    // 채팅입력창에 메시지를 입력하기 위해 키를 누르면 호출되는 콜백함수
-	    $("#chatMsg").on("keydown",function(event) {
-	    	// 엔터키가 눌린 경우, 서버로 메시지를 전송한다.
-	        if (event.keyCode == 13) {
-	            sendMessage();
-	        }
-	    });
-	}
-
-	// 연결이 끊어진 경우에 호출되는 콜백함수
-	function onClose(evt) {
-		// 채팅 입력창 이벤트를 제거 한다.
-       	$("#chatMsg").on("keydown",null);
-       	writeToScreen('Info: WebSocket closed.');
-	}
-
-	// 서버로부터 메시지를 받은 경우에 호출되는 콜백함수
-	function onMessage(evt) {
-    	// JSON으로 전송 받는다.
-    	var data=JSON.parse(evt.data); // JSON 파싱
-    	
-    	var cmd=data.cmd;
-    	
-    	if(cmd=="connectList") { // 처음 접속할때 접속자 리스트를 받는다.
-    		var userId=data.userId;
-    		var nickName=data.nickName;
-    		
-    		var sp="<span style='display: block;' id='guest-"+userId+"'>"+userId+"("+nickName+")</span>";
-    		$("#guestListContainer").append(sp);
-    		
-    	} else if(cmd=="connect") { // 다른 접속자가 접속했을 때
-    		var userId=data.userId;
-    		var nickName=data.nickName;
-    		
-    		var s=userId+"("+nickName+") 님이 입장하였습니다.";
-    		writeToScreen(s);
-    		
-    		var sp="<span style='display: block;' id='guest-"+userId+"'>"+userId+"("+nickName+")<span>";
-    		$("#guestListContainer").append(sp);
-    		
-    	} else if(cmd=="disconnect") { // 접속자가 나갔을 때
-    		var userId=data.userId;
-    		var nickName=data.nickName;
-    		
-    		var s=userId+"("+nickName+") 님이 나가셨습니다.";
-    		writeToScreen(s);
-    		
-    		$("#guest-"+userId).remove();
-
-    	} else if(cmd=="message") { // 메시지를 받은 경우
-    		var userId=data.userId;
-    		var nickName=data.nickName;
-    		var msg=data.chatMsg;
-    		
-    		writeToScreen(nickName+"] " + msg);
-    	}
-	}
-
-	// 에러가 발생시 호출되는 콜백함수
-	function onError(evt) {
-		writeToScreen('Info: WebSocket error.');
+	function ajaxJSON(url, type, query, fn) {
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				fn(data);
+			}
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
 	}
 	
-	// 메시지 전송
-	function sendMessage() {
-	    var message = $("#chatMsg").val().trim();
-	    if (message!="") {
-	        var obj = {};
-	        var jsonStr;
-	        obj.cmd="message";
-	        obj.chatMsg=message;
-	        jsonStr = JSON.stringify(obj);
-	        socket.send(jsonStr);
-	        
-	        $("#chatMsg").val("");
-	        writeToScreen("보냄] "+message);
-	    }		
+	function listDept2() {
+		var url="<%=cp%>/employee/listDept";
+		var query="";
+		
+		var fn = function(data){
+			printDept2(data);
+		};
+		
+		ajaxJSON(url, "get", query, fn);		
 	}
+	
+	function printDept2(data) {
+	
+		var uid="${sessionScope.employee.empNo}";		
+		
+		var out="";
+		for(var idx=0; idx<data.length; idx++) {
+			var dType=data[idx];
+			
+			out+="<tr ><td class='fp-dept2'>";
+			out+="<span class='dept-icon2 fp-dept-more2' data-dept2='"+dType+"'><i class='fas fa-caret-down'></i>&nbsp;"+dType+"</span>";
+			out+="<span class='dept-icon2 fp-dept-less2' style='display:none'><i class='fas fa-caret-up'></i>&nbsp;"+dType+"</span></td></tr>";
+			out+="<tr style='display:none;'><td class='fp-person2'></td></tr>";
+		}
+		
+		$("#guestListContainer").append(out);
+	}
+	
+	listDept2();
+	
+	$("body").on("click", ".dept-icon2",function(){
+		  var obj = $(this);
+		  var $td = $(this).closest("tr").next("tr").children("td");
+		  if( obj.hasClass("fp-dept-more2") ){
+		    obj.hide();
+		    obj.next().show();            
+		    obj.parent().parent().next().show();
+		    
+		    $td.empty();
+		    
+		    var dept = obj.attr("data-dept2");
+		    
+		    var url="<%=cp%>/employee/listOrg";
+			var query="dept="+dept;
+			
+			var fn = function(data){
+				printOrg2(data, $td);
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+		    
+ 
+		  }else{
+		     obj.hide();
+		     obj.prev().show();
+		     obj.parent().parent().next().hide();
+		  }
+	});	
+	
+	function printOrg2(data,obj) {
+		var uid="${sessionScope.employee.empNo}";
+
+		var out="";
+		for(var idx=0; idx<data.listOrg.length; idx++) {
+			var dType=data.listOrg[idx].dType;
+			var name=data.listOrg[idx].name;
+			var pType=data.listOrg[idx].pType;
+			var image=data.listOrg[idx].imageFilename;
+			var empNo=data.listOrg[idx].empNo
+			
+			out+=" <p data-empNo='"+empNo+"' data-image='"+image+"'> <i class='fas fa-circle' style='font-size: 8px; color:gray;'></i>&nbsp;&nbsp;&nbsp;";
+			out+=" <img src='<%=cp%>/uploads/profile/"+image;
+			out+="' style='width: 30px; height: 30px; border-radius: 15px; vertical-align:middle;'>&nbsp;";
+			out+=pType+"&nbsp;|&nbsp;"+name+"</i>";
+		}		
+		obj.html(out);
+	}	
+	
 });
-//---------------------------------------------
-
-// 채팅 메시지를 출력하기 위한 함수
-function writeToScreen(message) {
-    var $chatContainer = $("#chatMsgContainer");
-    $chatContainer.append("<p>");
-    $chatContainer.find("p:last").css("wordWrap","break-word"); // 강제로 끊어서 줄 바꿈
-    $chatContainer.find("p:last").html(message);
-
-    // 추가된 메시지가 50개를 초과하면 가장 먼저 추가된 메시지를 한개 삭제
-    while ($chatContainer.find("p").length > 50) {
-    	$chatContainer.find("p:first").remove();
-	}
-
-    // 스크롤을 최상단에 있도록 설정함
-    $chatContainer.scrollTop($chatContainer.prop("scrollHeight"));
+// ---------------------
+//날짜가져오기
+function convertStringToDate(str) {
+	// yyyy-mm-dd hh:mi:ss
+    
+    return new Date(str.substr(0,4), str.substr(5,2)-1, str.substr(8,2), str.substr(11,2), str.substr(14,2), str.substr(17,2));
 }
+
+function convertDateTimeToString(date) {
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = (m>9 ? '' : '0') + m;
+    var d = date.getDate();
+    d = (d>9 ? '' : '0') + d;
+
+    var hh = date.getHours();
+    hh = (hh>9 ? '' : '0') + hh;
+    var mi=date.getMinutes();
+    mi = (mi>9 ? '' : '0') + mi;
+    var ss=date.getSeconds();
+    ss = (ss>9 ? '' : '0') + ss;
+    
+    return y + '-' + m + '-' + d +' ' + hh + ':'+mi+":"+ss;
+}
+
+function convertDateToString(date) {
+	var week = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var w = week[date.getDay()];
+    
+    return y + '년 ' + m + '월 ' + d +"일 " + w;
+}
+
+function yyyymmdd(date) {
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    
+    return [y,
+        (m>9 ? '' : '0') + m,
+        (d>9 ? '' : '0') + d
+       ].join('');
+}
+
+function convertTimeToString(date) {
+    var h = date.getHours();
+    var m=date.getMinutes();
+    var ampm='오전';
+    if (h>=12) ampm='오후';
+    if (h>12) h=h-12;
+    if (h==0) h=12;
+    
+    return ampm+" "+h+":"+m;
+}
+
+function compareToDate(date1, date2) {
+	var d1, d2;
+	
+	if (typeof date1 === 'object' && date1 instanceof Date && typeof date2 === 'object' && date2 instanceof Date) {
+		d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+		d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+	} else {
+		// yyyymmdd
+		d1 = new Date(date1.substr(0,4), date1.substr(4,2)-1, date1.substr(6,2));
+		d2 = new Date(date2.substr(0,4), date2.substr(4,2)-1, date2.substr(6,2));
+	}
+	
+	return d1.getTime() - d2.getTime();
+}
+
+//----------------------------
+
+$(function(){
+	//채티이이잉
+	var uid = "${sessionScope.employee.empNo}";
+	var name = "${sessionScope.employee.name}";
+	var uphoto="${sessionScope.employee.imageFilename}";
+	
+	if(! uid) {
+	    location.href="<%=cp%>/login";
+	    return;
+    }
+	var first_date = null; // 화면에 출력된 메시지의 최초의 날짜 
+	var last_date = null;  // 화면에 출력된 메시지의 마지막 날짜 
+	var room = null;
+	var image=null;
+	// 채팅 서버에 접속
+	var sock = io('http://localhost:3001/chat');
+	
+	
+	// 채팅방 입장
+	$("body").on("click", ".fp-person2 p", function(){
+		room = $(this).attr("data-empNo");
+		alert(room);
+		image=$(this).attr("data-image");
+		
+		
+	//^_^요기까지.........
+		first_date = last_date = new Date();
+		
+		// 룸이름
+		var roomName = $(this).text();
+		alert(roomName);
+		$(".chatting-content-list").empty();
+		$(".chatting-room-name").html(roomName);
+		$("#chatRoomList").css("display","none");
+		$("#chatContentList").css("display","");
+	
+		$(".backToChatroom").on("click", function(){
+			$("#chatRoomList").css("display","");
+			$(".chatList").css("display","");
+			
+			$("#chatContentList").css("display","none");
+		});
+		
+		if(room){
+			$(".room-image").html("<img width='60' height='60' style='border-radius:30px;' src='<%=cp%>/uploads/profile/"+image+"'>");			
+		}
+		
+		$("body").on("click", ".chatList", function(){
+			$("#chatRoomList").css("display","none");
+			$("#chatContentList").css("display","");
+		});
+		
+/* 		
+		var out="";
+		function roomList(data){
+			
+			out+= "<table class='chatList' style='border-bottom: 1px solid red; width: 670px; margin-left: 10px; padding: 10px;'>";
+			out+= " <tr><td rowspan='2' width='70'><i style='font-size: 60px;' class='fas fa-user-circle'></i></td>";
+			out+= "		<td class='chatting-room-name' width='400'><p>dType홍보부 name김수현 pType사원</p></td>";
+			out+= "		<td class='latestTime' width='100'><p></p></td>";
+			out+= "		<td rowspan='2'><i title='나가기' style='font-size: 30px;' class='fas fa-sign-out-alt'></i></td>";
+			out+= "	</tr>";
+			out+= "<tr><td class='latestChat' style='color:red'><p>대화내용이요~~</p></td><td></td></tr></table>";
+		}
+		$(".chatListContainer").append(out);
+		
+		 */
+		//채팅방 리스트 생성
+
+		
+		
+		// 오늘 날짜의 룸 채팅 문자열 리스트 요청
+		sock.emit("chat-msg-list", {
+			room : room,
+			writeDate : convertDateTimeToString(last_date)
+		});
+	});
+	
+	// 채팅 메시지 보내기
+	$("#chatMsg").on("keydown",function(event) {
+    	// 엔터키가 눌린 경우, 서버로 메시지를 전송한다.
+        if (event.keyCode == 13) {
+        	var message = $("#chatMsg").val().trim();
+        	
+        	if(! message) {
+        		return false;
+        	}
+        	
+        	var msg = {
+        		room:room,	
+        		writeDate:convertDateTimeToString(new Date()),	
+        		empNo:uid,
+        		name:name,
+        		image:image,
+        		message:message,	
+        	};
+        	
+			sock.emit("chat-msg", msg);
+        	
+        	$("#chatMsg").val("");
+        	$("#chatMsg").focus();
+        }
+    });
+	
+	
+	// 채팅 문자열이 전송된 경우
+	sock.on("chat-msg", function(data) {
+		writeToScreen(data);
+	});	
+	
+	function writeToScreen(data) {
+		var room = data.room;
+		var writeDate = convertStringToDate(data.writeDate);
+		var empNo = data.empNo;
+		var name = data.name;
+		var message = data.message;
+		
+		var out;
+		var dispDate = convertDateToString(writeDate);
+		var dispTime = convertTimeToString(writeDate);
+		var strDate = yyyymmdd(writeDate);
+    	var cls = "date-"+strDate;
+
+		if(! $(".chatting-content-list").children("div").hasClass(cls)) {
+			// 날짜 출력
+			out =  "<div class='"+cls+"'>";
+	    	out += " <div style='clear: both; margin: 7px 5px 3px;'>";
+		    out += "   <div style='float: left; font-size: 10px; padding-right: 5px;'><i class='far fa-calendar'></i> "+dispDate+"</div>";
+		    out += "   <hr>";
+		    out += "  </div>";
+		    out += "</div>";
+		    
+		    if(compareToDate(strDate, yyyymmdd(last_date)) >=0 ) {
+		    	last_date = writeDate;
+		    	$(".chatting-content-list").append(out);
+		    } else {
+		    	$(".chatting-content-list").prepend(out);
+		    }
+		}
+		
+		// 메시지 출력
+		if(uid==empNo) {
+			
+			out="<div class='my_message' style='clear: both; margin: 5px 5px;'>";
+        	out+="	<div class='my-tooltip toolmsg' style='float: right; cursor: pointer;' >"+message+"</div>";
+			out+="	<div class='toolTime' style='float: right; font-size: 12px; margin: 20px 4px 0 0;'>"+dispTime+"</div>";
+			out+="	<div class='myChatImage'  style='clear:both; float: right; margin: 15px 35px 0 0; '>";
+			out+="		<img src='<%=cp%>/uploads/profile/"+uphoto+"'></div>";
+			out += "</div>";
+			
+		} else {
+			out=" <div class='you_message' style='clear: both; margin: 5px 5px;'>";
+        	out+="	<div class='you-tooltip toolmsg' style='cursor: pointer; float: left;' >"+message+"</div>";
+        	out+="	<div class='toolTime' style='float:left; font-size: 12px; margin: 20px 0 0 4px ;'>"+dispTime+"</div>";
+			out+="<div class='youChatImage'  style='clear:both; margin-left:30px; padding-top:15px'>";
+			out+="<img src='<%=cp%>/uploads/profile/"+image+"'><span>"+empNo+"dTye"+name+"pType</span></div>";
+			out += "</div>";
+		}
+		
+		$("."+cls).append(out);
+		$('.chatting-content-list').scrollTop($('.chatting-content-list').prop('scrollHeight'));
+		
+		var latestChat= $(".chatting-content-list").children().children().last().children(".toolmsg").text();
+		var latestTime= $(".chatting-content-list").children().children().last().children(".toolTime").text();
+		
+
+		
+		
+		$(".latestChat p").text(latestChat);
+		$(".latestTime p").text(latestTime);
+		
+		
+	}	
+	
+	
+});
+
 </script>
 <div class="container">
 	<div class="board-container">
@@ -197,7 +373,7 @@ function writeToScreen(message) {
 	         <h3><i class="far fa-comment-alt"></i> 채팅 </h3>
 	     </div>
 	     
-	     <div class="board-body" style="float: left; width: 900px; height: 600px;" >
+	     <div class="board-body" style="float: left; width: 1200px; height: 600px;" >
 	         <div class="alert-info">
 	            <i class="fas fa-info-circle"></i> 회원과 실시간으로 대화를 나룰수 있는 공간 입니다.
 	        </div>
@@ -208,60 +384,65 @@ function writeToScreen(message) {
 		                <span style="font-weight: 600;">＞</span>
 		                <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">접속자 리스트</span>
 		            </div>
-		            <div id="guestListContainer">
-					
-					</div>
+		            <div id="guestListContainer"></div>
 		        </div>
 		        
 		        <div style="float: left; width: 20px;">&nbsp;</div>
+		        		        
+		        <div id="chatRoomList" style="float: left; width: 700px; /* display: none; */  ">
+		             <div style="clear: both; padding-bottom: 5px;">
+		                 <span style="font-weight: 600;">＞</span>
+		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅 목록</span>
+		             </div>
+		             <div id="chatListContainer" >
+		             	<table class="chatList"style="border-bottom: 1px solid red; width: 670px; margin-left: 10px; padding: 10px;  display: none;" >
+							<tr>
+								<td class="room-image"rowspan="2" width="70" height="70"><i style='font-size: 60px;' class='fas fa-user-circle'></i></td>
+								<td class="chatting-room-name" width="400"><p></p></td>
+								<td class="latestTime" width="100"><p></p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px;" class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat" style="color:red; padding-left: 15px;"><p></p></td>
+								<td></td>
+							</tr>
+						</table>
+		             </div>
+		        </div>
+
 		        
-		        <div style="float: left; width: 350px;">
+		        <div id="chatContentList"  style="float: left; width: 700px;  display: none; ">
 		             <div style="clear: both; padding-bottom: 5px;">
 		                 <span style="font-weight: 600;">＞</span>
 		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅 메시지</span>
 		             </div>
-		             <div id="chatRoomContainer">
-		             	 <ul>
-					        <li>
-					            <div class="my_message">
-					                <div class="tooltip">test1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-					            </div>
-					        </li>
-					        <li>
-					            <div class="my_message">
-					                <div class="tooltip">test2</div>
-					            </div>
-					        </li>
-					        <li>
-					            <div class="my_message">
-					                <div class="tooltip">test3</div>
-					            </div>
-					        </li>
-					        <li>
-					            <div class="you_message">
-					                <div class="tooltip">test4</div>
-					            </div>
-					        </li>
-					    </ul>
+		             <div id="chatMsgContainer">
+		             	<div class="backToChatroom"><i class="far fa-arrow-alt-circle-left"></i>뒤로</div>
+		             		<div class="chatting-content-list"></div>
+		             		<%-- <div class='my_message' style='clear: both; margin: 5px 5px;'>
+					        	<div class="my-tooltip" style='float: right; cursor: pointer;' >메세지입력ㄱㄱ</div>
+								<div style='float: right; font-size: 12px; margin: 20px 4px 0 0;'>시ddd간</div>
+								<div class="myChatImage"  style='clear:both; float: right; margin: 15px 35px 0 0; '><img src='<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}'></div>
+							</div>
+							
+							<div class='you_message' style='clear: both; margin: 5px 5px;'>
+					        	<div class="you-tooltip" style='cursor: pointer; float: left;' >니가보낸메세지ㄱㄱ</div>
+					        	<div style="float:left; font-size: 12px; margin: 20px 0 0 4px ;">상대방이보낸시간</div>
+								<div class="youChatImage"  style='clear:both; margin-left:30px; padding-top:15px'><img src='<%=cp%>/resource/images/basic.gif'><span>dTye이름pType</span></div>
+							</div>
+							<div class='you_message' style='clear: both; margin: 5px 5px;'>
+					        	<div class="you-tooltip" style='cursor: pointer; float: left;' >니가보낸메세지ㄱㄱ</div>
+					        	<div style="float:left; font-size: 12px; margin: 20px 0 0 4px ;">상대방이보낸시간</div>
+								<div class="youChatImage"  style='clear:both; margin-left:30px; padding-top:15px'><img src='<%=cp%>/resource/images/basic.gif'><span>dTye이름pType</span></div>
+							</div> --%>
 		             </div>
 		             <div style="clear: both; padding-top: 5px;">
 		                 <input type="text" id="chatMsg" class="boxTF"  style="width: 98%;"
 		                            placeholder="채팅 메시지를 입력 하세요...">
 		             </div>
 		        </div>
-		        
-		        <div style="float: left; width: 350px; display: none;">
-		             <div style="clear: both; padding-bottom: 5px;">
-		                 <span style="font-weight: 600;">＞</span>
-		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅 메시지</span>
-		             </div>
-		             <div id="chatMsgContainer"></div>
-		             <div style="clear: both; padding-top: 5px;">
-		                 <input type="text" id="chatMsg" class="boxTF"  style="width: 98%;"
-		                            placeholder="채팅 메시지를 입력 하세요...">
-		             </div>
-		        </div>
-		        
+
+
 		       
 		        
 		        

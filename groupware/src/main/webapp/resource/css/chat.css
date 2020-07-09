@@ -5,100 +5,148 @@
 	padding: 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ul li {
-	list-style: none;
+.fp-dept2{
+	font-size:20px;
+	font-weight:600;
+	padding: 10px 0 0 10px;
+	color: DARKSLATEGRAY;
 }
+
+
+.fp-person2 {
+	 padding: 5px 0 5px 20px;
+	 font-size: 17px;
+	 color: DARKSLATEGRAY;
+}
+
+.fp-person2 i {
+	color: 9B9B9B;
+}
+
+.fp-person2 p {
+	padding: 3px 0 3px 0;
+}
+
+
+
+
+#chatMsgContainer{
+   clear:both;
+   border: 1px solid #ccc;
+   height: 500px;
+   overflow-y: auto;
+   padding: 5px;
+   width: 100%;
+}
+#chatMsgContainer p{
+   padding-bottom: 0px;
+   margin-bottom: 0px;
+}
+
+#guestListContainer{
+	clear:both;
+	width: 100%;
+	height: 570px;
+	text-align:left;
+	padding:5px 5px 5px 5px;
+	overflow-y:auto;
+    border: 1px solid #ccc;
+}
+
+#chatListContainer{
+	clear:both;
+	text-align:left;
+	padding:5px;
+	overflow-y:auto;
+	border: 1px solid #ccc;
+	width: 100%;
+	height: 570px;
+}
+
+
+#chatRoomContainer{
+   clear:both;
+   border: 1px solid #ccc;
+   overflow-y: auto;
+   padding: 3px;
+   width: 100%;
+}
+#chatRoomContainer p{
+   padding-bottom: 0px;
+   margin-bottom: 0px;
+}
+
+
 
 .my_message {
 	position: relative;
 	width: 100%;
-	height: 80px;
+	min-height: 60px;
 	display: block;
 }
 
-.my_message>.tooltip {
-	position: absolute;
+.my-tooltip {
+	/* position: absolute; */
 	display: block;
 	background-color: #9565A4;
-	width: 200px;
-	left: 150px;
-	top: 40px;
+/* 	width: 300px; */
 	border-radius: 10px;
 	padding: 10px;
 	color: white;
+	margin-right: 20px;
 }
 
-.my_message>.tooltip:before {
+.my-tooltip:before {
 	position: absolute;
 	content: '';
 	border-width: 10px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) #9565A4
 		rgba(255, 255, 255, 0);
-	top: 36px;
-	left: 150px;
+	top: 32px;
+	right:32px;
 	transform: rotate(180deg);
+}
+
+.myChatImage img{
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	
+}
+
+.youChatImage img{
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	
 }
 
 .you_message {
 	position: relative;
 	width: 100%;
-	height: 300px;
+	min-height: 60px;
 }
 
-.you_message>.tooltip {
-	position: absolute;
+.you-tooltip {
+	/* position: absolute; */
 	display: block;
 	background-color: #EDA900;
-	width: 200px;
-	left: 50px;
-	top: 40px;
+/* 	width: 300px; */
+	left: 20px;
 	border-radius: 10px;
 	padding: 10px;
 	color: white;
 }
 
-.you_message>.tooltip:before {
+.you-tooltip:before {
 	position: absolute;
 	content: '';
 	border-width: 10px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) #EDA900
 		rgba(255, 255, 255, 0);
-	top: 36px;
-	left: 40px;
+	top: 32px;
+	left:5px;
 	transform: rotate(180deg);
 }
