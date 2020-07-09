@@ -20,8 +20,6 @@ import com.of.employee.SessionInfo;
 @Controller("workTime.workTimeController")
 @RequestMapping("/workTime/*")
 public class WorkTimeController {
-	
-
 	@Autowired
 	private WorkTimeService service;
 

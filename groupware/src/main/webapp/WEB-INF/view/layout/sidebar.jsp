@@ -107,7 +107,7 @@
 				<a href="#"><i class="fas fa-user-clock"></i></a>
 			</div>
 			<ul class="sub-menu">
-				<li><a class="sm3" href="#">근태관리</a></li>
+				<li><a class="sm3" href="<%=cp%>/workTime/main">근태관리</a></li>
 			</ul>
 		</li>
 		

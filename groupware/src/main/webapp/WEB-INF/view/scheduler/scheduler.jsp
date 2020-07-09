@@ -36,9 +36,42 @@
     text-decoration: none;
 }
 
-.hbtn-bottom {
-	border:3px solid black;
+.hbtn-bottom {				/* 오른쪽 위 버튼 */
+	border:1px solid #cccccc;
 	font-weight: 900;
+}
+
+
+.fc-unthemed td.fc-today {		/* 오늘 해당 칸 */
+	background: #F8EFFB;
+	border-top: 1px solid #ddd;
+}
+
+.fc-widget-header {		/* 요일 칸 */
+	height: 22px;
+	line-height: 22px;
+}
+
+/* 일요일 */
+.fc-widget-header .fc-sun {
+	color: red;
+	background: #FBEFEF;
+}
+
+.fc-widget-content .fc-sun {   
+	background: #FBEFEF;
+	color: red;
+}
+
+ /* 토요일 */
+ .fc-widget-header .fc-sat {
+ 	background: #EFF2FB;
+	color: blue;
+}
+ 
+.fc-widget-content .fc-sat {  
+	background: #EFF2FB;
+	color: blue;
 }
 
 #calendar {
@@ -54,12 +87,22 @@
 
 .fc-center h2{
 	display: block;
-	font-family: "Malgun Gothic", "맑은 고딕", NaschNumGothic, 나눔고딕, 돋움, sans-serif;
+	font-family: NanumSquareRound, "Malgun Gothic", "맑은 고딕", NaschNumGothic, 나눔고딕, 돋움, sans-serif;
 	font-size: 1.5em;
-	font-weight: bold;
+	font-weight: bolder;
 	/* -webkit-margin-after: 0.83em; */
 	-webkit-margin-start: 0px;
 	-webkit-margin-end: 0px;
+}
+
+.fc-event-container {
+	border-radius: 0px;
+}
+
+.fc-content {
+	height: 17px;
+	line-height: 17px;
+	padding-left: 3px;
 }
 
 .fc-content .fc-title{
@@ -691,12 +734,12 @@ $(function(){
 
 </script>
 <div class="container">
-<div class="board-container"  style="width: 900px; float: left; position:absolute; margin-left: 300px;">
-    <div class="body-title" style=" margin-bottom: 30px;" align="center">
-        <h3><i class="far fa-calendar-alt"></i> 일정관리 </h3>
-    </div>
-    
-    <div >
+<div class="board-container"  style="width: 900px; float: left; position:absolute; margin-left: 450px;">
+    <div class="body-title" style=" margin-bottom: 30px;" align="left">
+        <p style="font-size: 22px; font-weight: bold; padding-top: 10px;"><i class="far fa-calendar-alt"></i> 일정관리 </p>
+    </div>  
+      
+    <div style="margin-top: -20px;">
             <div id="calendarHeader" style="height: 35px; line-height: 35px;">
                 <div style="text-align: right;">
                     <div style="clear: both; display: inline-block;">

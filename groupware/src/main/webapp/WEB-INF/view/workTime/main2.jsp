@@ -103,106 +103,52 @@ function updateMemo(){
 </script>
 
 <div class="container">
-	 <div class="board-container" style="margin-left: 200px;">
-        <div class="body-title" style="font-size: 18px;">
-            <h3> ♬ 근태관리 </h3>
-        </div>   
-
-        <div class="board-body" style="float: left; width: 23%;">	      
-				<input type="hidden" name="empNo" value="${sessionScope.employee.empNo}">
-				<input type="hidden" name="msg" value="${msg}">
-					
-		 		<!-- 출퇴근 찍기 -->
-				<div class="timeINOUT">				
-					<p> <i class="fas fa-clock"></i> </p>
-				
-					<div class="timeBtn">
-						<button class="workingBtn" data-val="work" ${wk.clockIn==null ? '' : 'disabled="disabled"' }>
-							<i class="fas fa-walking"></i>&nbsp;<i class="fas fa-sign-in-alt"></i>
-						</button>
-						<span>|</span>	
-						<button class="workingBtn" data-val="home" ${wk.clockOut==null ? '' : 'disabled="disabled"' } >
-							<i class="fas fa-sign-out-alt"></i>&nbsp;<i class="fas fa-running"></i>
-						</button>
-					</div>
-					<div class="timeWord">
-						<p> 출근하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 퇴근하기 </p>					
-					</div>
-				
-					<div class="board-statMemo" style="width: 100%;">	
-						<table class="stateTable">
-							<tr>
-								<td class="stFtd" colspan="2">2020년 7월 9일</td>
-							</tr>
-							<tr>
-								<td class="stStd" style="width:50%;">출근</td>
-								<td class="stStd" style="width:50%;">퇴근</td>
-							</tr>
-							<tr>
-								<td>${wk.clockIn}</td> 
-								<td>${wk.clockOut}</td>
-							</tr>
+	<div class="board-container">
+		<div class="board-title" style="font-size: 18px;">
+            <h3>♬ 근태관리 </h3>
+        </div>
+		
+			<div class="board-profile" style="width: 20%;">
+				<div class="choiceStatus">
+					<input type="hidden" name="empNo" value="${sessionScope.employee.empNo}">
+					<input type="hidden" name="msg" value="${msg}">
+		 				<!-- 근무 상태 변경 :) -->
+						<table>
 							<tr>
 								<td>
-								<c:if test="${msg == 'work'}">
-									퇴근
-								</c:if>
-								<c:if test="${msg != 'work'}">
-									정상 출근
-								</c:if>
-								</td> 
-								<td>${wk.workCode}</td>
+									<button class="workingBtn" data-val="work" ${wk.clockIn==null ? '' : 'disabled="disabled"' }>
+										<span>출근</span>
+									</button>
+								</td>
+								<td>
+									<button class="workingBtn" data-val="home" ${wk.clockOut==null ? '' : 'disabled="disabled"' } >
+										<span>퇴근</span>
+									</button>
+								</td>
 							</tr>
-						</table>		
-					</div>
-				</div> 
+						</table>
+				</div>
+			</div>
 		
-			<!-- 	
-				<div class="board-statMemo" style="width: 100%; background: yellow;">
-				이번주 근태 기록 :]
-				<h3 style="font-size: 18px;">| 주중 근태 기록 </h3>				
-					<table class="stateTable">
-						<tr>
-							<td class="stFtd" style="width:15%;">요일</td>
-							<td class="stFtd" style="width:15%;">출근</td>
-							<td class="stFtd" style="width:45%;">퇴근</td>
-							<td class="stFtd" style="width:25%;">근태 상태</td>
-						</tr>
-						<tr>
-							<td>월요일</td>
-							<td>09:00:00</td>
-							<td>18:00:00</td>
-							<td>정상</td>
-						</tr>
-					</table>		
-				</div> -->
-        </div>
-        
-        
-        
-        
-        <!-- 출퇴근 연장근무 조퇴 등등 선택사항 + 현시간 :> -->
-        <div class="board-body" style="width: 65%; float: left; margin-left: 45px; margin-top: 15px;" >        
-			<script type="text/javascript">
-			function printTime(){
-				var clock = document.getElementById("currTime");
-				var curr = document.getElementById("curr");
-				var now = new Date();
+			<div class="board-profile2" style="width: 50%">
+				<!-- 출퇴근 연장근무 조퇴 등등 선택사항 + 현시간 :> -->
+				<script type="text/javascript">
+				function printTime(){
+					var clock = document.getElementById("currTime");
+					var curr = document.getElementById("curr");
+					var now = new Date();
 					
-				clock.innerText =  now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + "  " + now.getHours() + "시 " + now.getMinutes() + "분 " + now.getSeconds() + "초";
-				curr.innerText = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분 " + now.getSeconds() + "초 ";
-				setTimeout("printTime()", 1000);
-			}
+					clock.innerText = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
+					curr.innerText = now.getFullYear() + "년" + (now.getMonth()+1) + "월" + now.getDate() + "일" + now.getHours() + "시" + now.getMinutes() + "분" + now.getSeconds() + "초";
+					setTimeout("printTime()", 1000);
+				}
 	
 				window.onload = function(){
-				printTime();
-			}
-			</script>
-			
-			<div id="currTime" class="currTime">
-				<h3 style="font-size: 18px;"></h3>	
-			</div>
-				<%-- <div class="status" style="background: aqua;">
+					printTime();
+				}
+				</script>
+				<div><span id="currTime" class="currTime">현재시간 :)</span></div>
+				<div class="status">
 					<table>
 						<tr>
 							<td>${wk.workDate}</td>
@@ -227,26 +173,46 @@ function updateMemo(){
 							<td>${wk.workCode}</td>
 						</tr>
 					</table>
-				</div> --%>
-				
-				<div class="board-detailed" style="width: 100%;">
-			  		<h3 style="font-size: 20px;">| 월별 근태 기록  </h3>
-	
-					<table class="monthTable">
+				</div>
+			</div>
+			
+			<div class="board-statMemo" style="width: 30%">
+				<!-- 이번주 근태 기록 :] -->
+				<span>주중 근태 기록 :]</span>
+				<div class="statMemo">
+					<table>
 						<tr>
-							<td class="mtFtd" style="width: 15px;">일자</td>
-							<td class="mtFtd" style="width: 60px;">출근</td>
-							<td class="mtFtd" style="width: 60px;">퇴근</td>
-							<td class="mtFtd" style="width: 70px;">근태 현황</td>
-							<td class="mtFtd" style="width: 25px;"> IP </td>
-							<td class="mtFtd" style="width: 70px;">비고</td>
+							<td rowspan="2" style="width: 50px;">요일</td>
+							<td style="width: 70px;">출근</td>
+							<td style="width: 210px;">{출근 시간}</td>
+							<td>근태 상태</td>
+						</tr>
+						<tr>
+							<td>퇴근</td>
+							<td>{퇴근 시간}</td>
+							<td>{근태 상태}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="board-detailed" style="width: 65%">
+			  	<span>근태 기록 월별 정리 :}</span>
+				<div class="detailed">
+				<span>월 넘기기</span>
+					<table>
+						<tr>
+							<td style="width: 20px;">일자</td>
+							<td style="width: 70px;">출근</td>
+							<td style="width: 70px;">퇴근</td>
+							<td style="width: 70px;">근태 현황</td>
+							<td style="width: 70px;">비고</td>
 						</tr>
 						<c:forEach var="dto" items="${monthList}" >
 							<tr>
 								<td>${dto.workDate}</td>
 								<td>
 									<c:if test="${dto.out1 != null}">
-										<span>${dto.clockIn} [외근]</span>
+										<span>${dto.clockIn}[외근]</span>
 									</c:if>
 									<c:if test="${dto.out1 == null}">
 										<span>${dto.clockIn}</span>
@@ -255,14 +221,13 @@ function updateMemo(){
 								<td>
 								
 								<c:if test="${dto.out2 != null }">
-										<span>${dto.clockOut} [외근]</span>
+										<span>${dto.clockOut}[외근]</span>
 									</c:if>
 									<c:if test="${dto.out2 == null}">
 										<span>${dto.clockOut}</span>
 									</c:if>
 								</td>
 								<td>${dto.workCode}</td>
-								<td> IP 주소 </td>
 								<td>
 									<c:if test="${dto.other == null}">
 									<form method="post" id="updateForm" name="updateForm">
@@ -277,18 +242,17 @@ function updateMemo(){
 							</tr>
 						</c:forEach>
 					</table>
-			
+				</div>
 				
 				<div class="detailedMonth">
-					<span>지각 : 횟수 | </span>
-					<span>결근 : 횟수 | </span>
+					<span>지각 : 횟수</span>
+					<span>결근 : 횟수</span>
 					<span>연차 : 횟수</span>
 				</div>
+				
 			</div>
-        </div>   
-        
+		</div>
 	</div>
-</div>
 
 
 <!-- 모달창 -->

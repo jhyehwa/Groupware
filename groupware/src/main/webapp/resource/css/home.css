@@ -10,6 +10,9 @@ body {
 
 *:focus { outline:none; }
 
+.sl-title a:link { color: #2E2E2E; text-decoration: none; }
+.sl-title a:link { color: #2E2E2E; text-decoration: none; }
+
  .content-notice a:link { color: #2E2E2E; text-decoration: none;}
  .content-notice a:visited { color: #2E2E2E; text-decoration: none;}
  .content-notice a:hover { color: #EDA900; text-decoration: none;}

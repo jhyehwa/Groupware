@@ -1,93 +1,120 @@
 @charset "UTF-8";
 
-.board-profile{
-	border: 1px solid black;
-	height: 200px;
+
+.workingBtn {
+	border: none;
+	width: 110px; 
+	height: 50px; 
+/* 	background: white; */
+	background: none;
+	color: white;
+	font-size: 25px; 
+	border: none; 
+	border-radius: 10px;
+	cursor: pointer;
 }
 
-.choiceStatus{
-	border: 1px solid black;
-	margin:20px auto;
-	width: 250px;
-	height: 150px;
-	line-height:40px;
+.workingBtn span {
+	font-size: 18px;
 }
 
-.choiceStatus table{
-	margin: auto;	
+.timeINOUT {
+	margin-top: 15px;
+	margin-left: 10px;
+	background: #9565A4; 
+	height: 395px;
 }
 
-.choiceStatus table tr td{
-	padding-top : 20px;
+.timeINOUT p {
+	font-size: 70px;
+	text-align: center;
+	padding-top: 18px;
+	color: white;
 }
 
-.status{
-	border: 1px solid black;
-	margin:20px 0 0 20px;
-	background-color: red;
-	width: 400px;
-	height: 150px;
-	line-height:30px;
+.timeBtn {
+	text-align: center;
 }
 
-.status table{
-	margin: 15px auto;
+.timeBtn span {
+	color: white;
+	font-size: 23px;
+	font-weight: bold;
 }
 
-.board-statMemo{
-	float: left;
-	display: inline-block;
-	height: 700px;
-	border: 1px solid black;
+.timeWord p {
+	font-size: 14px;
+	margin-top: -20px;
 }
 
-.statMemo table{
-	margin: auto;
+.board-statMemo {
+	margin-top: 20px;
 }
 
-.statMemo table tr{
+.stateTable {
+	width: 100%;
+	margin-top: 5px;
+	background: white;
+}
+
+.stateTable td {
+	text-align: center;
+	height: 45px;
+	border-bottom: 1px solid #cccccc;
+	color: #424242;
+}
+
+.stFtd {
+	border-top: 1px solid #cccccc;
+	background: #E6E6E6;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.stStd {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.currTime {
+	font-size: 30px;
+	font-weight: bold;
+	border-top: 1px solid #cccccc; 
+	border-bottom: 1px solid #cccccc; 
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #424242;
+	padding-left: 8px;
+}
+
+.board-detailed {
+	margin-top: 35px;
+}
+
+.monthTable {
+/* 	background: fuchsia; */
+	width: 100%;
+	margin-top: 15px;
+}
+
+.monthTable td {
+	border-bottom: 1px solid #cccccc;
 	height: 40px;
+	text-align: center;
+	font-size: 15px;
 }
 
-.statMemo table tr td{
-	border: 1px solid black;
+.mtFtd {
+	border-top: 1px solid #cccccc;
+	background: #9565A4; 
+	color: white;
+	font-weight: bold;
+	font-size: 16px;
 }
 
-.board-detailed{
-	float: left;
-	height: 700px;
-	border: 1px solid black;
-}
-
-.detailed{
-	height : 500px;
-	border: 1px solid black;
-}
-
-.detailed table{
-	margin: auto;
-	width: 900px;
-}
-
-.detailed table tr{
-	height: 40px;
-}
-
-.detailed table tr td{
-	border: 1px solid black;
-}
-
-.other{
-	resize: none;
-	width: 450px;
-	height: 300px;
-	display: none;
-}
-
-.sendBtn{
-	bottom: 0;
-}
-
-.sendBtns{
-	bottom: 0;
+.detailedMonth {
+	margin-top: 15px;
+	padding-right: 10px;
+	font-size: 14px;
+	text-align: right;
 }
