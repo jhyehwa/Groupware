@@ -682,7 +682,7 @@ function deleteTalk(talkNum, page) {
 			<div class="mini-box">
 				<div class="mini-box-div1"> <a href="<%=cp%>/privateAddr/privateAddr"><span><i class="far fa-id-badge"></i></span> &nbsp;연락처 추가 </a></div>
 				<div class="mini-box-div2"> <span><i class="fas fa-comments"></i></span> &nbsp;채팅 </div>
-				<div class="mini-box-div1"> <span><i class="fab fa-digital-ocean"></i></span> &nbsp;다른거 </div>
+				<div class="mini-box-div1"> <a href="<%=cp%>/buddy/created"><span><i class="fas fa-envelope"></i></span> &nbsp;메일 전송 </a></div>
 				<div class="mini-box-div2"> <a href="<%=cp%>/sign/created"><span><i class="fas fa-signature"></i></span> &nbsp;전자 결재</a> </div>
 			</div>		
 	</div> 	

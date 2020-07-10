@@ -16,6 +16,15 @@
 	background-image: url("<%=cp%>/resource/images/menu.png");
 	
 } --%>
+
+.ui-dialog-title {
+	padding-left: 7px;
+	text-align: center;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+	font-size: 18px;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -49,8 +58,9 @@ $(function(){
 	$("#largeCalendar .textDate").each(function (i) {
         var s=$(this).attr("data-date");
         if(s==today) {
-        	$(this).parent().css("border", "1px solid gold ");
-        	$(this).parent().css("border-radius", "5px");
+    /*         $(this).parent().css("border-top", "1px solid #D0A9F5"); 
+            $(this).parent().css("border-bottom", "1px solid #D0A9F5");  */
+        /* 	$(this).parent().css("border-radius", "4px"); */
         }
     });
 });
@@ -159,19 +169,16 @@ function check() {
 	return true;
 }
 
-$(function(){
-	if($("#form-subject option:selected").val()=='LUNCH'){
-		$(".foodSubject").css("background", "salmon");
-	}
-	if ($("#form-subject option:selected").val()=='DINNER') {
-		$(".foodSubject").css("background", "gold");
-	}
+ $(function(){			
+	 $(".foodSubject:contains('DINNER')").css("color", "#632A7E");
+	 $(".foodSubject:contains('LUNCH')").css("color", "#9153B2");
+	 $(".foodSubject:contains('SNACK')").css("color", "#9879A9");
+	 
+/* 	 $(".foodSubject:contains('DINNER')").css("border-left", "1.5px solid #632A7E");
+	 $(".foodSubject:contains('LUNCH')").css("border-left", "1.5px solid #9153B2");
+	 $(".foodSubject:contains('SNACK')").css("border-left", "1.5px solid #9879A9"); */
 	
-	if ($("#form-subject option:selected").val()=='SNACK') {
-		$(".foodSubject").css("background", "blue");
-	}
-	
-});
+}); 
 
 
 // 스케쥴 제목 클릭 -----------------------
@@ -180,12 +187,12 @@ $(function(){
 	$(".foodSubject").click(function(){
 		var selectDate = $(this).attr("data-date");
 		var date=selectDate;
-		date=date.substr(0,4)+"년"+date.substr(4,2)+"월"+date.substr(6,2);
+		date=date.substr(0,4)+"년 "+date.substr(4,2)+"월 "+date.substr(6,2);
 		$('#food-detail').dialog({
 			  modal: true,
 			  height: 550,
 			  width: 450,
-			  title: date+'일의 식단',
+			  title: date+'일 식단',
 			  
 			  close: function(event, ui) {
 			  },
@@ -225,68 +232,15 @@ function deleteOk(num) {
 </script>
 <div class="container">	
 	<div class="board-container" style="margin-left: 200px;">
-	  <!--   <div class="board-title">
-	        <h3>식단표</h3>
-	    </div> -->
+	  	<div class="body-title" style="margin-bottom: 15px; margin-left: 50px;" align="left">
+       		 <p style="font-size: 22px; font-weight: bold; padding-top: 10px;"><i class="fas fa-utensils"></i>&nbsp;&nbsp;월간 식단표 </p>
+   		 </div>  
 	    
     	<div class="board-body " style="float: left; width: 20%;">	      
-	        <div style="margin: 70px 0 0 20px; ">
-	        	<table style="width: 200px; margin-top:5px; border-spacing: 0px; " >  	
-		        	<tr>
-		        		<td class="titleBtn" >   	        				        			
-			        		<!-- <button type="button" class="titleBtn" disabled="disabled"; ></button> -->
-			        		<i  class="fas fa-utensils"></i>
-			        		
-		        		</td>	        		
-		        	</tr>
-		        	
-		        	<tr>
-		        		<td style="text-align: center;">
-		        			<p>&nbsp;</p>
-		        			<p style="font-size: 20px; font-weight: 800; color: #545454; ">오늘의 식단</p>	
-		        			<p>&nbsp;</p>
-		        			<p>${todayYear}년 ${todayMonth}월  ${todayDate}일 </p>
-		        		</td>
-		        	</tr>
-	        	</table>
-	        	
-	        	<c:if test="${list.size()==0}">
-				<table class="leftMenu" style="margin-top: 50px">
-					<tr height="35" style="border:1px solid MISTYROSE; background: transparent;">
-						<td align="center">등록된 식단이 없습니다.</td>
-					</tr>
-				</table>
-				</c:if>
-				
-				
-				<c:forEach var="dto" items="${list}">
-				<table class="leftMenu" style="margin-top: 20px;">
-					<tr height="35">
-						<td style="text-align: left;  padding-left: 15px;  padding-bottom: 5px; ">
-							<p style="font-size:16px; font-weight: 900;"><i class="fas fa-apple-alt" style="color: ${dto.subject=='LUNCH'? 'salmon' : (dto.subject=='DINNER'? '#F7E5F3': 'SEASHELL')};"></i>
-							<c:choose>
-							    <c:when test="${dto.subject=='LUNCH'}">점심</c:when>
-							    <c:when test="${dto.subject=='DINNER'}">저녁</c:when>
-						    <c:otherwise>간식</c:otherwise>
-						    </c:choose>
-						    
-							</p>
-						</td>
-					</tr>
-					<tr>
-						<td style="text-align: ; margin-top: 5px;">
-							<p style="text-align: ; padding-bottom: 10px; padding-left: 30px "  >
-								<span style="">${dto.content}</span>
-							</p>
-						</td>
-					</tr>
-				</table>
-				</c:forEach>	
+	       	
+        </div> 
 
-	        </div>	       	       
-        </div>
-
-		   <div id="tab-content" style="padding-bottom:20px; float: left;"> 		   
+		   <div id="tab-content" style="padding-bottom:20px; float: left; margin-left: 300px;"> 		   
 		   		<table style="width: 840px; margin:0px auto; border-spacing: 0;" >
 		   			<tr height="60">
 		   			     <td width="200">&nbsp;</td>
@@ -300,19 +254,19 @@ function deleteOk(num) {
 		   			</tr>
 		   		</table>
 		   		
-			    <table id="largeCalendar" style="width: 840px; margin:10px auto; font-weight: 700" >
-					<tr align="center" height="30" bgcolor="#ffffff">
-						<td width="120" style="color:#cccccc;">일</td>
-						<td width="120">월</td>
-						<td width="120">화</td>
-						<td width="120">수</td>
-						<td width="120">목</td>
-						<td width="120">금</td>
-						<td width="120" style="color:#cccccc;">토</td>
+			    <table id="largeCalendar" style="width: 900px; margin:10px auto; font-weight: 700" >
+					<tr align="center" height="27" bgcolor="#ffffff">
+						<td width="120" style="color:#F5A9A9; background: #F2F2F2;">일</td>
+						<td width="120" style="background: #F2F2F2;">월</td>
+						<td width="120" style="background: #F2F2F2;">화</td>
+						<td width="120" style="background: #F2F2F2;">수</td>
+						<td width="120" style="background: #F2F2F2;">목</td>
+						<td width="120" style="background: #F2F2F2;">금</td>
+						<td width="120" style="color:#A9A9F5; background: #F2F2F2;">토</td>
 					</tr>
 
 				<c:forEach var="row" items="${days}" >
-						<tr align="center" height="120" valign="top">
+						<tr align="center" height="130" valign="top">
 							<c:forEach var="d" items="${row}">
 								<td style="padding: 5px; box-sizing:border-box;">
 									${d}
@@ -336,7 +290,7 @@ function deleteOk(num) {
 			      <td valign="middle" >
 			        <p>
 			            <select name="subject" id="form-subject" class="selectField">
-			              <option name="titleOPT" value="LUNCH">점심</option>
+			              <option class="titleOPT" value="LUNCH">점심</option>
 			              <option class="titleOPT" value="DINNER">저녁</option>
 			              <option class="titleOPT" value="SNACK">간식</option>
 			          </select>

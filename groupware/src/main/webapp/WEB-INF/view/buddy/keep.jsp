@@ -116,8 +116,8 @@ $("body").on("click", ".aTag", function(){
 	        							&nbsp;&nbsp;<i class="fas fa-paper-plane"></i> 						
 	        		</button>
 	       	         <button type="button" style="width: 107px; margin-right: 2px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/rlist';">
-	       		    			&nbsp;&nbsp;<i class="fas fa-archive" style="font-size: 18px;"></i>
-	       		    			<span style="font-size: 13px; font-weight: bold;"> ${unreadCount==0? "": unreadCount}</span>
+	       		    			&nbsp;&nbsp;<i class="fas fa-archive" style="position: relative;">
+	       		    			<span style="top: -3px; right: -8px; position: absolute; background: gold; width: 15px; height: 15px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 15px; color: #585858;">${unreadCount==0? "": unreadCount}</span></i>
 	       		    </button>
 	       	</div>
 	      	       	

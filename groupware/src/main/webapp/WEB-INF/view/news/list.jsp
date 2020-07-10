@@ -81,12 +81,12 @@
 		<div class="board-body" style="width: 58%; float: left;" > 
 			<div class="body-title" style="margin-top: 20px; margin-bottom: 15px;">
 				 <h3 style="font-size: 18px;">| 전체 소식
-          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          		  
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           		  
           		  <button type="button" style="border: none; background: transparent;" onclick="javascript:location.href='<%=cp%>/news/list';"><i class="fas fa-redo-alt"></i></button>
           		  </h3>          		 
@@ -111,8 +111,27 @@
 				<c:forEach var="dto" items="${list}">
 				  <tr align="center" style="border-bottom: 1px solid #E6E6E6;"> 
 				      <td>${dto.listNum}</td>
-				      <td>${dto.nType}</td>
-				      <td align="left" style="padding-left: 10px;">
+				      <td style="text-align: left">
+				      	 <c:if test="${dto.nType=='결혼'}">
+				       		   <i class="fas fa-heart"></i>&nbsp;&nbsp;${dto.nType}
+				      	 </c:if>
+				     	 <c:if test="${dto.nType=='부고'}">
+				      		   <i class="fas fa-ribbon"></i>&nbsp;&nbsp;${dto.nType}
+				     	 </c:if>
+				     	 <c:if test="${dto.nType=='회사소식'}">
+				       		  <i class="fas fa-building"></i>&nbsp;&nbsp;${dto.nType}
+				     	 </c:if>
+				     	 <c:if test="${dto.nType=='출산'}">
+				       		  <i class="fas fa-baby"></i>&nbsp;&nbsp;${dto.nType}
+				     	 </c:if>
+				     	 <c:if test="${dto.nType=='승진'}">
+				       		 <i class="fas fa-level-up-alt"></i>&nbsp;&nbsp;${dto.nType}
+				       	 </c:if>
+				     	 <c:if test="${dto.nType=='기타'}">																		
+							<i class="fas fa-asterisk"></i>&nbsp;&nbsp;${dto.nType}										
+						 </c:if>     
+				      </td>
+				      <td align="left" style="padding-left: 14px;">
 				           <a href="${articleUrl}&newsNum=${dto.newsNum}">${dto.title}&nbsp;(${dto.replyCount})</a>
 				      </td>
 				      <td>${dto.name}&nbsp;${dto.pType} </td>

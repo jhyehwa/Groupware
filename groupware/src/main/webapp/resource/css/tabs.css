@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+span {
+	font-family: NanumSquareRound;
+}
+
 ul.tabs {
 	margin: 0;
 	padding: 0;
@@ -37,7 +41,7 @@ ul.tabs li.active{
 	line-height:35px;
 	border-bottom: 1px solid seashell;
 	border-radius: 0px;
-	font-family: "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+	font-family: NanumSquareRound, "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
 }
 .ui-widget-footer{
 	border-top: 1px solid seashell;
@@ -45,12 +49,15 @@ ul.tabs li.active{
 
 .ui-button{
 	background: white;
-	border: 1px solid seashell;
+	border: none;
+	color: #585858;
 }
 
 .ui-button:hover, .ui-button:active, .ui-button:focus	{
-	background: seashell;
-	border: 1px solid white;
+	background: none;
+	border: none;
+	color: #585858;
+	font-weight: bold;
 }
 
 .help-block {
@@ -97,11 +104,22 @@ ul.tabs li.active{
 
 /*달력*/
 
+#largeCalendar {
+	border: 1px solid #E6E6E6;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-radius: 4px;
+}
+
+#largeCalendar td {
+	border: 1px solid #E6E6E6;
+}
+
 .titleDate {
 	display: inline-block;
 	font-weight: 600; 
-	font-size: 19px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+	font-size: 22px;
+	font-family: NanumSquareRound, 나눔고딕, "맑은 고딕", 돋움, sans-serif;
 	padding:2px 4px 4px;
 	text-align:center;
 	position: relative;
@@ -109,8 +127,8 @@ ul.tabs li.active{
 }
 .btnDate {
 	display: inline-block;
-	font-size: 10px;
-	font-family: 나눔고딕, "맑은 고딕", 돋움, sans-serif;
+	font-size: 13px;
+	font-family:  NanumSquareRound, 나눔고딕, "맑은 고딕", 돋움, sans-serif;
 	color:#333333;
 	padding:3px 5px 5px;
 	border:1px solid #cccccc;
@@ -126,28 +144,29 @@ ul.tabs li.active{
       
 }
 .preMonthDate, .nextMonthDate {
-      color:#aaaaaa;
+      color:#aaaaaa; font-size: 15px;
 }
 .nowDate {
       width:30px;
 	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#333333;
+      font-weight: 500; cursor: pointer; font-size:15px; display: block; color:#333333;
 
 }
 .nowDate:hover {
       width:30px;
 	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      font-size:20px; 
       display: block; 
-      background:gold;
-      border-radius: 15px;
+      color: gold;
       
 }
 
 .saturdayDate{
       width:30px;
 	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:#632A7E;
+      font-weight: 500; cursor: pointer; font-size:15px; display: block; color:#632A7E;
 }
 
 /* .saturdayDate .foodSubject {
@@ -158,7 +177,7 @@ ul.tabs li.active{
 .sundayDate{
        width:30px;
 	  height:30px;
-      font-weight: 500; cursor: pointer; font-size:20px; display: block; color:red;
+      font-weight: 500; cursor: pointer; font-size:15px; display: block; color:red;
 }
 
 
@@ -167,15 +186,16 @@ ul.tabs li.active{
    display:block;
    /*width:100%;*/
    width:90px;
-   height:22px;
-   line-height: 22px;
-   margin:1.5px 0; 
-   color:#333333;
-   background:#F7E5F3;
+   height:18px;
+   line-height: 18px;
+   margin:3px 0; 
+   color: #585858;
+   font-weight: bolder;
+   font-size: 14px;
+   background: none;
    /* LAVENDERBLUSH; */
    
    cursor: pointer;
-   border-radius:10px;
    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 

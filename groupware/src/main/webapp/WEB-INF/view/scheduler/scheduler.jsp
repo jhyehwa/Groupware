@@ -13,7 +13,7 @@
 
 <style type="text/css">
 .hbtn {
-	font-family: "Malgun Gothic", "맑은 고딕", NaschNumGothic, 나눔고딕, 돋움, sans-serif;
+	font-family: NanumSquareRound, "Malgun Gothic", "맑은 고딕", NaschNumGothic, 나눔고딕, 돋움, sans-serif;
     background-image:none;
     color:#fff;
     line-height: 1.5;
@@ -734,7 +734,7 @@ $(function(){
 
 </script>
 <div class="container">
-<div class="board-container"  style="width: 900px; float: left; position:absolute; margin-left: 450px;">
+<div class="board-container"  style="width: 900px; float: left; position:absolute; margin-left: 490px;">
     <div class="body-title" style=" margin-bottom: 30px;" align="left">
         <p style="font-size: 22px; font-weight: bold; padding-top: 10px;"><i class="far fa-calendar-alt"></i> 일정관리 </p>
     </div>  

@@ -13,13 +13,10 @@
 			<div style='float: left; width:97%;'>
 				<div style='float: left; color: #424242;'><b>[${vo.dType}]&nbsp;${vo.name}&nbsp;${vo.pType}</b></div>
 				<div style='float: right; color: #424242;'>
-					<span>${vo.created}</span> |
-					<%-- <c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}"> --%>
-						<span class='deleteReplyAnswer' style='cursor: pointer;' data-replyNum='${vo.replyNum}' data-answer='${vo.answer}'>삭제</span>
-				<%-- 	</c:if> --%>
-				<%-- 	<c:if test="${sessionScope.member.userId!=vo.userId || sessionScope.member.userId!='admin'}"> --%>
-						<span class="notifyReply">신고</span>
-				<%-- 	</c:if> --%>
+					<span>${vo.created}</span>
+					<c:if test="${sessionScope.employee.name == vo.name || sessionScope.employee.rCode=='admin'}">
+						&nbsp;|&nbsp;&nbsp;<span class='deleteReplyAnswer' style='cursor: pointer;' data-replyNum='${vo.replyNum}' data-answer='${vo.answer}'>삭제</span>
+					</c:if>
 				</div>
 			</div>
 		</div>

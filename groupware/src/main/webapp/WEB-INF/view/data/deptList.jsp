@@ -50,14 +50,6 @@ $(function() {
 });
 </script>
 
-<script>
-	/* var dCode = $("input[name=dCode]").val();
-    console.log(dCode);
-	  
-    $("#dddcode").html(dCode);  */
-</script>  
-
-
 
 <div class="container">
     <div class="board-container">
@@ -220,9 +212,12 @@ $(function() {
 			  	  <td ><input type="checkbox" name="dataNums" value="${dto.dataNum}"></td>		      
 			      <td>${dto.dataType}</td>
 			      <td align="left" style="padding-left: 10px;">
-			           <a href="${articleUrl}&dataNum=${dto.dataNum}">${dto.title}</a>
-		        	   <c:if test="${dto.gap < 1}">		             	  
-		        	   </c:if>
+				      	<c:if test="${sessionScope.employee.dCode == dto.dCode}">
+					           <a href="${articleUrl}&dataNum=${dto.dataNum}">${dto.title}</a>
+				        </c:if>
+				        <c:if test="${sessionScope.employee.dCode != dto.dCode}">
+					           ${dto.title}
+				        </c:if>
 			      </td>			   
 			      <td>
 			      	<c:if test="${dto.fileCount != 0}">

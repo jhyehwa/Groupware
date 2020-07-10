@@ -18,13 +18,10 @@
 				<span><b>[${vo.dType}]&nbsp;${vo.name}&nbsp;${vo.pType}</b></span>
 			</td>
 			<td width='50%' style='padding:5px 5px; border-top: 1px solid #cccccc; color: #424242;' align='right'>
-				<span>${vo.created}</span> |
-			<%-- 	<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}"> --%>
-					<span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</span>
-			<%-- 	</c:if> --%>
-		<%-- 		<c:if test="${sessionScope.member.userId!=vo.userId || sessionScope.member.userId!='admin'}"> --%>
-					<span class="notifyReply">신고</span>
-			<%-- 	</c:if> --%>
+				<span>${vo.created}</span>
+				<c:if test="${sessionScope.employee.name == vo.name || sessionScope.employee.rCode=='admin'}">
+					&nbsp;|&nbsp;&nbsp;<span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.replyNum}' data-pageNo='${pageNo}'>삭제</span>
+				</c:if>
 			</td>
 		</tr>
 		<tr>

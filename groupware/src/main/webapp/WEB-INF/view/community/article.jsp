@@ -310,15 +310,24 @@ $(function(){
 			<table>
 			<tr align="left" height="40"  > 
 			      <td colspan="2" style="width: 100px; padding-left: 10px; color: #424242; text-align: left; font-size: 20px; border-bottom: 1px solid #cccccc;">			      	 
-			
-			      	<button type="button" class="articlebtn" onclick="updateCommu();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
-			      	<button type="button" class="articlebtn" onclick="deleteCommu();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
-			 	
+					
+					<c:if test="${sessionScope.employee.name == dto.name}">
+			      		<button type="button" class="articlebtn" onclick="updateCommu();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
+			      		<button type="button" class="articlebtn" onclick="deleteCommu();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+			 		</c:if>
+			 		
+			 		<c:if test="${sessionScope.employee.name != dto.name}">
+			      		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		</c:if>
+			 		
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		
 			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
 			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>

@@ -22,7 +22,7 @@
 	margin-top: 15px;
 	margin-left: 10px;
 	background: #9565A4; 
-	height: 395px;
+	height: 400px;
 }
 
 .timeINOUT p {
@@ -112,10 +112,16 @@
 	font-size: 16px;
 }
 
+.workOther {
+	padding-bottom: 4px;
+	border: none;
+	border-bottom: 1px solid #cccccc;
+}
+
 .detailedMonth {
 	margin-top: 15px;
 	padding-right: 10px;
-	font-size: 14px;
+	font-size: 15px;
 	text-align: right;
 }
 
@@ -126,15 +132,152 @@
 .vacaiontTd{
 	height: 100px;
 }
+
+.dtitle {
+	float: left;
+}
+
 .restBtn{
-	margin-top:8px;
+	margin-left: 740px;
+	float: left;
 	border-top: 1px solid #cccccc;
 	background: #9565A4; 
 	color: white;
 	font-weight: bold;
-	font-size: 40px;
+	font-size: 18px;
+	height: 30px;
 	border: none;
+	padding: 3px 7px;
+	margin-bottom: 5px;
+	border-radius: 4px;
 }
+
 .restSpan{
-	font-size: 14px;
+	font-size: 15px;
+	line-height: 22px;
 }
+
+.ui-dialog-title {
+	font-size: 19px;
+	color: #484848;
+	font-family: NanumSquareRound;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	border-bottom: 1px solid #cccccc;
+}
+
+.nowDate {
+	padding-left: 15px;
+}
+
+.nowDate p {
+	font-size: 20px;
+	color: #484848;
+	font-family: NanumSquareRound;
+	font-weight: bold;
+}
+
+.profile {
+	margin-top: 15px;
+}
+
+.profile p {
+	padding-left: 20px;
+}
+
+.profile .span1 {
+	font-size: 20px;
+	color: #484848;
+	font-family: NanumSquareRound;
+	position: absolute;
+	padding-left: 10px;
+	line-height: 40px;
+}
+
+.profile .span2 {
+	font-size: 20px;
+	color: #484848;
+	font-family: NanumSquareRound;
+	position: absolute;
+	padding-left: 10px;
+	line-height: 85px;
+}
+
+.photo {
+	width: 60px;
+	height: 60px;
+	border-radius: 30px;
+	position: relative;
+}
+
+.checkBtn {
+	margin-top: 20px;
+	text-align: center;
+	margin-right: 25px;
+}
+
+.sendBtn {
+	width: 50px;
+	height: 30px;
+	font-family: NanumSquareRound;
+	font-size: 14px;
+	font-weight: bold;
+	background: #eeeeee;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	color: #484848;
+}
+
+.sendBtns {
+	width: 50px;
+	height: 30px;
+	font-family: NanumSquareRound;
+	font-size: 14px;
+	font-weight: bold;
+	background: #eeeeee;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	color: #484848;
+	margin-left: 5px;
+}
+
+.otherBtn {
+	background: none;
+	border: none;
+	color: #6E6E6E;
+	font-size: 13px;
+}
+
+.vacaDate {
+	padding-left: 10px;
+}
+
+.vacaDate input {
+	width: 150px;
+	height: 25px;
+	padding-left: 5px;
+}
+
+.vacationBtn {
+	width: 50px;
+	height: 30px;
+	font-family: NanumSquareRound;
+	font-size: 14px;
+	font-weight: bold;
+	background: #eeeeee;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	color: #484848;
+	margin-left: 5px;
+}
+
+.info {
+	font-family: NanumSquareRound;
+	font-size: 16px;
+	color: #484848;
+	padding-bottom: 5px;
+}
+
+
+

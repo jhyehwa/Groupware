@@ -38,8 +38,9 @@ $("body").on("click", ".workingBtn", function(){
 	
 	$(".modal").dialog({
 		modal : true,
-		width : 500,
-		height : 100,
+		width : 450,
+		height : 245,
+		title : "출퇴근 등록",
 		position : {my:"center top", at:"center top"},
 		show : "fade",
 		resizable : false,
@@ -60,8 +61,9 @@ $("body").on("click", ".restBtn", function(){
 	
 	$(".vation").dialog({
 		modal : true,
-		width : 500,
-		height : 100,
+		width : 450,
+		height : 185,
+		title : "연차 일정 입력",
 		position : {my:"center top", at:"center top"},
 		show : "fade",
 		resizable : false,
@@ -184,35 +186,14 @@ function vacation(){
 								</td> 
 								<td>${wk.workCode}</td>
 							</tr>
-							<tr class="vacaiontTr">
+							<!-- <tr class="vacaiontTr">
 								<td colspan="2" class="vacaiontTd">
-									<button type="button" name="restBtn" class="restBtn"><i class="fas fa-plane-departure"></i>&nbsp;
-									<span class="restSpan">연차사용</span></button>
+									
 								</td>
-							</tr>
+							</tr> -->
 						</table>		
 					</div>
 				</div> 
-		
-			<!-- 	
-				<div class="board-statMemo" style="width: 100%; background: yellow;">
-				이번주 근태 기록 :]
-				<h3 style="font-size: 18px;">| 주중 근태 기록 </h3>				
-					<table class="stateTable">
-						<tr>
-							<td class="stFtd" style="width:15%;">요일</td>
-							<td class="stFtd" style="width:15%;">출근</td>
-							<td class="stFtd" style="width:45%;">퇴근</td>
-							<td class="stFtd" style="width:25%;">근태 상태</td>
-						</tr>
-						<tr>
-							<td>월요일</td>
-							<td>09:00:00</td>
-							<td>18:00:00</td>
-							<td>정상</td>
-						</tr>
-					</table>		
-				</div> -->
         </div>
         
         
@@ -227,7 +208,7 @@ function vacation(){
 				var now = new Date();
 					
 				clock.innerText =  now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + "  " + now.getHours() + "시 " + now.getMinutes() + "분 " + now.getSeconds() + "초";
-				curr.innerText = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분 " + now.getSeconds() + "초 ";
+				curr.innerText = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분";
 				setTimeout("printTime()", 1000);
 			}
 	
@@ -239,44 +220,20 @@ function vacation(){
 			<div id="currTime" class="currTime">
 				<h3 style="font-size: 18px;"></h3>	
 			</div>
-				<%-- <div class="status" style="background: aqua;">
-					<table>
-						<tr>
-							<td>${wk.workDate}</td>
-						</tr>
-						<tr>
-							<td>출근 시각 : </td>
-							<td>${wk.clockIn}</td>
-							<td>출결 상태 : </td>
-							<td>
-								<c:if test="${msg == 'work'}">
-									퇴근
-								</c:if>
-								<c:if test="${msg != 'work'}">
-									출근
-								</c:if>
-							</td>
-						</tr>
-						<tr>
-							<td>퇴근 시각 : </td>
-							<td>${wk.clockOut}</td>
-							<td>근태 상태</td>
-							<td>${wk.workCode}</td>
-						</tr>
-					</table>
-				</div> --%>
 				
 				<div class="board-detailed" style="width: 100%;">
-			  		<h3 style="font-size: 20px;">| 월별 근태 기록  </h3>
+			  		<h3 class="dtitle" style="font-size: 20px;">| 월별 근태 기록  </h3>
+			  		<button type="button" name="restBtn" class="restBtn"><i class="fas fa-plane-departure"></i>&nbsp;
+						<span class="restSpan">연차 등록</span></button>
 	
 					<table class="monthTable">
 						<tr>
-							<td class="mtFtd" style="width: 15px;">일자</td>
-							<td class="mtFtd" style="width: 60px;">출근</td>
-							<td class="mtFtd" style="width: 60px;">퇴근</td>
-							<td class="mtFtd" style="width: 70px;">근태 현황</td>
-							<td class="mtFtd" style="width: 25px;"> IP </td>
-							<td class="mtFtd" style="width: 70px;">비고</td>
+							<td class="mtFtd" style="width: 12%;">일자</td>
+							<td class="mtFtd" style="width: 21%;">출근</td>
+							<td class="mtFtd" style="width: 21%;">퇴근</td>
+							<td class="mtFtd" style="width: 8%;">근태 현황</td>
+							<td class="mtFtd" style="width: 15%;"> IP </td>
+							<td class="mtFtd" style="width: 21%;">비고</td>
 						</tr>
 						<c:forEach var="dto" items="${monthList}" >
 							<tr>
@@ -289,7 +246,7 @@ function vacation(){
 								<c:if test="${dto.workCode!='연차'}">
 									<td>
 										<c:if test="${dto.out1 != null}">
-											<span>${dto.clockIn} [외근]</span>
+											<span>${dto.clockIn}<span style="font-weight: bolder; color:#9565A4;">&nbsp;[외근]</span></span>
 										</c:if>
 										<c:if test="${dto.out1 == null}">
 											<span>${dto.clockIn}</span>
@@ -305,7 +262,7 @@ function vacation(){
 								<c:if test="${dto.workCode!='연차'}">
 								<td>
 								<c:if test="${dto.out2 != null }">
-										<span>${dto.clockOut} [외근]</span>
+										<span>${dto.clockOut}<span style="font-weight: bolder; color:#9565A4;">&nbsp;[외근]</span></span>
 									</c:if>
 									<c:if test="${dto.out2 == null}">
 										<span>${dto.clockOut}</span>
@@ -318,7 +275,7 @@ function vacation(){
 									<c:if test="${dto.other == null}">
 									<form method="post" id="updateForm" name="updateForm">
 										<input type="text" name="other" id="other" class="workOther">
-										<button type="button" name="otherBtn" onclick="updateMemo()">+</button>
+										<button type="button" name="otherBtn" class="otherBtn" onclick="updateMemo()"> <i class="fas fa-plus"></i> </button>
 									</form>
 									</c:if>
 									<c:if test="${dto.other != null}">
@@ -343,23 +300,35 @@ function vacation(){
 
 
 <!-- 모달창 -->
-<div id ="checking" class="modal"  style="width: 300px; height: 250px;
-	display: none;">
+<div id ="checking" class="modal" style="width: 300px; height: 1000px; display: none;">
 	<div class="nowDate">
-		<h3 id="curr">현재 시간을 출력해줄꺼야</h3>
+		<p> <i class="fas fa-stopwatch"></i> 현재 시간 | <span id="curr">현재 시간을 출력해줄꺼야</span></p>
 	</div>
-	<form method="POST" id="sendForm" name="sendForm">
-		<button type="button" class="sendBtn" onclick="send();">확인</button>
-		<button type="button" class="sendBtns" onclick="sendOut();">외근</button>
-	</form>
+	
+	<div class="profile">
+		<p><img class="photo" src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}"> 
+			<span class="span1">[${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}&nbsp;${sessionScope.employee.pType}] 님 </span>
+		    <span class="span2"> 출퇴근 현황을 등록하시겠습니까? </span>			
+		</p>	
+	</div>
+	<div class="checkBtn">
+		<form method="POST" id="sendForm" name="sendForm">
+			<button type="button" class="sendBtn" onclick="send();">등록</button>
+			<button type="button" class="sendBtns" onclick="sendOut();">외근</button>
+		</form>
+	</div>
 </div>
 
 
 <!-- 휴가 사용 -->
 <div id ="vation" class="vation" style="width: 600px; height: 250px; display: none;">
+  <div class="vacaDate">	
 	<form method="POST" id="vacationForm" name="vacationForm">
-		<input type="Date" name="startDay"> ~
+		<p class="info"> * 결재 승인 된 휴가 내역만 입력 가능합니다. </p>
+		<p class="info" style="margin-bottom: 12px;"> * 시작일과 종료일을 정확히 입력 해 주세요. </p>
+		<input type="Date" name="startDay"> -
 		<input type="Date" name="endDay">
-		<button type="button" class="vacationBtn" onclick="vacation();">확인</button>
+		<button type="button" class="vacationBtn" onclick="vacation();">등록</button>
 	</form>
+  </div>
 </div>
