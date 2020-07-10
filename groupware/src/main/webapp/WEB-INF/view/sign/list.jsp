@@ -260,7 +260,7 @@
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				   <span>${mode=='임시보관함' ? '<button type="button" class="deleteBtn" onclick="deleteChk();">삭제하기</button>' : '' }</span>
+				   <span>${mode=='임시보관함' ? '<button type="button" class="deleteBtn" onclick="deleteChk();" style="background: #9565A4; height: 30px; width: 70px; border: none; color: white; font-weight: bold; font-size: 15px;">삭제하기</button>' : '' }</span>
 				  </h3>
 		<form method="POST" name="deleteForm">
 			<table class="trData" style="border-collapse: collapse; width: 850px; margin-top: 20px;">

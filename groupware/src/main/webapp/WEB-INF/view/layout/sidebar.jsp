@@ -35,10 +35,10 @@
 	})
 </script>
 
-<div>
+<div id="sideBarMenu">
 	<ul class="menu-bar">
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="공용주소록">
 				<a href="#"><i class="fas fa-briefcase"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -47,7 +47,7 @@
 		</li>
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="개인주소록">
 				<a href="#"><i class="far fa-address-book"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -65,7 +65,7 @@
 		</li>
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="전자결재">
 				<a href="#"><i class="fas fa-file-signature"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -74,7 +74,7 @@
 		</li>		
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="일정">
 				<a href="#"><i class="fas fa-calendar-alt"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -83,7 +83,7 @@
 		</li>
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="커뮤니티">
 				<a href="#"><i class="fas fa-users"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -92,7 +92,7 @@
 		</li>
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="게시판">
 				<a href="#"><i class="fas fa-bullhorn"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -103,7 +103,7 @@
 		</li>
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="근태관리">
 				<a href="#"><i class="fas fa-user-clock"></i></a>
 			</div>
 			<ul class="sub-menu">
@@ -112,7 +112,7 @@
 		</li>
 		
 		<li>
-			<div class="menu-icon">
+			<div class="menu-icon" style="CURSOR:hand;" title="자료실">
 				<a href="#"><i class="fas fa-download"></i></a>
 			</div>
 			<ul class="sub-menu">

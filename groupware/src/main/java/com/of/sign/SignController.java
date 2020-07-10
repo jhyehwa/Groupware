@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.of.common.FileManager;
 import com.of.common.MyUtil;
 import com.of.employee.SessionInfo;
+import com.of.news.News;
 
 @Controller("sign.signController")
 @RequestMapping("/sign/*")
@@ -100,6 +101,13 @@ public class SignController {
 		
 		// 임시저장함
 		List<Sign> storageList = service.storageList(map);
+		
+		for(Sign dto : storageList) {
+			if(dto.getSsubject().length()>=32) {
+				dto.setSsubject(dto.getSsubject().substring(0, 32) + "…");
+			}
+		}
+		
 		model.addAttribute("storageList",storageList);
 		
 		

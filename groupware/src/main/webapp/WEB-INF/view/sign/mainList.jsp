@@ -374,7 +374,7 @@
 									</c:if>
 								</tr>
 								<tr align="left">
-									<td style="font-weight: bold; font-size: 16px; padding-left: 10px; border-bottom: 1px solid #cccccc;">
+									<td style="font-weight: bold; font-size: 16px; padding-left: 10px;">
 										<a href="javascript:location.href='<%=cp%>/sign/list?mode=6' " style="color: black; ">
 											<i class="fas fa-save">&nbsp;&nbsp;임시보관함</i>
 										</a>
