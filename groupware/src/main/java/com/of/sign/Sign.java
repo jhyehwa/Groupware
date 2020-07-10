@@ -12,6 +12,7 @@ public class Sign {
 	private String email;
 	private String enterDate;
 	private String dType;
+	private int pCode;
 	private String pType;
 	private int stnum;
 	private int stsubject;
@@ -43,6 +44,16 @@ public class Sign {
 	private List<MultipartFile> upload;
 	
  
+	
+	
+	public int getpCode() {
+		return pCode;
+	}
+
+	public void setpCode(int pCode) {
+		this.pCode = pCode;
+	}
+
 	public int getSfNum() {
 		return sfNum;
 	}

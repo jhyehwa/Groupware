@@ -20,7 +20,7 @@ public interface SignService {
 	public Sign readSign(Map<String, Object> map);
 	public Sign readEmp(int empNo);
 	public Sign readWriter(int empNo);
-	public List<Sign> empList();
+	public List<Sign> empList(String pType, String empNo,Map<String, Object> map);
 	
 	public void updateScurrStep(int sNum) throws Exception;
 	public void insertReturnSign(Map<String, Object> map) throws Exception;
@@ -36,4 +36,8 @@ public interface SignService {
 	public List<Sign> storageList(Map<String, Object> map);
 	public int storageDataCount(int empNo);
 	public Sign readStorage(Map<String, Object> map);
+	
+	public void deleteStorage(int valueArr) throws Exception;
+	
+	public int dataCountPermissionLine(List<Sign> list);
 }

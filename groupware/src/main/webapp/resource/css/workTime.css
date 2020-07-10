@@ -178,15 +178,15 @@
 	font-weight: bold;
 }
 
-.profile {
+.profile2 {
 	margin-top: 15px;
 }
 
-.profile p {
+.profile2 p {
 	padding-left: 20px;
 }
 
-.profile .span1 {
+.profile2 .span1 {
 	font-size: 20px;
 	color: #484848;
 	font-family: NanumSquareRound;
@@ -195,7 +195,7 @@
 	line-height: 40px;
 }
 
-.profile .span2 {
+.profile2 .span2 {
 	font-size: 20px;
 	color: #484848;
 	font-family: NanumSquareRound;

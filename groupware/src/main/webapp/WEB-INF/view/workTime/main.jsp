@@ -108,6 +108,7 @@ function updateMemo(){
 		f.other.focus();
 		return;
 	}
+	
 	f.action="<%=cp%>/workTime/update";
 	f.submit();
 }
@@ -177,20 +178,16 @@ function vacation(){
 							</tr>
 							<tr>
 								<td>
-								<c:if test="${msg == 'work'}">
-									퇴근
-								</c:if>
-								<c:if test="${msg != 'work'}">
-									정상 출근
+								<c:if test="${wk.clockIn != null}">
+									출근
 								</c:if>
 								</td> 
-								<td>${wk.workCode}</td>
-							</tr>
-							<!-- <tr class="vacaiontTr">
-								<td colspan="2" class="vacaiontTd">
-									
+								<td>
+									<c:if test="${wk.clockOut != null}">
+										퇴근
+									</c:if>
 								</td>
-							</tr> -->
+							</tr>
 						</table>		
 					</div>
 				</div> 
@@ -272,15 +269,10 @@ function vacation(){
 								<td>${dto.workCode}</td>
 								<td>${dto.ipAddr}</td>
 								<td>
-									<c:if test="${dto.other == null}">
 									<form method="post" id="updateForm" name="updateForm">
-										<input type="text" name="other" id="other" class="workOther">
+										<input type="text" name="other" id="other" class="workOther" value="${dto.other}" placeholder="${dto.other}">
 										<button type="button" name="otherBtn" class="otherBtn" onclick="updateMemo()"> <i class="fas fa-plus"></i> </button>
 									</form>
-									</c:if>
-									<c:if test="${dto.other != null}">
-										${dto.other}
-									</c:if>
 								</td>
 							</tr>
 						</c:forEach>
@@ -305,7 +297,7 @@ function vacation(){
 		<p> <i class="fas fa-stopwatch"></i> 현재 시간 | <span id="curr">현재 시간을 출력해줄꺼야</span></p>
 	</div>
 	
-	<div class="profile">
+	<div class="profile2">
 		<p><img class="photo" src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}"> 
 			<span class="span1">[${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}&nbsp;${sessionScope.employee.pType}] 님 </span>
 		    <span class="span2"> 출퇴근 현황을 등록하시겠습니까? </span>			
@@ -318,7 +310,6 @@ function vacation(){
 		</form>
 	</div>
 </div>
-
 
 <!-- 휴가 사용 -->
 <div id ="vation" class="vation" style="width: 600px; height: 250px; display: none;">

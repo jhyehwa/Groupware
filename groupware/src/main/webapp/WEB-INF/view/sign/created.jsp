@@ -131,7 +131,7 @@ $(function() {
 		$("#lineModal-dialog").dialog({
 			modal : true,
 			width : 600,
-			title : '결제라인',
+			title : '결재라인',
 			open : function() {
 			},
 			close : function(event, ui) {

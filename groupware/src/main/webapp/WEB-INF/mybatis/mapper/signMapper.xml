@@ -33,12 +33,13 @@
 	
 
 	<select id="emplist" resultType="com.of.sign.Sign">
-		SELECT e.empNo, name, tel, email, c.enterDate, dType, pType
+		SELECT e.empNo, name, tel, email, c.enterDate, dType, pType, h.pCode
 		FROM employee e
 		JOIN history h ON e.empNo = h.empNo
 		JOIN career c ON c.empNo = h.empNo
 		JOIN dept d ON d.dCode = h.dCode
 		JOIN position p ON p.pCode = h.pCode
+		ORDER BY dType ASC, h.pCode ASC
 	</select>
 
 	<select id="readSign" parameterType="map" resultType="com.of.sign.Sign">

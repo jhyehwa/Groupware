@@ -26,6 +26,8 @@ import com.of.scheduler.Scheduler;
 import com.of.scheduler.SchedulerJSON;
 import com.of.sign.Sign;
 import com.of.sign.SignService;
+import com.of.workTime.WorkTime;
+import com.of.workTime.WorkTimeService;
 
 @Controller("mainController")
 public class MainController {
@@ -43,6 +45,9 @@ public class MainController {
 	
 	@Autowired
 	BuddyService bdService;
+	
+	@Autowired
+	WorkTimeService wkService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(
@@ -88,6 +93,9 @@ public class MainController {
 			dto.setSdate(dto.getSdate().substring(0,10));
 		}
 		
+		// 출퇴근 시각
+		WorkTime wk = wkService.toDayChekc(Integer.parseInt(info.getEmpNo()));
+		
 		model.addAttribute("list", list);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("nwlist", nwlist);
@@ -95,6 +103,7 @@ public class MainController {
 		model.addAttribute("newsUrl", newsUrl);
 		model.addAttribute("noticeUrl", noticeUrl);
 		model.addAttribute("signUrl", signUrl);
+		model.addAttribute("wk",wk);
 				
 		return ".mainLayout";		
 	}
@@ -212,27 +221,19 @@ public class MainController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", info.getEmpNo());
 		
-		int mainCnt = 0;
 		int mailCnt = 0;
 		int stepCnt = 0;
-		int newsCnt = 0;
 		
 		try {
-			mainCnt = mailCnt + stepCnt;
 			mailCnt = bdService.unreadCount(info.getEmpNo());
 			stepCnt = sgservice.stepCount(map);
-			newsCnt = nwservice.dataCountAlert(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		Map<String, Object> model = new HashMap<>();
-		
-		model.put("mainCnt", mainCnt);
 		model.put("mailCnt", mailCnt);
 		model.put("stepCnt", stepCnt);
-		model.put("newsCnt", newsCnt);
-
 		
 		return model;
 	}

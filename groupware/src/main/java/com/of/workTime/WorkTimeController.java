@@ -20,8 +20,6 @@ import com.of.employee.SessionInfo;
 @Controller("workTime.workTimeController")
 @RequestMapping("/workTime/*")
 public class WorkTimeController {
-	
-
 	@Autowired
 	private WorkTimeService service;
 
@@ -317,5 +315,61 @@ public class WorkTimeController {
 		service.insertVacation(map);
 		
 		return "redirect:/workTime/main";
+	}
+	
+	@RequestMapping(value="mainWorkOrHome")
+	public String mainWorkOrHome(
+			HttpSession session,
+			HttpServletRequest req,
+			String val,
+			Model model
+			) throws Exception{
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf4 = new SimpleDateFormat("yyyyMMdd");
+		
+		Map<String, Object> map = new HashMap<>();
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+		
+		Date nowDate = new Date();
+
+		String status = sdf2.format(nowDate);
+
+		String[] time = status.split(":");
+		int hour = Integer.parseInt(time[0]);
+		int min = Integer.parseInt(time[1]);
+
+		map.put("empNo", info.getEmpNo());
+		map.put("ipAddr", req.getRemoteAddr());
+		switch (val) {
+		case "work":
+			if (hour < 9) {
+				map.put("workCode", "A");
+			} else if (hour == 9 && min <= 30) {
+				map.put("workCode", "B");
+			} else {
+				map.put("workCode", "C");
+			}
+
+			service.insertWorkTime(map);
+			break;
+		case "home":
+			map.put("empNo", info.getEmpNo());
+			map.put("workDate", sdf4.format(nowDate));
+
+
+			WorkTime wk = service.toDayChekc(Integer.parseInt(info.getEmpNo()));
+			
+			if(hour < 18) {
+				map.put("workCode", "D");
+			}else if(wk.getWorkCode().equalsIgnoreCase("A")){
+				map.put("workCode","F");
+			}else {
+				map.put("workCode", wk.getWorkCode());
+			}
+			service.updateWorkTime(map);
+			break;
+		}
+
+		return "redirect:/main";
 	}
 }

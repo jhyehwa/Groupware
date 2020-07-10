@@ -1,5 +1,6 @@
 package com.of.sign;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,10 @@ public class SignServiceImpl implements SignService {
 		try {
 			int seq = dao.selectOne("sign.seq");
 			dto.setSnum(seq);
-			
-			if(article.equals("article")) {
+
+			if (article.equals("article")) {
 				dao.deleteData("sign.deleteStorage", Integer.parseInt(hiddenSnum));
 			}
-			
 
 			dao.insertData("insertSign", dto);
 			dao.insertData("insertSignPermission", dto);
@@ -102,10 +102,163 @@ public class SignServiceImpl implements SignService {
 	}
 
 	@Override
-	public List<Sign> empList() {
+	public List<Sign> empList(String pType, String empNo, Map<String, Object> map) {
 		List<Sign> list = null;
 		try {
-			list = dao.selectList("sign.emplist");
+			int intPtype = Integer.parseInt(pType);
+			int intEmpNo = Integer.parseInt(empNo);
+			list = dao.selectList("sign.emplist", map);
+			switch (intPtype) {
+			case 1:
+				// 사원
+				break;
+			case 2:
+				// 대리
+				Iterator<Sign> it = list.iterator();
+				Sign dto1 = null;
+				while (it.hasNext()) {
+					Sign dto = it.next();
+					if (intPtype > dto.getpCode() && dto.getpCode() != 6) {
+						it.remove();
+						
+					}
+
+					if (dto.getEmpNo() == intEmpNo) {
+						it.remove();
+					}
+
+					if (dto.getpCode() == 12) {
+						dto1 = dto;
+						it.remove();
+					}
+				}
+				
+				if(dto1 != null) {
+					list.add(dto1);
+				}
+				
+				break;
+			case 3:
+				// 과장
+				it = list.iterator();
+				dto1 = null;
+				while (it.hasNext()) {
+					Sign dto = it.next();
+					if (intPtype > dto.getpCode() && dto.getpCode() != 6) {
+						it.remove();
+						
+					}
+
+					if (dto.getEmpNo() == intEmpNo) {
+						it.remove();
+					}
+
+					if (dto.getpCode() == 12) {
+						dto1 = dto;
+						it.remove();
+					}
+				}
+				
+				if(dto1 != null) {
+					list.add(dto1);
+				}
+				
+				break;
+			case 4:
+				// 차장
+				it = list.iterator();
+				dto1 = null;
+				while (it.hasNext()) {
+					Sign dto = it.next();
+					if (intPtype > dto.getpCode() && dto.getpCode() != 6) {
+						it.remove();
+						
+					}
+
+					if (dto.getEmpNo() == intEmpNo) {
+						it.remove();
+					}
+
+					if (dto.getpCode() == 12) {
+						dto1 = dto;
+						it.remove();
+					}
+				}
+				
+				if(dto1 != null) {
+					list.add(dto1);
+				}
+				
+				break;
+			case 5:
+				// 부장
+				it = list.iterator();
+				dto1 = null;
+				while (it.hasNext()) {
+					Sign dto = it.next();
+					if (intPtype > dto.getpCode() && dto.getpCode() != 6) {
+						it.remove();
+						
+					}
+
+					if (dto.getEmpNo() == intEmpNo) {
+						it.remove();
+					}
+
+					if (dto.getpCode() == 12) {
+						dto1 = dto;
+						it.remove();
+					}
+				}
+				
+				if(dto1 != null) {
+					list.add(dto1);
+				}
+				
+				break;
+			case 11:
+				// 부사장
+				it = list.iterator();
+				dto1 = null;
+				while (it.hasNext()) {
+					Sign dto = it.next();
+					if (intPtype > dto.getpCode() && dto.getpCode() != 6) {
+						it.remove();
+						
+					}
+
+					if (dto.getEmpNo() == intEmpNo) {
+						it.remove();
+					}
+
+					if (dto.getpCode() == 12) {
+						dto1 = dto;
+						it.remove();
+					}
+				}
+				
+				if(dto1 != null) {
+					list.add(dto1);
+				}
+				
+				break;
+			case 12:
+				// 대표이사
+				it = list.iterator();
+				while (it.hasNext()) {
+					Sign dto = it.next();
+					if (intPtype > dto.getpCode()) {
+						it.remove();
+					}
+
+					if (dto.getEmpNo() == intEmpNo) {
+						it.remove();
+					}
+				}
+				break;
+
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -265,12 +418,12 @@ public class SignServiceImpl implements SignService {
 					dao.insertData("sign.insertStorage", dto);
 				}
 			}
-			if(dto.getSfOriginalFilename() == null && dto.getSfSaveFilename() == null) {
+			if (dto.getSfOriginalFilename() == null && dto.getSfSaveFilename() == null) {
 				dto.setSfOriginalFilename("null");
 				dto.setSfSaveFilename("null");
 			}
 			dao.insertData("sign.insertStorage", dto);
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -326,6 +479,26 @@ public class SignServiceImpl implements SignService {
 		int result = 0;
 		try {
 			result = dao.selectOne("sign.searchDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void deleteStorage(int valueArr) throws Exception {
+		try {
+			dao.deleteData("sign.deleteStorage", valueArr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int dataCountPermissionLine(List<Sign> list) {
+		int result = 0;
+		try {
+			result = list.size();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

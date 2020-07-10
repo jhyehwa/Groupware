@@ -75,8 +75,8 @@
 	</select>
 	
 	<insert id="insertVacation" parameterType="map">
-		INSERT INTO workTime(empNo, workDate, workCode, ipAddr, other , clockIn) 
-		VALUES( #{empNo}, #{startDay}, #{workCode}, #{ipAddr}, #{endDay}, SYSDATE )
+		INSERT INTO workTime(empNo, workDate, workCode, ipAddr, other) 
+		VALUES( #{empNo}, #{startDay}, #{workCode}, #{ipAddr}, #{endDay})
 	</insert>
 	
 	<select id="countCodeB" parameterType="map" resultType="Integer">

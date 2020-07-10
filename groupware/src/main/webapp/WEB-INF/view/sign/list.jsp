@@ -177,7 +177,7 @@
 			$("#lineModal-dialog").dialog({
 				modal : true,
 				width : 600,
-				title : '결제라인',
+				title : '결재라인',
 				open : function() {
 				},
 				close : function(event, ui) {
@@ -205,6 +205,26 @@
 			
 	});
 
+	function deleteChk(){
+		var checkArr = [];
+		$("input[name=chkVal]:checked").closest("td").find("input[type=hidden]").each(function(i){
+			alert($(this).val());
+			checkArr.push($(this).val());
+		});
+		
+		var url = "<%=cp%>/sign/delete";
+		
+		$.ajax({
+			url : url,
+			type : "POST",
+			dataType : "text",
+			data : {
+				valueArrTest : checkArr
+			}
+		});
+		
+		location.reload();
+	}
 	
 </script>
 
@@ -230,11 +250,22 @@
         <div class="board-body">
 			<div class="board-body" style="float: left; width: 58%;">
 			
-				  <h3 style="font-size: 18px;">| ${mode}</h3>
-				  
+				  <h3 style="font-size: 18px;">| ${mode}
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				   <span>${mode=='임시보관함' ? '<button type="button" class="deleteBtn" onclick="deleteChk();">삭제하기</button>' : '' }</span>
+				  </h3>
+		<form method="POST" name="deleteForm">
 			<table class="trData" style="border-collapse: collapse; width: 850px; margin-top: 20px;">
 			  <tr align="center" bgcolor="#006461;" style="border-top: 3px solid #9565A4;"> 
-			      <th width="100">부서</th>
+			      <th width="100">${mode=='임시보관함' ? '선택' : '부서' }</th>
 				  <th width="100">기안자</th>
 			      <th width="100">종류</th>
 			      <th width="350">제목</th>
@@ -243,9 +274,18 @@
 			  </tr>
 			<c:forEach var="dto" items="${list}">
 			  <tr id="sList" align="center" style="border-bottom: 1px solid #cccccc; cursor: pointer;">
-			      <td>${dto.dType} 
-			      <input type="hidden" class="dtoSnum" value="${dto.snum}"></td>
-				  <td>${dto.name}&nbsp;${dto.pType}</td>
+			      <td> ${mode=='임시보관함' ?
+			       		'<input type="checkbox" class="chkVal" name="chkVal">' : dto.dType }
+			      	<input type="hidden" class="dtoSnum" value="${dto.snum}"></td>
+				  <td>
+				  	<c:if test="${mode=='임시보관함'}">
+				  		${sessionScope.employee.name}&nbsp;
+				  		${sessionScope.employee.pType}
+				  	</c:if>
+				  	<c:if test="${mode!='임시보관함'}">
+				  		${dto.name}&nbsp;${dto.pType}
+				  	</c:if>
+				  </td>
 			      <td class="stNum">
 			      <c:choose>
 			      	<c:when test="${dto.stnum == 1}">기안</c:when>
@@ -260,6 +300,7 @@
 			  </tr>
 			</c:forEach>
 			</table>
+		</form>
 			 
 			<table style="width: 850px;">
 			   <tr>

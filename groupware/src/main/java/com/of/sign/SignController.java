@@ -481,7 +481,8 @@ public class SignController {
 			@RequestParam(defaultValue = "") String listVal,
 			HttpSession session,
 			Model model) throws Exception {
-
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("employee");
 		String returnAddr = "sign/" + option;
 		Sign dto = null;
 		Sign writer = null;
@@ -506,7 +507,7 @@ public class SignController {
 						model.addAttribute("listVal", listVal);
 					}else if(listVal.equals("임시보관함")) {
 						
-						SessionInfo info = (SessionInfo) session.getAttribute("employee");
+						info = (SessionInfo) session.getAttribute("employee");
 						
 						writer = service.readEmp(Integer.parseInt(info.getEmpNo()));
 						
@@ -547,8 +548,10 @@ public class SignController {
 					}
 
 				}
+			
+			Map<String, Object> map = new HashMap<>();
 
-			List<Sign> list = service.empList();
+			List<Sign> list = service.empList(info.getpCode(), info.getEmpNo(), map);
 	
 			model.addAttribute("list", list);
 			model.addAttribute("dto", dto);
@@ -618,6 +621,22 @@ public class SignController {
 				PrintWriter out = resp.getWriter();
 				out.println("<script>alert('파일 다운로드가 불가능 합니다!.');history.back();</script>");
 			} catch (Exception e) {
+			}
+		}
+	}
+	
+	
+	@RequestMapping(value="delete", method=RequestMethod.POST)
+	@ResponseBody
+	public void deleteCheck(
+			@RequestParam(value="valueArrTest[]") List<String> valueArr,
+			Model model
+			) {
+		for(String ss : valueArr) {
+			try {
+				service.deleteStorage(Integer.parseInt(ss));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

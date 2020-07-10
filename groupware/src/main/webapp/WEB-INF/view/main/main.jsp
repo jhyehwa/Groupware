@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.min.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/weekcalendar.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/fullcalendar/fullcalendar.print.min.css" media='print' type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/workTime.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/fullcalendar/lib/moment.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/fullcalendar/fullcalendar.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/fullcalendar/locale-all.js"></script>
@@ -97,28 +98,6 @@ $(function(){
 		$(this).parent("div").find("input[type=text]").css("text-decoration", "line-through");
 	});
 });
-
-function showInTime(){
-    var currentDate = new Date();
-    var divClock = document.getElementById("divClockIn");
-     
-    var msg = currentDate.getHours()+":"
-    msg += currentDate.getMinutes()+":";
-    msg += currentDate.getSeconds();
-     
-    divClockIn.innerText = msg;
-}
-
-function showOutTime(){
-    var currentDate = new Date();
-    var divClock = document.getElementById("divClockOut");
-     
-    var msg = currentDate.getHours()+":"
-    msg += currentDate.getMinutes()+":";
-    msg += currentDate.getSeconds();
-     
-    divClockOut.innerText = msg;
-}
 
 // 오늘날짜 출력
 
@@ -422,6 +401,52 @@ function deleteTalk(talkNum, page) {
 
 
 
+$("body").on("click", ".timeBtn", function(){
+	var val = $(this).data("val");
+	var empNo = $("input[name=empNo]").val();
+	
+	/* if(val == 'home'){
+		var now = new Date();
+		nowMin = now.getHours();
+		if(nowMin < 12){
+			alert("퇴근시간이 아닙니다.");
+			return;
+		}
+	} */
+	
+	$(".modal").dialog({
+		modal : true,
+		width : 450,
+		height : 245,
+		title : "출퇴근 등록",
+		position : {my:"center top", at:"center top"},
+		show : "fade",
+		resizable : false,
+		open : function(){
+			$("form[name=sendForm]").append("<input type='hidden' id='empNo' name='empNo' value='" + empNo + "'>");
+			$("form[name=sendForm]").append("<input type='hidden' id='val' name='val' value='" + val + "'>");
+			
+			$(".ui-draggable .ui-dialog-titlebar").css("background", "white");
+			$(".ui-draggable .ui-dialog-titlebar").css("border", "white");
+			
+		},close : function(){
+			
+		}
+	});
+});
+
+
+function send(){
+	var f = document.sendForm;
+	
+	var val = f.val.value;
+	
+	f.action="<%=cp%>/workTime/mainWorkOrHome";
+	f.submit();
+}
+
+
+
 </script>
 
 
@@ -465,7 +490,7 @@ function deleteTalk(talkNum, page) {
 				<div class="inTime" style="margin-top: 60px; float: left; margin-left: 40px;">
 					<table style="width: 100px; height: 50px; border: 1px solid #9565A4; border-radius: 25px; color: #9565A4;">
 						<tr> 
-							<td style="text-align: center;"><button type="button" class="timeBtn" onclick="showInTime()" style="background: none; border: none; color:#9565A4;"> 출근 </button> </td>
+							<td style="text-align: center;"><button type="button" data-val="work" class="timeBtn" onclick="showInTime()" style="background: none; border: none; color:#9565A4;"> 출근 </button> </td>
 						</tr>
 					</table>
 				</div>
@@ -473,7 +498,7 @@ function deleteTalk(talkNum, page) {
 				<div class="outTime" style="margin-top: 60px; float: left; margin-left: 45px;">
 					<table style="width: 100px; height: 50px; border: 1px solid #9565A4; border-radius: 25px; color: #9565A4;">
 						<tr> 
-							<td style="text-align: center;"><button type="button" class="timeBtn" onclick="showOutTime()" style="background: none; border: none; color:#9565A4;"> 퇴근 </button></td>
+							<td style="text-align: center;"><button type="button" data-val="home" class="timeBtn" onclick="showOutTime()" style="background: none; border: none; color:#9565A4;"> 퇴근 </button></td>
 						</tr>
 					</table>
 				</div>
@@ -482,12 +507,12 @@ function deleteTalk(talkNum, page) {
 					<table style="width: 250px; height: 50px; margin: 0px auto; padding-top: 10px;">
 						<tr>
 							<td style="text-align: left; padding-bottom: 7px; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 출근 시간 </td>
-							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockIn" class="clock"></div> </td>
+							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockIn" class="clock">${wk.clockIn}</div> </td>
 							
 						</tr>
 						<tr>
 							<td style="text-align: left; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 퇴근 시간</td>
-							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockOut" class="clock"></div> </td>
+							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockOut" class="clock">${wk.clockOut}</div> </td>
 						</tr>
 					</table>
 				</div>
@@ -686,6 +711,28 @@ function deleteTalk(talkNum, page) {
 				<div class="mini-box-div2"> <a href="<%=cp%>/sign/created"><span><i class="fas fa-signature"></i></span> &nbsp;전자 결재</a> </div>
 			</div>		
 	</div> 	
+	
+	
+	
+<!-- 모달창 -->
+<div id ="checking" class="modal" style="width: 300px; height: 1000px; display: none;">
+	<div class="nowDate">
+		<p> <i class="fas fa-stopwatch"></i> 현재 시간 | <span id="curr">현재 시간을 출력해줄꺼야</span></p>
+	</div>
+	
+	<div class="profile2">
+		<p><img class="photo" src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}"> 
+			<span class="span1">[${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}&nbsp;${sessionScope.employee.pType}] 님 </span>
+		    <span class="span2"> 출퇴근 현황을 등록하시겠습니까? </span>			
+		</p>	
+	</div>
+	<div class="checkBtn">
+		<form method="POST" id="sendForm" name="sendForm">
+			<button type="button" class="sendBtn" onclick="send();">등록</button>
+			<button type="button" class="sendBtns" onclick="sendOut();">외근</button>
+		</form>
+	</div>
+</div>
 	
 	
 </div>
