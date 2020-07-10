@@ -66,8 +66,6 @@ public class NewsController {
 		if(offset < 0) offset=0;
 			map.put("offset", offset);
 			map.put("rows", rows);			
-
-
 		
 		// 글 리스트
 		List<News> list=service.listNews(map);
@@ -154,7 +152,6 @@ public class NewsController {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
-
 		
 		News dto = service.readNews(newsNum);
 		if(dto==null) {

@@ -45,6 +45,10 @@
 	margin-top: 20px;
 }
 
+#headerMail {
+	font-size: 15px;
+}
+
 /*sidebar*/
 ul {
 	list-style: none;

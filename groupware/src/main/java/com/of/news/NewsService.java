@@ -21,6 +21,5 @@ public interface NewsService{
 	public List<NewsReply> listReply(Map<String, Object> map);
 	public void deleteReply(Map<String, Object> map)throws Exception;
 	
-	
-	
+	public int dataCountAlert(Map<String, Object> map);
 }

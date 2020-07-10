@@ -46,6 +46,14 @@
 		</where>
 	</select>
 	
+	<select id="dataCountAlert" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0)
+		FROM news n
+		JOIN employee e ON n.writer=e.empNo
+		JOIN newsType p ON n.nCode=p.nCode
+        WHERE n.nCode = 'COMPANY'
+	</select>
+	
 	<!-- 리스트 -->
 	<select id="listNews" parameterType="map" resultType="com.of.news.News">
 		SELECT n.newsNum, writer, name, title, TO_CHAR(created, 'YYYY-MM-DD')created, 

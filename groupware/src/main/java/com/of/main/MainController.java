@@ -212,19 +212,27 @@ public class MainController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", info.getEmpNo());
 		
+		int mainCnt = 0;
 		int mailCnt = 0;
 		int stepCnt = 0;
+		int newsCnt = 0;
 		
 		try {
+			mainCnt = mailCnt + stepCnt;
 			mailCnt = bdService.unreadCount(info.getEmpNo());
 			stepCnt = sgservice.stepCount(map);
+			newsCnt = nwservice.dataCountAlert(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		Map<String, Object> model = new HashMap<>();
+		
+		model.put("mainCnt", mainCnt);
 		model.put("mailCnt", mailCnt);
 		model.put("stepCnt", stepCnt);
+		model.put("newsCnt", newsCnt);
+
 		
 		return model;
 	}

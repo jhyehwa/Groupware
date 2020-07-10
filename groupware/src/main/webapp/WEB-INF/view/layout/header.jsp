@@ -30,22 +30,65 @@
 			});
 		}
 		
-		function mailAlert() {
+		function mainAlert() {
 			var url = "<%=cp%>/main/mainAlert";
 			var fn = function(data) {
+				var mainCnt = data.mailCnt + data.stepCnt + data.newsCnt;
+				
+				var alertCnt = mainCnt;
+				$("#mainCnt").html(alertCnt);
+				
 				var mailCnt = data.mailCnt;
 				var stepCnt = data.stepCnt;
+				var newsCnt = data.newsCnt;
 				
-				var out = "<p>새로운메일" + mailCnt + "</p>";
-				out += "<p>수신대기" + stepCnt + "</p>";
+				var out = "<p id='allAlert' style='margin-left: 10px; padding-top: 10px; font-size: 15px; margin-right: 10px; font-weight: bold; border-bottom: 1px solid #ccc; padding-bottom: 10px;'>전체 알림</p>";
+				
+				
+				out += "<p id='mailCnt'><a href='<%=cp%>/buddy/rlist'><i class='fas fa-square fa-stack-2x' style='color: #632A7E; text-align: left; margin-left: 15px; padding-top: 10px;'></i>";
+				out += "<i class='fas fa-envelope-open-text fa-stack-1x fa-inverse' style='width: 50px; backgroud: white; text-align: left; color: white; position: relative; margin-left: 25px; margin-top: 20px;'>";
+				out += "<span style='position: absolute; background: #FFE641; color: #585858; width: 20px; height: 20px; border-radius: 50%; font-size: 16px; line-height: 20px; margin-top: -15px; text-align: center;'>";
+				out += + mailCnt + "</span></i></a>" + "<span style='font-size: 15px; margin-left: 0px;'>새로운 메일 " + "<span style='font-weight: 1000;'>" + mailCnt + " 개</span></span>" + "</p>";
+				
+				
+				
+				out += "<p id='stepCnt'><a href='<%=cp%>/sign/mainList'><i class='fas fa-square fa-stack-2x' style='color: #632A7E; text-align: left; margin-left: 15px; margin-top: 15px;'></i>";
+				out += "<i class='fas fa-clock fa-stack-1x fa-inverse'  style='width: 50px; backgroud: white; text-align: left; color: white; position: relative; margin-left: 25px; margin-top: 27px;'>";
+				out += "<span style='position: absolute; background: #FFE641; color: #585858; width: 20px; height: 20px; border-radius: 50%; font-size: 16px; line-height: 20px; margin-top: -15px; text-align: center;'>";
+				out += + stepCnt + "</span></i></a>" + "<span style='font-size: 15px; margin-left: 0px;'>처리해야 할 결재 " + "<span style='font-weight: 1000;'>" + stepCnt + " 건</span></span>" + "</p>";
+				
+				
+				out += "<p id='newsCnt'><a class='newsClick' href='<%=cp%>/news/list'><i class='fas fa-square fa-stack-2x' style='color: #632A7E; text-align: left; margin-left: 15px; margin-top: 15px;'></i>";
+				out += "<i class='far fa-building fa-stack-1x fa-inverse' style='width: 50px; backgroud: white; text-align: left; color: white; position: relative; margin-left: 25px; margin-top: 27px;'>";
+				out += "<span style='position: absolute; background: #FFE641; color: #585858; width: 20px; height: 20px; border-radius: 50%; font-size: 16px; line-height: 20px; margin-top: -15px; text-align: center;'>";
+				out += + newsCnt + "</span></i></a>" + "<span style='font-size: 15px; margin-left: 0px;'>회사소식 " + "<span style='font-weight: 1000;'>" + newsCnt + " 건</span></span>" + "</p>";
 				
 				$(".alertInfo").html(out);
+				
+				$("#mailCnt").css("font-size","25px");
+				$("#stepCnt").css("font-size","25px");
+				$("#newsCnt").css("font-size", "25px");
+				
+				if(mainCnt == 0) {
+					$("#mainCnt").hide();
+				} else {
+					$("#mainCnt").show();
+				}
+				
+				$(function(){
+					$("#newsCnt").on("click", ".newsClick", function(){
+						alert("aaaaa");
+						
+					});
+				});
+				
 			};
+			
 			var query = "";
 			
 			ajaxJSON(url, "post", query, fn);
 		}
-		mailAlert();
+		mainAlert();
 	});
 	
 	$(function(){
@@ -58,6 +101,12 @@
 		$(".alertTable").hide();
 	});
 </script>
+
+<style>
+.alertList {
+	background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
+}
+</style>
 
 <div class="header-top">
 	<div class="header-left">
@@ -83,7 +132,12 @@
 				&nbsp;
 			</c:if>
 			
-			<a href="#" id="headerAlert"><i class="far fa-bell" id="aa"></i></a> <!-- 알림 -->
+			<!-- 알림 -->
+			<a href="#" id="headerAlert">
+				<i class="far fa-bell" style='position: relative; margin-left: 10px; margin-top: 10px;'>
+					<span id="mainCnt" style='top: -10px; right: -12px; position: absolute; background: #FFE641; color: #585858; width: 20px; height: 20px; border-radius: 50%; font-size: 16px; text-align: center; line-height: 20px;'></span>
+				</i>
+			</a>
 			&nbsp;
 			<a href="<%=cp%>/main"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
 			&nbsp;
@@ -97,8 +151,8 @@
 		</div>
 	</div>
 	
-	<div class="alertTable" style="position: absolute; right: 0; top: 65px;">
-		<div class="alertList" style="background: aqua; width: 200px; height: 200px;">
+	<div class="alertTable" style="position: absolute; right: 30px; top: 65px;">
+		<div class="alertList" style="width: 250px; height: 220px;">
 			<span class="alertInfo"></span>
 		</div>
 	</div>

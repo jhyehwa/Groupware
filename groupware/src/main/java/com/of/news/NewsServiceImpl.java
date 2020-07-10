@@ -34,6 +34,19 @@ public class NewsServiceImpl implements NewsService {
 		}
 		return result;
 	}
+	
+	@Override
+	public int dataCountAlert(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("news.dataCountAlert", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 	@Override
 	public List<News> listNews(Map<String, Object> map) {
