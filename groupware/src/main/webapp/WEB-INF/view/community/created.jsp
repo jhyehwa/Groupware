@@ -118,7 +118,7 @@ $(document).ready(function(){
 <div class="container">
     <div class="board-container" style="margin-left: 200px;">
         <div class="body-title" style="font-size: 18px;">
-            <h3> ♬ 커뮤니티 </h3>
+            <h3><i class="fas fa-satellite-dish"></i>&nbsp;&nbsp;커뮤니티 </h3>
         </div>  
         
         <div class="board-body" style="float: left; width: 20%;">	      

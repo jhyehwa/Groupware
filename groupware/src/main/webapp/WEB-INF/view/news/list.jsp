@@ -50,12 +50,12 @@
 <div class="container">
     <div class="board-container"  style="margin-left: 200px;">
         <div class="board-title"  style="font-size: 18px;">
-            <h3>소식 </h3>
+            <h3><i class="far fa-newspaper"></i>&nbsp;&nbsp;소식 </h3>
         </div>
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div style="margin-top: 20px; margin-left: 20px;">
-      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="far fa-newspaper"></i> </button>
+      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="fas fa-pen-alt"></i> </button>
 	       	</div>	
 	       	
 	       	<form name="searchForm"  action="<%=cp%>/news/list" method="post">

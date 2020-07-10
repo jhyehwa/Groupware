@@ -45,7 +45,7 @@
 <div class="container">
     <div class="board-container">
         <div class="board-title"  style="font-size: 18px;">
-            <h3>소식 </h3>
+             <h3><i class="far fa-newspaper"></i>&nbsp;&nbsp;소식 </h3>
         </div>
         
         <div class="board-body" style="float: left; width: 20%;">	      

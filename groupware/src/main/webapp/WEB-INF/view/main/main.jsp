@@ -576,7 +576,7 @@ function deleteTalk(talkNum, page) {
 			                       <textarea name="content" id="content" class="boxTF" style="display:block; width:460px; height:40px; padding: 6px 12px; box-sizing:border-box; resize: none;" required="required" placeholder="오늘의 한마디를 입력하세요..."></textarea>
 			                 	</div>
 			                 	<div style="text-align: right; padding-top: 10px;float: left;">
-			                      <a class="talkBtn" onclick="sendTalk();" ><i class="fas fa-chevron-circle-up"></i> </a>
+			                      <a class="talkBtn" onclick="sendTalk();" ><i class="fas fa-paper-plane" style="font-size: 28px;"></i> </a>
 			                 	</div>           
 			          	 	</div>
 			           </form>      	          

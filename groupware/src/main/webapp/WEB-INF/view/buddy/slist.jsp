@@ -71,10 +71,11 @@ function ajaxHTML(url, method, query, selector) {
 
 $("body").on("click", ".aTag", function(){
  	var buddyNum = $(this).closest("td").find("input[type=hidden]").val(); 
+ 	var empNo = $(this).closest("td").find("input[name=hideEmp]").val(); 
 	var page = $("input[name=page]").val();
 	
-	var url = "<%=cp%>/buddy/mail";
-	var query = "page="+page+"&buddyNum="+buddyNum;
+	var url = "<%=cp%>/buddy/sendmail";
+	var query = "page="+page+"&buddyNum="+buddyNum+"&empNo="+empNo;
 	
 	ajaxHTML(url, "GET", query, ".mailArticle");
 });
@@ -84,7 +85,7 @@ $("body").on("click", ".aTag", function(){
 <div class="container">
     <div class="board-container" style="margin-left: 200px;">
         <div class="board-title" style="font-size: 18px;">
-            <h3>♬ 메일 </h3>
+            <h3><i class="far fa-envelope"></i>&nbsp;&nbsp;메일 </h3>
         </div>
         
         <div class="board-body" style="float: left; width: 20%;">
@@ -92,9 +93,11 @@ $("body").on("click", ".aTag", function(){
 	        		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-pen"></i>  </button>
 	       	</div>	
 	       	<div style="margin-top: 5px; margin-left: 20px;">
+	       		
 	       		    <button type="button" style="width: 107px; margin-right: 2px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/rlist';">
 	       		    			&nbsp;&nbsp;<i class="fas fa-archive" style="position: relative;">
-	       		    			<span style="top: -3px; right: -8px; position: absolute; background: gold; width: 15px; height: 15px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 15px; color: #585858;">${unreadCount==0? "": unreadCount}</span></i>
+	       		    		<c:if test="${unreadCount!=0}">
+	       		    			<span style="top: -3px; right: -8px; position: absolute; background: gold; width: 15px; height: 15px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 15px; color: #585858;">${unreadCount==0? "": unreadCount}</span></c:if></i> 
 	       		    </button>
 	       	        <button type="button" style="width: 107px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/keep';"><i class="fas fa-star"></i></button>
 	       	</div>
@@ -166,6 +169,7 @@ $("body").on("click", ".aTag", function(){
 			           <a href="${articleUrl}&buddyNum=${dto.buddyNum}&empNo=${dto.empNo}">${dto.title}</a>
 			           <a class="aTag" href="#"> <i class="fas fa-external-link-alt" style="font-size: 10px;"></i> </a>
 			           <input type="hidden" value="${dto.buddyNum}">
+			           <input type="hidden" name="hideEmp" value="${dto.empNo}">
 			      </td>			   
 			      <td>
 			      	<c:if test="${dto.fileCount != 0}">

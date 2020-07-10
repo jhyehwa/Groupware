@@ -294,7 +294,7 @@ public class BuddyController {
         String cp=req.getContextPath();
         String query = "";
         String listUrl = cp+"/buddy/slist";
-        String articleUrl = cp+"/buddy/sendmail?page=" + current_page;
+        String articleUrl = cp+"/buddy/sendmail2?page=" + current_page;
         if(keyword.length()!=0) {
         	query = "condition=" + condition + 
         	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
@@ -302,7 +302,7 @@ public class BuddyController {
         
         if(query.length()!=0) {
         	listUrl = cp+"/buddy/slist?" + query;
-        	articleUrl = cp+"/buddy/sendmail?page=" + current_page + "&"+ query;
+        	articleUrl = cp+"/buddy/sendmail2?page=" + current_page + "&"+ query;
         }
         
         String paging = myUtil.paging(current_page, total_page, listUrl);   
@@ -498,53 +498,108 @@ public class BuddyController {
 		}	
 		
 	
-	//보낸 메일 읽기 
-	@RequestMapping(value="/buddy/sendmail")
-	public String sendmail(
-			@RequestParam int buddyNum,
-			@RequestParam String empNo,
-			@RequestParam String page,
-			@RequestParam(defaultValue="title") String condition,
-			@RequestParam(defaultValue="") String keyword,
-			Model model) throws Exception {
+	//보낸 메일 읽기 (미리보기)
+		@RequestMapping(value="/buddy/sendmail", method=RequestMethod.GET)
+		public String sendmail(
+				@RequestParam int buddyNum,
+				@RequestParam String empNo,
+				@RequestParam String page,
+				@RequestParam(defaultValue="title") String condition,
+				@RequestParam(defaultValue="") String keyword,
+				HttpServletRequest req,
+				Model model) throws Exception {
 
-		keyword = URLDecoder.decode(keyword, "utf-8");
+			keyword = URLDecoder.decode(keyword, "utf-8");
 			
-		String query="page="+page;
-		if(keyword.length()!=0) {
-			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
-		}			
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("buddyNum", buddyNum);
-		map.put("empNo", empNo);
+			String query="page="+page;
+			if(keyword.length()!=0) {
+				query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+			}	
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("buddyNum", buddyNum);
+			map.put("empNo", empNo);
 
-
-		Buddy dto = service.readSendBuddy(map);
-		if(dto==null) {
-			return "redirect:/Buddy/slist?"+query;
-		}       
+			Buddy dto = service.readSendBuddy(map);
+			
+			if(dto==null) {
+				return "redirect:/Buddy/slist?"+query;
+			} 
+			
+			dto.setsDate(dto.getsDate().substring(0,9));
 	         
-		Map<String, Object> map2 = new HashMap<String, Object>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		map.put("buddyNum", buddyNum);
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+			map.put("buddyNum", buddyNum);
 
-		Buddy preReadDto = service.preReadBuddy(map2);
-		Buddy nextReadDto = service.nextReadBuddy(map2);
+			Buddy preReadDto = service.preReadBuddy(map2);
+			Buddy nextReadDto = service.nextReadBuddy(map2);
 	        		
-		List<Buddy> listFile=service.listFile(buddyNum);
-					
-		model.addAttribute("dto", dto);
-		model.addAttribute("preReadDto", preReadDto);
-		model.addAttribute("nextReadDto", nextReadDto);
-		model.addAttribute("listFile", listFile);
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
+			List<Buddy> listFile=service.listFile(buddyNum);
 			
-		return ".buddy.sendmail";
-	}		
+			String cp=req.getContextPath();
+			String articleUrl = cp+"/buddy/sendmail2?page=" + page;
+							
+			model.addAttribute("dto", dto);
+			model.addAttribute("preReadDto", preReadDto);
+			model.addAttribute("nextReadDto", nextReadDto);
+			model.addAttribute("listFile", listFile);
+			model.addAttribute("page", page);
+			model.addAttribute("query", query);
+			model.addAttribute("articleUrl", articleUrl);
+			
+			return "/buddy/sendmail";
+		}	
+	
+	//보낸 메일 읽기 (전체보기) 
+		@RequestMapping(value="/buddy/sendmail2")
+		public String sendmail2(
+				@RequestParam int buddyNum,
+				@RequestParam String empNo,
+				@RequestParam String page,
+				@RequestParam(defaultValue="title") String condition,
+				@RequestParam(defaultValue="") String keyword,
+				Model model) throws Exception {
+
+			keyword = URLDecoder.decode(keyword, "utf-8");
+				
+			String query="page="+page;
+			if(keyword.length()!=0) {
+				query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+			}			
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("buddyNum", buddyNum);
+			map.put("empNo", empNo);
+
+
+			Buddy dto = service.readSendBuddy(map);
+			if(dto==null) {
+				return "redirect:/Buddy/slist?"+query;
+			}       
+		         
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+			map.put("buddyNum", buddyNum);
+
+			Buddy preReadDto = service.preReadBuddy(map2);
+			Buddy nextReadDto = service.nextReadBuddy(map2);
+		        		
+			List<Buddy> listFile=service.listFile(buddyNum);
+						
+			model.addAttribute("dto", dto);
+			model.addAttribute("preReadDto", preReadDto);
+			model.addAttribute("nextReadDto", nextReadDto);
+			model.addAttribute("listFile", listFile);
+			model.addAttribute("page", page);
+			model.addAttribute("query", query);
+				
+			return ".buddy.sendmail2";
+		}		
 	
 	// 중요 표시 (받은편지함)
 	@RequestMapping(value="/buddy/update")

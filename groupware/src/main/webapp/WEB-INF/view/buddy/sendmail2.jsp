@@ -5,7 +5,8 @@
 <%
    String cp = request.getContextPath();
 %>
-<link rel="stylesheet" href="<%=cp%>/resource/css/buddy2.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/buddy.css" type="text/css">
 
 <script type="text/javascript">
 
@@ -69,14 +70,30 @@ function ajaxHTML(url, method, query, selector) {
 }
 
 </script>
+</head>
+<body>
 
-
-<div style="margin-top: 10px; float: left; width: 500px; height: 700px;">
+	
+<div class="container">
+     <div class="board-container">
+       <div class="body-title" style="font-size: 18px;">
+            <h3><i class="far fa-envelope"></i>&nbsp;&nbsp;메일 </h3>
+      </div>
+      
+       <div class="board-body" style="float: left; width: 20%;">	      
+	       <div class="leftside">	        	
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/created';"><i class="fas fa-pen"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/buddy/slist';"><i class="fas fa-list"></i></button>	
+	       </div>   
+      </div>
+        
+      <div class="board-article" style="margin-top: 10px; width: 80%; float: left;">
 			<table class="articleTable">
 			<tr align="left" height="40"  > 
 			      <td class="typeTd" colspan="2" style="font-size: 14px;">	     	 
 			
-			   	  
+			   	  <button type="button" class="articlebtn" onclick="deleteBuddy();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
+			      &nbsp;<button type="button" class="articlebtn" onclick="deleteBuddy();"><i class="fas fa-reply"></i> <span style="font-size: 13px;"> 답장 </span></button>				 		
 			 	  
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -88,33 +105,27 @@ function ajaxHTML(url, method, query, selector) {
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;
 			 		
-			      	${dto.sDate} ${page}
+			      	${dto.sDate}
 			      </td>
 			</tr>		
 			 		
 			 <tr align="left" height="50"> 
 				 <td class="titleTd" colspan="2" style="color: #632A7E; font-weight: bold; font-size: 20px;">
-				 	<c:if test="${dto.buddyState==0}">				 
-				 		<i class="far fa-star"></i> ${dto.title}  
-				 	</c:if>
-				 	<c:if test="${dto.buddyState!=0}">				 
 				 		<i class="fas fa-star" style="color:#632A7E; " ></i> ${dto.title}  
-				 	</c:if>
 				</td>   
 			 </tr>		 	
 			
 			<tr height="25" style="">
 			    <td colspan="2" class="nameTd" align="left">
-			      	보낸 사람 : ${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}${sessionScope.employee.pType} [${sessionScope.employee.email}]     	
+			      	보낸 사람 : ${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}${sessionScope.employee.pType} [${sessionScope.employee.email}] 	
 			    </td>			   
 			</tr>
 			<tr height="30" style="border-bottom: 1px solid #E6E6E6;">
 				 <td colspan="2" class="nameTd" align="left" style="padding-bottom: 10px;">
-		      		받는 사람 : ${dto.dType}&nbsp;${dto.name}&nbsp;${dto.pType} [${dto.email}]   
-		  	    </td>   
+		      		받는 사람 : ${dto.dType}&nbsp;${dto.name}&nbsp;${dto.pType} [${dto.email}]    
+		  	    </td>
 			</tr>
 			
 			<c:if test="${dto.fileCount!=0}">
@@ -125,8 +136,8 @@ function ajaxHTML(url, method, query, selector) {
 			<tr> 
 				<td colspan="2" style="padding-top: 0px; padding-bottom: 10px; border-bottom: 1px solid #cccccc; height: 30px;"> 
 				<c:forEach var="vo" items="${listFile}">				
-						<a href="<%=cp%>/buddy/download?fileNum=${vo.fileNum}" style="font-size: 17px;   border: 1px solid #cccccc; border-radius: 5px; padding: 3px 6px; margin-left: 10px;"> <span style="font-size: 13px;">
-						${vo.originalFilename} </span> </a> 
+						<a href="<%=cp%>/buddy/download?fileNum=${vo.fileNum}" style="font-size: 20px; border: 1px solid #cccccc; border-radius: 5px; padding: 6px 8px; margin-left: 10px;"><i class="fas fa-file-pdf"></i> <span style="font-size: 13px;">
+						${vo.originalFilename} (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte) </span> </a> 
 				</c:forEach>
 				</td>
 			</tr>
@@ -139,26 +150,29 @@ function ajaxHTML(url, method, query, selector) {
 			</tr>	
 			
 			<tr> 			
-				<td rowspan="6" style="width: 18%; border-bottom: 1px solid #cccccc;  padding: 10px 0; padding-left: 3px; padding-top: 45px; padding-right: 5px;">
+				<td rowspan="6" style="width: 18%; border-bottom: 1px solid #cccccc;  padding: 10px 0; padding-left: 15px;">
 					<img src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}" width="150" height="150" border="0"> 
 				</td>
 				<td style="font-size: 15px;"> &nbsp; </td>
 			</tr>
 			<tr>
-				<td style="font-weight: bold; font-size: 18px; border-bottom: 1px solid #cccccc; padding-left: 10px;"> <i class="fas fa-warehouse"></i>&nbsp; Mamp connect </td>
+				<td style="font-weight: bold; font-size: 18px; border-bottom: 1px solid #cccccc;"> <i class="fas fa-warehouse"></i>&nbsp; Mamp connect </td>
 			</tr>
 			<tr> 
-				<td style="font-size: 15px; padding-top: 3px; padding-left: 10px;"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;${sessionScope.employee.name} </td>
+				<td style="font-size: 15px; padding-top: 3px;"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;${sessionScope.employee.name}</td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px; padding-left: 10px;"><i class="fas fa-crosshairs"></i>&nbsp;&nbsp;${sessionScope.employee.dType} &nbsp; ${sessionScope.employee.pType} </td>
+				<td style="font-size: 15px;"><i class="fas fa-crosshairs"></i>&nbsp;&nbsp;${sessionScope.employee.dType} &nbsp; ${sessionScope.employee.pType} </td>
 			</tr>
 			<tr>
-				<td style="font-size: 15px; padding-left: 10px;">&nbsp;<i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;${sessionScope.employee.tel}  </td>
+				<td style="font-size: 15px;">&nbsp;<i class="fas fa-mobile-alt"></i>&nbsp;&nbsp;${sessionScope.employee.tel}  </td>
 			</tr>				
 			<tr>
-				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px; padding-left: 10px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;${sessionScope.employee.email}  </td>
+				<td style="border-bottom: 1px solid #cccccc; padding-bottom: 8px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;${sessionScope.employee.email}  </td>
 			</tr>
-			</table>	
-			
+			</table>				
          </div>
+    </div>
+</div>
+
+

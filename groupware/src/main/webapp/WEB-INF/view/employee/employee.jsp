@@ -269,7 +269,7 @@
 							<option value="03" ${dto.pCode=="03"?"selected='selected'":"" }>과장</option>
 							<option value="04" ${dto.pCode=="04"?"selected='selected'":"" }>차장</option>
 							<option value="05" ${dto.pCode=="05"?"selected='selected'":"" }>부장</option>
-							<option value="06" ${dto.pCode=="05"?"selected='selected'":"" }>이사</option>
+							<option value="06" ${dto.pCode=="06"?"selected='selected'":"" }>이사</option>
 							<option value="11" ${dto.pCode=="11"?"selected='selected'":"" }>부사장</option>
 							<option value="12" ${dto.pCode=="12"?"selected='selected'":"" }>대표이사</option>
 						</select>

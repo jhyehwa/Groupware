@@ -171,7 +171,7 @@ $(function() {
 <div class="container">
     <div class="board-container">
         <div class="body-title" style="font-size: 18px;">
-            <h3> ♬ 메일 </h3>
+            <h3><i class="far fa-envelope"></i>&nbsp;&nbsp;메일 </h3>
         </div> 
         
         <div class="board-body" style="float: left; width: 20%;">	      

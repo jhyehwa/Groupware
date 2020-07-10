@@ -43,7 +43,7 @@
 <div class="container">
     <div class="board-container" style="margin-left: 200px;">
         <div class="body-title" style="font-size: 18px;">
-            <h3> ♬ 커뮤니티 </h3>
+            <h3><i class="fas fa-satellite-dish"></i>&nbsp;&nbsp;커뮤니티 </h3>
         </div>   
 
         <div class="board-body" style="float: left; width: 20%;">	      
@@ -167,7 +167,7 @@
 		<!-- 모달창 -->
 		<div id="ex7" class="modal">
 			<p> &nbsp; </p>	
-			<h3><i class="fas fa-cube"></i> 새 커뮤니티 만들기 </h3>		
+			<p><i class="fas fa-cube" style="font-size: 22px;"></i> 새 커뮤니티 만들기 </p>		
 			<div class="board-created">
 			<form name="clubForm" method="post">
 			  <table class="boardtable" style="margin: 20px auto 0px; ">
@@ -175,21 +175,21 @@
 				  <tr align="left" height="40"> 
 				      <td width="100" style="text-align: center; background: #6E3C89;">동호회 코드</td>
 				      <td style="padding-left:10px;"> 
-				          <input class="inputnoline" type="text" name="clubCode" maxlength="100" style="width: 300px;">
+				          <input class="clubinput" type="text" name="clubCode" maxlength="100" style="width: 300px;">
 				      </td>
 				  </tr>
 				  
 				  <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center; background:#6E3C89;">동호회 이름</td>
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center; background:#6E3C89;">동호회명</td>
 				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="clubType" maxlength="100" style="width: 300px;">
+				        <input class="clubinput" type="text" name="clubType" maxlength="100" style="width: 300px;">
 				      </td>
 				  </tr>		
 				  
 				   <tr align="left" height="50" > 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center; background:#6E3C89;">동호회 설명</td>
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center; background:#6E3C89;">간단한 설명</td>
 				      <td style="padding-left:10px;"> 
-				        <input class="inputnoline" type="text" name="clubExp" maxlength="100" style="width: 300px;">
+				        <input class="clubinput" type="text" name="clubExp" maxlength="100" style="width: 300px;">
 				      </td>
 				  </tr>			  
              	 </tbody>              
@@ -200,7 +200,7 @@
 			      <td align="center" >
 			        <button type="submit" class="clubBtn" onclick="sendOk2()">커뮤니티 만들기</button>
 			        <button type="reset" class="clubBtn">다시입력</button>
-			        <button type="button" class="clubBtn" onclick="javascript:location.href='<%=cp%>/community/list';">만들기 취소</button>
+			        <button type="button" class="clubBtn" onclick="javascript:location.href='<%=cp%>/community/list';">취소</button>
 			     </td>
 			    </tr>
 			  </table>

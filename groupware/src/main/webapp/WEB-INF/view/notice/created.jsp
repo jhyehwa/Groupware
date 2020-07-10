@@ -66,7 +66,7 @@ $(function(){
 <div class="container">
     <div class="board-container">
         <div class="board-title"  style="font-size: 18px;">
-            <h3>공지사항 </h3>
+            <h3><i class="fas fa-bullhorn"></i>&nbsp;&nbsp;공지사항 </h3>
         </div>
         
         <div class="board-body" style="float: left; width: 20%;">	      

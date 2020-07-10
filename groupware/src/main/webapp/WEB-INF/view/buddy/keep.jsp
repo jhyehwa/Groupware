@@ -104,7 +104,7 @@ $("body").on("click", ".aTag", function(){
 <div class="container">
     <div class="board-container" style="margin-left: 200px;">
         <div class="board-title" style="font-size: 18px;">
-            <h3>♬ 메일 </h3>
+            <h3><i class="far fa-envelope"></i>&nbsp;&nbsp;메일 </h3>
         </div>
         
         <div class="board-body" style="float: left; width: 20%;">
@@ -117,7 +117,8 @@ $("body").on("click", ".aTag", function(){
 	        		</button>
 	       	         <button type="button" style="width: 107px; margin-right: 2px; height: 38px; background: #9565A4; color: white; font-size: 18px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/buddy/rlist';">
 	       		    			&nbsp;&nbsp;<i class="fas fa-archive" style="position: relative;">
-	       		    			<span style="top: -3px; right: -8px; position: absolute; background: gold; width: 15px; height: 15px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 15px; color: #585858;">${unreadCount==0? "": unreadCount}</span></i>
+	       		    			<c:if test="${unreadCount!=0}">
+	       		    			<span style="top: -3px; right: -8px; position: absolute; background: gold; width: 15px; height: 15px; border-radius: 50%; font-size: 10px; text-align: center; line-height: 15px; color: #585858;">${unreadCount==0? "": unreadCount}</span></c:if></i>
 	       		    </button>
 	       	</div>
 	      	       	

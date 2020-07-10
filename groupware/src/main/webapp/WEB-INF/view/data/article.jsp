@@ -245,7 +245,7 @@ $(function(){
 <div class="container">
      <div class="board-container">
        <div class="body-title" style="font-size: 18px;">
-            <h3> ♬ 자료실 </h3>
+            <h3><i class="fas fa-cloud-download-alt"></i>&nbsp;&nbsp;자료실 </h3>
       </div>
       
        <div class="board-body" style="float: left; width: 20%;">	      
