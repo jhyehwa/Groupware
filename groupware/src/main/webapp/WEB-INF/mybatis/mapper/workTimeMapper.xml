@@ -28,7 +28,8 @@
 	<update id="updateOutWorkTime" parameterType="map">
 		UPDATE workTime
 		SET out2 = 'E',
-			clockOut = SYSDATE
+			clockOut = SYSDATE,
+			workCode = #{workCode}
 		WHERE TO_CHAR(workDate, 'YYYYMMDD') = #{workDate} AND empNo = #{empNo}
 	</update>
 	

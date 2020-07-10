@@ -244,7 +244,6 @@ public class WorkTimeController {
 
 		String[] time = status.split(":");
 		int hour = Integer.parseInt(time[0]);
-		int min = Integer.parseInt(time[1]);
 
 		map.put("empNo", info.getEmpNo());
 		map.put("ipAddr", req.getRemoteAddr());
