@@ -23,7 +23,8 @@ public class Employee {
 	private String pType;
 	private String lastLogin;
 	private String imageFilename;
-	private String workCode;
+	private String clockIn;
+	private String clockOut;
 
 	public int getEmployeeNum() {
 		return employeeNum;
@@ -201,13 +202,23 @@ public class Employee {
 		this.imageFilename = imageFilename;
 	}
 
-	public String getWorkCode() {
-		return workCode;
+	public String getClockIn() {
+		return clockIn;
 	}
 
-	public void setWorkCode(String workCode) {
-		this.workCode = workCode;
+	public void setClockIn(String clockIn) {
+		this.clockIn = clockIn;
 	}
+
+	public String getClockOut() {
+		return clockOut;
+	}
+
+	public void setClockOut(String clockOut) {
+		this.clockOut = clockOut;
+	}
+
+	
 	
 	
 

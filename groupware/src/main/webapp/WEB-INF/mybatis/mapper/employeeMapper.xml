@@ -143,12 +143,14 @@
 	<select id="listEmpOrg"  resultType="com.of.employee.Employee" parameterType="map">
 		SELECT distinct e.empNo, name,dOrgan, dType, pType, imageFilename,clockIn,clockOut
 		FROM employee e
-		LEFT OUTER JOIN workTime w ON w.empNo=e.empNo 
+		LEFT OUTER JOIN workTime w ON w.empNo=e.empNo
+				AND TO_CHAR(clockIn,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD') AND TO_CHAR(clockIn,'HH24:MI:SS') &lt;= TO_CHAR(SYSDATE,'HH24:MI:SS')
+				AND (TO_CHAR(clockOut,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD') OR (clockOut is null))
 		JOIN profile pf ON pf.empNo=e.empNo
 		JOIN history h ON e.empNo = h.empNo
 		JOIN dept d ON h.dCode = d.dCode
 		JOIN position p ON h.pCode = p.pCode
-		WHERE dType=#{dept} AND dOrgan=1
+		WHERE dType=#{dept} AND  dOrgan=1
 		ORDER BY DECODE(dType, '대표이사', 0, '개발부', 1, '경영지원부', 2, '기획부', 3, '인사부', 4, '홍보부', 5,6), 
 			DECODE(pType, '대표이사', 0, '부사장', 1, '이사', 2, '부장', 3, '차장', 4, '과장', 5, '대리', 6,  '사원',7,8)
 	</select>

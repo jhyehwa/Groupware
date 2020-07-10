@@ -6,6 +6,23 @@
 	String cp = request.getContextPath();
 %>
 <style>
+.footer-detail ::-webkit-scrollbar {
+  width: 10px;
+}
+.footer-detail ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.footer-detail ::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #9565A4;
+}
+.footer-detail ::-webkit-scrollbar-button {
+  width: 20px;
+  height: 10px;
+}
+
+
+
 .footer {
 	background: transparent;
  	position: fixed;
@@ -15,13 +32,15 @@
 .footer-icon {  	
 	font-size: 30px;
 	color: /* fuchsia; */#632A7E; 
-	padding: 10px 0 10px 27.5px ;
+	padding: 10px 0 10px 0 ;
+	text-align: center;
+	width: 85px;
 	
 }
 
 
 .footer-detail{
-	background: /* aqua;  */ #EDE0EE;
+	background: /* aqua;  */ /* #EDE0EE; */#632A7E; 
 	width: 300px; 
 	height: 410px; 
 	display: none;
@@ -34,7 +53,7 @@
 	height:60px;
 	line-height:60px;
 	border-radius:20px 20px 0 0;
-	background: /* gold; */ #CDBBDC;
+	background: /* gold; */ /* #CDBBDC; */	
 }
 
 #footericon a, a:active{
@@ -42,10 +61,15 @@
 }
 
 .fixedIcon{
-	
+
 	font-size: 30px;
 	margin-left:25px;
 	margin-right: 25px;
+}
+
+.fixedIcon i{
+	color: white;
+
 }
 
 .footer-profile{
@@ -54,10 +78,10 @@
 }
 
 .fp-dept{
-	font-size:20px;
-	font-weight:700;
+	font-size:19px;
+	font-weight:600;
 	padding: 10px 0 0 10px;
-	color: DARKSLATEGRAY;
+	color:/*  DARKSLATEGRAY; */ white;
 }
 
 
@@ -65,8 +89,8 @@
 
 .fp-person{
 	 padding: 5px 0 5px 20px;
-	 font-size: 17px;
-	 color: DARKSLATEGRAY;
+	 font-size: 16.5px;
+	 color:/*  DARKSLATEGRAY; */ white;
 }
 
 .fp-person i {
@@ -74,7 +98,7 @@
 }
 
 .fp-person a {
-	color: gold;
+	color: /*  DARKSLATEGRAY; */  /* gold;  */ white;
 }
 
 .footer-chatTB, .footer-messageTB{
@@ -194,11 +218,19 @@ $(function(){
 			var pType=data.listOrg[idx].pType;
 			var image=data.listOrg[idx].imageFilename;
 			var empNo=data.listOrg[idx].empNo
+			var clockIn=data.listOrg[idx].clockIn;
+			var clockOut=data.listOrg[idx].clockOut;
 			
-			out+=" <p> <i class='fas fa-circle' style='font-size: 8px; color:gray;'></i>&nbsp;&nbsp;&nbsp;";
-			out+=" <img src='<%=cp%>/uploads/profile/"+image+"' style='width: 30px; height: 30px; border-radius: 15px; vertical-align:middle;'>&nbsp;"+pType+"&nbsp;|&nbsp;"+name+"</i>";
+			out+=" <p>";
+			if(clockIn!=null && (clockOut==null)){
+				out+=" <i class='fas fa-circle' style='font-size: 8px; color:LIME;' ></i>";	
+			}else{
+				out+=" <i class='fas fa-circle' style='font-size: 8px; color:lightgray;'></i>";				
+			}
+			out+=" &nbsp;&nbsp;&nbsp;";
+			out+=" <img src='<%=cp%>/uploads/profile/"+image+"' style='width: 30px; height: 30px; border-radius: 15px; vertical-align:middle;'>&nbsp;"+pType+"&nbsp;|&nbsp;"+name+"&nbsp;";
 			out+=" <a class='chatInput' <%-- href=' --%>'><span><i class='fas fa-comments'></i></span></a>";
-			out+=" <a class='messageInput' <%-- href='<%=cp%>/buddy/created --%>'><span><i class='fas fa-paper-plane'></i></span></a>";
+			out+=" <a class='messageInput' <%-- href='<%=cp%>/buddy/created --%>'><span><i class='fas fa-envelope'></i></span></a>";
 			out+=" <a class='information' data-empNo='"+empNo+"' data-name='"+name+"'><span><i class='fas fa-info-circle'></i></span></a></p>";							
 		}		
 		obj.html(out);	
@@ -254,7 +286,7 @@ $(function(){
 		$(".footer-messageTB").css("display", "none");
 	});
 	
-	$(".header2").on("click",function(){
+	/* $(".header2").on("click",function(){
 		$(".footer-profileTB").css("display", "none");
 		$(".footer-chatTB").css("display", "inline-block");
 		$(".footer-messageTB").css("display", "none");
@@ -264,7 +296,7 @@ $(function(){
 		$(".footer-profileTB").css("display", "none");
 		$(".footer-chatTB").css("display", "none");
 		$(".footer-messageTB").css("display", "inline-block");
-	});
+	}); */
 });
 
 
@@ -282,7 +314,7 @@ $(function(){
 			<div id="footericon" style="text-align: center; line-height: 60px;">
 				<a class="fixedIcon header1"><span><i class="fas fa-user"></i></span></a>
 				<a class="fixedIcon header2" href="<%=cp%>/chat/main"><span><i class="fas fa-comments"></i></span></a>
-				<a class="fixedIcon header3" href="<%=cp%>/buddy/created"><span><i class="fas fa-paper-plane"></i></span></a>
+				<a class="fixedIcon header3" href="<%=cp%>/buddy/created"><span><i class="fas fa-envelope"></i></span></a>
 			</div>
 		
 			<div class="footer-detail-content" style="width: 300px; height: 350px; text-align: left; overflow: auto ">

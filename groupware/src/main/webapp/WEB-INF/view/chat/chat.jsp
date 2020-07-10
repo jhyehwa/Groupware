@@ -105,8 +105,16 @@ $(function(){
 			var pType=data.listOrg[idx].pType;
 			var image=data.listOrg[idx].imageFilename;
 			var empNo=data.listOrg[idx].empNo
+			var clockIn=data.listOrg[idx].clockIn;
+			var clockOut=data.listOrg[idx].clockOut;
 			
-			out+=" <p data-empNo='"+empNo+"' data-image='"+image+"'> <i class='fas fa-circle' style='font-size: 8px; color:gray;'></i>&nbsp;&nbsp;&nbsp;";
+			out+=" <p data-empNo='"+empNo+"' data-image='"+image+"'>";
+			if(clockIn!=null && (clockOut==null)){
+				out+=" <i class='fas fa-circle' style='font-size: 8px; color:LIME;'></i>";	
+			}else{
+				out+=" <i class='fas fa-circle' style='font-size: 8px; color:lightgray;'></i>";				
+			}
+			out+=" &nbsp;&nbsp;&nbsp;";
 			out+=" <img src='<%=cp%>/uploads/profile/"+image;
 			out+="' style='width: 30px; height: 30px; border-radius: 15px; vertical-align:middle;'>&nbsp;";
 			out+=pType+"&nbsp;|&nbsp;"+name+"</i>";
@@ -316,7 +324,7 @@ $(function(){
 			// 날짜 출력
 			out =  "<div class='"+cls+"'>";
 	    	out += " <div style='clear: both; margin: 7px 5px 3px;'>";
-		    out += "   <div style='float: left; font-size: 10px; padding-right: 5px;'><i class='far fa-calendar'></i> "+dispDate+"</div>";
+		    out += "   <div style='float: left; font-size: 12px; padding-right: 5px; margin-top: 8px;'><i class='far fa-calendar'></i> "+dispDate+"</div>";
 		    out += "   <hr>";
 		    out += "  </div>";
 		    out += "</div>";
@@ -335,7 +343,7 @@ $(function(){
 			out="<div class='my_message' style='clear: both; margin: 5px 5px;'>";
         	out+="	<div class='my-tooltip toolmsg' style='float: right; cursor: pointer;' >"+message+"</div>";
 			out+="	<div class='toolTime' style='float: right; font-size: 12px; margin: 20px 4px 0 0;'>"+dispTime+"</div>";
-			out+="	<div class='myChatImage'  style='clear:both; float: right; margin: 15px 35px 0 0; '>";
+			out+="	<div class='myChatImage'  style='clear:both; float: right; '>";
 			out+="		<img src='<%=cp%>/uploads/profile/"+uphoto+"'></div>";
 			out += "</div>";
 			
@@ -343,7 +351,7 @@ $(function(){
 			out=" <div class='you_message' style='clear: both; margin: 5px 5px;'>";
         	out+="	<div class='you-tooltip toolmsg' style='cursor: pointer; float: left;' >"+message+"</div>";
         	out+="	<div class='toolTime' style='float:left; font-size: 12px; margin: 20px 0 0 4px ;'>"+dispTime+"</div>";
-			out+="<div class='youChatImage'  style='clear:both; margin-left:30px; padding-top:15px'>";
+			out+="<div class='youChatImage'  style='clear:both; '>";
 			out+="<img src='<%=cp%>/uploads/profile/"+image+"'><span>"+empNo+"dTye"+name+"pType</span></div>";
 			out += "</div>";
 		}
@@ -369,41 +377,41 @@ $(function(){
 </script>
 <div class="container">
 	<div class="board-container">
-	     <div class="body-title">
+	     <div class="body-title" >
 	         <h3><i class="far fa-comment-alt"></i> 채팅 </h3>
 	     </div>
 	     
-	     <div class="board-body" style="float: left; width: 1200px; height: 600px;" >
+	     <div class="board-body" style="" >
 	         <div class="alert-info">
-	            <i class="fas fa-info-circle"></i> 회원과 실시간으로 대화를 나룰수 있는 공간 입니다.
+	            <i class="fas fa-info-circle"></i> 사원들과 실시간으로 대화를 나눌 수 있는 공간 입니다.
 	        </div>
 	     
 		    <div style="clear: both;">
 		    	<div style="float: left; width: 300px;">
-		            <div style="clear: both; padding-bottom: 5px;">
+		            <div style="clear: both; padding-bottom: 5px; margin-top: 10px;">
 		                <span style="font-weight: 600;">＞</span>
-		                <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">접속자 리스트</span>
+		                <span style="font-weight: 600; color: #424951;">사원목록</span>
 		            </div>
 		            <div id="guestListContainer"></div>
 		        </div>
 		        
 		        <div style="float: left; width: 20px;">&nbsp;</div>
 		        		        
-		        <div id="chatRoomList" style="float: left; width: 700px; /* display: none; */  ">
-		             <div style="clear: both; padding-bottom: 5px;">
+		        <div id="chatRoomList" style="float: left; width: 700px;  /* display: none;  */  ">
+		             <div style="clear: both; padding-bottom: 5px; margin-top: 10px;">
 		                 <span style="font-weight: 600;">＞</span>
-		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅 목록</span>
+		                 <span style="font-weight: 600; font-family:color: #424951;">채팅 목록</span>
 		             </div>
 		             <div id="chatListContainer" >
-		             	<table class="chatList"style="border-bottom: 1px solid red; width: 670px; margin-left: 10px; padding: 10px;  display: none;" >
+		             	<table class="chatList"style="border-bottom: 3px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  display: none;" >
 							<tr>
 								<td class="room-image"rowspan="2" width="70" height="70"><i style='font-size: 60px;' class='fas fa-user-circle'></i></td>
-								<td class="chatting-room-name" width="400"><p></p></td>
-								<td class="latestTime" width="100"><p></p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px;" class="fas fa-sign-out-alt"></i></td>
+								<td class="chatting-room-name" ><p></p></td>
+								<td class="latestTime" width="120"><p></p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
-								<td class="latestChat" style="color:red; padding-left: 15px;"><p></p></td>
+								<td class="latestChat"><p></p></td>
 								<td></td>
 							</tr>
 						</table>
@@ -411,10 +419,10 @@ $(function(){
 		        </div>
 
 		        
-		        <div id="chatContentList"  style="float: left; width: 700px;  display: none; ">
-		             <div style="clear: both; padding-bottom: 5px;">
+		        <div id="chatContentList"  style="float: left; width: 700px; display: none;">
+		             <div style="clear: both; padding-bottom: 5px; margin-top: 10px;">
 		                 <span style="font-weight: 600;">＞</span>
-		                 <span style="font-weight: 600; font-family: 나눔고딕, 맑은 고딕, 돋움; color: #424951;">채팅 메시지</span>
+		                 <span style="font-weight: 600; color: #424951;">채팅 메시지</span>
 		             </div>
 		             <div id="chatMsgContainer">
 		             	<div class="backToChatroom"><i class="far fa-arrow-alt-circle-left"></i>뒤로</div>
@@ -436,8 +444,8 @@ $(function(){
 								<div class="youChatImage"  style='clear:both; margin-left:30px; padding-top:15px'><img src='<%=cp%>/resource/images/basic.gif'><span>dTye이름pType</span></div>
 							</div> --%>
 		             </div>
-		             <div style="clear: both; padding-top: 5px;">
-		                 <input type="text" id="chatMsg" class="boxTF"  style="width: 98%;"
+		             <div style="clear: both; padding-top: 5px; margin-top: 10px;">
+		             	<input type="text" id="chatMsg" class="boxTF"  style=""
 		                            placeholder="채팅 메시지를 입력 하세요...">
 		             </div>
 		        </div>
