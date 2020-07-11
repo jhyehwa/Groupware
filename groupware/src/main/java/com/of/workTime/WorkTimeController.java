@@ -183,10 +183,8 @@ public class WorkTimeController {
 		case "work":
 			if (hour < 9) {
 				map.put("workCode", "A");
-			} else if (hour == 9 && min <= 30) {
-				map.put("workCode", "B");
 			} else {
-				map.put("workCode", "C");
+				map.put("workCode", "B");
 			}
 
 			service.insertWorkTime(map);
@@ -199,7 +197,12 @@ public class WorkTimeController {
 			WorkTime wk = service.toDayChekc(Integer.parseInt(info.getEmpNo()));
 			
 			if(hour < 18) {
-				map.put("workCode", "D");
+				
+				if(wk.getWorkCode().equalsIgnoreCase("B")) {
+					
+				}else {
+					map.put("workCode", "D");
+				}
 			}else if(wk.getWorkCode().equalsIgnoreCase("A")){
 				map.put("workCode","F");
 			}else {

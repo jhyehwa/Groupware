@@ -311,7 +311,7 @@ textarea {
 							<c:if test="${empty mode || modes=='임시보관함'}">
 									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
-									<p id="btnLine">
+									<p id="pTageLine">
 										<c:if test="${dto.scurrStep == 2}">
 											<c:if test="${pempNo3.empNo == sessionScope.employee.empNo}">
 												<button type="button" class="choiceBtn"
@@ -401,7 +401,7 @@ textarea {
 		<table class="content">
 			<tbody  id="tb">
 			<tr>
-				<td style="width: 100px; background: #DDDDDD; text-align: center; "><b>시행일자${mode}${modes}</b></td>
+				<td style="width: 100px; background: #DDDDDD; text-align: center; "><b>시행일자</b></td>
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">
 						<td style="width: 50%;" style="padding-left: 10px;" >
@@ -468,17 +468,18 @@ textarea {
 				</td>
 			</tr>
 		</c:if>
-		<c:if test="${mode == 'article' && modes == '임시보관함'}">
+		<c:if test="${modes == '임시보관함'}">
 			<tr>
 				<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
 				<td colspan="3" style="padding-left: 10px;" >
-					<input type="file" id="upload" name="upload" style="padding-top: 13px;" multiple="multiple">
+					<a href="<%=cp%>/sign/download?sfNum=${dto.sfNum}">${dto.sfOriginalFilename}</a> 
 				</td>
 			</tr>
 		</c:if>
 		<c:if test="${mode == 'article'}">
 				<c:forEach var="vo" items="${listFile}">
 					<tr id="f${vo.sfNum}" height="40px;" style="border-bottom: 1px solid #cccccc;">
+					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
 						<td colspan="4" style="padding-left:10px;">
 							<a href="<%=cp%>/sign/download?sfNum=${vo.sfNum}">${vo.sfOriginalFilename}</a> 
 						</td>

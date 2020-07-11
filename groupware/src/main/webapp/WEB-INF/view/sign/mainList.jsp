@@ -24,6 +24,29 @@
 			}
 		});
 	}
+	
+
+	function ajaxJSON(url, type, query, fn) {
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				fn(data);
+			}
+			/* , beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    } */
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
 
 	/*===============================================================*/
 	
@@ -113,6 +136,8 @@
 			}
 		});
 	});
+	
+	
 	
 	
 </script>
@@ -357,6 +382,20 @@
 										</a>
 									</td>
 								</tr>
+								<c:if test="${storageList.size() != 0 }">
+										<c:forEach var="dto" items="${storageList}">
+											<td style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc;">
+												<i class="fas fa-arrow-right"></i> ${dto.name} : ${dto.ssubject}
+											</td>
+										</c:forEach>
+									</c:if>
+									<c:if test="${storageList.size() == 0 }">
+										<td
+											style="padding-left: 12px; color: #505050; border-bottom: 1px solid #cccccc;">
+											<i class="fas fa-arrow-right"></i> 임시저장함이 비어있습니다. 
+											<i class="fas fa-clock"></i>
+										</td>
+									</c:if>
 							</table>
 						</div>
 				</div>

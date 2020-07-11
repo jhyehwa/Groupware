@@ -154,6 +154,14 @@ $(function() {
 	});
 	
 	$("body").on("click", "#btnLineSelectOk", function(){
+
+		var count = $(this).closest("div").find("input:checkbox[name=cb]:checked").length;
+		
+		if(count > 1){
+			alert("한명만 선택해주세요.");
+			return;
+		}
+		
 		$('#lineModal-dialog').dialog("close");
 	});
 		

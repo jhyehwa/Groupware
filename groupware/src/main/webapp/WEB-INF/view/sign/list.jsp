@@ -118,7 +118,8 @@
 					
 					var query = "passVal="+val+"&sNum="+sNum+"&writer="+writer+"&returnMemo="+returnMemo;
 					var fn = function(data){
-						location.href="<%=cp%>/sign/list?mode="+${option};
+						var option = "${option}";
+						location.href="<%=cp%>/sign/list?mode="+option;
 					}
 					ajaxJSON(url, "GET", query, fn);
 				});
@@ -171,7 +172,7 @@
 	
 
 	$(function() {
-		$("body").on("click", "#btnLine", function(){
+		$("body").on("click", "button[id=btnLine]", function(){
 			var value = $(this).closest("div").find("input[name=lineDivChild]").val();
 			var $btn = $(this);
 			$("#lineModal-dialog").dialog({

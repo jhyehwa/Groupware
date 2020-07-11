@@ -342,8 +342,6 @@ public class SignServiceImpl implements SignService {
 	public List<Sign> seatchList(Map<String, Object> map, String keyword) {
 		List<Sign> list = null;
 		try {
-			System.out.println(map.get("condition"));
-			System.out.println(map.get("keyword"));
 			list = dao.selectList("sign.searchlist", map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -415,7 +413,6 @@ public class SignServiceImpl implements SignService {
 
 					dto.setSfOriginalFilename(originalFilename);
 					dto.setSfSaveFilename(saveFilename);
-					dao.insertData("sign.insertStorage", dto);
 				}
 			}
 			if (dto.getSfOriginalFilename() == null && dto.getSfSaveFilename() == null) {

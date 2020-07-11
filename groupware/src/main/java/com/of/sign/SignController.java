@@ -97,6 +97,11 @@ public class SignController {
 		List<Sign> returnList4 = service.returnSignList(map);
 		model.addAttribute("returnList", returnList4);
 		
+		// 임시저장함
+		List<Sign> storageList = service.storageList(map);
+		model.addAttribute("storageList",storageList);
+		
+		
 		return ".sign.mainList";
 	}
 
@@ -389,6 +394,9 @@ public class SignController {
 			
 			if(modes.equals("임시보관함")) {
 				article = "";
+				lineEmp2 = pempNo2;
+				lineEmp3 = pempNo3;
+				lineEmp4 = pempNo4;
 			}
 			
 			if(article.equals("article")) {
