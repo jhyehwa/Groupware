@@ -249,10 +249,12 @@ public class MainController {
 		
 		int mailCnt = 0;
 		int stepCnt = 0;
+		int newsCnt = 0;
 		
 		try {
 			mailCnt = bdService.unreadCount(info.getEmpNo());
 			stepCnt = sgservice.stepCount(map);
+			newsCnt = nwservice.dataCountAlert(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -260,6 +262,7 @@ public class MainController {
 		Map<String, Object> model = new HashMap<>();
 		model.put("mailCnt", mailCnt);
 		model.put("stepCnt", stepCnt);
+		model.put("newsCnt", newsCnt);
 		
 		return model;
 	}
