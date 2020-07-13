@@ -261,7 +261,9 @@ $(function(){
 		        	wicon = "<i class='fas fa-cloud-sun'></i>";
 		        } else if(wcondition=='Atmosphere') {
 		        	wicon = "<i class='fas fa-smog'></i>";
-		        }			
+		        } else {
+		        	wicon = "<i class='fas fa-sun'></i>"; 
+		        }		
 			
 			out += "<table style='width: 90%; border: none; padding: 0px; border-spacing: 0px;'>";
 			out += "<tr>";

@@ -216,7 +216,6 @@ $(function() {
 				      <td valign="top" style="padding:20px 0px 20px 10px; border-bottom: 1px solid #cccccc;"> 
 				        <textarea name="content" id="content" rows="12" class="boxTA" style="width: 95%;">
 				        		[ 전달 된 메일 ]<br>
-				        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				        		Date : ${dto.sDate}<br>
 				        		From : ${dto.dType}&nbsp;${dto.name}${dto.pType}<br>
 				        		TO   : ${sessionScope.employee.dType}&nbsp;${sessionScope.employee.name}${sessionScope.employee.pType}<br>	

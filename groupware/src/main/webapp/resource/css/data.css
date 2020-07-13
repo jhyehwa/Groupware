@@ -8,6 +8,10 @@
 	margin-left: 20px;
 }
 
+button:hover {
+	cursor: pointer;
+}
+
 .selectGroup .selectBox {
 	margin-top: 9px;	
 	width: 110px;

@@ -140,10 +140,10 @@
     background-color:black; border-color:black;
 }
 .btn-company {
-    background-color:#F3F781; border-color:#F3F781; color: #484848;
+    background-color:#AED6F1 ; border-color:#AED6F1 ; color: #484848;
 }
 .btn-company:hover, .btn-company:focus {
-    background-color:#F3F781; border-color:#F3F781;
+    background-color:#AED6F1 ; border-color:#AED6F1 ;
 }
 .btn-red {
     background-color: #F5A9A9; border-color:#F5A9A9;
@@ -294,7 +294,7 @@ function articleForm(calEvent) {
 	var color=calEvent.color;
 	var category="";
 	if(color=="#D0A9F5") category="개인일정";
-	else if(color=="#F3F781") category="회사일정";
+	else if(color=="#AED6F1 ") category="회사일정";
 	else if(color=="#F5A9A9") category="부서일정";
 	
 	var allDay=calEvent.allDay;
@@ -722,7 +722,7 @@ function classifyChange(category) {
 		$("#btnTitle").html("개인일정")
 		$("#btnTitle").addClass("btn-private");
 		$("#btnDropdown").addClass("btn-private");
-	} else if(category=="#F3F781") {
+	} else if(category=="#AED6F1 ") {
 		$("#btnTitle").html("회사일정")
 		$("#btnTitle").addClass("btn-company");
 		$("#btnDropdown").addClass("btn-company");
@@ -766,8 +766,8 @@ $(function(){
                                href="javascript:classification('all', 0);">전체일정</a>
                          <a class="hbtn" style="background: #D0A9F5;"
                                href="javascript:classification('#D0A9F5', 1);">개인일정</a>          
-                         <a class="hbtn" style="background: #F3F781; color: #484848;"
-                               href="javascript:classification('#F3F781', 2);">회사일정</a>
+                         <a class="hbtn" style="background: #AED6F1 ;"
+                               href="javascript:classification('#AED6F1 ', 2);">회사일정</a>
                          <a class="hbtn" style="background: #F5A9A9;"
                                href="javascript:classification('#F5A9A9', 3);">부서일정</a>
                      </div>

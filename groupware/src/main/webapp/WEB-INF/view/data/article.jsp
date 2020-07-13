@@ -115,7 +115,8 @@ $(function(){
 			listPage(1);
 		}
 		
-		ajaxJSON(url, "post", query, fn)
+		ajaxJSON(url, "post", query, fn);
+		location.reload();
 	});
 });
 
@@ -134,7 +135,8 @@ $(function(){
 		var fn = function(data){
 			listPage(page);
 		};
-		ajaxJSON(url, "post", query, fn);		
+		ajaxJSON(url, "post", query, fn);
+		location.reload();
 	});
 });
 
@@ -283,8 +285,22 @@ $(function(){
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${nextReadDto.dataNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
-			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${preReadDto.dataNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			 	   
+			 	   <c:if test="${not empty nextReadDto.dataNum && not empty preReadDto.dataNum}">	
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${nextReadDto.dataNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${preReadDto.dataNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			       </c:if>
+			       
+			       <c:if test="${empty nextReadDto.dataNum && not empty preReadDto.dataNum}">	
+				      	<i class="fas fa-arrow-up" style="color: #CACFD2;"></i><span style="color: #CACFD2; font-size: 13px;"> 다음  </span>	
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${preReadDto.dataNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			       </c:if>
+			       
+			       <c:if test="${not empty nextReadDto.dataNum && empty preReadDto.dataNum}">	
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/data/article?${query}&dataNum=${nextReadDto.dataNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+				      	<i class="fas fa-arrow-down" style="color: #CACFD2;"></i><span style="color: #CACFD2; font-size: 13px;"> 이전  </span>
+			       </c:if>
+			       
 			      </td>
 			</tr>		
 			 		

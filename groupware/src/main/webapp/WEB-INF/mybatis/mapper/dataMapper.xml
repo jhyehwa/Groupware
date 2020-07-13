@@ -134,14 +134,20 @@
 	
 	<!-- 글보기 -->
     <select id="readData" parameterType="Integer" resultType="com.of.data.Data">
-		SELECT dataNum, dg.dataType, e.name, title, content, created, d.dCode, dpt.dType, pType		  
+		SELECT d.dataNum, dg.dataType, e.name, title, content, created, d.dCode, dpt.dType, pType,
+		NVL(replyCount, 0) replyCount	  
 		FROM data d
 		JOIN employee e ON d.writer = e.empNo
 		JOIN history h ON h.empNo = e.empNo 
 		JOIN dept dpt ON h.dCode = dpt.dCode
 		JOIN position p ON p.pCode = h.pCode
 		JOIN dataGroup dg ON d.dataCode = dg.dataCode
-		WHERE dataNum = #{dataNum}
+		LEFT OUTER JOIN (
+			SELECT dataNum, COUNT(*) replyCount FROM dataReply
+			WHERE answer=0
+			GROUP BY dataNum
+		) r ON d.dataNum=r.dataNum
+		WHERE d.dataNum = #{dataNum}
 	</select>
 	
 	<!-- 이전글 -->

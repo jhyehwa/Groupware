@@ -478,6 +478,12 @@ public class CommunityController {
 			try {
 				dto.setReplyWriter(info.getEmpNo());
 				service.insertReply(dto);
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("commuNum", dto.getCommuNum());
+				int replyCount = service.replyCount(map);
+				model.put("replyCount", replyCount);
+				
 			} catch (Exception e) {
 				state = "false";
 			}
@@ -527,6 +533,7 @@ public class CommunityController {
 			String state = "true"; 
 			try {
 				service.deleteReply(paramMap);
+				
 			} catch (Exception e) {
 				state = "false";
 			}

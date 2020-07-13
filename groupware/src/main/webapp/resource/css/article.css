@@ -5,6 +5,10 @@
 a:visited { color: #424242; text-decoration: none; }
 a:link { color: #424242; text-decoration: none; }
 
+button:hover {
+	cursor: pointer;
+}
+
 .leftside {
 	margin-top: 20px;
 	margin-left: 20px;

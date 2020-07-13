@@ -11,6 +11,10 @@
  a:link { color: #505050; text-decoration: none;}
  a:visited { color: #505050; text-decoration: none;}
  a:hover {color: #EDA900; text-decoration: none;}
+ 
+ button:hover {
+	cursor: pointer;
+}
 
 .selectGroup .selectBox {
 	margin-top: 9px;	

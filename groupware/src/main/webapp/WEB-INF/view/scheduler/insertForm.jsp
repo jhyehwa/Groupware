@@ -34,7 +34,7 @@ $(function() {
 		      <td> 
 		        	<select name='category' class='selectField' style="border: 1px solid #cccccc; padding: 2px; padding-bottom: 5px; border-radius: 4px;">
 	                     <option value='#D0A9F5' ${dto.category=='#D0A9F5'?"selected='selected'":""}> 개인일정 </option>
-	                     <option value='#F3F781' ${dto.category=='#F3F781'?"selected='selected'":""}> 회사일정 </option>
+	                     <option value='#AED6F1 ' ${dto.category=='#AED6F1 '?"selected='selected'":""}> 회사일정 </option>
 	                     <option value='#F5A9A9' ${dto.category=='#F5A9A9'?"selected='selected'":""}> 부서일정 </option>
                     </select>
 		      </td>

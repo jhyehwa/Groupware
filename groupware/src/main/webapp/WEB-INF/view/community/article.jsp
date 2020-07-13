@@ -89,7 +89,7 @@ $(function(){
 			$("#commuLikeCount").text(count);
 		}		
 		ajaxJSON(url, "post", query, fn); 
-		
+		location.reload();
 	});
 });
 
@@ -121,17 +121,22 @@ $(function(){
 		var url = "<%=cp%>/community/insertReply";
 		var query = "commuNum=" + commuNum + "&content=" + content;
 		var fn = function(data) {
+			
 			var state = data.state;
+			var replyCount = data.replyCount;
+			
 			if(state=="false") {
 				alert("댓글을 추가하지 못했습니다.");
 				return false;
 			}
 			
 			$ta.val("");
+			$(".replyCount").text(replyCount);
 			listPage(1);
 		}
 		
 		ajaxJSON(url, "post", query, fn)
+		
 	});
 });
 
@@ -166,6 +171,7 @@ $(function(){
 			}
 		};
 		ajaxJSON(url, "post", query, fn);
+	
 	});
 });
 
@@ -186,6 +192,7 @@ $(function(){
 			listPage(page);
 		};
 		ajaxJSON(url, "post", query, fn);		
+		location.reload();
 	});
 });
 
@@ -335,13 +342,13 @@ $(function(){
 			      	</c:if>
 			      	
 			      	<c:if test="${not empty preReadDto.commuNum && empty nextReadDto.commuNum}">
-			      		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      		<i class="fas fa-arrow-up" style="color: #CACFD2;"></i><span style="color: #CACFD2; font-size: 13px;"> 다음  </span>
 			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
 			     	</c:if>
 			     	
 			     	<c:if test="${empty preReadDto.commuNum && not empty nextReadDto.commuNum}">
-			      		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>	
+			      		<i class="fas fa-arrow-down" style="color: #CACFD2;"></i><span style="color: #CACFD2; font-size: 13px;"> 이전  </span>
 			     	</c:if>
 			      </td>
 			</tr>		 		
@@ -386,7 +393,7 @@ $(function(){
 		<table style="margin-top: 20px;">
 			<tr height='30'> 
 				 <td align='left' style="padding-left: 10px; font-size: 14px; color: #6E6E6E;" >
-				 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;${dto.replyCount}&nbsp;&nbsp;|&nbsp;&nbsp;조회 ${dto.hitCount}&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-heart"></i> ${dto.commuLikeCount}
+				 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;<span class="replyCount">${dto.replyCount}</span>&nbsp;&nbsp;|&nbsp;&nbsp;조회 ${dto.hitCount}&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-heart"></i> ${dto.commuLikeCount}
 				 </td>
 			</tr>
 			<tr>

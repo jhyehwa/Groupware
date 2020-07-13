@@ -92,6 +92,12 @@ public class MainController {
 		map.put("nCode", nCode);
 		List<News> nwlist = nwservice.listNews(map);	
 		
+		for(News dto : nwlist) {
+			if(dto.getTitle().length()>=15) {
+				dto.setTitle(dto.getTitle().substring(0, 15) + "…");
+			}
+		}
+		
 		// 결재 수신함 리스트
 		String signUrl = cp + "/sign/article?page=";
 		map.put("offset", offset);
