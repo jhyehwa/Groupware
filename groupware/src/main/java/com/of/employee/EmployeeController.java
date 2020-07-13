@@ -34,8 +34,89 @@ public class EmployeeController {
 
 	// ---------------------------------------------------------------------------------------------
 	// 사원 리스트
-	@RequestMapping("/employee/list")
+	@RequestMapping("/employee/main")
+	public String main(HttpSession session, Model model) throws Exception {
+
+		int dataCount = 0;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		dataCount = service.dataCount(map);
+		
+		model.addAttribute("dataCount", dataCount);
+		
+		return ".employee.main";
+	}
+	
+	@RequestMapping("/employee/office/list")
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req, Model model) throws Exception {
+
+		String cp = req.getContextPath();
+
+		int rows = 10;
+		int total_page = 0;
+		int dataCount = 0;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+
+		dataCount = service.dataCount(map);
+		total_page = myUtil.pageCount(rows, dataCount);
+		
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		List<Employee> list = null;
+		
+		list = service.listEmployee(map);
+
+		String query = "";
+
+		String articleUrl;
+
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		articleUrl = cp + "/employee/article?page=" + current_page;
+		if (query.length() != 0) {
+			articleUrl = articleUrl + "&" + query;
+		}
+
+		String paging = myUtil.paging(current_page, total_page, "listPage");
+		
+		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+
+		return "employee/list";
+	}
+
+	@RequestMapping("/employee/leave/list")
+	public String leavelist(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req, Model model) throws Exception {
 
@@ -68,25 +149,23 @@ public class EmployeeController {
 		map.put("offset", offset);
 		map.put("rows", rows);
 
-		List<Employee> list = service.listEmployee(map);
+		List<Employee> list = service.listEmployeeLeave(map);
 
 		String query = "";
 
-		String listUrl;
 		String articleUrl;
 
 		if (keyword.length() != 0) {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
 
-		listUrl = cp + "/employee/list";
 		articleUrl = cp + "/employee/article?page=" + current_page;
 		if (query.length() != 0) {
-			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
 		}
 
-		String paging = myUtil.paging(current_page, total_page, listUrl);
+		String paging = myUtil.paging(current_page, total_page, "listPage");
+		
 		model.addAttribute("list", list);
 		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
@@ -97,8 +176,9 @@ public class EmployeeController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 
-		return ".employee.list";
+		return "employee/list";
 	}
+	
 
 	// ---------------------------------------------------------------------------------------------
 	// 사원 등록

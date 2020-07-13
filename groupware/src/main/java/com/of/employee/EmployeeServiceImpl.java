@@ -46,6 +46,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		return list;
 	}
+	
+	@Override
+	public List<Employee> listEmployeeLeave(Map<String, Object> map) {
+
+		List<Employee> list = null;
+
+		try {
+			list = dao.selectList("employee.listEmployeeLeave", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 
 	// ---------------------------------------------------------------------------------------------
 	// 데이터 개수

@@ -155,14 +155,14 @@
 	</div>
 	
 	<!-- 알림창 -->
-	<div class="alertTable" style="position: absolute; right: 30px; top: 65px;">
+	<div class="alertTable" style="position: absolute; right: 30px; top: 65px; display: none;">
 		<div class="alertList" style="width: 250px; height: 220px; position: relative; z-index: 2;">
 			<span class="alertInfo"></span>
 		</div>
 	</div>
 	
 	<!-- header 메뉴 -->
-	<div id="pullMenu" style="background: #F8EFFB; width: 1920px; top: 65px; position: absolute; z-index: 2;">
+	<div id="pullMenu" style="background: #F8EFFB; width: 1920px; top: 65px; position: absolute; z-index: 2; display: none;">
 		<div style="position: relative; width: 1661px; margin: 0px auto;" class="pullMenu">
 			<ul>	
 				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
@@ -179,8 +179,6 @@
 						<li style="margin-bottom: 10px; margin-top: 5px;"><a href="<%=cp%>/buddy/rlist">&nbsp;받은 메일함</a></li>
 						<li style="margin-bottom: 10px;"><a href="<%=cp%>/buddy/slist">&nbsp;보낸 메일함</a></li>
 						<li><a href="<%=cp%>/buddy/keep">&nbsp;중요 보관함</a></li>
-						
-						
 					</ul>
 				</li>
 

@@ -7,6 +7,8 @@ import com.of.publicAddr.PublicAddr;
 
 public interface EmployeeService {	
 	public List<Employee> listEmployee(Map<String, Object> map);
+	public List<Employee> listEmployeeLeave(Map<String, Object> map);
+	
 	public int dataCount(Map<String, Object> map);
 	
 	public Employee loginEmployee(String empNo);
