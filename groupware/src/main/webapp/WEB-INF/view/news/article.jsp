@@ -9,20 +9,41 @@
 
 <script type="text/javascript">
 function deleteNews() {
-	var q = "newsNum=${dto.newsNum}&${query}";
-	var url = "<%=cp%>/news/delete?" + q;
-
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
-		  	location.href=url;
-	}
+	<c:if test="${sessionScope.employee.dCode=='PR' || sessionScope.employee.empNo==dto.writer}">
+		var q = "newsNum=${dto.newsNum}&${query}";
+		var url = "<%=cp%>/news/delete?" + q;
+	
+		if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+			  	location.href=url;
+		}
+	</c:if>
+	<c:if test="${sessionScope.employee.dCode!='PR' && sessionScope.employee.empNo!=dto.writer}">
+		alert("권한이 없습니다.");
+	</c:if>
 }
 
 function updateNews() {
+	<c:if test="${sessionScope.employee.dCode=='PR' || sessionScope.employee.empNo==dto.writer}">
 	  var q = "newsNum=${dto.newsNum}&page=${page}";
 	  var url = "<%=cp%>/news/update?" + q;
 
 	  location.href=url;
-}  
+	 </c:if>
+	 <c:if test="${sessionScope.employee.dCode!='PR' && sessionScope.employee.empNo!=dto.writer}">
+		alert("권한이 없습니다.");
+	</c:if>
+} 
+
+function writeNews() {
+	<c:if test="${sessionScope.employee.dCode=='PR'}">
+		var url = "<%=cp%>/news/created";
+		location.href=url;
+	</c:if>
+
+	<c:if test="${sessionScope.employee.dCode!='PR'}">
+		alert("권한이 없습니다.");
+	</c:if>
+}
 	  
 function ajaxJSON(url, method, query, fn) {
 	$.ajax({
@@ -126,6 +147,8 @@ $(function(){
 		ajaxJSON(url, "post", query, fn);		
 	});
 });
+		
+		
 
 </script>
 
@@ -140,8 +163,8 @@ $(function(){
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div class="leftside">	        	
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="fas fa-marker"></i></button>
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/list';"><i class="fas fa-list"></i></button>	
+	       		<button class="leftsidebtn" type="button" onclick="writeNews();"><i class="fas fa-marker"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/list?${query}';"><i class="fas fa-list"></i></button>	
 	       </div>   
 	       	
         </div>
@@ -151,12 +174,12 @@ $(function(){
 				<tr align="left" height="40"  > 
 				      <td class="typeTd" colspan="2">
 				      
-				      <c:if test="${sessionScope.employee.name == dto.name}">			      	 
+				      <c:if test="${sessionScope.employee.empNo == dto.writer || sessionScope.employee.dCode=='PR'}">			      	 
 				      	<button type="button" class="articlebtn" onclick="updateNews();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
 				      	<button type="button" class="articlebtn" onclick="deleteNews();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
 				 	  </c:if>	
 				 	  
-				 	   <c:if test="${sessionScope.employee.name != dto.name}">
+				 	   <c:if test="${sessionScope.employee.empNo != dto.writer && sessionScope.employee.dCode !='PR'}">
 						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -165,12 +188,19 @@ $(function(){
 				      </c:if>
 				 	  
 				 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				 		
-				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/news/article?${query}&newsNum=${nextReadDto.newsNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+				 		<c:if test="${not empty nextReadDto}">
+				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/news/article?${query}&newsNum=${nextReadDto.newsNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>	
+				      	</c:if>	
+				      	<c:if test="${empty nextReadDto}">
+				      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				      	</c:if>	
+				      	<c:if test="${not empty preReadDto}">
 				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/news/article?${query}&newsNum=${preReadDto.newsNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+				      	</c:if>	
 				      </td>
 				</tr>
 				<tr align="left" height="50"> 
@@ -192,27 +222,22 @@ $(function(){
 				   </td>
 				</tr>	
 			</table>
-			
 		<div>
 			<table class="replyTable">
-				<tr height='30'> 
-					<td class="replyTd" align='left'>
-					 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-					 </td>
-				</tr>
 				<tr>
-				   	<td style='padding:5px 5px 0px;'>
+					<td style='padding:5px 5px 0px;'>
 						<textarea class='replyArea' style="resize: none;"></textarea>
-				    </td>
+					</td>
 				</tr>
 				<tr>
-				   <td align='right'>
-				        <button type='button' class='btn btnSendReply'>댓글 등록</button>
-				    </td>
-				 </tr>
-			</table>  		
-		<div id="listReply"></div>	
-		</div>    
+					<td align='right'>
+						<button type='button' class='btn btnSendReply'>댓글 등록</button>
+					</td>
+				</tr>
+			</table> 
+		</div>	
+		
+		<div id="listReply"></div>	   
       </div>
     </div>
 </div>

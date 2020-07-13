@@ -338,8 +338,7 @@ $(function(){
 		}
 		
 		// 메시지 출력
-		if(uid==empNo) {
-			
+		if(uid==empNo) {		
 			out="<div class='my_message' style='clear: both; margin: 5px 5px;'>";
         	out+="	<div class='my-tooltip toolmsg' style='float: right; cursor: pointer;' >"+message+"</div>";
 			out+="	<div class='toolTime' style='float: right; font-size: 12px; margin: 20px 4px 0 0;'>"+dispTime+"</div>";
@@ -352,7 +351,7 @@ $(function(){
         	out+="	<div class='you-tooltip toolmsg' style='cursor: pointer; float: left;' >"+message+"</div>";
         	out+="	<div class='toolTime' style='float:left; font-size: 12px; margin: 20px 0 0 4px ;'>"+dispTime+"</div>";
 			out+="<div class='youChatImage'  style='clear:both; '>";
-			out+="<img src='<%=cp%>/uploads/profile/"+image+"'><span>"+empNo+"dTye"+name+"pType</span></div>";
+			out+="<img src='<%=cp%>/uploads/profile/"+image+"'><span>"+name+"</span></div>";
 			out += "</div>";
 		}
 		
@@ -378,7 +377,7 @@ $(function(){
 <div class="container">
 	<div class="board-container">
 	     <div class="body-title" >
-	         <h3><i class="far fa-comment-alt"></i> 채팅 </h3>
+	         <h3 style="font-size: 18px"><i class="far fa-comment-alt"></i> 채팅 </h3>
 	     </div>
 	     
 	     <div class="board-body" style="" >
@@ -392,7 +391,7 @@ $(function(){
 		                <span style="font-weight: 600;">＞</span>
 		                <span style="font-weight: 600; color: #424951;">사원목록</span>
 		            </div>
-		            <div id="guestListContainer"></div>
+		            <div id="guestListContainer" class="scrollStyle"></div>
 		        </div>
 		        
 		        <div style="float: left; width: 20px;">&nbsp;</div>
@@ -424,7 +423,7 @@ $(function(){
 		                 <span style="font-weight: 600;">＞</span>
 		                 <span style="font-weight: 600; color: #424951;">채팅 메시지</span>
 		             </div>
-		             <div id="chatMsgContainer">
+		             <div id="chatMsgContainer" class="scrollStyle">
 		             	<div class="backToChatroom"><i class="far fa-arrow-alt-circle-left"></i>뒤로</div>
 		             		<div class="chatting-content-list"></div>
 		             		<%-- <div class='my_message' style='clear: both; margin: 5px 5px;'>

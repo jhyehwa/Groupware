@@ -35,11 +35,19 @@
             f.nCode.focus();
             return false;
         }
+    	<c:if test="${sessionScope.employee.dCode!='PR'}">
+	    	alert("권한이 없습니다.");
+	    	return false;
+    	</c:if>
+    	
+    	<c:if test="${sessionScope.employee.dCode=='PR'}">
+	   		f.action="<%=cp%>/news/${mode}";
+	        return true;
 
-   		f.action="<%=cp%>/news/${mode}";
+    	</c:if>
 
-        return true;
     }
+    
 </script>
 
 <div class="container">
@@ -50,7 +58,7 @@
         
         <div class="board-body" style="float: left; width: 20%;">	      
 	        	<div style="margin-top: 20px; margin-left: 20px;">	        	
-	           		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/list';"><i class="fas fa-list"></i></button>
+	           		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/list"><i class="fas fa-list"></i></button>
 	           	</div>   
         </div> 
         

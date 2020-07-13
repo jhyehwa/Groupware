@@ -42,6 +42,19 @@
 		f.submit();
 	}
 	
+function writeNews() {
+	<c:if test="${sessionScope.employee.dCode=='PR'}">
+		var url = "<%=cp%>/news/created";
+		location.href=url;
+	</c:if>
+
+	<c:if test="${sessionScope.employee.dCode!='PR'}">
+		alert("권한이 없습니다.");
+	</c:if>
+}
+
+
+	
 </script>
 
 
@@ -55,15 +68,17 @@
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div style="margin-top: 20px; margin-left: 20px;">
-      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/news/created';"><i class="fas fa-pen-alt"></i> </button>
+      				<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="writeNews();"><i class="fas fa-pen-alt"></i> </button>
+
 	       	</div>	
+	       	
 	       	
 	       	<form name="searchForm"  action="<%=cp%>/news/list" method="post">
 	        	<div class="selectGroup">
 	        		  <select class="selectBox selectField" name="condition">			              
 			          	   <option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
 			               <option value="name" ${condition=="name"?"selected='selected'":""}>작성자</option>
-			               <option value="content" ${condition=="content"?"selected='selected'":""}>분류</option>
+			            <%--    <option value="content" ${condition=="content"?"selected='selected'":""}>분류</option> --%>
 			               <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 				      </select> 
 				      		<input type="hidden" name="rows" value="${rows}">

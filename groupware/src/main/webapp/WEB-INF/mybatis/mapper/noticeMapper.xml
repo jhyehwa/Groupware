@@ -19,7 +19,7 @@
 			DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 
 		</if>
 		<if test="condition=='writer' ">
-			writer=#{keyword}
+			name=#{keyword}
 		</if>
 		<if test="condition=='created' ">
 			( TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
@@ -74,7 +74,7 @@
 
 	<!-- 이전글 -->
 	<select id="preReadNotice" parameterType="map" resultType="com.of.notice.Notice">
-		SELECT noticeNum, title, dType, pType
+		SELECT noticeNum, name, title, dType, pType
 		FROM notice n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN history h ON h.empNo = e.empNo
@@ -92,7 +92,7 @@
 
     <!-- 다음글 -->
     <select id="nextReadNotice" parameterType="map" resultType="com.of.notice.Notice">
-		SELECT noticeNum, title, dType, pType
+		SELECT noticeNum, name, title, dType, pType
 		FROM notice n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN history h ON h.empNo = e.empNo
