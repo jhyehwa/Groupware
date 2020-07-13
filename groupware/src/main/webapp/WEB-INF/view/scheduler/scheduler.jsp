@@ -99,6 +99,20 @@
 	border-radius: 0px;
 }
 
+.ui-dialog-title {
+	font-size: 18px;
+}
+
+.ui-button.ui-corner-all.ui-widget {
+	border: 1px solid #cccccc;
+	font-size: 15px;
+	font-family: NanumSquareRound;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	margin-top: -5px;
+}
+
 .fc-content {
 	height: 17px;
 	line-height: 17px;
@@ -126,10 +140,10 @@
     background-color:black; border-color:black;
 }
 .btn-company {
-    background-color:#F3F781;; border-color:#F3F781;;
+    background-color:#F3F781; border-color:#F3F781; color: #484848;
 }
 .btn-company:hover, .btn-company:focus {
-    background-color:#F3F781;; border-color:#F3F781;;
+    background-color:#F3F781; border-color:#F3F781;
 }
 .btn-red {
     background-color: #F5A9A9; border-color:#F5A9A9;
@@ -152,6 +166,7 @@
 .ui-widget-content {
    /* border: none; */
    border-color: #cccccc; 
+   font-family: NanumSquareRound;
 }
 </style>
 
@@ -217,6 +232,10 @@ $(function() {
 			},
 			editable: true,
 			eventLimit: true,
+		/* 	events: {
+				title : "회사일정"
+				,text-color: "#484848"
+			}, */
 			events: function(start, end, timezone, callback){
 				// 캘린더가 처음 실행되거나 월이 변경되면
 				var startDate=start.format("YYYY-MM-DD");
@@ -337,8 +356,8 @@ function articleForm(calEvent) {
 		    	   $(this).dialog("close");
 		        }
 		  },
-		  height: 480,
-		  width: 550,
+		  height: 450,
+		  width: 450,
 		  title: "상세 일정",
 		  close: function(event, ui) {
 		  }
@@ -747,7 +766,7 @@ $(function(){
                                href="javascript:classification('all', 0);">전체일정</a>
                          <a class="hbtn" style="background: #D0A9F5;"
                                href="javascript:classification('#D0A9F5', 1);">개인일정</a>          
-                         <a class="hbtn" style="background: #F3F781;"
+                         <a class="hbtn" style="background: #F3F781; color: #484848;"
                                href="javascript:classification('#F3F781', 2);">회사일정</a>
                          <a class="hbtn" style="background: #F5A9A9;"
                                href="javascript:classification('#F5A9A9', 3);">부서일정</a>

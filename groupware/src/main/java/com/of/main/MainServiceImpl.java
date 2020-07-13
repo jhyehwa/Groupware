@@ -59,6 +59,17 @@ public class MainServiceImpl implements MainService {
 	}
 	
 	@Override
+	public void updateTodo2(int todoNum) throws Exception {
+		try {
+			dao.updateData("main.updateTodo2", todoNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
+	@Override
 	public List<Scheduler> listWeekScheduler(Map<String, Object> map) {
 		List<Scheduler> list =null;
 		try {
@@ -68,6 +79,8 @@ public class MainServiceImpl implements MainService {
 		}	
 		return list;
 	}
+
+	
 	
 	
 	

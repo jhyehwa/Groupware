@@ -81,23 +81,33 @@ ul.tabs li.active{
 	text-align: center;
 }
 
+.leftMenuDIV {
+	border-top: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	width: 250px;
+	margin-top: 15px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+
+
 /*왼쪽메뉴 출력*/
 .leftMenu tr{
 	/* background:#F6EBF4;  */
 	margin: 10px auto;
-	
-	
+	margin-top: 5px;
 }
-
 
 .leftMenu{
-	width: 200px;
-	margin-top:5px; 
+	width: 250px;
 	border-spacing: 0px; 
-
-	
-	
+	margin-top: 10px;
 }
+
+.leftMenu td {
+	color: #585858;
+}
+
 
 
 
@@ -264,4 +274,14 @@ input:hover, input:focus, input:active{
 	background: transparent;
 }
 .btn i{font-size: 25px;}	
+
+.todayMenu {
+	width: 250px; 
+	margin-top:5px; 
+	margin-bottom:5px; 
+	padding-bottom:10px;
+	border-spacing: 0px; 
+	border-top: 1px solid #cccccc; 
+	border-bottom: 1px solid #cccccc; 
+}
 

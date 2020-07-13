@@ -18,7 +18,7 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">제&nbsp;&nbsp;목</td>
 		      <td> 
-                     <input name='title' type='text' class='boxTF' style="width:98%;" placeholder='제목'>
+                     <input name='title' type='text' class='boxTF' style="width:98%; border:none; border-bottom: 1px solid #cccccc; padding-bottom: 5px;" placeholder='일정명'>
               </td>
 	  </tr>
 
@@ -32,7 +32,7 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">일정분류</td>
 		      <td> 
-		        	<select name='category' class='selectField'>
+		        	<select name='category' class='selectField' style="border: 1px solid #cccccc; padding: 2px; padding-bottom: 5px; border-radius: 4px;">
 	                     <option value='#D0A9F5' ${dto.category=='#D0A9F5'?"selected='selected'":""}> 개인일정 </option>
 	                     <option value='#F3F781' ${dto.category=='#F3F781'?"selected='selected'":""}> 회사일정 </option>
 	                     <option value='#F5A9A9' ${dto.category=='#F5A9A9'?"selected='selected'":""}> 부서일정 </option>
@@ -51,7 +51,7 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">시작일자</td>
 		      <td> 
-		        	<input name="startDate" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px;" placeholder="시작날짜">
+		        	<input name="startDate" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px; border: 1px solid #cccccc; padding: 2px; padding-bottom: 5px; padding-left: 7px; border-radius: 4px;" placeholder="시작날짜">
 		        	<input id="startTime" name="startTime" type="text" class="boxTF" style="width: 120px;" placeholder="시작시간">
 		      </td>
 	  </tr>
@@ -59,7 +59,7 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">종료일자</td>
 		      <td> 
-		        	<input name="endDate" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px;" placeholder="종료날짜">
+		        	<input name="endDate" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px; border: 1px solid #cccccc; padding: 2px; padding-bottom: 5px; padding-left: 7px; border-radius: 4px;" placeholder="종료날짜">
 		        	<input id="endTime" name="endTime" type="text" class="boxTF" style="width: 120px;" placeholder="종료시간">
 		      </td>
 	  </tr>
@@ -67,7 +67,7 @@ $(function() {
 	  <tr> 
 		      <td width="100" style="font-weight:600; padding-right:15px; padding-top:5px; text-align: right;" valign="top">내&nbsp;&nbsp;용</td>
 		      <td valign="top" style="padding:5px 0px 5px 0px;"> 
-		           <textarea name="content" cols="50" rows="3" class="boxTA" style="width:97%; height: 60px;"></textarea>
+		           <textarea name="content" cols="50" rows="3" class="boxTA" style="width:97%; height: 60px; border: 1px solid #cccccc; border-radius: 4px; padding: 2px; padding-top: 5px; padding-left: 7px;"></textarea>
 		           <input type="hidden" name="schNum" value="0">
 		      </td>
 	  </tr>

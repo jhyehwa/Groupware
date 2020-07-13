@@ -18,11 +18,12 @@
 } --%>
 
 .ui-dialog-title {
-	padding-left: 7px;
+	padding-left: 17px;
 	text-align: center;
-	border-bottom: 1px solid #cccccc;
+	border-bottom: 1px solid ;
 	font-weight: bold;
 	font-size: 18px;
+	color: #2E2E2E;
 }
 
 </style>
@@ -58,8 +59,8 @@ $(function(){
 	$("#largeCalendar .textDate").each(function (i) {
         var s=$(this).attr("data-date");
         if(s==today) {
-    /*         $(this).parent().css("border-top", "1px solid #D0A9F5"); 
-            $(this).parent().css("border-bottom", "1px solid #D0A9F5");  */
+	        $(this).parent().css("background", "#E6E0F8"); 
+        /*    $(this).parent().css("border-bottom", "1px solid #D0A9F5");  */
         /* 	$(this).parent().css("border-radius", "4px"); */
         }
     });
@@ -171,8 +172,8 @@ function check() {
 
  $(function(){			
 	 $(".foodSubject:contains('DINNER')").css("color", "#632A7E");
-	 $(".foodSubject:contains('LUNCH')").css("color", "#9153B2");
-	 $(".foodSubject:contains('SNACK')").css("color", "#9879A9");
+	 $(".foodSubject:contains('LUNCH')").css("color", "#975A97");
+	 $(".foodSubject:contains('SNACK')").css("color", "#A13297");
 	 
 /* 	 $(".foodSubject:contains('DINNER')").css("border-left", "1.5px solid #632A7E");
 	 $(".foodSubject:contains('LUNCH')").css("border-left", "1.5px solid #9153B2");
@@ -193,6 +194,7 @@ $(function(){
 			  height: 550,
 			  width: 450,
 			  title: date+'일 식단',
+			  resizable: false,
 			  
 			  close: function(event, ui) {
 			  },
@@ -232,15 +234,69 @@ function deleteOk(num) {
 </script>
 <div class="container">	
 	<div class="board-container" style="margin-left: 200px;">
-	  	<div class="body-title" style="margin-bottom: 15px; margin-left: 50px;" align="left">
+	  	<div class="body-title" style="margin-bottom: 15px; margin-left: 40px;" align="left">
        		 <p style="font-size: 22px; font-weight: bold; padding-top: 10px;"><i class="fas fa-utensils"></i>&nbsp;&nbsp;월간 식단표 </p>
    		 </div>  
 	    
-    	<div class="board-body " style="float: left; width: 20%;">	      
-	       	
+    	<div class="board-body " style="float: left; width: 20%;">	     
+    	 
+	       	  <div style="margin: 70px 0 0 20px; ">
+              <table class="todayMenu">     
+               <!--   <tr>
+                    <td class="titleBtn" >                                           
+                       <button type="button" class="titleBtn" disabled="disabled"; ></button>
+                       <i  class="fas fa-utensils"></i>
+                       
+                    </td>                 
+                 </tr> -->
+                 
+                 <tr>
+                    <td style="text-align: center;">
+                       <p>&nbsp;</p>
+                       <p style="font-size: 20px; font-weight: 700; color: #545454; "><i class="fas fa-concierge-bell"></i> &nbsp;오늘의 메뉴</p>   
+                       <p>&nbsp;</p>
+                       <p>${todayYear}년 ${todayMonth}월  ${todayDate}일 </p>
+                    </td>
+                 </tr>
+              </table>
+              
+              <c:if test="${list.size()==0}">
+            <table class="leftMenu" style="margin-top: 50px">
+               <tr height="35" style="border:1px solid MISTYROSE; background: transparent;">
+                  <td align="center">등록된 식단이 없습니다.</td>
+               </tr>
+            </table>
+            </c:if>
+            
+            <div class="leftMenuDIV">
+	            <c:forEach var="dto" items="${list}">
+	            <table class="leftMenu">
+	               <tr height="35">
+	                  <td style="text-align: left;  padding-left: 20px;  padding-bottom: 5px; ">
+	                     <p style="font-size:18px; font-weight: 700;">
+	                     <c:choose>
+	                         <c:when test="${dto.subject=='LUNCH'}"><i class="fas fa-utensil-spoon"></i>&nbsp;&nbsp;점심</c:when>
+	                         <c:when test="${dto.subject=='DINNER'}"><i class="fas fa-utensil-spoon"></i>&nbsp;&nbsp;저녁</c:when>
+	                      <c:otherwise><i class="fas fa-cookie-bite"></i>&nbsp;&nbsp;간식</c:otherwise>
+	                      </c:choose>
+	                      
+	                     </p>
+	                  </td>
+	               </tr>
+	               <tr>
+	                  <td style="text-align: ; margin-top: 5px;">
+	                     <p style="text-align: ; padding-bottom: 10px; padding-left: 45px ">
+	                        <span style="font-size: 15px;">${dto.content}</span>
+	                     </p>
+	                  </td>
+	               </tr>
+	            </table>
+	            </c:forEach>   
+			</div>
+           </div>                    
         </div> 
 
-		   <div id="tab-content" style="padding-bottom:20px; float: left; margin-left: 300px;"> 		   
+		   <div id="tab-content" style="padding-bottom:20px; float: left; margin-left: 100px;"> 		   
 		   		<table style="width: 840px; margin:0px auto; border-spacing: 0;" >
 		   			<tr height="60">
 		   			     <td width="200">&nbsp;</td>

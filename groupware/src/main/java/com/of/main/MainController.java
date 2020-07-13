@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.of.buddy.BuddyService;
+import com.of.employee.EmployeeService;
 import com.of.employee.SessionInfo;
 import com.of.news.News;
 import com.of.news.NewsService;
@@ -49,6 +50,9 @@ public class MainController {
 	@Autowired
 	WorkTimeService wkService;
 	
+	@Autowired
+	EmployeeService empService;
+	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(
 			HttpSession session,
@@ -73,7 +77,13 @@ public class MainController {
 		map.put("offset", offset);
 		map.put("rows", 10);
 		
-		List<Notice> nlist = nservice.listNotice(map);		
+		List<Notice> nlist = nservice.listNotice(map);	
+		
+		for(Notice dto : nlist) {
+			if(dto.getTitle().length()>=15) {
+				dto.setTitle(dto.getTitle().substring(0, 15) + "…");
+			}
+		}
 		
 		// 소식 리스트
 		String newsUrl=cp+"/news/article?page=";
@@ -95,6 +105,9 @@ public class MainController {
 		
 		// 출퇴근 시각
 		WorkTime wk = wkService.toDayChekc(Integer.parseInt(info.getEmpNo()));
+		
+		// 사원 로그인 날짜 찍기
+		empService.updateLastLogin(empNo);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("nlist", nlist);
@@ -144,6 +157,19 @@ public class MainController {
 		
 		try {
 			service.updateTodo(todoNum);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value="/main/update2")
+	public String update2(
+			@RequestParam int todoNum
+			) throws Exception {
+		
+		try {
+			service.updateTodo2(todoNum);
 		} catch (Exception e) {
 		}
 		

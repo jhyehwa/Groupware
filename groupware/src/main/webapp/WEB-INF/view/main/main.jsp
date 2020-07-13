@@ -22,6 +22,21 @@
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/home.css" type="text/css">
 <script type="text/javascript">
+function sendTodo() {
+	var f = document.todoForm;
+	
+	var str = f.content.value;
+    if(!str) {
+        alert("할 일을 입력 해 주세요.");
+        f.content.focus();
+        return false;
+    }
+	
+	f.action="<%=cp%>/main/created";
+	
+	return true;
+}
+
 function updateTodo(num) {		
 	var q = "todoNum="+num;
 	var url = "<%=cp%>/main/update?" + q;
@@ -29,7 +44,16 @@ function updateTodo(num) {
 	if(confirm("할 일을 마치셨습니까? ")){
 	location.href=url;
 	}
+}
+
+function updateTodo2(num) {		
+	var q = "todoNum="+num;
+	var url = "<%=cp%>/main/update2?" + q;
+	
+	if(confirm("체크를 취소 하시겠습니까?")){
+	location.href=url;
 	}
+}
 
 function deleteTodo(num) {
 	var q = "todoNum="+num;
@@ -132,7 +156,7 @@ $(function(){
 	$(function(){							
 		calendar = $("#schedule-list").fullCalendar({						
 		timeZone: 'UTC',							
-		defaultView: 'listDay',							
+		defaultView: 'listDay',						
 		// customize the button names,							
 		// otherwise they'd all just say "list"							
  		views: {							
@@ -329,6 +353,7 @@ function printTalk(data) {
 	if(dataCount!=0) {
 		for(var idx=0; idx<data.list.length; idx++) {
 			var talkNum=data.list[idx].talkNum;
+			var pType = data.list[idx].pType;
 			var name=data.list[idx].name;
 			var writer=data.list[idx].writer;
 			var content=data.list[idx].content;
@@ -337,7 +362,7 @@ function printTalk(data) {
 			
 			out+="    <tr height='40'>";
 			if(image!=null){
-				out+="	<td style='font-size:16px; padding-top:10px'><img src='<%=cp%>/uploads/profile/"+image+"' style='width: 36px; height: 36px; margin: 0 5px 0 5px; border-radius: 18px; vertical-align:middle;'><a class='nameDropdown'>"+name+"</a>";
+				out+="	<td style='font-size:16px; padding-top:10px'><img src='<%=cp%>/uploads/profile/"+image+"' style='width: 36px; height: 36px; margin: 0 5px 0 5px; border-radius: 18px; vertical-align:middle;'><a class='nameDropdown'>"+name+pType+"</a>";
 				out+="	&nbsp;<i style='color:#F5A9A9' class='far fa-comment-dots'></i>&nbsp;&nbsp;"+content+"</td>";			
 			} else {
 				out+=" <td style='font-size:16px; line-height:35px;'><i class='far fa-user-circle' style='margin: 0 5px 0 5px ;'></i>"+name+"<i class='far fa-comment-dots'></i>"+content+"</td>";
@@ -503,15 +528,15 @@ function send(){
 					</table>
 				</div>
 				
-				<div class="enterTime">
-					<table style="width: 250px; height: 50px; margin: 0px auto; padding-top: 10px;">
+				<div class="enterTime" style="margin-left: 13px;">
+					<table style="width: 270px; height: 50px; margin: 0px auto; padding-top: 15px;">
 						<tr>
-							<td style="text-align: left; padding-bottom: 7px; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 출근 시간 </td>
+							<td style="text-align: left; padding-bottom: 7px; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> <i class="fas fa-walking"></i>&nbsp;<i class="fas fa-sign-in-alt"></i></td>
 							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockIn" class="clock">${wk.clockIn}</div> </td>
 							
 						</tr>
 						<tr>
-							<td style="text-align: left; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> 퇴근 시간</td>
+							<td style="text-align: left; padding-left: 10px; font-size: 17px; color: #6E6E6E;"> <i class="fas fa-sign-out-alt"></i>&nbsp;<i class="fas fa-running"></i></td>
 							<td style="text-align: right; padding-right: 20px; font-size: 17px; color: #6E6E6E;"> <div id="divClockOut" class="clock">${wk.clockOut}</div> </td>
 						</tr>
 					</table>
@@ -535,7 +560,7 @@ function send(){
 						<div class="todoContent">						
 												
 							<c:if test="${dto.checked == 1}">						
-								<i class="fas fa-clipboard-check" style="font-size: 18px;"></i> &nbsp;						
+								<button type="button" style="background: none; border: none;" onclick="updateTodo2(${dto.todoNum});"><i class="fas fa-clipboard-check" style="font-size: 18px;"></i></button> &nbsp;					
 								<input type="text" name="content" value="${dto.content}" style="border: none; text-decoration: line-through;" required="required" disabled="disabled">						
 							</c:if>	
 												
@@ -547,7 +572,7 @@ function send(){
 						</div>						
 						</td>						
 						<td style="font-size: 18px; text-align: center; border: none;">						
-							<button type="submit" style="background: none; border: none; color: #632A7E;">						
+							<button type="button" onclick="sendTodo();" style="background: none; border: none; color: #632A7E;">						
 							<i class="fas fa-check-square"></i></button>						
 							<button type="button" onclick="deleteTodo(${dto.todoNum});" style="background: none; border: none;">						
 							<i class="fas fa-trash-alt" style="color: #2E2E2E;"></i></button>						
@@ -592,7 +617,7 @@ function send(){
 			<div class="content-todayTalk" >
 				<div class="talk-container" >
 				    <div class="body-title">
-				        <h3><i class="far fa-edit"></i> TODAY TALK </h3>
+				        <p style="font-weight: 800; font-size: 18px;"><i class="far fa-edit"></i> TODAY TALK </p>
 				    </div>
 				    <div>
 			    		<form name="talkForm" method="post" action="">
@@ -601,11 +626,11 @@ function send(){
 			                       <textarea name="content" id="content" class="boxTF" style="display:block; width:460px; height:40px; padding: 6px 12px; box-sizing:border-box; resize: none;" required="required" placeholder="오늘의 한마디를 입력하세요..."></textarea>
 			                 	</div>
 			                 	<div style="text-align: right; padding-top: 10px;float: left;">
-			                      <a class="talkBtn" onclick="sendTalk();" ><i class="fas fa-paper-plane" style="font-size: 28px;"></i> </a>
+			                      <a class="talkBtn" onclick="sendTalk();" ><i class="fas fa-paper-plane" style="font-size: 27px; margin-top: 6px; margin-left: 5px;"></i> </a>
 			                 	</div>           
 			          	 	</div>
 			           </form>      	          
-				          <div id="listTalk"  style="height: 500px; overflow: auto; clear: both; background: white">
+				          <div id="listTalk"  style="height: 491px; overflow: auto; clear: both; background: white">
 				           	<table style='width: 95%; margin: 10px auto 10px; border-spacing: 0px;  border-collapse: collapse;'>                   	           
 					         <tbody id="listTalkBody"></tbody>
 					        </table>
@@ -706,7 +731,7 @@ function send(){
 			</div>	
 			<div class="mini-box">
 				<div class="mini-box-div1"> <a href="<%=cp%>/privateAddr/privateAddr"><span><i class="far fa-id-badge"></i></span> &nbsp;연락처 추가 </a></div>
-				<div class="mini-box-div2"> <span><i class="fas fa-comments"></i></span> &nbsp;채팅 </div>
+				<div class="mini-box-div2"> <a href="<%=cp%>/chat/main"><span><i class="fas fa-comments"></i></span> &nbsp;채팅</a></div>
 				<div class="mini-box-div1"> <a href="<%=cp%>/buddy/created"><span><i class="fas fa-envelope"></i></span> &nbsp;메일 전송 </a></div>
 				<div class="mini-box-div2"> <a href="<%=cp%>/sign/created"><span><i class="fas fa-signature"></i></span> &nbsp;전자 결재</a> </div>
 			</div>		
@@ -729,7 +754,6 @@ function send(){
 	<div class="checkBtn">
 		<form method="POST" id="sendForm" name="sendForm">
 			<button type="button" class="sendBtn" onclick="send();">등록</button>
-			<button type="button" class="sendBtns" onclick="sendOut();">외근</button>
 		</form>
 	</div>
 </div>

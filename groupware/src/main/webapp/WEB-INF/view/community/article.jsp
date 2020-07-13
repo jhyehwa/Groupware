@@ -329,9 +329,20 @@ $(function(){
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		
-			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
-			      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
-			     
+			 		<c:if test="${not empty nextReadDto.commuNum && not empty preReadDto.commuNum}">
+			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			      	</c:if>
+			      	
+			      	<c:if test="${not empty preReadDto.commuNum && empty nextReadDto.commuNum}">
+			      		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${preReadDto.commuNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+			     	</c:if>
+			     	
+			     	<c:if test="${empty preReadDto.commuNum && not empty nextReadDto.commuNum}">
+			      		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/community/article?${query}&commuNum=${nextReadDto.commuNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+			     	</c:if>
 			      </td>
 			</tr>		 		
 			 <tr align="left" height="50"> 
