@@ -96,18 +96,12 @@
 	
 	// 전체 메뉴
 	$(function(){
-		$("#aa").hide();
+		$("#pullMenu").hide();
 	});
 	
 	$(function(){
 		$("body").on("click", "#hMenu", function(){
-			$("#aa").slideToggle();
-		});
-	});
-	
-	$(function(){
-		$("body").on("click", ".pullMenu", function(){
-			$('dept1').slideDown(200);
+			$("#pullMenu").slideToggle();
 		});
 	});
 </script>
@@ -116,18 +110,15 @@
 .alertList {
 	background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
 }
-
-
 </style>
 
 <div class="header-top">
 	<div class="header-left">
 		<p style="margin: 2px 0 0 20px;">
 			<a href="<%=cp%>/main">
-			<span>
-			<img src="<%=cp%>/resource/images/logo3.png" width="120" height="60">
-			</span>
-			<!-- <span style="font-size: 28px; font-weight:900; color:GHOSTWHITE">AMPPER</span> -->
+				<span>
+				<img src="<%=cp%>/resource/images/logo3.png" width="120" height="60">
+				</span>
 			</a>
 		</p>
 	</div>
@@ -171,59 +162,65 @@
 	</div>
 	
 	<!-- header 메뉴 -->
-	<div id="aa" style="background: yellow; width: 1920px; top: 65px; position: absolute; z-index: 2;">
-		<div style="position: relative; background: aqua; width: 1520px; height: 300px; margin: 0px auto;" class="pullMenu">
-			<ul class="dept1" style="background: lime; height: 300px;">	
-				<li class="pullTitle" style="float: left; width: 217px; background: orange;">
-				<span style="font-size: 20px; width: 217px; background: skyblue;">주소록</span>
-					<ul class="submenu">
-						<li><i class="fas fa-briefcase"><a href="<%=cp%>/publicAddr/main">공용주소록</a></i></li>
-						<li><i class="far fa-address-book"><a href="<%=cp%>/privateAddr/main">개인주소록</a></i></li>
+	<div id="pullMenu" style="background: #F8EFFB; width: 1920px; top: 65px; position: absolute; z-index: 2;">
+		<div style="position: relative; width: 1661px; margin: 0px auto;" class="pullMenu">
+			<ul>	
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">주소록</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">
+						<li style="margin-bottom: 10px; margin-top: 5px;"><a href="<%=cp%>/publicAddr/main">&nbsp;공용주소록</a></li>
+						<li><a href="<%=cp%>/privateAddr/main">&nbsp;개인주소록</a></li>
 					</ul>
 				</li>
 
-				<li class="pullTitle" style="float: left; width: 217px; background: fuchsia;">
-				<span>메일</span>
-					<ul class="submenu">
-						<li><i class="fas fa-envelope"><a href="<%=cp%>/buddy/rlist">메일</a></i></li>
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">메일</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">
+						<li style="margin-bottom: 10px; margin-top: 5px;"><a href="<%=cp%>/buddy/rlist">&nbsp;받은 메일함</a></li>
+						<li style="margin-bottom: 10px;"><a href="<%=cp%>/buddy/slist">&nbsp;보낸 메일함</a></li>
+						<li><a href="<%=cp%>/buddy/keep">&nbsp;중요 보관함</a></li>
+						
+						
 					</ul>
 				</li>
 
-				<li class="pullTitle" style="float: left; width: 217px; background: gray;">
-				<span>전자결재</span>
-					<ul class="submenu">						
-						<li><i class="fas fa-file-signature"><a href="<%=cp%>/sign/mainList">전자결재</a></i></li>
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">전자결재</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">						
+						<li style="margin-bottom: 10px; margin-top: 5px;"><a href="<%=cp%>/sign/list?mode=1">&nbsp;결재 대기함</a></li>
+						<li style="margin-bottom: 10px;"><a href="<%=cp%>/sign/list?mode=2">&nbsp;수신 대기함</a></li>
+						<li><a href="<%=cp%>/sign/list?mode=3">&nbsp;결재 완료함</a></li>
+					</ul>
+				</li>
+				
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">근태</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">
+						<li style="margin-top: 5px;"><a href="<%=cp%>/workTime/main">&nbsp;근태관리</a></li>
 					</ul>
 				</li>
 
-				<li class="pullTitle" style="float: left; width: 217px; background: red;">
-				<span>캘린더</span>
-					<ul class="submenu">
-						<li><i class="fas fa-calendar-alt"><a href="<%=cp%>/scheduler/scheduler">일정</a></i></li>
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">캘린더</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">
+						<li style="margin-top: 5px;"><a href="<%=cp%>/scheduler/scheduler">&nbsp;일정 관리</a></li>
 					</ul>
 				</li>
 
-				<li class="pullTitle" style="float: left; width: 217px; background: silver;">
-				<span>게시판</span>
-					<ul class="submenu">
-						<li><i class="fas fa-users"><a href="<%=cp%>/community/list">커뮤니티</a></i></li>
-						<li><a href="<%=cp%>/notice/list">공지</a></li>
-						<li><a href="<%=cp%>/news/list">News</a></li>
-						<li><a href="<%=cp%>/food/month">식단표</a></li>
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">게시판</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">
+						<li style="margin-bottom: 10px; margin-top: 5px;"><a href="<%=cp%>/notice/list">&nbsp;공지</a></li>
+						<li style="margin-bottom: 10px;"><a href="<%=cp%>/news/list">&nbsp;News</a></li>
+						<li style="margin-bottom: 10px;"><a href="<%=cp%>/community/list">&nbsp;커뮤니티</a></li>
+						<li><a href="<%=cp%>/food/month">&nbsp;식단표</a></li>
 					</ul>
 				</li>
 			
-				<li class="pullTitle" style="float: left; width: 217px; background: gold;">
-				<span>근태</span>
-					<ul class="submenu">
-						<li><i class="fas fa-user-clock"><a href="<%=cp%>/workTime/main">근태관리</a></i></li>
-					</ul>
-				</li>
-			
-				<li class="pullTitle" style="float: left; width: 217px; background: olive;">
-				<span>자료실</span>
-					<ul class="submenu">
-						<li><i class="fas fa-download"><a href="<%=cp%>/data/list">자료실</a></i></li>
+				<li class="pullTitle" style="float: left; width: 217px; text-align: center; padding: 10px;">
+				<p style="font-size: 20px; width: 217px; height: 30px; border-bottom: 1px solid #632A7E; font-weight: bold;">자료실</p>
+					<ul class="submenu" style="font-size: 15px; padding: 5px;">
+						<li style="margin-top: 5px;"><a href="<%=cp%>/data/list">&nbsp;자료실</a></li>
 					</ul>
 				</li>
 			</ul>
