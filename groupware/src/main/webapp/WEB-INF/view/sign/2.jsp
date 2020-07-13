@@ -249,7 +249,7 @@ textarea {
 									<c:choose>
 								<c:when test="${dto.scurrStep > 3 }">
 									<span style=" position:absolute; z-index:200; top:38px; left:38px; ">${pempNo4.name}</span>
-									<span style="color: #E6E6E6; position:absolute; z-index:100; top:15px; left:27px; background-position: center center ; font-size: 20px;"><i class="far fa-check-circle fa-3x"></i></span>
+									<span style="color: #B7BDE2; position:absolute; z-index:100; top:15px; left:27px; background-position: center center ; font-size: 20px;"><i class="far fa-check-circle fa-3x"></i></span>
 								</c:when>
 								<c:otherwise>
 									<span>${pempNo4.name}</span>								
@@ -295,7 +295,7 @@ textarea {
 							<c:choose>
 								<c:when test="${dto.scurrStep > 2 }">
 									<span style=" position:absolute; z-index:200; top:38px; left:38px; ">${pempNo3.name}</span>
-									<span style="color: #E6E6E6; position:absolute; z-index:100; top:15px; left:27px; background-position: center center ; font-size: 20px;"><i class="far fa-check-circle fa-3x"></i></span>
+									<span style="color: #B7BDE2; position:absolute; z-index:100; top:15px; left:27px; background-position: center center ; font-size: 20px;"><i class="far fa-check-circle fa-3x"></i></span>
 								</c:when>
 								<c:otherwise>
 									<span>${pempNo3.name}</span>								
@@ -342,7 +342,7 @@ textarea {
 								<c:choose>
 								<c:when test="${dto.scurrStep > 1 }">
 									<span style=" position:absolute; z-index:200; top:38px; left:38px; ">${pempNo2.name}</span>
-									<span style="color: #E6E6E6; position:absolute; z-index:100; top:15px; left:27px; background-position: center center ; font-size: 20px;"><i class="far fa-check-circle fa-3x"></i></span>
+									<span style="color: #B7BDE2; position:absolute; z-index:100; top:15px; left:27px; background-position: center center ; font-size: 20px;"><i class="far fa-check-circle fa-3x"></i></span>
 								</c:when>
 								<c:otherwise>
 									<span>${pempNo2.name}</span>								
