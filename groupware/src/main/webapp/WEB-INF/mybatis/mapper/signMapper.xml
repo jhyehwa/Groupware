@@ -39,6 +39,7 @@
 		JOIN career c ON c.empNo = h.empNo
 		JOIN dept d ON d.dCode = h.dCode
 		JOIN position p ON p.pCode = h.pCode
+		WHERE enable = 1
 		ORDER BY dType ASC, h.pCode ASC
 	</select>
 
