@@ -7,6 +7,11 @@
 
 <table>
 	<thead id='listReplyHeader' style="margin: 20px auto 0px;">
+		<tr height='30'> 
+			<td class="replyTd" align='left'>
+				<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;${replyCount}
+			</td>
+		</tr>
 	</thead>
 	
 	<tbody id='listReplyBody'>

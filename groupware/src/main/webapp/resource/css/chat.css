@@ -4,6 +4,9 @@
 	margin: 0;
 	padding: 0;
 }
+#guestListContainer
+
+
 
 .body-title{
 	margin-left: 100px;
@@ -44,8 +47,21 @@
 	padding: 3px 0 3px 0;
 }
 
-
-
+/* 채팅창 */
+.board-body ::-webkit-scrollbar {
+  width: 10px;
+}
+.board-body ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.board-body ::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #9565A4;
+}
+.board-body ::-webkit-scrollbar-button {
+  width: 20px;
+  height: 10px;
+}
 
 #chatMsgContainer{
    clear:both;
@@ -61,6 +77,9 @@
    margin-bottom: 0px;
 }
 
+
+/* 사원리스트 */
+
 #guestListContainer{
 	clear:both;
 	width: 100%;
@@ -70,6 +89,8 @@
 	overflow-y:scroll;
     border: 1px solid #ccc;
 }
+
+
 
 #chatListContainer{
 	clear:both;
@@ -126,7 +147,7 @@
 	border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) #9565A4
 		rgba(255, 255, 255, 0);
 	top: 32px;
-	right:32px;
+	right:25px;
 	transform: rotate(180deg);
 }
 

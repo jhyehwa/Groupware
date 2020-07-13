@@ -15,8 +15,8 @@
 		<if test="condition=='content' ">
 			INSTR(content, #{keyword}) &gt; 0 
 		</if>
-		<if test="condition=='writer' ">
-			writer=#{keyword}
+		<if test="condition=='name' ">
+			name=#{keyword}
 		</if>
 		<if test="condition=='created' ">
 			( TO_CHAR(created, 'YYYY-MM-DD') = #{keyword}
@@ -103,7 +103,7 @@
 
 	<!-- 이전글 -->
 	<select id="preReadNews" parameterType="map" resultType="com.of.news.News">
-		SELECT newsNum, title, dType, pType
+		SELECT newsNum, name, title, dType, pType
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN newsType p ON n.nCode=p.nCode
@@ -122,7 +122,7 @@
 
     <!-- 다음글 -->
     <select id="nextReadNews" parameterType="map" resultType="com.of.news.News">
-		SELECT newsNum, title, dType, pType
+		SELECT newsNum, name, title, dType, pType
 		FROM news n
 		JOIN employee e ON n.writer=e.empNo
 		JOIN newsType p ON n.nCode=p.nCode

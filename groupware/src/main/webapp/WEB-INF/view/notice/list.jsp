@@ -11,6 +11,19 @@
 		var f=document.searchForm;
 		f.submit();
 	}
+
+    
+    function writeNotice() {
+    	<c:if test="${sessionScope.employee.dCode=='HR'}">
+    		var url = "<%=cp%>/notice/created";
+    		location.href=url;
+    	</c:if>
+
+    	<c:if test="${sessionScope.employee.dCode!='HR'}">
+    		alert("권한이 없습니다.");
+    	</c:if>
+    }
+    	  
 </script>
 
 <div class="container">
@@ -21,7 +34,7 @@
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div style="margin-top: 20px; margin-left: 20px;">
-      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/notice/created';"><i class="fas fa-pen-alt"></i> </button>
+      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="writeNotice();"><i class="fas fa-pen-alt"></i> </button>
 	       	</div>	
 	       	
 	       	<form name="searchForm"  action="<%=cp%>/notice/list" method="post">
@@ -70,8 +83,8 @@
 				      <td>${dto.listNum}</td>
 				      <td align="left" style="padding-left: 10px;">
 				           <a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.title}</a>
-				           <c:if test="${dto.gap < 1}">
-			               	<i class="fas fa-ad"></i>
+				           <c:if test="${dto.gap < 24}">
+			               	<img src="<%=cp%>/resource/images/new.png">
 			          	   </c:if>
 				      </td>
 				      <td>${dto.name}&nbsp;${dto.pType }</td>
@@ -90,8 +103,8 @@
 				</table>
 			</div>
 		 </div>	
-		<div class="board-body" style="width: 22%; float: left;" > 
-				<img src="<%=cp %>/resource/images/office.jpg" width="250" height="700">
+		<div class="board-body" style="width: 22%; float: left; padding-top: 30px" > 
+				<img src="<%=cp %>/resource/images/office.png" width=350" height="650">
 		</div>       
     </div>
 </div>

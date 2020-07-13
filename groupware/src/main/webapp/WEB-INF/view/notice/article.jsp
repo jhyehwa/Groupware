@@ -9,20 +9,45 @@
 
 <script type="text/javascript">
 function deleteNotice() {
-	var q = "noticeNum=${dto.noticeNum}&${query}";
-	var url = "<%=cp%>/notice/delete?" + q;
-
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
-		  	location.href=url;
-	}
+	<c:if test="${sessionScope.employee.dCode=='HR' || sessionScope.employee.empNo==dto.writer}">
+		var q = "noticeNum=${dto.noticeNum}&${query}";
+		var url = "<%=cp%>/notice/delete?" + q;
+	
+		if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+			  	location.href=url;
+		}		
+	</c:if>
+	
+	<c:if test="${sessionScope.employee.dCode!='HR' && sessionScope.employee.empNo!=dto.writer}">
+		alert("권한이 없습니다.");
+	</c:if>
 }
 
 function updateNotice() {
+	<c:if test="${sessionScope.employee.dCode=='HR' || sessionScope.employee.empNo==dto.writer}">
 	  var q = "noticeNum=${dto.noticeNum}&page=${page}";
 	  var url = "<%=cp%>/notice/update?" + q;
 
 	  location.href=url;
+	  
+	</c:if>
+		
+	<c:if test="${sessionScope.employee.dCode!='HR' && sessionScope.employee.empNo!=dto.writer}">
+		alert("권한이 없습니다.");
+	</c:if>
 }
+
+function writeNotice() {
+	<c:if test="${sessionScope.employee.dCode=='HR'}">
+		var url = "<%=cp%>/notice/created";
+		location.href=url;
+	</c:if>
+
+	<c:if test="${sessionScope.employee.dCode!='HR'}">
+		alert("권한이 없습니다.");
+	</c:if>
+}
+	  
 
 function ajaxJSON(url, method, query, fn) {
 	$.ajax({
@@ -140,8 +165,8 @@ $(function(){
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div class="leftside">	        	
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/notice/created';"><i class="fas fa-marker"></i></button>
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/notice/list';"><i class="fas fa-list"></i></button>	
+	       		<button class="leftsidebtn" type="button" onclick="writeNotice();"><i class="fas fa-marker"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';"><i class="fas fa-list"></i></button>	
 	       </div>   
 	       	
         </div>
@@ -151,12 +176,12 @@ $(function(){
 				<tr align="left" height="40"  > 
 				      <td class="typeTd" colspan="2">	
 				      
-				      <c:if test="${sessionScope.employee.name == dto.name}">		      	 
+				       <c:if test="${sessionScope.employee.empNo == dto.writer || sessionScope.employee.dCode=='HR'}">	      	 
 				      	<button type="button" class="articlebtn" onclick="updateNotice();"><i class="fas fa-edit"></i><span style="font-size: 13px;">수정</span></button>
 				      	<button type="button" class="articlebtn" onclick="deleteNotice();"><i class="far fa-trash-alt"></i> <span style="font-size: 13px;"> 삭제 </span></button>
 				      </c:if>
 				      
-				      <c:if test="${sessionScope.employee.name != dto.name}">
+				      <c:if test="${sessionScope.employee.empNo != dto.writer && sessionScope.employee.dCode !='HR'}">
 				       	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -165,12 +190,21 @@ $(function(){
 				      </c:if>
 				      
 				      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				 		
-				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+				 		<c:if test="${not empty nextReadDto}">
+				 		<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}';"><i class="fas fa-arrow-up"></i> <span style="font-size: 13px;"> 다음 </span></button>		
+				      	</c:if>	
+				      	<c:if test="${empty nextReadDto}">
+				      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				      	</c:if>	
+				      	<c:if test="${not empty preReadDto}">
 				      	<button type="button" class="articlebtn" onclick="javascript:location.href='<%=cp%>/notice/article?${query}&noticeNum=${preReadDto.noticeNum}';"><i class="fas fa-arrow-down"></i> <span style="font-size: 13px;"> 이전 </span></button>
+				      	</c:if>	
+				      	
+				      	
 				      </td>
 				</tr>
 				<tr align="left" height="50"> 
@@ -202,11 +236,6 @@ $(function(){
 			</table>
 		<div>
 			<table class="replyTable">
-				<tr height='30'> 
-					<td class="replyTd" align='left'>
-					 	<i class="fas fa-comment-alt"></i>&nbsp;&nbsp;${dto.replyCount}
-					 </td>
-				</tr>
 				<tr>
 				   	<td style='padding:5px 5px 0px;'>
 						<textarea class='replyArea' style="resize: none;"></textarea>

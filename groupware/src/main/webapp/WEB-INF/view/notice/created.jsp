@@ -55,11 +55,17 @@ $(function(){
             f.content.focus();
             return false;
         }
-
-   		f.action="<%=cp%>/notice/${mode}";
-
-        return true;
+        <c:if test="${sessionScope.employee.dCode!='HR'}">
+    	alert("권한이 없습니다.");
+    	return false;
+	</c:if>
+		
+        <c:if test="${sessionScope.employee.dCode=='HR'}">
+	   		f.action="<%=cp%>/notice/${mode}";
+	        return true;
+        </c:if>
     }
+
  
 </script>
 

@@ -92,6 +92,9 @@
 	 font-size: 16.5px;
 	 color:/*  DARKSLATEGRAY; */ white;
 }
+.fp-person p{
+	padding-bottom:5px;	
+}
 
 .fp-person i {
 	color: 9B9B9B;
