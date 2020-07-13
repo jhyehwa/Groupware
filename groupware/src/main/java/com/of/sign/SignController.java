@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -546,7 +547,22 @@ public class SignController {
 						model.addAttribute("pempNo4", pempNo4);
 					}
 					
-					listFile = service.listFile(Integer.parseInt(valueSnum));
+					if(listVal.equals("임시보관함")) {
+						if(dto.getSfSaveFilename()!=null) {
+							listFile = new ArrayList<Sign>();
+							String []s1 = dto.getSfSaveFilename().split(":::");
+							String []s2 = dto.getSfOriginalFilename().split(":::");
+
+							for(int i=0; i<s1.length; i++) {
+								Sign vo=new Sign();
+								vo.setSfSaveFilename(s1[i]);
+								vo.setSfOriginalFilename(s2[i]);
+								listFile.add(vo);
+							}
+						}
+					} else {
+						listFile = service.listFile(Integer.parseInt(valueSnum));
+					}
 					
 					if(option.equals("2")) {
 						String[] a1 = dto.getScontent().split("/");

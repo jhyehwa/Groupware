@@ -118,6 +118,10 @@
 	border-bottom: 1px solid #cccccc;
 }
 
+.workOther:focus{
+		border-bottom: 1px solid #9565A4;;
+}
+
 .detailedMonth {
 	margin-top: 15px;
 	padding-right: 10px;

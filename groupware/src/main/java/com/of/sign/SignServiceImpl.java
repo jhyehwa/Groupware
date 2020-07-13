@@ -411,6 +411,7 @@ public class SignServiceImpl implements SignService {
 	@Override
 	public void insertStorage(Sign dto, String pathname) throws Exception {
 		try {
+			String s1="", s2="";
 			if (!dto.getUpload().isEmpty()) {
 				for (MultipartFile mf : dto.getUpload()) {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);
@@ -418,11 +419,21 @@ public class SignServiceImpl implements SignService {
 						continue;
 
 					String originalFilename = mf.getOriginalFilename();
-
-					dto.setSfOriginalFilename(originalFilename);
-					dto.setSfSaveFilename(saveFilename);
+					
+					s1+=saveFilename+":::";
+					s2+=originalFilename+":::";
+					
 				}
 			}
+			
+			if(s1.length()>0) {
+				s1=s1.substring(0, s1.length()-3);
+				s2=s2.substring(0, s2.length()-3);
+			}
+			
+			dto.setSfSaveFilename(s1);
+			dto.setSfOriginalFilename(s2);
+			
 			dao.insertData("sign.insertStorage", dto);
 
 		} catch (Exception e) {

@@ -469,15 +469,6 @@ textarea {
 			</tr>
 		</c:if>
 		<c:if test="${modes == '임시보관함'}">
-			<tr>
-				<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
-				<td colspan="3" style="padding-left: 10px;" >
-					<a href="<%=cp%>/sign/download?sfNum=${dto.sfNum}">${dto.sfOriginalFilename}</a> 
-
-				</td>
-			</tr>
-		</c:if>
-		<c:if test="${mode == 'article'}">
 				<c:forEach var="vo" items="${listFile}">
 					<tr id="f${vo.sfNum}" height="40px;" style="border-bottom: 1px solid #cccccc;">
 					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
@@ -485,6 +476,16 @@ textarea {
 							<a href="<%=cp%>/sign/download?sfNum=${vo.sfNum}">${vo.sfOriginalFilename}</a> 
 							<input type="hidden" name="originals" value="${vo.sfOriginalFilename}">
 							<input type="hidden" name="saves" value="${vo.sfSaveFilename}">
+						</td>
+					</tr>
+				</c:forEach>
+		</c:if>
+		<c:if test="${mode == 'article' && modes != '임시보관함'}">
+				<c:forEach var="vo" items="${listFile}">
+					<tr id="f${vo.sfNum}" height="40px;" style="border-bottom: 1px solid #cccccc;">
+					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
+						<td colspan="4" style="padding-left:10px;">
+							<a href="<%=cp%>/sign/download?sfNum=${vo.sfNum}">${vo.sfOriginalFilename}</a> 
 						</td>
 					</tr>
 				</c:forEach>
