@@ -43,9 +43,28 @@ public class Sign {
 	
 	private List<MultipartFile> upload;
 	
+	private List<String> originals;
+	private List<String> saves;
+	
  
 	
 	
+	public List<String> getOriginals() {
+		return originals;
+	}
+
+	public void setOriginals(List<String> originals) {
+		this.originals = originals;
+	}
+
+	public List<String> getSaves() {
+		return saves;
+	}
+
+	public void setSaves(List<String> saves) {
+		this.saves = saves;
+	}
+
 	public int getpCode() {
 		return pCode;
 	}

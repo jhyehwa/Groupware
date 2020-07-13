@@ -473,6 +473,7 @@ textarea {
 				<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
 				<td colspan="3" style="padding-left: 10px;" >
 					<a href="<%=cp%>/sign/download?sfNum=${dto.sfNum}">${dto.sfOriginalFilename}</a> 
+
 				</td>
 			</tr>
 		</c:if>
@@ -482,6 +483,8 @@ textarea {
 					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
 						<td colspan="4" style="padding-left:10px;">
 							<a href="<%=cp%>/sign/download?sfNum=${vo.sfNum}">${vo.sfOriginalFilename}</a> 
+							<input type="hidden" name="originals" value="${vo.sfOriginalFilename}">
+							<input type="hidden" name="saves" value="${vo.sfSaveFilename}">
 						</td>
 					</tr>
 				</c:forEach>

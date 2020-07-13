@@ -127,7 +127,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void updateEmployee(Employee dto) throws Exception {
 
 		try {
-			dao.updateData("employee.updateEmployee1", dto);
+			if(dto.getEnterDate() != null) {
+				dto.setEnable(0);
+				dao.updateData("employee.updateEmployee1", dto);
+			}else {
+				dao.updateData("employee.updateEmployee1", dto);
+			}
+			
 			dao.updateData("employee.updateEmployee2", dto);
 			dao.updateData("employee.updateEmployee3", dto);
 		} catch (Exception e) {

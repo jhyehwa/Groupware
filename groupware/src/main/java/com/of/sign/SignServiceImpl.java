@@ -32,8 +32,16 @@ public class SignServiceImpl implements SignService {
 
 			dao.insertData("insertSign", dto);
 			dao.insertData("insertSignPermission", dto);
+			
 
-			if (!dto.getUpload().isEmpty() || dto.getUpload() != null) {
+			if (dto.getSaves() != null) {
+				for(int i = 0 ; i < dto.getSaves().size(); i++) {
+					dto.setSfSaveFilename(dto.getSaves().get(i));
+					dto.setSfOriginalFilename(dto.getOriginals().get(i));
+				
+					insertFile(dto);
+				}
+			} else if(dto.getUpload() != null && ! dto.getUpload().isEmpty()) {
 				for (MultipartFile mf : dto.getUpload()) {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);
 					if (saveFilename == null)
@@ -43,8 +51,8 @@ public class SignServiceImpl implements SignService {
 
 					dto.setSfOriginalFilename(originalFilename);
 					dto.setSfSaveFilename(saveFilename);
-					insertFile(dto);
 				}
+				insertFile(dto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

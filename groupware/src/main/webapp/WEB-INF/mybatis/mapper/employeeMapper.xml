@@ -55,6 +55,7 @@
 			<if test="keyword!=null and keyword !='' ">
 				<include refid="where-list"/>
 			</if>
+			AND enable = 1
 		</where>
 		ORDER BY employeeNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -118,8 +119,16 @@
 	
 	<!-- 사원 정보 수정 -->
 	<update id="updateEmployee1" parameterType="com.of.employee.Employee">
-		UPDATE employee SET name = #{name}, birth = #{birth}, tel = #{tel}, email = #{email}, addr = #{addr}
-		WHERE empNo = #{empNo}
+	<choose>
+		<when test="enable != 0">
+			UPDATE employee SET name = #{name}, birth = #{birth}, tel = #{tel}, email = #{email}, addr = #{addr}
+			WHERE empNo = #{empNo}
+		</when>
+		<otherwise>
+			UPDATE employee SET enable = #{enable}
+			WHERE empNo = #{empNo}
+		</otherwise>
+	</choose>
 	</update>
         
     <update id="updateEmployee2" parameterType="com.of.employee.Employee">
@@ -129,7 +138,7 @@
 	</update>
 	
 	<update id="updateEmployee3" parameterType="com.of.employee.Employee">
-		UPDATE career SET enterDate = #{enterDate},	exitDate = #{exitDate}
+		UPDATE career SET enterDate = #{enterDate},	exitDate = #{exitDate}, enterType = '퇴사'
         WHERE empNo = #{empNo}
 	</update>
 	
