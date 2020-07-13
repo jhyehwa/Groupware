@@ -8,8 +8,8 @@
 
 <div id="list-Box">		
 	<div id="speedInsertBox">
-		<label><button id="addrAdd"><i class="fas fa-plus">&nbsp;빠른 등록</i></button></label>&nbsp;&nbsp;
-		<label><button type="button" id="excelOut" onclick="javascript:location.href='<%=cp%>/privateAddr/excel';"><i class="fas fa-file-export">&nbsp;내보내기</i></button></label>
+		<label><button id="addrAdd"><i class="fas fa-plus"><span class="titleFont">&nbsp;&nbsp;빠른 등록</span></i></button></label>&nbsp;&nbsp;
+		<label><button type="button" id="excelOut" onclick="javascript:location.href='<%=cp%>/privateAddr/excel';"><i class="fas fa-file-export"><span class="titleFont">&nbsp;&nbsp;내보내기</span></i></button></label>
 	</div>
 	
 	<form name="addrAddForm" method="post">

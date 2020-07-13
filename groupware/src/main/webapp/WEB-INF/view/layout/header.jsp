@@ -75,13 +75,6 @@
 					$("#mainCnt").show();
 				}
 				
-				$(function(){
-					$("#newsCnt").on("click", ".newsClick", function(){
-						alert("aaaaa");
-						
-					});
-				});
-				
 			};
 			
 			var query = "";
@@ -100,12 +93,31 @@
 	$(function(){
 		$(".alertTable").hide();
 	});
+	
+	// 전체 메뉴
+	$(function(){
+		$("#aa").hide();
+	});
+	
+	$(function(){
+		$("body").on("click", "#hMenu", function(){
+			$("#aa").slideToggle();
+		});
+	});
+	
+	$(function(){
+		$("body").on("click", ".pullMenu", function(){
+			$('dept1').slideDown(200);
+		});
+	});
 </script>
 
 <style>
 .alertList {
 	background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
 }
+
+
 </style>
 
 <div class="header-top">
@@ -120,11 +132,11 @@
 		</p>
 	</div>
 	<div class="header-right">
-		<div class="header-menu">
+		<div class="header-menu" style="position: relative;">
 			<c:if test="${not empty sessionScope.employee}">
-				<span style="color: white; margin-right: 10px; font-size: 15px;">${sessionScope.employee.name}님</span>
+				<span style="color: white; font-size: 15px; position: relative; left: -50px;">${sessionScope.employee.name}님</span>
 				<c:if test="${not empty sessionScope.employee.imageFilename}">
-					<a href="<%=cp%>/profile/list"><img src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}" style="width: 36px; height: 36px; margin-right: 5px; border-radius: 18px;"></a>
+					<a href="<%=cp%>/profile/list"><img src="<%=cp%>/uploads/profile/${sessionScope.employee.imageFilename}" style="width: 36px; height: 36px; margin-right: 5px; border-radius: 18px; position: absolute; left: 20px; top: 15px;"></a>
 				</c:if>
 				<c:if test="${empty sessionScope.employee.imageFilename}">
 					<a href="<%=cp%>"><i class="far fa-user-circle" style="margin-right: 5px;"></i></a> <!-- 프로필 -->
@@ -135,11 +147,11 @@
 			<!-- 알림 -->
 			<a href="#" id="headerAlert">
 				<i class="far fa-bell" style='position: relative; margin-left: 10px; margin-top: 10px;'>
-					<span id="mainCnt" style='top: -10px; right: -12px; position: absolute; background: #FFE641; color: #585858; width: 20px; height: 20px; border-radius: 50%; font-size: 16px; text-align: center; line-height: 20px;'></span>
+					<span id="mainCnt" style='position: absolute; top: -10px; right: -12px; background: #FFE641; color: #585858; width: 20px; height: 20px; border-radius: 50%; font-size: 16px; text-align: center; line-height: 20px;'></span>
 				</i>
 			</a>
 			&nbsp;
-			<a href="<%=cp%>/main"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
+			<a href="#" id="hMenu"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
 			&nbsp;
 			<c:if test="${sessionScope.employee.rCode == 'admin'}">
 				<a href="<%=cp%>/employee/list"><i class="fas fa-user-cog"></i></a> <!-- 관리자 -->
@@ -151,9 +163,70 @@
 		</div>
 	</div>
 	
+	<!-- 알림창 -->
 	<div class="alertTable" style="position: absolute; right: 30px; top: 65px;">
-		<div class="alertList" style="width: 250px; height: 220px;">
+		<div class="alertList" style="width: 250px; height: 220px; position: relative; z-index: 2;">
 			<span class="alertInfo"></span>
 		</div>
+	</div>
+	
+	<!-- header 메뉴 -->
+	<div id="aa" style="background: yellow; width: 1920px; top: 65px; position: absolute; z-index: 2;">
+		<div style="position: relative; background: aqua; width: 1520px; height: 300px; margin: 0px auto;" class="pullMenu">
+			<ul class="dept1" style="background: lime; height: 300px;">	
+				<li class="pullTitle" style="float: left; width: 217px; background: orange;">
+				<span style="font-size: 20px; width: 217px; background: skyblue;">주소록</span>
+					<ul class="submenu">
+						<li><i class="fas fa-briefcase"><a href="<%=cp%>/publicAddr/main">공용주소록</a></i></li>
+						<li><i class="far fa-address-book"><a href="<%=cp%>/privateAddr/main">개인주소록</a></i></li>
+					</ul>
+				</li>
+
+				<li class="pullTitle" style="float: left; width: 217px; background: fuchsia;">
+				<span>메일</span>
+					<ul class="submenu">
+						<li><i class="fas fa-envelope"><a href="<%=cp%>/buddy/rlist">메일</a></i></li>
+					</ul>
+				</li>
+
+				<li class="pullTitle" style="float: left; width: 217px; background: gray;">
+				<span>전자결재</span>
+					<ul class="submenu">						
+						<li><i class="fas fa-file-signature"><a href="<%=cp%>/sign/mainList">전자결재</a></i></li>
+					</ul>
+				</li>
+
+				<li class="pullTitle" style="float: left; width: 217px; background: red;">
+				<span>캘린더</span>
+					<ul class="submenu">
+						<li><i class="fas fa-calendar-alt"><a href="<%=cp%>/scheduler/scheduler">일정</a></i></li>
+					</ul>
+				</li>
+
+				<li class="pullTitle" style="float: left; width: 217px; background: silver;">
+				<span>게시판</span>
+					<ul class="submenu">
+						<li><i class="fas fa-users"><a href="<%=cp%>/community/list">커뮤니티</a></i></li>
+						<li><a href="<%=cp%>/notice/list">공지</a></li>
+						<li><a href="<%=cp%>/news/list">News</a></li>
+						<li><a href="<%=cp%>/food/month">식단표</a></li>
+					</ul>
+				</li>
+			
+				<li class="pullTitle" style="float: left; width: 217px; background: gold;">
+				<span>근태</span>
+					<ul class="submenu">
+						<li><i class="fas fa-user-clock"><a href="<%=cp%>/workTime/main">근태관리</a></i></li>
+					</ul>
+				</li>
+			
+				<li class="pullTitle" style="float: left; width: 217px; background: olive;">
+				<span>자료실</span>
+					<ul class="submenu">
+						<li><i class="fas fa-download"><a href="<%=cp%>/data/list">자료실</a></i></li>
+					</ul>
+				</li>
+			</ul>
+		</div>	
 	</div>
 </div>

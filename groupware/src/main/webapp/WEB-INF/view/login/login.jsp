@@ -45,7 +45,7 @@ function sendLogin() {
 				
 				<div class="div">
 					<h5>User</h5>
-					<input type="text" class="input" name="empNo" autocomplete="off">				
+					<input type="text" class="input" name="empNo" autocomplete="off" style="CURSOR:hand;" title="사번은 5자리입니다.">				
 				</div>
 			</div>
 			
@@ -66,7 +66,7 @@ function sendLogin() {
 		</c:if>
 	</div>
 	
-	<div style="background: red; font-size: 20px; text-align: center;">
+	<div style="font-size: 20px; text-align: center; height: 70px; padding-top: 30px;">
 		${message}
 	</div>
 </div>

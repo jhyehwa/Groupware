@@ -201,12 +201,12 @@
 		$("body").on("click", ".all", function(){
 			
 			var f = document.privateAddrSearchForm;
-			f.condition.value="name";
+			f.condition.value="all";
 			f.keyword.value="";
 			f.kor.value="";
 			f.kor2.value="";
 			
-			$("#condition").val("name");
+			$("#condition").val("all");
 			$("#keyword").val("");
 			
 			listPage(1);
@@ -220,9 +220,9 @@
 			var kor2 = $(this).next().attr("data-kor");
 			
 			var f = document.privateAddrSearchForm;
-			f.condition.value="name";
+			f.condition.value="all";
 			f.keyword.value="";
-			$("#condition").val("name");
+			$("#condition").val("all");
 			$("#keyword").val("");
 			
 			f.kor.value=kor;
@@ -256,7 +256,7 @@
 <div class="container">
 	<div id="list-container">
 		<div id="body-title">
-			<i class="fas fa-map-pin"> 개인주소록 |<span id="privateAddr-count">${dataCount}개</span></i>
+			<i class="fas fa-map-pin"><span class="titleFont"> 개인주소록 |<span id="privateAddr-count">&nbsp;${dataCount}개</span></span></i>
 		</div>
 	
 		<div id="listBtnBox">
@@ -268,6 +268,7 @@
 			<form name="searchForm" action="<%=cp%>/privateAddr/main" method="post">
 				<div class="selectGroup-list">
 					<select name="condition" id="condition" class="selectBox-list">
+						<option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
 						<option value="name" ${condition=="name"?"selected='selected'":""}>이름</option>
 						<option value="tel" ${condition=="tel"?"selected='selected'":""}>전화번호</option>
 						<option value="company" ${condition=="company"?"selected='selected'":""}>회사명</option>

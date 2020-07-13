@@ -92,6 +92,7 @@
 			$('#tel')[0].setSelectionRange(len, len);
 			
 		});
+		
 		$('#button_on4').click(function() {
 			$("input[name=company]").prop('disabled', false).css('border-bottom', '2px solid #B336ED');
 			var len = $('#company').val().length;

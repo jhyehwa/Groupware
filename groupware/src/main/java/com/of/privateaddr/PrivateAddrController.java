@@ -254,9 +254,7 @@ public class PrivateAddrController {
 	}
 
 	@RequestMapping(value = "/privateAddr/update", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> updateSubmit(PrivateAddr dto, HttpSession session) throws Exception {
-		String state = "true";
+	public String updateSubmit(PrivateAddr dto, @RequestParam String page, HttpSession session) throws Exception {
 		
 		try {
 			SessionInfo info = (SessionInfo) session.getAttribute("employee");
@@ -273,13 +271,10 @@ public class PrivateAddrController {
 
 			service.updatePrivateAddr(dto);
 		} catch (Exception e) {
-			state = "false";
+			e.printStackTrace();
 		}
-		
-		Map<String, Object> model = new HashMap<>();
-		model.put("state", state);
 
-		return model;
+		return "redirect:/privateAddr/main?page=" + page;
 	}
 
 	// ---------------------------------------------------------------------------------------------

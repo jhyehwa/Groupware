@@ -13,12 +13,16 @@
 	/* background: lime; */
 }
 
+.titleFont {
+	 font-family: NanumSquareRound;
+}
+
 #privateAddr-count {
 	float: right;
-	width: 35px;
+	width: 45px;
 	height: 20px;
 	text-align: center;
-	padding-top: 4px;
+	padding-top: 3px;
 	color: gray;
 	font-size: 15px;
 	/* background: orange; */

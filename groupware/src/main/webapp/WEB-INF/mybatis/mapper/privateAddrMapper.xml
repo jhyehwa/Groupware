@@ -65,11 +65,18 @@
 	
 	<!-- 개인 개인주소록 검색 리스트 -->
 	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(name,#{keyword}) &gt; 0 
+			OR REPLACE(tel, '-', '') like '%' ||  #{keyword} || '%'
+			OR INSTR(company,#{keyword}) &gt; 0
+			OR INSTR(groupType,#{keyword}) &gt; 0)
+		</if>
 		<if test="condition=='name'">
 			INSTR(name, #{keyword}) &gt; 0
 		</if>
 		<if test="condition=='tel'">
-			INSTR(tel, #{keyword}) &gt; 0
+			<!-- INSTR(tel, #{keyword}) &gt; 0 -->
+			REPLACE(tel, '-', '') like '%' ||  #{keyword} || '%'
 		</if>
 		<if test="condition=='company'">
 			INSTR(company, #{keyword}) &gt; 0

@@ -175,7 +175,7 @@ public class EmployeeController {
 	// 로그인
 	@RequestMapping(value = "/login/login", method = RequestMethod.GET)
 	public String loginForm() {
-		return ".login.login";
+		return "/login";
 	}
 
 	@RequestMapping(value = "/login/login", method = RequestMethod.POST)
@@ -184,8 +184,8 @@ public class EmployeeController {
 		Employee dto = service.loginEmployee(empNo);
 
 		if (dto == null || !pwd.equals(dto.getPwd())) {
-			model.addAttribute("message", "사번 또는 비밀번호가 일치하지 않습니다.");
-			return ".login.login";
+			model.addAttribute("message", "사번 또는 비밀번호가 일치하지 않습니다.<p style='margin-top: 10px;'>다시 로그인 해주세요.</p>");
+			return "login/login";
 		}
 
 		SessionInfo info = new SessionInfo();

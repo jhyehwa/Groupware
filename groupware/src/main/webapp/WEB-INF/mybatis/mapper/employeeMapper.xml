@@ -129,7 +129,7 @@
 	</update>
 	
 	<update id="updateEmployee3" parameterType="com.of.employee.Employee">
-		UPDATE career SET enterDate = #{enterDate}, exitDate = #{exitDate}
+		UPDATE career SET enterDate = #{enterDate},	exitDate = #{exitDate}
         WHERE empNo = #{empNo}
 	</update>
 	
@@ -154,6 +154,4 @@
 		ORDER BY DECODE(dType, '대표이사', 0, '개발부', 1, '경영지원부', 2, '기획부', 3, '인사부', 4, '홍보부', 5,6), 
 			DECODE(pType, '대표이사', 0, '부사장', 1, '이사', 2, '부장', 3, '차장', 4, '과장', 5, '대리', 6,  '사원',7,8)
 	</select>
-	
-	
 </mapper>

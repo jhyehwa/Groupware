@@ -8,7 +8,7 @@
 
 <div id="list-Box">
 	<div id="speedInsertBox">
-		<label><button type="button" id="excelOut" onclick="javascript:location.href='<%=cp%>/publicAddr/excel';"><i class="fas fa-file-export">&nbsp;내보내기</i></button></label>
+		<label><button type="button" id="excelOut" onclick="javascript:location.href='<%=cp%>/publicAddr/excel';"><i class="fas fa-file-export"><span class="titleFont">&nbsp;내보내기</span></i></button></label>
 	</div>
 	
 	<form name="addrAddForm" method="post">

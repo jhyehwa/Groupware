@@ -70,7 +70,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 					uri+="?"+queryString;
 				}
 				session.setAttribute("preLoginURI", uri);		// 세션에 저장
-				response.sendRedirect(cp+"/login");
+				response.sendRedirect(cp+"/login/login");
 			}
 			
 			

@@ -44,14 +44,29 @@
 	
 	<!-- 사원 리스트 검색 -->
 	<sql id="where-list">
+		<if test="condition=='all' ">
+			(INSTR(name, #{keyword}) &gt; 0 
+			OR TO_CHAR(birth, 'YYYY-MM') = #{keyword}
+            OR TO_CHAR(birth, 'YYYY-MM-DD') = #{keyword}
+            OR TO_CHAR(birth, 'YYYY') = #{keyword}
+            OR TO_CHAR(birth, 'YYYYMM') = #{keyword}
+            OR TO_CHAR(birth, 'YYYYMMDD') = #{keyword}
+			OR REPLACE(tel, '-', '') like '%' ||  #{keyword} || '%'
+			OR INSTR(dType, #{keyword}) &gt; 0
+			OR INSTR(pType, #{keyword}) &gt; 0)
+		</if>
 		<if test="condition=='name' ">
 			INSTR(name, #{keyword}) &gt; 0
 		</if>
 		<if test="condition=='birth' ">
-			TO_CHAR(birth, 'YYYY') = #{keyword}
+			( TO_CHAR(birth, 'YYYY-MM') = #{keyword}
+                OR TO_CHAR(birth, 'YYYY-MM-DD') = #{keyword}
+                OR TO_CHAR(birth, 'YYYY') = #{keyword}
+                OR TO_CHAR(birth, 'YYYYMM') = #{keyword}
+                OR TO_CHAR(birth, 'YYYYMMDD') = #{keyword} )
 		</if>
 		<if test="condition=='tel' ">
-			INSTR(tel, #{keyword}) &gt; 0
+			REPLACE(tel, '-', '') like '%' || #{keyword} || '%'
 		</if>
 		<if test="condition=='dType' ">
 			INSTR(dType, #{keyword}) &gt; 0 

@@ -198,10 +198,9 @@
 						</tr>
 
 						<c:if test="${list.size()==0}">
-							<tr>
-								<td class="board-paging" align="center" colspan="5">
-									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
+							<tr id="sList">
+								<td class="board-paging" align="center" colspan="6" style="cursor: pointer;">
+									<p style="text-align: center;">등록된 게시물이 없습니다.</p>
 								</td>
 							</tr>
 						</c:if>
@@ -254,7 +253,7 @@
 							<th width="100">결재상태</th>
 						</tr>
 						<c:if test="${rlist.size()==0}">
-							<tr id="sList" style="">
+							<tr id="sList">
 								<td class="board-paging" align="center" colspan="6" style="cursor: pointer;">
 									<p style="text-align: center;">등록된 게시물이 없습니다.</p>
 								</td>
@@ -312,9 +311,8 @@
 						</tr>
 						<c:if test="${flist.size()==0}">
 							<tr id="sList">
-								<td class="board-paging" align="center" colspan="6">
-									<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록된 게시물이 없습니다.</p>
+								<td class="board-paging" align="center" colspan="6" style="cursor: pointer;">
+									<p style="text-align: center;">등록된 게시물이 없습니다.</p>
 								</td>
 							</tr>
 						</c:if>
