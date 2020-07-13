@@ -98,20 +98,6 @@ function sendOut(){
 	f.submit();
 }
 
-function updateMemo(){
-	var f = document.updateForm;
-	
-	var str = f.other.value;
-	
-	if(!str){
-		alert("사유를 입력하세요.");
-		f.other.focus();
-		return;
-	}
-	
-	f.action="<%=cp%>/workTime/update";
-	f.submit();
-}
 
 function vacation(){
 	var f = document.vacationForm;
@@ -134,6 +120,19 @@ function vacation(){
 	
 	f.submit();
 }
+
+
+$("body").on("click", ".otherBtn", function(){
+	event.preventDefault();
+	var data = $(this).closest("form").find("input").val();
+	var workDate = $(this).closest("td").find("input[name=workDate]").val();
+	var url = "<%=cp%>/workTime/update?other="+data+"&workDate="+workDate;
+	
+	
+	ajaxGET(url, "GET", data);
+	return;
+});
+
 </script>
 
 <div class="container">
@@ -269,9 +268,10 @@ function vacation(){
 								<td>${dto.workCode}</td>
 								<td>${dto.ipAddr}</td>
 								<td>
-									<form method="post" id="updateForm" name="updateForm">
-										<input type="text" name="other" id="other" class="workOther" value="${dto.other}" placeholder="${dto.other}">
-										<button type="button" name="otherBtn" class="otherBtn" onclick="updateMemo()"> <i class="fas fa-plus"></i> </button>
+									<form method="post" name="updateForm">
+										<input type="text" name="other" class="workOther" value="${dto.other}" placeholder="${dto.other}">
+										<input type="hidden" name="workDate" class="workDate" value="${dto.workDate}">
+										<button type="button" name="otherBtn" class="otherBtn"> <i class="fas fa-plus"></i> </button>
 									</form>
 								</td>
 							</tr>
@@ -323,3 +323,4 @@ function vacation(){
 	</form>
   </div>
 </div>
+

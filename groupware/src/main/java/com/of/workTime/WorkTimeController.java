@@ -175,7 +175,6 @@ public class WorkTimeController {
 
 		String[] time = status.split(":");
 		int hour = Integer.parseInt(time[0]);
-		int min = Integer.parseInt(time[1]);
 
 		map.put("empNo", info.getEmpNo());
 		map.put("ipAddr", req.getRemoteAddr());
@@ -243,10 +242,8 @@ public class WorkTimeController {
 		case "work":
 			if (hour < 9) {
 				map.put("workCode", "A");
-			} else if (hour == 9 && min <= 30) {
-				map.put("workCode", "B");
 			} else {
-				map.put("workCode", "C");
+				map.put("workCode", "B");
 			}
 
 			service.outInsert(map);
@@ -258,7 +255,12 @@ public class WorkTimeController {
 			WorkTime wk = service.toDayChekc(Integer.parseInt(info.getEmpNo()));
 
 			if(hour < 18) {
-				map.put("workCode", "D");
+
+				if(wk.getWorkCode().equalsIgnoreCase("B")) {
+					
+				}else {
+					map.put("workCode", "D");
+				}
 			}else if(wk.getWorkCode().equalsIgnoreCase("A")){
 				map.put("workCode","F");
 			}else {
@@ -273,7 +275,8 @@ public class WorkTimeController {
 	
 	@RequestMapping(value="update")
 	public String update(
-			WorkTime dto,
+			String other,
+			String workDate,
 			HttpSession session,
 			Model model
 			) {
@@ -281,12 +284,11 @@ public class WorkTimeController {
 		Map<String, Object> map = new HashMap<>();
 		
 		try {
-			map.put("workMemo", dto.getOther());
 			
-			WorkTime wk = service.toDayChekc(Integer.parseInt(info.getEmpNo()));
+			map.put("workMemo", other);
 			
+			map.put("workDate", workDate);
 			
-			map.put("workDate", wk.getWorkDate().substring(0,10));
 			map.put("empNo", info.getEmpNo());
 			
 			service.otherMemo(map);
