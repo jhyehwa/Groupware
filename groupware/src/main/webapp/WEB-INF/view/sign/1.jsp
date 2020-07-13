@@ -32,7 +32,7 @@ textarea {
 	border-radius: 5px;
 }
 
-.body {
+.body { 
 	width: 100%;
 	margin-bottom: 10px;
 }

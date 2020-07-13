@@ -17,7 +17,7 @@
 	font-size: 13px;
 }
 
-input {
+input { 
 	border: 1px solid gray;
 	height: 30px;
 	padding-left: 10px;
