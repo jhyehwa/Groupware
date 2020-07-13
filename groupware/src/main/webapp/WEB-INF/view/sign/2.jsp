@@ -472,24 +472,25 @@ textarea {
 			</tr>
 		<c:if test="${mode != 'article'}">
 			<tr>
-					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
-				<td colspan="5">
-					<input type="file" id="upload" name="upload" style="padding-top: 13px; outline: 0; border: none;" multiple="multiple">
+				<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
+				<td colspan="3" style="padding-left: 10px;">
+					<input type="file" id="upload" name="upload" style="padding-top: 13px; border: none; outline: 0;" multiple="multiple">
 				</td>
 			</tr>
 		</c:if>
-		<c:if test="${mode == 'article' && modes == '임시보관함'}">
+		<c:if test="${modes == '임시보관함'}">
 			<tr>
-				<td style="background: #eee"><b>첨부</b></td>
-				<td colspan="3">
-					<input type="file" id="upload" name="upload" style="padding-top: 13px;" multiple="multiple">
+				<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
+				<td colspan="3" style="padding-left: 10px;" >
+					<a href="<%=cp%>/sign/download?sfNum=${dto.sfNum}">${dto.sfOriginalFilename}</a> 
 				</td>
 			</tr>
 		</c:if>
 		<c:if test="${mode == 'article'}">
 				<c:forEach var="vo" items="${listFile}">
 					<tr id="f${vo.sfNum}" height="40px;" style="border-bottom: 1px solid #cccccc;">
-						<td colspan="3" style="padding-left:10px;">
+					<td style="text-align:center; background: #DDDDDD;"><b>첨부</b></td>
+						<td colspan="4" style="padding-left:10px;">
 							<a href="<%=cp%>/sign/download?sfNum=${vo.sfNum}">${vo.sfOriginalFilename}</a> 
 						</td>
 					</tr>

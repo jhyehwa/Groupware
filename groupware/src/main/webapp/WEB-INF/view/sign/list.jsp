@@ -209,7 +209,6 @@
 	function deleteChk(){
 		var checkArr = [];
 		$("input[name=chkVal]:checked").closest("td").find("input[type=hidden]").each(function(i){
-			alert($(this).val());
 			checkArr.push($(this).val());
 		});
 		

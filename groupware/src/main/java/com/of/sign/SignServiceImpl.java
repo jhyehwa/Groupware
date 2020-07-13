@@ -33,7 +33,7 @@ public class SignServiceImpl implements SignService {
 			dao.insertData("insertSign", dto);
 			dao.insertData("insertSignPermission", dto);
 
-			if (!dto.getUpload().isEmpty()) {
+			if (!dto.getUpload().isEmpty() || dto.getUpload() != null) {
 				for (MultipartFile mf : dto.getUpload()) {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);
 					if (saveFilename == null)
@@ -414,10 +414,6 @@ public class SignServiceImpl implements SignService {
 					dto.setSfOriginalFilename(originalFilename);
 					dto.setSfSaveFilename(saveFilename);
 				}
-			}
-			if (dto.getSfOriginalFilename() == null && dto.getSfSaveFilename() == null) {
-				dto.setSfOriginalFilename("null");
-				dto.setSfSaveFilename("null");
 			}
 			dao.insertData("sign.insertStorage", dto);
 

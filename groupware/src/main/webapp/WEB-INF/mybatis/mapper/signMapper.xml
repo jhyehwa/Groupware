@@ -13,7 +13,7 @@
 
 	<insert id="insertSignFile" parameterType="com.of.sign.Sign">
 		INSERT INTO	signFile(sfNum, sNum, sfOriginalfilename, sfSavefilename)
-		VALUES( seq_signFile.NEXTVAL, #{snum}, #{sfOriginalFilename}, #{sfSaveFilename} )
+		VALUES( seq_signFile.NEXTVAL, #{snum}, #{sfOriginalFilename,jdbcType=VARCHAR}, #{sfSaveFilename,jdbcType=VARCHAR} )
 	</insert>
 
 	<insert id="insertSignPermission" parameterType="com.of.sign.Sign">
@@ -331,7 +331,7 @@
 	
 	<insert id="insertStorage" parameterType="com.of.sign.Sign">
 		INSERT INTO storage( sNum,	stNum, sDept, sDate, sSubject, sContent, empNo, sEndStep, sCurrStep, startDay, sfOriginalfilename, sfSavefilename ,pEmpNo2, pEmpNo3, pEmpNo4 )
-		VALUES( seq_storage.NEXTVAL, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay} ,#{sfOriginalFilename},	#{sfSaveFilename}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4} )
+		VALUES( seq_storage.NEXTVAL, #{stnum}, #{sdept} , SYSDATE, #{ssubject}, #{scontent}, #{empNo}, #{sendStep}, 1, #{startDay} ,#{sfOriginalFilename,jdbcType=VARCHAR},	#{sfSaveFilename,jdbcType=VARCHAR}, #{pEmpNo2},#{pEmpNo3},#{pEmpNo4} )
 	</insert>
 	
 	<select id="listStorage" parameterType="map" resultType="com.of.sign.Sign">

@@ -112,9 +112,16 @@ function check() {
 	var chk =  $("input:checkbox[id='sStorage']").is(":checked");
 	
 	if(chk){
-		f.action = "<%=cp%>/sign/storage?option="+option+"&storage="+storage;
-		f.submit();
-		return;
+		var conf = confirm("임시보관 하시겠습니까?");
+		
+		if(conf){
+			f.action = "<%=cp%>/sign/storage?option="+option+"&storage="+storage;
+			f.submit();
+			return;			
+		}else{
+			return;
+		}
+		
 	}
 	
 	if(! chk){
