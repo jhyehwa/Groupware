@@ -402,7 +402,7 @@ $(function(){
 		                 <span style="font-weight: 600; font-family:color: #424951;">채팅 목록</span>
 		             </div>
 		             <div id="chatListContainer" >
-		             	<table class="chatList"style="border-bottom: 3px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  display: none;" >
+		             	<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  display: none;" >
 							<tr>
 								<td class="room-image"rowspan="2" width="70" height="70"><i style='font-size: 60px;' class='fas fa-user-circle'></i></td>
 								<td class="chatting-room-name" ><p></p></td>
@@ -414,6 +414,79 @@ $(function(){
 								<td></td>
 							</tr>
 						</table>
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px; " >
+							<tr>
+								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/woobin.jpg"></td>
+								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;경영지원부 | 김우빈</p></td>
+								<td class="latestTime-smp" width="120"><p>목요일 오후 5:16</p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat-smp"><p>오늘 볼링 치러 갈래?</p></td>
+								<td></td>
+							</tr>
+						</table>
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  " >
+							<tr>
+								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/김다미.jpg"></td>
+								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;홍보부 | 김다미</p></td>
+								<td class="latestTime-smp" width="120"><p>수요일 오후 2:16</p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat-smp"><p>그래서 회식은 어디로 가나요?</p></td>
+								<td></td>
+							</tr>
+						</table>
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  " >
+							<tr>
+								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/박보검.jpg"></td>
+								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;개발부 | 박보검</p></td>
+								<td class="latestTime-smp" width="120"><p> 수요일 오후 2:11</p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat-smp"><p>자바 때리실?</p></td>
+								<td></td>
+							</tr>
+						</table>
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  " >
+							<tr>
+								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/서강준.jpg"></td>
+								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;홍보부 | 서강준</p></td>
+								<td class="latestTime-smp" width="120"><p>수요일 오후 1:54</p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat-smp"><p>오늘 점심 뭐먹었음?</p></td>
+								<td></td>
+							</tr>
+						</table>
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  " >
+							<tr>
+								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/서예지.jpg"></td>
+								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;인사부 | 서예지</p></td>
+								<td class="latestTime-smp" width="120"><p>화요일 오후 2:16</p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat-smp"><p>보고싶어~</p></td>
+								<td></td>
+							</tr>
+						</table>
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  " >
+							<tr>
+								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/한소희.jpg"></td>
+								<td class="chatting-room-name-smp"><p style="padding-left: 10px;">&nbsp;&nbsp;인사부 | 한소희</p></td>
+								<td class="latestTime-smp" width="120"><p>화요일 오전 10:57</p></td>
+								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+							</tr>
+							<tr>							
+								<td class="latestChat-smp"><p>보고싶어~</p></td>
+								<td></td>
+							</tr>
+						</table>
+
 		             </div>
 		        </div>
 
