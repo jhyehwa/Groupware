@@ -80,7 +80,7 @@ textarea {
 .rightMenu {
 	float: right;
 	width: 15%;
-	height: 140px;
+	height: 150px;
 }
 
 .rightMenu table {
@@ -99,22 +99,22 @@ textarea {
 }
 
 #lineDiv1{
-	width:129px;
+	width:150px;
 	height:150px;
 	float: right;
 }
 #lineDiv2{
-	width:110px;
+	width:150px;
 	height:150px;
 	float: right;
 }
 #lineDiv3{
-	width:110px;
+	width:150px;
 	height:150px;
 	float: right;
 }
 #lineDiv4{
-	width:110px;
+	width:150px;
 	height:150px;
 }
 
@@ -172,24 +172,27 @@ textarea {
 
 <form method="post" name="inputForm" id="inputForm" enctype="multipart/form-data" style="width: 980px; margin: auto;">
 	<input type="hidden" class="hiddenSnum" id="hiddenSnum" value="${sNum}">
-	<input type="hidden" name="option" value="2">
+	<input type="hidden" name="option" value="1">
 	<input type="hidden" name="modes" value="${modes}">
+	<input type="hidden" name="option" value="1">
 	<table class="body" style="text-align: center;">
 		<tr class="headLineTr">
 			<td class="headLineTd" colspan="4">
-			<div class="returnMemoDiv" style="position: absolute ; ${listVal == null ? 'display:none' : ' ' };">
+			<div class="returnMemoDiv" style=" position: absolute ; ${listVal == null ? 'display:none' : ' ' };">
 				<input type="hidden" class="hiddenWriter" value="${writer.empNo}">
 					<c:if test="${listVal == null}">
 						<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="반려사유를 작성해주세요" style="width: 350px; height: 100px; resize: none;
-						padding: 15px;"></textarea>
+								padding-top: 5px;"></textarea>
 						<br><button type="button" class="returnMemo">반려하기</button>
 					</c:if>
 					<c:if test="${listVal != null}">
-						<textarea  class="returnTxADiv" rows="5" cols="10" placeholder="" style="width: 350px; height: 100px; resize: none;
-								padding: 15px; color: red; " readonly="readonly">반려 사유 : ${dto.rreason}</textarea>
+					<div style=" float: left; border: 1px solid black; margin-top: 10px; width: 300px; height: 125px; padding-top: 5px; border: none; color: #EB5A5A; font-weight: bold; font-size: 20px;">
+						반려 사유
+						<textarea class="returnTxADiv" rows="4" cols="8" placeholder="" style="color: #EB5A5A; margin-top: 10px; width: 290px; height: 80px; border: none; font-size: 15px; resize: none;" readonly="readonly">: ${dto.rreason}</textarea>
+					</div>
 					</c:if>
 			</div>
-			<p class="pTag">휴 가 신 청 서</p>
+			<p class="pTag">업 무 기 안</p>
 			</td>
 		</tr>
 		<tr>
@@ -235,7 +238,7 @@ textarea {
 				</div>
 				<div class="rightMenu" id="lineDiv4">
 					<input type="hidden" value="4" name="lineDivChild">
-					<table style="width: 110px;">
+					<table style="width: 150px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px;">
 							${ mode=="article" ? pempNo4.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo4.pType : " " }</td>
@@ -257,8 +260,8 @@ textarea {
 							</td>
 						</tr>
 						<tr>
-							<td style="height: 20px;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
+							<td style="height: 20px;"><c:if test="${empty mode || modes=='임시보관함'}">
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 3}">
@@ -280,10 +283,11 @@ textarea {
 				</div>
 				<div class="rightMenu" id="lineDiv3">
 					<input type="hidden" value="3" name="lineDivChild">
-					<table style="width: 110px;">
+					<table style="width: 150px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
-							${ mode=="article" ? pempNo3.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo3.pType : " " }</td>
+							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;"><span>
+							${ mode=="article" ? pempNo3.dType : " "} ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo3.pType : " " }</span></td>
+							
 						</tr>
 						<tr>
 							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
@@ -303,10 +307,11 @@ textarea {
 							
 						</tr>
 						<tr>
-							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
+							<td style="height: 20px; border-right: none;">
+							<c:if test="${empty mode || modes=='임시보관함'}">
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
-									<p id="btnLine">
+									<p id="pTageLine">
 										<c:if test="${dto.scurrStep == 2}">
 											<c:if test="${pempNo3.empNo == sessionScope.employee.empNo}">
 												<button type="button" class="choiceBtn"
@@ -326,13 +331,13 @@ textarea {
 				</div>
 				<div class="rightMenu" id="lineDiv2">
 					<input type="hidden" value="2" name="lineDivChild">
-					<table style="width: 110px;">
+					<table style="width: 150px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
+							<td class="typeTd" style="height: 17px; border-right: none;">
 							${ mode=="article" ? pempNo2.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo2.pType : " " }</td>
 						</tr>
 						<tr>
-							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
+							<td class="nameTd" style="height: 80px; border-right: none; margin: 10px auto; position: relative;">
 							<c:if test="${mode=='article'}">
 								<c:choose>
 								<c:when test="${dto.scurrStep > 1 }">
@@ -348,8 +353,8 @@ textarea {
 							</td>
 						</tr>
 						<tr>
-							<td style="height: 20px; border-right: none;"><c:if test="${empty mode}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+${mode}</button>
+							<td style="height: 20px; border-right: none;"><c:if test="${empty mode || modes=='임시보관함'}">
+									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 1}">
@@ -371,11 +376,11 @@ textarea {
 				</div>
 		<div class="rightMenu" id="lineDiv1">
 			<input type="hidden" value="1" name="lineDivChild">
-			<table style="width: 130px;">
+			<table style="width: 150px;">
 				<tr>
 					<td rowspan="3"
 						style="background: #DDDDDD; width: 70px; text-align: left;"><b>결재</b></td>
-					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
+					<td class="typeTd" style="height: 17px; width: 1000px; border-right: none; text-align: center;">
 					${ mode=="article" ? writer.dType : sessionScope.employee.dType } | ${ mode=="article" ? writer.pType : sessionScope.employee.pType }
 					</td>
 				</tr>

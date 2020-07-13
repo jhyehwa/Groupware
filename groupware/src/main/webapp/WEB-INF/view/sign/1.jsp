@@ -80,7 +80,7 @@ textarea {
 .rightMenu {
 	float: right;
 	width: 15%;
-	height: 140px;
+	height: 150px;
 }
 
 .rightMenu table {
@@ -99,22 +99,22 @@ textarea {
 }
 
 #lineDiv1{
-	width:129px;
+	width:150px;
 	height:150px;
 	float: right;
 }
 #lineDiv2{
-	width:110px;
+	width:150px;
 	height:150px;
 	float: right;
 }
 #lineDiv3{
-	width:110px;
+	width:150px;
 	height:150px;
 	float: right;
 }
 #lineDiv4{
-	width:110px;
+	width:150px;
 	height:150px;
 }
 
@@ -238,7 +238,7 @@ textarea {
 				</div>
 				<div class="rightMenu" id="lineDiv4">
 					<input type="hidden" value="4" name="lineDivChild">
-					<table style="width: 110px;">
+					<table style="width: 150px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px;">
 							${ mode=="article" ? pempNo4.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo4.pType : " " }</td>
@@ -283,7 +283,7 @@ textarea {
 				</div>
 				<div class="rightMenu" id="lineDiv3">
 					<input type="hidden" value="3" name="lineDivChild">
-					<table style="width: 110px;">
+					<table style="width: 150px;">
 						<tr>
 							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;"><span>
 							${ mode=="article" ? pempNo3.dType : " "} ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo3.pType : " " }</span></td>
@@ -331,13 +331,13 @@ textarea {
 				</div>
 				<div class="rightMenu" id="lineDiv2">
 					<input type="hidden" value="2" name="lineDivChild">
-					<table style="width: 110px;">
+					<table style="width: 150px;">
 						<tr>
-							<td class="typeTd" style="height: 17px; width: 1000px; border-right: none;">
+							<td class="typeTd" style="height: 17px; border-right: none;">
 							${ mode=="article" ? pempNo2.dType : " " } ${ mode=="article" ? " | " : " "} ${ mode=="article" ? pempNo2.pType : " " }</td>
 						</tr>
 						<tr>
-							<td class="nameTd" style="width: 210px; height: 80px; border-right: none; margin: 10px auto; position: relative;">
+							<td class="nameTd" style="height: 80px; border-right: none; margin: 10px auto; position: relative;">
 							<c:if test="${mode=='article'}">
 								<c:choose>
 								<c:when test="${dto.scurrStep > 1 }">
@@ -376,7 +376,7 @@ textarea {
 				</div>
 		<div class="rightMenu" id="lineDiv1">
 			<input type="hidden" value="1" name="lineDivChild">
-			<table style="width: 130px;">
+			<table style="width: 150px;">
 				<tr>
 					<td rowspan="3"
 						style="background: #DDDDDD; width: 70px; text-align: left;"><b>결재</b></td>
