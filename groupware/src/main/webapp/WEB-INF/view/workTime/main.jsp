@@ -201,6 +201,7 @@ $("body").on("click", ".otherBtn", function(){
 			function printTime(){
 				var clock = document.getElementById("currTime");
 				var curr = document.getElementById("curr");
+				
 				var stFtd = document.getElementById("stFtd");
 				var now = new Date();
 					
