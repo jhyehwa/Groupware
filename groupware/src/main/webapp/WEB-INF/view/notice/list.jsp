@@ -34,7 +34,7 @@
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div style="margin-top: 20px; margin-left: 20px;">
-      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="writeNotice();"><i class="fas fa-pen-alt"></i> </button>
+      			<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="writeNotice();" title="글쓰기"><i class="fas fa-pen-alt"></i> </button>
 	       	</div>	
 	       	
 	       	<form name="searchForm"  action="<%=cp%>/notice/list" method="post">

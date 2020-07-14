@@ -77,7 +77,7 @@ $(function(){
         
         <div class="board-body" style="float: left; width: 20%;">	      
 	        	<div style="margin-top: 20px; margin-left: 20px;">	        	
-	           		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/notice/list';"><i class="fas fa-list"></i></button>
+	           		<button type="button" style="width: 220px; height: 50px; background: #9565A4; color: white; font-size: 25px; border: none; border-radius: 10px;" onclick="javascript:location.href='<%=cp%>/notice/list';" title="목록으로"><i class="fas fa-list"></i></button>
 	           	</div>   
         </div> 
         
