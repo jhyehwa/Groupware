@@ -165,7 +165,7 @@ $("body").on("click", ".otherBtn", function(){
 					<div class="board-statMemo" style="width: 100%;">	
 						<table class="stateTable">
 							<tr>
-								<td class="stFtd" colspan="2">2020년 7월 9일</td>
+								<td id="stFtd" class="stFtd" colspan="2">2020년 7월 9일</td>
 							</tr>
 							<tr>
 								<td class="stStd" style="width:50%;">출근</td>
@@ -201,10 +201,12 @@ $("body").on("click", ".otherBtn", function(){
 			function printTime(){
 				var clock = document.getElementById("currTime");
 				var curr = document.getElementById("curr");
+				var stFtd = document.getElementById("stFtd");
 				var now = new Date();
 					
 				clock.innerText =  now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + "  " + now.getHours() + "시 " + now.getMinutes() + "분 " + now.getSeconds() + "초";
 				curr.innerText = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분";
+				stFtd.innerText = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 ";
 				setTimeout("printTime()", 1000);
 			}
 	

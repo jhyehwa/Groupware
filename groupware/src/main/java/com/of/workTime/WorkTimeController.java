@@ -309,6 +309,7 @@ public class WorkTimeController {
 			Model model
 			) {
 		SessionInfo info = (SessionInfo) session.getAttribute("employee");
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("ipAddr", req.getRemoteAddr());
