@@ -113,7 +113,7 @@
 					      <td align="left" style="padding-left: 10px; font-weight: bold; font-size: 16px;">					       
 					         		<a class="btn"  style=" color: #041910;"  href="#smallarticle">${dto.title}</a>
 						         		<input type="hidden" class="hcommuNum" value="${dto.commuNum}">
-						         		<span id="hcontent${dto.commuNum}" style="display: none">${dto.content}</span>
+						         		<span id="hcontent${dto.commuNum}" style="display: none;">${dto.content}</span>
 						         		<input type="hidden" class="hreplyCount" value="${dto.replyCount}">
 						         		<input type="hidden" class="hname" value="[${dto.dType}]&nbsp;${dto.name}&nbsp;${dto.pType}">
  					            <c:if test="${dto.gap < 1}">
@@ -219,8 +219,8 @@
 				<tr style="height: 10%; background: white; color: #505050; font-size: 13px; border: 1px solid #cccccc;">
 					<td id="mname" style="padding-left: 10px; border-bottom: 1px solid #cccccc;"> 작성자 </td>
 				</tr>
-				<tr style="font-size: 15px; color: #505050; border: 1px solid #cccccc;">
-					<td id="mcontent" style="padding-left:10px; text-align: left;"> 내용 </td>
+				<tr style="font-size: 15px; color: #505050; border: 1px solid #cccccc;" valign="top">
+					<td  style="padding-left:10px; text-align: left; "><div id="mcontent" style="white-space: pre; padding-top: 15px;">내용</div> </td>
 				</tr>	
 			</table>
 			
@@ -253,7 +253,7 @@
       var title = $(this).text();
       var name = "&nbsp;작성자 | " + $(this).closest("td").find("input[class=hname]").val();   
       var commuNum = $(this).closest("td").find("input[class=hcommuNum]").val();
-      var content = $("#hcontent"+commuNum).text(); 
+      var content = $("#hcontent"+commuNum).html(); 
       
       $("#mtitle").html(title);
       $("#mcontent").html(content);      

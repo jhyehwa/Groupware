@@ -196,7 +196,7 @@ $("body").on("click", ".otherBtn", function(){
         
         
         <!-- 출퇴근 연장근무 조퇴 등등 선택사항 + 현시간 :> -->
-        <div class="board-body" style="width: 65%; float: left; margin-left: 45px; margin-top: 15px;" >        
+        <div class="board-body" style="width: 72%; float: left; margin-left: 45px; margin-top: 15px;" >        
 			<script type="text/javascript">
 			function printTime(){
 				var clock = document.getElementById("currTime");
@@ -228,11 +228,11 @@ $("body").on("click", ".otherBtn", function(){
 					<table class="monthTable">
 						<tr>
 							<td class="mtFtd" style="width: 12%;">일자</td>
-							<td class="mtFtd" style="width: 21%;">출근</td>
-							<td class="mtFtd" style="width: 21%;">퇴근</td>
+							<td class="mtFtd" style="width: 22%; text-align: left; padding-left: 80px;">출근</td>
+							<td class="mtFtd" style="width: 22%; text-align: left; padding-left: 80px;">퇴근</td>
 							<td class="mtFtd" style="width: 8%;">근태 현황</td>
-							<td class="mtFtd" style="width: 15%;"> IP </td>
-							<td class="mtFtd" style="width: 21%;">비고</td>
+							<td class="mtFtd" style="width: 14%;"> IP </td>
+							<td class="mtFtd" style="width: 20%;">비고</td>
 						</tr>
 						<c:forEach var="dto" items="${monthList}" >
 							<tr>
@@ -243,7 +243,7 @@ $("body").on("click", ".otherBtn", function(){
 									</td>
 								</c:if>
 								<c:if test="${dto.workCode!='연차'}">
-									<td>
+									<td style="text-align: left; padding-left: 18px;">
 										<c:if test="${dto.out1 != null}">
 											<span>${dto.clockIn}<span style="font-weight: bolder; color:#9565A4;">&nbsp;[외근]</span></span>
 										</c:if>
@@ -259,7 +259,7 @@ $("body").on("click", ".otherBtn", function(){
 									</td>
 								</c:if>
 								<c:if test="${dto.workCode!='연차'}">
-								<td>
+								<td style="text-align: left; padding-left: 18px;">
 								<c:if test="${dto.out2 != null }">
 										<span>${dto.clockOut}<span style="font-weight: bolder; color:#9565A4;">&nbsp;[외근]</span></span>
 									</c:if>
@@ -268,12 +268,23 @@ $("body").on("click", ".otherBtn", function(){
 									</c:if>
 								</td>
 								</c:if>
-								<td>${dto.workCode}</td>
+								
+								<c:if test="${dto.workCode == '지각' || dto.workCode == '조퇴' || dto.workCode == '초과근무' || dto.workCode == '결근'}">
+									<td style="color: #E74C3C; font-weight: bold;"> ${dto.workCode} </td>
+								</c:if>
+								<c:if test="${dto.workCode == '퇴근' || dto.workCode == '정상' || dto.workCode == '외근'}">
+									<td> ${dto.workCode} </td>
+								</c:if>
+								<c:if test="${dto.workCode == '연차'}">
+									<td style="color: #9565A4; font-weight: bold;"> ${dto.workCode} </td>
+								</c:if>
+								
 								<td>${dto.ipAddr}</td>
+								
 								<td>
 									<form method="post" name="updateForm">
-										<input type="text" name="other" class="workOther" value="${dto.other}" placeholder="${dto.other}">
-										<input type="hidden" name="workDate" class="workDate" value="${dto.workDate}">
+										<input type="text" name="other" style="width: 150px; color: #909497;" class="workOther" value="${dto.other}" placeholder="${dto.other}">
+										<input type="hidden" name="workDate" class="workDate" value="${dto.workDate}">&nbsp;
 										<button type="button" name="otherBtn" class="otherBtn"> <i class="fas fa-plus"></i> </button>
 									</form>
 								</td>
