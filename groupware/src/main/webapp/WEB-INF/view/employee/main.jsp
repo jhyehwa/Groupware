@@ -121,13 +121,13 @@
 	$(function() {
 		$("#tab-office").on("click", ".tab-btn1", function() {
 			$(".tab-btn1").css("background-color","#EDA900");
-			
+			$(".tab-btn1").css("border","2px solid #9565A4");
 			$(".tab-btn2").css("background-color","#9565A4");
 		});
 		
 		$("#tab-leave").on("click", ".tab-btn2", function() {
 			$(".tab-btn2").css("background-color","#EDA900");
-			
+			$(".tab-btn2").css("border","2px solid #9565A4");
 			$(".tab-btn1").css("background-color","#9565A4");
 		});
 	});
@@ -167,7 +167,7 @@
 			<div id="container-list">
 				<div style="width: 1200px;">
 					<ul class="tabs" style="font-size: 17px; margin-left: 50px;">
-						<li id="tab-office" data-tab="office" style="float: left; margin-right: 10px;"><button class="tab-btn1" style="background: #EDA900; border: none; height: 35px; padding: 5px; color: white; font-weight: bold; border-radius: 3px;">재직</button></li>
+						<li id="tab-office" data-tab="office" style="float: left; margin-right: 10px;"><button class="tab-btn1" style="background: #EDA900; border: 2px solid #9565A4; height: 35px; padding: 5px; color: white; font-weight: bold; border-radius: 3px;">재직</button></li>
 						<li id="tab-leave" data-tab="leave"><button class="tab-btn2" style="background: #9565A4; border: none; height: 35px; padding: 5px; color: white; font-weight: bold; border-radius: 3px;">퇴사</button></li>
 					</ul>
 				</div>
