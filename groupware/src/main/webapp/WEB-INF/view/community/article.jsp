@@ -12,7 +12,7 @@ function deleteCommu() {
 	var q = "commuNum=${dto.commuNum}&${query}";
 	var url = "<%=cp%>/community/delete?" + q;
 
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")){
+	if(confirm("글을 삭제 하시 겠습니까 ? ")){
 		  	location.href=url;
 	}
 }

@@ -253,7 +253,7 @@
       var title = $(this).text();
       var name = "&nbsp;작성자 | " + $(this).closest("td").find("input[class=hname]").val();   
       var commuNum = $(this).closest("td").find("input[class=hcommuNum]").val();
-      var content = $("#hcontent"+commuNum).text();
+      var content = $("#hcontent"+commuNum).text(); 
       
       $("#mtitle").html(title);
       $("#mcontent").html(content);      
