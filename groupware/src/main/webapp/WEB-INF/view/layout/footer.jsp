@@ -306,7 +306,57 @@ $(function(){
 
 </script>
 
+<!-- 프로필 modal -->
+<div class="testbox" style="display: none;">
+		<h1>마이 페이지</h1>
 
+		<form name="employeeForm" method="post">
+			<div id="div-one">
+				<div id="div-one-right" style="margin-top: 55px;">
+					 <div class="imgLayout" style="margin-top: 20px; margin-left: 22px; width: 250px; height: 250px; padding: 5px; padding-top: 10px;  border: 1px solid #cccccc;  text-align: center; vertical-align: middle;">
+			             	<img src="<%=cp%>/uploads/profile/${dto.imageFilename}" width="240" height="240" border="0">
+			         </div>
+				
+					<div style="padding-left: 0px;">
+						<label id="icon" style="margin-left: 0px;"><i class="fas fa-pen"></i></label>
+							<input type="text" name="intro" value="${dto.intro}" placeholder="&nbsp;자신을 표현 해 보세요!" readonly="readonly" />
+					</div>					
+				</div>				
+	
+				<div id="div-two" style="margin-top: 40px;">
+					<div>
+						<label id="icon"><i class="fas fa-user"></i></label>
+							<input type="text" name="empNo" id="empNo" value="${dto.empNo}" readonly="readonly" />
+					</div>
+					
+					<div>
+					<label id="icon"><i class="fas fa-signature"></i></label>
+						<input type="text" name="name" value="${dto.name}" readonly="readonly" />
+					</div>
+					
+					<div>
+					<label id="icon"><i class="fas fa-users"></i></label>
+						<input type="text" name="addr" value="${dto.dType} | ${dto.pType}" readonly="readonly" />
+					</div>				
+					
+					<div>
+					<label id="icon"><i class="fas fa-birthday-cake"></i></label>
+						<input type="text" name="birth" value="${dto.birth}" readonly="readonly" />
+					</div>
+					
+					<div>
+					<label id="icon"><i class="fas fa-mobile-alt"></i></label>
+						<input type="text" name="tel" value="${dto.tel}" readonly="readonly" />
+					</div>
+					
+					<div>
+					<label id="icon"><i class="far fa-envelope-open"></i></label>
+						<input type="text" name="email" value="${dto.email}" readonly="readonly" />
+					</div>	
+				</div>
+			</div>
+		</form>
+	</div>
 
 
 
