@@ -129,6 +129,22 @@ $(function(){
 </script>
 
 <script type="text/javascript">
+
+function ajaxHTML(url, type, query, selector) {
+	$.ajax({
+		type:type,
+		url:url,
+		data:query,
+		success:function(data){
+			$(selector).html(data);
+		},
+		error:function(e){
+			console.log(e.responseText);
+		}
+	});
+}
+
+
 $(function(){
 	function ajaxJSON(url, type, query, fn) {
 		$.ajax({
@@ -151,6 +167,7 @@ $(function(){
 		    }
 		});
 	}
+	
 	
 	function listDept() {
 		var url="<%=cp%>/employee/listDept";
@@ -234,7 +251,7 @@ $(function(){
 			out+=" <img src='<%=cp%>/uploads/profile/"+image+"' style='width: 30px; height: 30px; border-radius: 15px; vertical-align:middle;'>&nbsp;"+pType+"&nbsp;|&nbsp;"+name+"&nbsp;";
 			out+=" <a class='chatInput' <%-- href=' --%>'><span><i class='fas fa-comments'></i></span></a>";
 			out+=" <a class='messageInput' <%-- href='<%=cp%>/buddy/created --%>'><span><i class='fas fa-envelope'></i></span></a>";
-			out+=" <a class='information' data-empNo='"+empNo+"' data-name='"+name+"'><span><i class='fas fa-info-circle'></i></span></a></p>";							
+			out+=" <a class='information' data-empNo='"+empNo+"' data-name='"+name+"'><input type='hidden' value='"+empNo+"'><span><i class='fas fa-info-circle'></i></span></a></p>";							
 		}		
 		obj.html(out);	
 	}
@@ -303,60 +320,44 @@ $(function(){
 });
 
 
+$("body").on("click", ".information", function(){
+	
+	var data = $(this).find("input[type=hidden]").val();
+	
+	$("#testbox").dialog({
+		modal : true,
+		width : 450,
+		height : 245,
+		title : "프로필",
+		position : {my:"center top", at:"center top"},
+		show : "fade",
+		resizable : false,
+		open : function(){
+
+			$(".ui-draggable .ui-dialog-titlebar").css("background", "white");
+			$(".ui-draggable .ui-dialog-titlebar").css("border", "white");
+			
+			var url = "<%=cp%>/main/profile"
+			
+			var query = "empNo=" + data;
+			
+			ajaxHTML(url, "GET", query, ".showProfile");
+			
+		},close : function(){
+			
+		}
+	});
+	 
+	
+});
+
 
 </script>
 
 <!-- 프로필 modal -->
-<div class="testbox" style="display: none;">
-		<h1>마이 페이지</h1>
-
-		<form name="employeeForm" method="post">
-			<div id="div-one">
-				<div id="div-one-right" style="margin-top: 55px;">
-					 <div class="imgLayout" style="margin-top: 20px; margin-left: 22px; width: 250px; height: 250px; padding: 5px; padding-top: 10px;  border: 1px solid #cccccc;  text-align: center; vertical-align: middle;">
-			             	<img src="<%=cp%>/uploads/profile/${dto.imageFilename}" width="240" height="240" border="0">
-			         </div>
-				
-					<div style="padding-left: 0px;">
-						<label id="icon" style="margin-left: 0px;"><i class="fas fa-pen"></i></label>
-							<input type="text" name="intro" value="${dto.intro}" placeholder="&nbsp;자신을 표현 해 보세요!" readonly="readonly" />
-					</div>					
-				</div>				
-	
-				<div id="div-two" style="margin-top: 40px;">
-					<div>
-						<label id="icon"><i class="fas fa-user"></i></label>
-							<input type="text" name="empNo" id="empNo" value="${dto.empNo}" readonly="readonly" />
-					</div>
-					
-					<div>
-					<label id="icon"><i class="fas fa-signature"></i></label>
-						<input type="text" name="name" value="${dto.name}" readonly="readonly" />
-					</div>
-					
-					<div>
-					<label id="icon"><i class="fas fa-users"></i></label>
-						<input type="text" name="addr" value="${dto.dType} | ${dto.pType}" readonly="readonly" />
-					</div>				
-					
-					<div>
-					<label id="icon"><i class="fas fa-birthday-cake"></i></label>
-						<input type="text" name="birth" value="${dto.birth}" readonly="readonly" />
-					</div>
-					
-					<div>
-					<label id="icon"><i class="fas fa-mobile-alt"></i></label>
-						<input type="text" name="tel" value="${dto.tel}" readonly="readonly" />
-					</div>
-					
-					<div>
-					<label id="icon"><i class="far fa-envelope-open"></i></label>
-						<input type="text" name="email" value="${dto.email}" readonly="readonly" />
-					</div>	
-				</div>
-			</div>
-		</form>
-	</div>
+<div id="testbox" style="display: none;">
+	<div class="showProfile"></div>
+</div>
 
 
 

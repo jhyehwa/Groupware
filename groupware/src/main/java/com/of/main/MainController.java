@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.of.buddy.BuddyService;
+import com.of.employee.Employee;
 import com.of.employee.EmployeeService;
 import com.of.employee.SessionInfo;
 import com.of.news.News;
 import com.of.news.NewsService;
 import com.of.notice.Notice;
 import com.of.notice.NoticeService;
+import com.of.profile.Profile;
+import com.of.profile.ProfileService;
 import com.of.scheduler.Scheduler;
 import com.of.scheduler.SchedulerJSON;
 import com.of.sign.Sign;
@@ -52,6 +55,9 @@ public class MainController {
 	
 	@Autowired
 	EmployeeService empService;
+	
+	@Autowired
+	ProfileService proService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(
@@ -271,5 +277,18 @@ public class MainController {
 		model.put("newsCnt", newsCnt);
 		
 		return model;
+	}
+	
+	
+	
+	@RequestMapping(value="/main/profile")
+	public String profileSearch(
+			@RequestParam String empNo,
+			Model model
+			) {
+		Profile dto = 	proService.readProfile(empNo);
+		
+		model.addAttribute("dto",dto);
+		return "profile/semi";
 	}
 }

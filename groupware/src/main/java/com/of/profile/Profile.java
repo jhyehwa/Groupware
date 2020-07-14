@@ -13,7 +13,29 @@ public class Profile {
 	private String email;
 	private String birth;
 	private String enterDate;
+	private String name;
+	private String dType;
+	private String pType;
 	
+	
+	public String getpType() {
+		return pType;
+	}
+	public void setpType(String pType) {
+		this.pType = pType;
+	}
+	public String getdType() {
+		return dType;
+	}
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getEmpNo() {
 		return empNo;
 	}
