@@ -73,6 +73,9 @@ public class WorkTimeController {
 			case "G":
 				wk.setWorkCode("연차");
 				break;
+			case "H":
+				wk.setWorkCode("초과근무");
+				break;
 			case "EE":
 				wk.setWorkCode("정상");
 				model.addAttribute("stat", "EE");
@@ -130,6 +133,9 @@ public class WorkTimeController {
 				break;
 			case "G":
 				dto.setWorkCode("연차");
+				break;
+			case "H":
+				dto.setWorkCode("초과근무");
 				break;
 			case "EE":
 				dto.setWorkCode("정상");
@@ -203,7 +209,11 @@ public class WorkTimeController {
 					map.put("workCode", "D");
 				}
 			}else if(wk.getWorkCode().equalsIgnoreCase("A")){
-				map.put("workCode","F");
+				if(hour >= 19) {
+					map.put("workCode","H");
+				}else {
+					map.put("workCode","F");
+				}
 			}else {
 				map.put("workCode", wk.getWorkCode());
 			}
@@ -253,16 +263,14 @@ public class WorkTimeController {
 			map.put("workDate", sdf4.format(nowDate));
 
 			WorkTime wk = service.toDayChekc(Integer.parseInt(info.getEmpNo()));
-
-			if(hour < 18) {
-
-				if(wk.getWorkCode().equalsIgnoreCase("B")) {
-					
-				}else {
-					map.put("workCode", "D");
-				}
+			if(hour < 18 ){
+				map.put("workCode", "D");
 			}else if(wk.getWorkCode().equalsIgnoreCase("A")){
-				map.put("workCode","F");
+				if(hour >= 19) {
+					map.put("workCode","H");
+				}else {
+					map.put("workCode","F");
+				}
 			}else {
 				map.put("workCode", wk.getWorkCode());
 			}
@@ -364,11 +372,14 @@ public class WorkTimeController {
 
 
 			WorkTime wk = service.toDayChekc(Integer.parseInt(info.getEmpNo()));
-			
-			if(hour < 18) {
+			if(hour < 18 ){
 				map.put("workCode", "D");
 			}else if(wk.getWorkCode().equalsIgnoreCase("A")){
-				map.put("workCode","F");
+				if(hour >= 19) {
+					map.put("workCode","H");
+				}else {
+					map.put("workCode","F");
+				}
 			}else {
 				map.put("workCode", wk.getWorkCode());
 			}

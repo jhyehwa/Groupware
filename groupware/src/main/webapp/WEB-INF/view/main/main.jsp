@@ -517,7 +517,7 @@ function send(){
 				<div class="inTime" style="margin-top: 60px; float: left; margin-left: 40px;">
 					<table style="width: 100px; height: 50px; border: 1px solid #9565A4; border-radius: 25px; color: #9565A4;">
 						<tr> 
-							<td style="text-align: center;"><button type="button" data-val="work" class="timeBtn" onclick="showInTime()" style="background: none; border: none; color:#9565A4;"> 출근 </button> </td>
+							<td style="text-align: center;"><button type="button" data-val="work" class="timeBtn" style="background: none; border: none; color:#9565A4;"> 출근 </button> </td>
 						</tr>
 					</table>
 				</div>
@@ -525,7 +525,7 @@ function send(){
 				<div class="outTime" style="margin-top: 60px; float: left; margin-left: 45px;">
 					<table style="width: 100px; height: 50px; border: 1px solid #9565A4; border-radius: 25px; color: #9565A4;">
 						<tr> 
-							<td style="text-align: center;"><button type="button" data-val="home" class="timeBtn" onclick="showOutTime()" style="background: none; border: none; color:#9565A4;"> 퇴근 </button></td>
+							<td style="text-align: center;"><button type="button" data-val="home" class="timeBtn" style="background: none; border: none; color:#9565A4;"> 퇴근 </button></td>
 						</tr>
 					</table>
 				</div>
@@ -740,6 +740,22 @@ function send(){
 	</div> 	
 	
 	
+<script type="text/javascript">
+
+function printTime(){
+	var curr = document.getElementById("curr");
+	var now = new Date();
+		
+	curr.innerText = now.getFullYear() + "년 " + (now.getMonth()+1) + "월 " + now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분";
+	setTimeout("printTime()", 1000);
+}
+
+window.onload = function(){
+	printTime();
+}
+</script>
+	
+	
 	
 <!-- 모달창 -->
 <div id ="checking" class="modal" style="width: 300px; height: 1000px; display: none;">
@@ -759,7 +775,6 @@ function send(){
 		</form>
 	</div>
 </div>
-	
 	
 </div>
 </div>
