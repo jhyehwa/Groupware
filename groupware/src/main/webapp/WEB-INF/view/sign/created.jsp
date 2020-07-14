@@ -132,7 +132,7 @@ function check() {
 }
 
 $(function() {
-	$("body").on("click", "#btnLine", function(){
+	$("body").on("click", ".btnLine", function(){
 		var value = $(this).closest("div").find("input[name=lineDivChild]").val();
 		var $btn = $(this);
 		$("#lineModal-dialog").dialog({
@@ -160,7 +160,7 @@ $(function() {
 		});
 	});
 	
-	$("body").on("click", "#btnLineSelectOk", function(){
+	$("body").on("click", ".close", function(){
 
 		var count = $(this).closest("div").find("input:checkbox[name=cb]:checked").length;
 		
@@ -169,7 +169,7 @@ $(function() {
 			return;
 		}
 		
-		$('#lineModal-dialog').dialog("close");
+		$('.lineModal').dialog("close");
 	});
 		
 });

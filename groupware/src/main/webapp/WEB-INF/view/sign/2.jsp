@@ -261,7 +261,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px;"><c:if test="${empty mode || modes=='임시보관함'}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
+									<button type="button" class="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 3}">
@@ -309,7 +309,7 @@ textarea {
 						<tr>
 							<td style="height: 20px; border-right: none;">
 							<c:if test="${empty mode || modes=='임시보관함'}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
+									<button type="button" class="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="pTageLine">
 										<c:if test="${dto.scurrStep == 2}">
@@ -354,7 +354,7 @@ textarea {
 						</tr>
 						<tr>
 							<td style="height: 20px; border-right: none;"><c:if test="${empty mode || modes=='임시보관함'}">
-									<button type="button" id="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
+									<button type="button" class="btnLine" style="font-weight: bold; width: 20px; height: 20px; background: none;">+</button>
 								</c:if> <c:if test="${not empty mode}">
 									<p id="btnLine">
 										<c:if test="${dto.scurrStep == 1}">

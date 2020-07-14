@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+body::-webkit-scrollbar {
+width: 10px;
+background: transparent;
+}
+
+
+.sidebar{ min-height:1020px;}
+
 body {
 	font-family: NanumSquareRound, 나눔바른고딕, "Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
 }
