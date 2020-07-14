@@ -6,6 +6,11 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/article.css" type="text/css">
+<style>
+.sidebar{
+	min-height: 1000px;
+}
+</style>
 
 <script type="text/javascript">
 function deleteNews() {

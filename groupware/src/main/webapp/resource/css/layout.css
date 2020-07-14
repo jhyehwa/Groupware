@@ -11,17 +11,12 @@
 .sidebar {
 	clear: both;
 	width: 85px;
-	min-height: 880px;
+	min-height: 872px;
 	height: auto;
 	float: left;
 	overflow: hidden;
 	background: #F2F2F2;
 	position: relative; 
-}
-
-body::-webkit-scrollbar {
-    width: 10px;
-    background: transparent;
 }
 
 /* header */
