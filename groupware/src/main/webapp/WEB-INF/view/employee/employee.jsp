@@ -167,8 +167,6 @@
 		var pwd1 = $("#pwd1").val();
 		var pwd2 = $("#pwd2").val();
 		
-		// 정규식 넣어줘야 함
-		
 		if(pwd1 == pwd2) {
 			var s = "<span style='color:blue;font-weight:bold;'>비밀번호가 일치합니다.</span>";
 			$("#pwd2").next(".help-block").html(s);
@@ -301,7 +299,7 @@
 				<div id="buttonSubBox">
 					<button type="button" name="sendButton" class="button" onclick="employeeOk();">${mode == "employee" ? "등록하기" : "정보수정"}</button>
 					<button type="reset" class="button">다시입력</button>
-					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
+					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/main';">${mode == "employee" ? "등록취소" : "수정취소"}</button>
 				</div>
 				<c:if test="${mode=='update'}">
 		        	 <input type="hidden" name="page" value="${page}">

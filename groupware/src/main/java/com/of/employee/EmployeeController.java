@@ -100,7 +100,7 @@ public class EmployeeController {
 			articleUrl = articleUrl + "&" + query;
 		}
 
-		String paging = myUtil.paging(current_page, total_page, "listPage");
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 		
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
@@ -124,7 +124,7 @@ public class EmployeeController {
 
 		int rows = 10;
 		int total_page = 0;
-		int dataCount = 0;
+		int dataCountLeave = 0;
 
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "UTF-8");
@@ -134,9 +134,9 @@ public class EmployeeController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 
-		dataCount = service.dataCount(map);
-		if (dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
+		dataCountLeave = service.dataCountLeave(map);
+		if (dataCountLeave != 0) {
+			total_page = myUtil.pageCount(rows, dataCountLeave);
 		}
 
 		if (total_page < current_page) {
@@ -164,13 +164,13 @@ public class EmployeeController {
 			articleUrl = articleUrl + "&" + query;
 		}
 
-		String paging = myUtil.paging(current_page, total_page, "listPage");
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
 		
 		model.addAttribute("list", list);
 		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
-		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("dataCount", dataCountLeave);
 		model.addAttribute("paging", paging);
 
 		model.addAttribute("condition", condition);
@@ -255,7 +255,7 @@ public class EmployeeController {
 	// 로그인
 	@RequestMapping(value = "/login/login", method = RequestMethod.GET)
 	public String loginForm() {
-		return "/login";
+		return "login/login";
 	}
 
 	@RequestMapping(value = "/login/login", method = RequestMethod.POST)
@@ -315,7 +315,7 @@ public class EmployeeController {
 
 		Employee dto = service.readEmployee(employeeNum);
 		if (dto == null) {
-			return "redirect:/employee/list?" + query;
+			return "redirect:/employee/main";
 		}
 
 		model.addAttribute("employeeNum", employeeNum);
@@ -334,7 +334,7 @@ public class EmployeeController {
 		Employee dto = service.readEmployee(employeeNum);
 
 		if (dto == null) {
-			return "redirect:/employee/list?page=" + page;
+			return "redirect:/employee/m?page=" + page;
 		}
 
 		model.addAttribute("employeeNum", employeeNum);
@@ -360,7 +360,7 @@ public class EmployeeController {
 			service.updateEmployee(dto);
 
 		} catch (Exception e) {
-			return ".employee.list";
+			return ".employee.main";
 		}
 
 		StringBuilder sb = new StringBuilder();

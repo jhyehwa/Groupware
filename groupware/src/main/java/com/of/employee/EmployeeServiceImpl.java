@@ -76,6 +76,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		return result;
 	}
+	
+	@Override
+	public int dataCountLeave(Map<String, Object> map) {
+
+		int result = 0;
+
+		try {
+			result = dao.selectOne("employee.dataCountLeave", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 
 	// ---------------------------------------------------------------------------------------------
 	// 사원 등록

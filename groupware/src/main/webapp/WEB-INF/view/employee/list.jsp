@@ -6,8 +6,6 @@
 	String cp=request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/employeeList.css" type="text/css">
-
 <div id="list-header">
 	<table id="list-menu">
 		<tr id="list-title">
@@ -30,7 +28,7 @@
 				<td>${dto.enterDate}</td>
 				<td>${dto.dType}</td>
 				<td>${dto.pType}</td>
-				<td><a href="<%=cp%>/employee/article?employeeNum=${dto.employeeNum}&page=${page}"><i class="fas fa-search"></i></a></td>
+				<td id="listView"><a href="<%=cp%>/employee/article?employeeNum=${dto.employeeNum}&page=${page}"><i class="fas fa-search"></i></a></td>
 			</tr>
 		</c:forEach>
 		<tr>

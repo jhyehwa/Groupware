@@ -124,7 +124,7 @@
 				<div id="buttonSubBox">
 					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/update?employeeNum=${employeeNum}&page=${page}';">수정</button>
 					<button type="button" class="button" onclick="deleteEmployee();">삭제</button>
-					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/list?${query}';">리스트</button>
+					<button type="button" class="button" onclick="javascript:location.href='<%=cp%>/employee/main?${query}';">리스트</button>
 				</div>
 			</div>			
 			<div>

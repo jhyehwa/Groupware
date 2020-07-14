@@ -142,9 +142,8 @@
 }
 
 #container-list {
-	width: 1000px;
-	margin: -100px 0 0 300px;
-	float: left;
+	width: 1200px;
+	margin: -125px 0 0 300px;
 }
 
 #list-header table {
@@ -210,6 +209,10 @@
 	font-weight: bold;
 }
 
+#listView>a>i:hover {
+	color: #EDA900;
+}
+
 #list-paging {
 	width: 1000px;
 	text-align: center;
@@ -230,6 +233,10 @@
 	margin-right: 15px;
 }
 
+.numBox:hover {
+	color: #EDA900;
+}
+
 .listBtn {
 	width: 70px;
 	color: white;
@@ -242,3 +249,4 @@
 .listBtn:hover { 
 	color:white; 
 	background-color: #9565A4;
+}

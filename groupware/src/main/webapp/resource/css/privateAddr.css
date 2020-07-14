@@ -381,6 +381,10 @@
 	margin-right: 15px;
 }
 
+.numBox:hover {
+	color: #EDA900;
+}
+
 h3 i {
 	font-size: 20px;
 }

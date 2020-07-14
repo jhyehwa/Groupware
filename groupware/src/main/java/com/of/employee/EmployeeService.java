@@ -10,6 +10,7 @@ public interface EmployeeService {
 	public List<Employee> listEmployeeLeave(Map<String, Object> map);
 	
 	public int dataCount(Map<String, Object> map);
+	public int dataCountLeave(Map<String, Object> map);
 	
 	public Employee loginEmployee(String empNo);
 	

@@ -145,7 +145,7 @@
 			<a href="#" id="hMenu"><i class="fas fa-bars"></i></a> <!-- 메뉴 -->
 			&nbsp;
 			<c:if test="${sessionScope.employee.rCode == 'admin'}">
-				<a href="<%=cp%>/employee/list"><i class="fas fa-user-cog"></i></a> <!-- 관리자 -->
+				<a href="<%=cp%>/employee/main"><i class="fas fa-user-cog"></i></a> <!-- 관리자 -->
 				&nbsp;
 			</c:if>
 			<c:if test="${not empty sessionScope.employee}">

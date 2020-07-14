@@ -91,11 +91,11 @@
 		var $tab = $(".tabs .active");
 		var tab = $tab.attr("data-tab");
 		var url="<%=cp%>/employee/"+ tab +"/list";
-		var query = "pageNo=" + page;
+		var query = "page=" + page;
 		var search = $('form[name=searchForm]').serialize();
 		query = query + "&" + search;
 		var selector = "#tab-content";
-	
+		
 		ajaxHTML(url, "get", query, selector);
 	}
 		
@@ -117,20 +117,36 @@
 	}
 </script>
 
+<script>
+	$(function() {
+		$("#tab-office").on("click", ".tab-btn1", function() {
+			$(".tab-btn1").css("background-color","#EDA900");
+			
+			$(".tab-btn2").css("background-color","#9565A4");
+		});
+		
+		$("#tab-leave").on("click", ".tab-btn2", function() {
+			$(".tab-btn2").css("background-color","#EDA900");
+			
+			$(".tab-btn1").css("background-color","#9565A4");
+		});
+	});
+</script>
+
 <div class="container">
 	<div id="list-container">
 		<div class="body-title">
-			<h3><i class="fa fa-quote-left"> 사원 정보</i>&nbsp;|&nbsp;${dataCount}명</h3>
+			<h3><i class="fa fa-quote-left"> 사원 정보</i></h3>
 		</div>
 	
 		<div id="listBtnBox">
 			<div id="listBtnBox-left">
 				<button type="button" id="new-button1" class="listBtn" onclick="javascript:location.href='<%=cp%>/employee/employee';"><i class="fas fa-user-plus"></i></button>
-				<button type="button" id="new-button2" class="listBtn" onclick="javascript:location.href='<%=cp%>/employee/list';"><i class="fas fa-undo-alt"></i></button>
+				<button type="button" id="new-button2" class="listBtn" onclick="javascript:location.href='<%=cp%>/employee/main';"><i class="fas fa-undo-alt"></i></button>
 			</div>
 		
 		
-			<form name="searchForm" action="<%=cp%>/employee/list" method="post">
+			<form name="searchForm" action="<%=cp%>/employee/main" method="post">
 				<div class="selectGroup-list">
 					<select name="condition" id="condition" class="selectBox-list">
 						<option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
@@ -149,13 +165,13 @@
 			</form>
 			
 			<div id="container-list">
-				<div style="background: yellow; float: left; list-style: none;">
-						<ul class="tabs">
-							<li id="tab-office" data-tab="office">재직</li>
-							<li id="tab-leave" data-tab="leave">퇴사</li>
-						</ul>
-					</div>
-								
+				<div style="width: 1200px;">
+					<ul class="tabs" style="font-size: 17px; margin-left: 50px;">
+						<li id="tab-office" data-tab="office" style="float: left; margin-right: 10px;"><button class="tab-btn1" style="background: #EDA900; border: none; height: 35px; padding: 5px; color: white; font-weight: bold; border-radius: 3px;">재직</button></li>
+						<li id="tab-leave" data-tab="leave"><button class="tab-btn2" style="background: #9565A4; border: none; height: 35px; padding: 5px; color: white; font-weight: bold; border-radius: 3px;">퇴사</button></li>
+					</ul>
+				</div>
+				
 				<div id="tab-content"></div>
 			</div>
 		

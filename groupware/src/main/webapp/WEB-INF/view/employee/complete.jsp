@@ -21,7 +21,7 @@
 	</div>
 	<div id="button-form">
 		<div>
-			<button type="button" onclick="javascript:location.href='<%=cp%>/employee/list';" style="width: 100px; height: 30px;">목록으로</button>
+			<button type="button" onclick="javascript:location.href='<%=cp%>/employee/main';" style="width: 100px; height: 30px;">목록으로</button>
 		</div>
 	</div>
 </div>
