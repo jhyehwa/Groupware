@@ -11,6 +11,7 @@ public class Profile {
 	private String pwd;
 	private String tel;
 	private String email;
+	
 	private String birth;
 	private String enterDate;
 	private String name;
