@@ -431,14 +431,14 @@ textarea {
 				<c:if test="${mode == 'article'}">
 					<c:if test="${modes == null }">				
 						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" disabled="disabled"
-							style="border: none; outline: 0; background: none;">
+							style="width: 800px; border: none; outline: 0; background: none;">
 					</c:if>	
 					<c:if test="${modes == '임시보관함' }">		
-						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" style="outline: 0; background: none;">
+						<input type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}" style="width: 800px; outline: 0; background: none;">
 					</c:if>	
 				</c:if>
 				<c:if test="${mode != 'article'}">
-					<input style="margin-left: 10px; outline: 0; background: none;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
+					<input style="width: 800px; margin-left: 10px; outline: 0; background: none;" type="text" id="sSubject" name="ssubject" value="${mode == 'article' ? dto.ssubject : ''}">
 				</c:if>
 				</td>
 			</tr>
