@@ -163,8 +163,8 @@ $(function(){
         
         <div class="board-body" style="float: left; width: 20%;">
         	<div class="leftside">	        	
-	       		<button class="leftsidebtn" type="button" onclick="writeNews();"><i class="fas fa-marker"></i></button>
-	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/list?${query}';"><i class="fas fa-list"></i></button>	
+	       		<button class="leftsidebtn" type="button" onclick="writeNews();" title="글쓰기"><i class="fas fa-marker"></i></button>
+	       		<button class="leftsidebtn" type="button" onclick="javascript:location.href='<%=cp%>/news/list?${query}';" title="목록으로"><i class="fas fa-list"></i></button>	
 	       </div>   
 	       	
         </div>

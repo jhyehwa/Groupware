@@ -210,7 +210,7 @@ $(function(){
 	var first_date = null; // 화면에 출력된 메시지의 최초의 날짜 
 	var last_date = null;  // 화면에 출력된 메시지의 마지막 날짜 
 	var room = null;
-	var image=null;
+	//var image=null;
 	// 채팅 서버에 접속
 	var sock = io('http://localhost:3001/chat');
 	
@@ -229,7 +229,12 @@ $(function(){
 		var roomName = $(this).text();
 		alert(roomName);
 		$(".chatting-content-list").empty();
-		$(".chatting-room-name").html(roomName);
+		if(uid=='10001'){
+			$(".chatting-room-name").html(roomName);		
+		} else if(uid=='10002'){		
+			$(".chatting-room-name").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;홍보부 | 김수현");
+		}
+		
 		$("#chatRoomList").css("display","none");
 		$("#chatContentList").css("display","");
 	
@@ -240,14 +245,28 @@ $(function(){
 			$("#chatContentList").css("display","none");
 		});
 		
-		if(room){
+	<%-- 	if(room){
 			$(".room-image").html("<img width='60' height='60' style='border-radius:30px;' src='<%=cp%>/uploads/profile/"+image+"'>");			
-		}
+		} 
+	--%>
+	
+		
+			
+		
 		
 		$("body").on("click", ".chatList", function(){
 			$("#chatRoomList").css("display","none");
 			$("#chatContentList").css("display","");
 		});
+		
+		$("body").on("click", "td.roomout", function(e){
+			alert("채팅방을 나가시겠습니까?");
+			$(this).closest("table").remove();			
+			e.stopPropagation();			
+		});
+
+		
+		
 		
 /* 		
 		var out="";
@@ -323,8 +342,8 @@ $(function(){
 		if(! $(".chatting-content-list").children("div").hasClass(cls)) {
 			// 날짜 출력
 			out =  "<div class='"+cls+"'>";
-	    	out += " <div style='clear: both; margin: 7px 5px 3px;'>";
-		    out += "   <div style='float: left; font-size: 12px; padding-right: 5px; margin-top: 8px;'><i class='far fa-calendar'></i> "+dispDate+"</div>";
+	    	out += " <div style='clear: both; margin:10px 5px 3px;'>";
+		    out += "   <div style='float: left; font-size: 12px; padding-right: 5px; margin:8px 0 20px 0'><i class='far fa-calendar'></i> "+dispDate+"</div>";
 		    out += "   <hr>";
 		    out += "  </div>";
 		    out += "</div>";
@@ -337,9 +356,11 @@ $(function(){
 		    }
 		}
 		
+		
+		
 		// 메시지 출력
 		if(uid==empNo) {		
-			out="<div class='my_message' style='clear: both; margin: 5px 5px;'>";
+			out="<div class='my_message' style='clear: both; '>";
         	out+="	<div class='my-tooltip toolmsg' style='float: right; cursor: pointer;' >"+message+"</div>";
 			out+="	<div class='toolTime' style='float: right; font-size: 12px; margin: 20px 4px 0 0;'>"+dispTime+"</div>";
 			out+="	<div class='myChatImage'  style='clear:both; float: right; '>";
@@ -347,29 +368,38 @@ $(function(){
 			out += "</div>";
 			
 		} else {
-			out=" <div class='you_message' style='clear: both; margin: 5px 5px;'>";
+			out=" <div class='you_message' style='clear: both; '>";
         	out+="	<div class='you-tooltip toolmsg' style='cursor: pointer; float: left;' >"+message+"</div>";
         	out+="	<div class='toolTime' style='float:left; font-size: 12px; margin: 20px 0 0 4px ;'>"+dispTime+"</div>";
 			out+="<div class='youChatImage'  style='clear:both; '>";
-			out+="<img src='<%=cp%>/uploads/profile/"+image+"'><span>"+name+"</span></div>";
+			if(uid=='10002'){
+				out+="<img src='<%=cp%>/resource/images/김수현.png'><span>"+name+"</span></div>";				
+			} else{
+			out+="<img src='<%=cp%>/resource/images/차승원.png'><span>"+name+"</span></div>";		
+				
+			}
 			out += "</div>";
 		}
 		
 		$("."+cls).append(out);
-		$('.chatting-content-list').scrollTop($('.chatting-content-list').prop('scrollHeight'));
+		$('#chatMsgContainer').scrollTop($('#chatMsgContainer').prop('scrollHeight'));
+		
+		
 		
 		var latestChat= $(".chatting-content-list").children().children().last().children(".toolmsg").text();
 		var latestTime= $(".chatting-content-list").children().children().last().children(".toolTime").text();
 		
-
-		
-		
 		$(".latestChat p").text(latestChat);
 		$(".latestTime p").text(latestTime);
 		
-		
 	}	
 	
+	$("body").on("click", ".topToChatroom", function(e){
+		$('#chatMsgContainer').scrollTop(0);		
+	});
+	$("body").on("click", ".bottomToChatroom", function(e){
+		$('#chatMsgContainer').scrollTop($('#chatMsgContainer').prop('scrollHeight'));	
+	});
 	
 });
 
@@ -404,22 +434,30 @@ $(function(){
 		             <div id="chatListContainer" >
 		             	<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  display: none;" >
 							<tr>
-								<td class="room-image"rowspan="2" width="70" height="70"><i style='font-size: 60px;' class='fas fa-user-circle'></i></td>
+								<td class="room-image"rowspan="2" width="70" height="70">
+									<c:if test="${sessionScope.employee.empNo=='10001'}">
+										<img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/차승원.png">
+									</c:if>
+									<c:if test="${sessionScope.employee.empNo=='10002'}">
+										<img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/김수현.png">
+									</c:if>
+								</td>
 								<td class="chatting-room-name" ><p></p></td>
 								<td class="latestTime" width="120"><p></p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat"><p></p></td>
 								<td></td>
 							</tr>
 						</table>
+						<c:if test="${sessionScope.employee.empNo=='10001'}">
 						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px; " >
 							<tr>
 								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/woobin.jpg"></td>
 								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;경영지원부 | 김우빈</p></td>
 								<td class="latestTime-smp" width="120"><p>목요일 오후 5:16</p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat-smp"><p>오늘 볼링 치러 갈래?</p></td>
@@ -431,19 +469,19 @@ $(function(){
 								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/김다미.jpg"></td>
 								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;홍보부 | 김다미</p></td>
 								<td class="latestTime-smp" width="120"><p>수요일 오후 2:16</p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat-smp"><p>그래서 회식은 어디로 가나요?</p></td>
 								<td></td>
 							</tr>
 						</table>
-						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px;  " >
+						<table class="chatList"style="border-bottom: 1px double #9565A4; width: 670px; margin-left: 10px; padding: 10px; " >
 							<tr>
 								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/박보검.jpg"></td>
 								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;개발부 | 박보검</p></td>
 								<td class="latestTime-smp" width="120"><p> 수요일 오후 2:11</p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat-smp"><p>자바 때리실?</p></td>
@@ -455,7 +493,7 @@ $(function(){
 								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/서강준.jpg"></td>
 								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;홍보부 | 서강준</p></td>
 								<td class="latestTime-smp" width="120"><p>수요일 오후 1:54</p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat-smp"><p>오늘 점심 뭐먹었음?</p></td>
@@ -467,7 +505,7 @@ $(function(){
 								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/서예지.jpg"></td>
 								<td class="chatting-room-name-smp" ><p style="padding-left: 10px;">&nbsp;&nbsp;인사부 | 서예지</p></td>
 								<td class="latestTime-smp" width="120"><p>화요일 오후 2:16</p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat-smp"><p>보고싶어~</p></td>
@@ -479,14 +517,14 @@ $(function(){
 								<td class="room-image-smp"rowspan="2" width="70" height="70"><img style="width: 60px; height: 60px; border-radius: 30px;" src="<%=cp%>/resource/images/한소희.jpg"></td>
 								<td class="chatting-room-name-smp"><p style="padding-left: 10px;">&nbsp;&nbsp;인사부 | 한소희</p></td>
 								<td class="latestTime-smp" width="120"><p>화요일 오전 10:57</p></td>
-								<td rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
+								<td class="roomout" rowspan="2"><i title="나가기" style="font-size: 30px; color:#9565A4; "  class="fas fa-sign-out-alt"></i></td>
 							</tr>
 							<tr>							
 								<td class="latestChat-smp"><p>보고싶어~</p></td>
 								<td></td>
 							</tr>
 						</table>
-
+						</c:if>
 		             </div>
 		        </div>
 
@@ -497,7 +535,7 @@ $(function(){
 		                 <span style="font-weight: 600; color: #424951;">채팅 메시지</span>
 		             </div>
 		             <div id="chatMsgContainer" class="scrollStyle">
-		             	<div class="backToChatroom"><i class="far fa-arrow-alt-circle-left"></i>뒤로</div>
+		             	<div class="backToChatroom" style=""><i style="font-size: 20px" class="far fa-arrow-alt-circle-left"></i>뒤로</div>
 		             		<div class="chatting-content-list"></div>
 		             		<%-- <div class='my_message' style='clear: both; margin: 5px 5px;'>
 					        	<div class="my-tooltip" style='float: right; cursor: pointer;' >메세지입력ㄱㄱ</div>
@@ -516,7 +554,17 @@ $(function(){
 								<div class="youChatImage"  style='clear:both; margin-left:30px; padding-top:15px'><img src='<%=cp%>/resource/images/basic.gif'><span>dTye이름pType</span></div>
 							</div> --%>
 		             </div>
-		             <div style="clear: both; padding-top: 5px; margin-top: 10px;">
+		             <div class="backToChatroom" style=" margin-top: 10px; float: left;">
+		             	<span><i style="font-size: 20px" class="far fa-arrow-alt-circle-left"></i>뒤로</span>
+		             </div>
+
+		             <div class="topToChatroom"  style="margin-top: 10px; float: right;">
+		             	<span><i style="font-size: 20px" class="far fa-arrow-alt-circle-up"></i>맨 위로&nbsp;</span>
+		             </div>
+		             <div class="bottomToChatroom"  style="margin-top: 10px; float: right;">
+		             	<span><i style="font-size: 20px" class="far fa-arrow-alt-circle-down"></i>맨 아래로&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		             </div>
+		             <div style="clear: both; padding-top: 5px; ">
 		             	<input type="text" id="chatMsg" class="boxTF"  style=""
 		                            placeholder="채팅 메시지를 입력 하세요...">
 		             </div>
