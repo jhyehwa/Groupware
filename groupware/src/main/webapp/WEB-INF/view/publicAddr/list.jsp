@@ -67,7 +67,7 @@
 		<div id="list-header">
 			<table id="list-menu">
 				<tr id="list-title">
-					<td id="name-title">이름</td>
+					<td colspan="2" id="name-title">이름</td>
 					<td id="birth-title">생년월일</td>
 					<td id="tel-title">전화번호</td>
 					<td id="email-title">이메일</td>
@@ -78,7 +78,8 @@
 				<tr id="list-cotainer">
 					<c:forEach var="dto" items="${list}">
 						<tr id="list-content">
-							<td>${dto.name}</td>
+							<td><img src="<%=cp%>/uploads/profile/${dto.imageFilename}" width="50" height="50" border="0" style="border-radius: 25px; padding-left: 25px;"></td>
+							<td><span style="line-height: 50px; padding-right: 50px;">${dto.name}</span></td>
 							<td>${dto.birth}</td>
 							<td>${dto.tel}</td>
 							<td>${dto.email}</td>

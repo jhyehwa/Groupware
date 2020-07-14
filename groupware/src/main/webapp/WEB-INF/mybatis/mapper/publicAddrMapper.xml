@@ -4,13 +4,14 @@
 <mapper namespace="publicAddr">
 	<!-- 공용 주소록 리스트 -->
 	<select id="listPublicAddr"  resultType="com.of.publicAddr.PublicAddr" parameterType="map">
-		SELECT pu.empNo, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, tel, email, TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, d.dCode, d.dType, p.pCode, p.pType
+		SELECT pu.empNo, name, TO_CHAR(birth, 'YYYY-MM-DD') birth, tel, email, TO_CHAR(enterDate, 'YYYY-MM-DD') enterDate, d.dCode, d.dType, p.pCode, p.pType, pf.imageFilename
 		FROM publicAddr pu
 		JOIN employee e ON e.empNo = pu.empNo
 		JOIN history h ON e.empNo = h.empNo
 		JOIN career c ON c.empNo = h.empNo
         JOIN dept d ON d.dCode = h.dCode
         JOIN position p ON p.pCode = h.pCode
+        JOIN profile pf ON pf.empNo = e.empNo
 		<where>
 			<if test="keyword!=null and keyword !='' ">
 				<include refid="where-list"/>

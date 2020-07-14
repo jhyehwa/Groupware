@@ -8,6 +8,7 @@ public class PublicAddr {
 	private String email;
 	private String dType;
 	private String pType;
+	private String imageFilename;
 
 	public String getEmpNo() {
 		return empNo;
@@ -63,6 +64,14 @@ public class PublicAddr {
 
 	public void setpType(String pType) {
 		this.pType = pType;
+	}
+
+	public String getImageFilename() {
+		return imageFilename;
+	}
+
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
 	}
 
 }
