@@ -24,7 +24,7 @@
 
 <div class="container">
 	<div class="testbox">
-		<h1>사원 정보</h1>
+		<i class="fas fa-address-card">&nbsp;사원 정보</i>
 
 		<form name="employeeForm" method="post">
 			<div id="div-one">
