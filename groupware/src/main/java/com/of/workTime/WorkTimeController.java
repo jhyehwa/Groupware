@@ -345,20 +345,16 @@ public class WorkTimeController {
 
 		String[] time = status.split(":");
 		int hour = Integer.parseInt(time[0]);
-		int min = Integer.parseInt(time[1]);
-
+		
 		map.put("empNo", info.getEmpNo());
 		map.put("ipAddr", req.getRemoteAddr());
 		switch (val) {
 		case "work":
 			if (hour < 9) {
 				map.put("workCode", "A");
-			} else if (hour == 9 && min <= 30) {
-				map.put("workCode", "B");
 			} else {
-				map.put("workCode", "C");
+				map.put("workCode", "B");
 			}
-
 			service.insertWorkTime(map);
 			break;
 		case "home":
