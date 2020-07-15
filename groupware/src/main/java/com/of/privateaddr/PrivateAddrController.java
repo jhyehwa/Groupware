@@ -39,12 +39,17 @@ public class PrivateAddrController {
 	// ---------------------------------------------------------------------------------------------
 	// 개인 주소록 리스트
 	@RequestMapping("/privateAddr/main")
-	public String main(Model model) throws Exception {
+	public String main(
+			HttpSession session,
+			Model model
+			) throws Exception {
 		
 		int dataCount = 0;
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		SessionInfo info = (SessionInfo)session.getAttribute("employee");
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", info.getEmpNo());
 		dataCount = service.dataCount(map);
 		
 		model.addAttribute("dataCount", dataCount);
