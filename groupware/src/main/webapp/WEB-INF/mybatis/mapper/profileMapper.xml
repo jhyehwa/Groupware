@@ -4,10 +4,13 @@
 <mapper namespace="profile">
 	
 	<select id="readProfile" parameterType="String" resultType="com.of.profile.Profile">
-		SELECT p.empNo, intro, imageFilename, pwd, tel, email, TO_CHAR(birth, 'YYYY-MM-DD')birth, TO_CHAR(enterDate, 'YYYY-MM-DD')enterDate
+		SELECT p.empNo, name, dType, pType,  intro, imageFilename, pwd, tel, email, TO_CHAR(birth, 'YYYY-MM-DD')birth, TO_CHAR(enterDate, 'YYYY-MM-DD')enterDate
 		FROM profile p 
 		JOIN employee e ON p.empNo = e.empNo
 		JOIN career c ON p.empNo = c.empNo
+        JOIN history h ON p.empNo = h.empNo 
+        JOIN dept d ON h.dCode = d.dCode
+        JOIN position ps ON h.pCode = ps.pCode
 		WHERE p.empNo = #{empNo}
 	</select>
 
@@ -22,7 +25,7 @@
 	</update>
 	
 	<select id="mainProfile" parameterType="String" resultType="com.of.profile.Profile">
-		SELECT p.empNo,name,dType,pType, intro, imageFilename, pwd, tel, email, TO_CHAR(birth, 'YYYY-MM-DD')birth, TO_CHAR(enterDate, 'YYYY-MM-DD')enterDate
+		SELECT p.empNo, name, dType, pType, intro, imageFilename, pwd, tel, email, TO_CHAR(birth, 'YYYY-MM-DD')birth, TO_CHAR(enterDate, 'YYYY-MM-DD')enterDate
 		FROM profile p 
 		JOIN employee e ON p.empNo = e.empNo
 		JOIN career c ON p.empNo = c.empNo

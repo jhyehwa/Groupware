@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/normalize.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/style.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/footer.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/board.css" type="text/css">
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css">

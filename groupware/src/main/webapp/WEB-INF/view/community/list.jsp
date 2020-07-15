@@ -212,7 +212,7 @@
 		<div id="smallarticle" class="modal">
 			<h2> <i class="fab fa-readme"></i>  글 미리보기 </h2>	
 			
-			<table style="width: 100%; height: 400px; margin-top: 20px; margin-bottom: 20px; border-collapse: collapse;">
+			<table style="width: 100%; height: 600px; margin-top: 20px; margin-bottom: 20px; border-collapse: collapse;">
 				<tr style="height: 12%; background: #6E3C89; color: white; border: 1px solid #cccccc;">
 					<td id="mtitle" style="padding-left: 10px; font-size: 21px; font-weight: bold;"> 제목 </td>
 				</tr>

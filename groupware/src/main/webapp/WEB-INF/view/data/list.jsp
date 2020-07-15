@@ -153,7 +153,7 @@ $(function() {
 		       	   </table> 
 		       	  </c:if> 
 	    
-		       <p style="text-align: right; margin-right: 60px; font-size: 13px; font-style: italic;"> <fmt:formatNumber value="${totalFile/(1024*1024)}" pattern="0.00"/> MB / 10.0GB </p>
+		       <p style="text-align: right; margin-right: 60px; font-size: 13px; font-style: italic;"> <fmt:formatNumber value="${totalFile/(1024*1024)}" pattern="0.00"/> GB / 10.0GB </p>
 			</div>
 	       	
 	       	<form name="searchForm" action="" method="post">
