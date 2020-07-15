@@ -55,7 +55,6 @@
 		FROM workTime w
 		WHERE empNo = #{empNo} AND TO_CHAR(workDate, 'YYYY-MM') = #{currDate}
 		ORDER BY workDate ASC
-		OFFSET #{offset} ROWS FETCH FIRST #{row} ROWS ONLY
 	</select>
 	
 	<select id="weekList" parameterType="map" resultType="com.of.workTime.WorkTime">

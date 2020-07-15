@@ -83,12 +83,8 @@ public class WorkTimeController {
 			}
 		}
 
-		int row = 10;
-		int offset = 0;
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("row", row);
-		map.put("offset", offset);
 		map.put("empNo", info.getEmpNo());
 
 		String currDate = sdf1.format(nowDate);

@@ -259,20 +259,20 @@ $("body").on("click", ".otherBtn", function(){
 									</td>
 								</c:if>
 								<c:if test="${dto.workCode!='연차'}">
-								<td style="text-align: left; padding-left: 18px;">
-								<c:if test="${dto.out2 != null }">
-										<span>${dto.clockOut}<span style="font-weight: bolder; color:#9565A4;">&nbsp;[외근]</span></span>
-									</c:if>
-									<c:if test="${dto.out2 == null}">
-										<span>${dto.clockOut}</span>
-									</c:if>
+									<td style="text-align: left; padding-left: 18px;">
+										<c:if test="${dto.out2 != null }">
+											<span>${dto.clockOut}<span style="font-weight: bolder; color:#9565A4;">&nbsp;[외근]</span></span>
+										</c:if>
+										<c:if test="${dto.out2 == null}">
+											<span>${dto.clockOut}</span>
+										</c:if>
 								</td>
 								</c:if>
 								
 								<c:if test="${dto.workCode == '지각' || dto.workCode == '조퇴' || dto.workCode == '초과근무' || dto.workCode == '결근'}">
 									<td style="color: #E74C3C; font-weight: bold;"> ${dto.workCode} </td>
 								</c:if>
-								<c:if test="${dto.workCode == '퇴근' || dto.workCode == '정상' || dto.workCode == '외근'}">
+								<c:if test="${dto.workCode == '퇴근' || dto.workCode == '정상' || dto.workCode == '외근' || dto.workCode == '미퇴근'}">
 									<td> ${dto.workCode} </td>
 								</c:if>
 								<c:if test="${dto.workCode == '연차'}">
