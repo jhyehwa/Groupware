@@ -6,22 +6,21 @@
 	String cp = request.getContextPath();
 %>
 
-<style>
-::-webkit-scrollbar {
-width: 10px;
-background: transparent;
-}
-
-.sidebar{
-min-height: 1000px;
-}
-
-</style>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <link rel="stylesheet" href="<%=cp%>/resource/css/privateAddr.css" type="text/css">
+
+<style>
+::-webkit-scrollbar {
+	width: 10px;
+	background: transparent;
+}
+
+.sidebar {
+	min-height: 1000px;
+}
+</style>
 
 <script type="text/javascript">
 	function privateAddr() {
