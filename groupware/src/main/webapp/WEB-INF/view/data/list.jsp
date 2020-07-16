@@ -160,7 +160,7 @@ $(function() {
         	<div class="selectGroup">
         		  <select class="selectBox" name="condition" class="selectField">			              
 		          	   <option value="title" ${condition=="title"?"selected='selected'":""}>제목</option>
-		               <option value="dataType" ${condition=="clubType"?"selected='selected'":""}>분류</option>
+		               <option value="dataType" ${condition=="dataType"?"selected='selected'":""}>분류</option>
 		               <option value="name" ${condition=="name"?"selected='selected'":""}>작성자</option>
 		               <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 			      </select>        

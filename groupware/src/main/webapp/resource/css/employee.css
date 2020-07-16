@@ -1,11 +1,12 @@
 @charset "UTF-8";
 
 * {
-	font-size: 18px;
+	
 }
 
 /* employee*/
 .testbox {
+	font-size: 18px;
 	margin: 30px 0 0 550px;
 	width: 800px;
 	height: 550px;

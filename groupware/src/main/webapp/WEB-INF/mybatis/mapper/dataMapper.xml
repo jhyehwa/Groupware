@@ -185,7 +185,7 @@
     <!-- 수정 -->
 	<update id="updateData" parameterType="com.of.data.Data">
 		UPDATE data SET title=#{title},
-				content=#{content}
+				content=#{content}, dataCode=#{dataCode}
 		WHERE dataNum=#{dataNum}
 	</update>
     
