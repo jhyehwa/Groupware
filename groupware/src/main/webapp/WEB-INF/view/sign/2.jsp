@@ -192,7 +192,7 @@ textarea {
 					</div>
 					</c:if>
 			</div>
-			<p class="pTag">업 무 기 안</p>
+			<p class="pTag">휴가신청서</p>
 			</td>
 		</tr>
 		<tr>
