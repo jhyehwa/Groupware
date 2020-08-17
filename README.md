@@ -68,7 +68,7 @@
 3. Oracle 18c
 4. Java<br/>
 
-## Others<br/>
+### Others<br/>
 1. Git & Github
 2. eXERD (DB 모델링)
 3. Sql Developer (powered by Oracle)
