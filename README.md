@@ -3,8 +3,9 @@
 ### 반드시 필요한 협업 출 기능의 집합체<br/><br/>
 
 ## 데모
-![그림5](https://user-images.githubusercontent.com/62512658/90393591-0597b500-e0cc-11ea-9901-18f13f942340.png)<br/>
 ### [메인화면]<br/>
+![그림5](https://user-images.githubusercontent.com/62512658/90393591-0597b500-e0cc-11ea-9901-18f13f942340.png)<br/>
+
 
  - 프로필/TO DO 리스트/캘린더/오늘의 한마디/결제 수신함/공지사항/사내소식/오늘의 일정
  - 연락처 추가/메일 전송/채팅/전자결재<br/><br/>
